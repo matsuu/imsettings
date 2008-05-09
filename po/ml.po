@@ -1,0 +1,540 @@
+# translation of im-chooser.trunk.ml.po to
+# translation of ml.po to
+# Malayalam translations for im-chooser package.
+# Copyright (C) 2006 Red Hat, Inc. All rights reserved.
+# This file is distributed under the same license as the im-chooser package.
+# Automatically generated, 2006.
+# Ani Peter <apeter@redhat.com>, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: im-chooser.trunk.ml\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-05-09 19:05+0900\n"
+"PO-Revision-Date: 2008-04-16 09:01+0530\n"
+"Last-Translator: \n"
+"Language-Team:  <en@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"\n"
+
+#: ../backends/gconf/main.c:184 ../src/factory_info.c:645 ../src/factory.c:744
+#: ../imsettings/imsettings-observer.c:724
+msgid "Replace the running settings daemon with new instance."
+msgstr "പ്രവര്‍ത്തനത്തിലുള്ള ക്രമികരണങ്ങളുടെ ഡെണിനെ പുതിയ ഇന്‍സ്റ്റന്‍സ് ഉപയോഗിച്ച് മാറ്റുക."
+
+#: ../backends/gconf/main.c:206 ../backends/xim/main.c:209
+#: ../src/factory_info.c:667 ../src/factory.c:771
+#: ../utils/imsettings-start.c:67 ../utils/imsettings-stop.c:63
+#: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:65
+msgid "Unknown error in parsing the command lines."
+msgstr "കമാന്‍ഡ് ലൈനുകള്‍ പാഴ്സ് ചെയ്യുന്നതില്‍ അപരിചിതമായ പിശക്."
+
+#: ../backends/xim/protocol.c:1356 ../backends/xim/connection.c:197
+#: ../backends/xim/server.c:444
+#, fuzzy
+msgid "X display"
+msgstr "എക്സ് ഡിസ്പ്ലെ നാമം"
+
+#: ../backends/xim/protocol.c:1357 ../backends/xim/connection.c:198
+#: ../backends/xim/server.c:445 ../backends/xim/main.c:177
+#: ../src/factory.c:745
+msgid "X display to use"
+msgstr "ഉപയോഗിക്കുന്നതിനുള്ള എക്സ് ഡിസ്പ്ലെ"
+
+#: ../backends/xim/protocol.c:1361 ../backends/xim/connection.c:226
+#: ../backends/xim/server.c:455
+#, fuzzy
+msgid "Verbose flag"
+msgstr "ഫ്ലാഗ് വേണ്ടെന്ന് വയ്ക്കുക"
+
+#: ../backends/xim/protocol.c:1362 ../backends/xim/connection.c:227
+#: ../backends/xim/server.c:456
+msgid "Output a lot of helpful messages to debug"
+msgstr ""
+
+#: ../backends/xim/protocol.c:1367
+msgid "Connection object"
+msgstr ""
+
+#: ../backends/xim/protocol.c:1368
+msgid "XIMConnection Gobject"
+msgstr ""
+
+#: ../backends/xim/connection.c:202
+msgid "Window ID"
+msgstr ""
+
+#: ../backends/xim/connection.c:203
+msgid "Window ID for the client"
+msgstr ""
+
+#: ../backends/xim/connection.c:210
+msgid "Communication Window ID"
+msgstr ""
+
+#: ../backends/xim/connection.c:211 ../backends/xim/loopback.c:943
+msgid "Window ID to communicate the client"
+msgstr ""
+
+#: ../backends/xim/connection.c:218 ../backends/xim/loopback.c:950
+msgid "Selection Atom"
+msgstr ""
+
+#: ../backends/xim/connection.c:219 ../backends/xim/loopback.c:951
+msgid "Atom for selection"
+msgstr ""
+
+#: ../backends/xim/connection.c:232
+msgid "Protocol"
+msgstr ""
+
+#: ../backends/xim/connection.c:233
+msgid "GType to deal with the XIM protocol"
+msgstr ""
+
+#: ../backends/xim/connection.c:238
+msgid "XIMProtocol"
+msgstr ""
+
+#: ../backends/xim/connection.c:239
+msgid "GObject of GObject"
+msgstr ""
+
+#: ../backends/xim/server.c:449 ../imsettings/imsettings-info.c:531
+msgid "XIM server name"
+msgstr "XIM സര്‍വര്‍ നാമം"
+
+#: ../backends/xim/server.c:450
+#, fuzzy
+msgid "XIM server name to be connected"
+msgstr "പ്രവര്‍ത്തിക്കുന്നതിനുള്ള XIM സര്‍വര്‍ പ്രോഗ്രാം"
+
+#: ../backends/xim/main.c:177 ../src/factory.c:745
+msgid "DISPLAY"
+msgstr "DISPLAY"
+
+#: ../backends/xim/main.c:178
+#, fuzzy
+msgid "Replace the running XIM server with new instance."
+msgstr "പ്രവര്‍ത്തനത്തിലുള്ള ക്രമികരണങ്ങളുടെ ഡെണിനെ പുതിയ ഇന്‍സ്റ്റന്‍സ് ഉപയോഗിച്ച് മാറ്റുക."
+
+#: ../backends/xim/main.c:179
+msgid "Output the debugging logs"
+msgstr ""
+
+#: ../backends/xim/loopback.c:942
+msgid "Selection Window ID"
+msgstr ""
+
+#: ../src/factory_info.c:127
+#, c-format
+msgid "Reloading...\n"
+msgstr "വീണ്ടും ലഭ്യമാക്കുക...\n"
+
+#: ../src/factory_info.c:188
+#, c-format
+msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
+msgstr "`%s' എന്ന് ആവര്‍ത്തിക്കുന്നു, %s-ല്‍. SHORT_DESC ഒന്നേ പാടുള്ളൂ."
+
+#: ../src/factory_info.c:446 ../src/factory_info.c:484
+#: ../src/factory_info.c:500 ../src/factory_info.c:518
+#, c-format
+msgid "Timed out to initialize %s services."
+msgstr "%s സര്‍വീസുകള്‍ ആരംഭിക്കുന്നതില്‍ സമയപരിധി കഴിഞ്ഞിരിക്കുന്നു."
+
+#: ../src/factory_info.c:469
+#, c-format
+msgid "No input methods available on your system."
+msgstr "നിങ്ങളുടെ സിസ്റ്റമില്‍ ഒരു ഇന്‍പുട്ട് രീതിയും ലഭ്യമല്ല."
+
+#: ../src/factory_info.c:526 ../src/factory.c:489 ../src/factory.c:656
+#, c-format
+msgid "No such input method on your system: %s"
+msgstr "നിങ്ങളുടെ സിസ്റ്റമില്‍ അത്തരം ഒരു ഇന്‍പുട്ട് രീതിയില്ല: %s"
+
+#: ../src/factory.c:138
+#, c-format
+msgid "Failed to remove a pidfile: %s"
+msgstr "ഒരു pidfile നീക്കം ചെയ്യുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
+
+#: ../src/factory.c:180
+#, c-format
+msgid "Failed to open a pidfile: %s"
+msgstr "ഒരു pidfile തുറക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
+
+#: ../src/factory.c:271
+#, c-format
+msgid "Couldn't determine the pid for %s process."
+msgstr "%s പ്രക്രിയയ്ക്കുള്ള pid നിശ്ചയിക്കുവാന്‍ സാധ്യമായില്ല."
+
+#: ../src/factory.c:301
+#, c-format
+msgid "Couldn't send a signal to the %s process successfully."
+msgstr "വിജയകരമായി %s പ്രക്രിയയിലേക്ക് ഒരു സിഗ്നല്‍ അയയ്ക്കുവാന്‍ സാധ്യമായില്ല."
+
+#: ../src/factory.c:325 ../src/factory.c:611
+#, c-format
+msgid "Failed to get a place of home directory."
+msgstr "ഹോം ഡയറക്ടറിയില്‍ ഒരു സ്ഥലം ലഭിക്കുന്നതില്‍ പരാജയപ്പെട്ടു."
+
+#: ../src/factory.c:342
+#, c-format
+msgid "Failed to revert the backup file: %s"
+msgstr "ബാക്കപ്പ് ഫയല്‍ തിരികെ ലഭ്യമാക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
+
+#: ../src/factory.c:354
+#, c-format
+msgid "Failed to create a backup file: %s"
+msgstr "ഒരു ബാക്കപ്പ് ഫയല്‍ ഉണ്ടാക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
+
+#: ../src/factory.c:363
+#, c-format
+msgid "Failed to remove a .xinputrc file: %s"
+msgstr "ഒരു .xinputrc ഫയല്‍ നീക്കം ചെയ്യുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
+
+#: ../src/factory.c:374
+#, c-format
+msgid "Failed to make a symlink: %s"
+msgstr "ഒരു സിംലിങ്ക് ഉണ്ടാക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
+
+#: ../src/factory.c:509
+#, c-format
+msgid "No XIM server is available in %s"
+msgstr "%s-ല്‍ ഒരു XIM സര്‍വറും ലഭ്യമല്ല"
+
+#: ../src/factory.c:700
+msgid "X display name"
+msgstr "എക്സ് ഡിസ്പ്ലെ നാമം"
+
+#: ../src/factory.c:701
+msgid "X display name to use"
+msgstr "ഉപയോഗിക്കുന്നതിനുള്ള എക്സ് ഡിസ്പ്ലെ നാമം."
+
+#. FIXME
+#: ../src/factory.c:748
+msgid "X screen to use"
+msgstr "ഉപയോഗിക്കുന്നതിനുള്ള എക്സ് സ്ക്രീന്‍"
+
+#: ../src/factory.c:748
+msgid "SCREEN"
+msgstr "SCREEN"
+
+#: ../src/factory.c:779
+#, c-format
+msgid "Failed to open a X display."
+msgstr "എക്സ് ഡിസ്പ്ലെ തുറക്കുന്നതില്‍ പരാജയം."
+
+#: ../utils/imsettings-start.c:44 ../utils/imsettings-stop.c:43
+#: ../utils/imsettings-restart.c:44
+msgid "Do not update .xinputrc."
+msgstr ".xinputrc പരിഷ്കരിക്കേണ്ടതില്ല."
+
+#: ../utils/imsettings-start.c:85
+#, fuzzy, c-format
+msgid "Started %s\n"
+msgstr "%s നിര്‍ത്തിയിരിക്കുന്നു\n"
+
+#: ../utils/imsettings-start.c:87
+#, fuzzy, c-format
+msgid "Failed to start IM process `%s'\n"
+msgstr "IM പ്രക്രിയ `%s' നിര്‍ത്തുന്നതില്‍ പരാജയം\n"
+
+#: ../utils/imsettings-stop.c:42 ../utils/imsettings-reload.c:42
+msgid "Force reloading the configuration, including restarting the process."
+msgstr "പ്രക്രിയ വീണ്ടും ആരംഭിക്കുന്നത് ഉള്‍പ്പെടയുള്ള ക്രമികരണങ്ങള്‍ നിര്‍ബന്ധിച്ച് വീണ്ടും ലഭ്യമാക്കുക."
+
+#: ../utils/imsettings-stop.c:80
+#, c-format
+msgid "Stopped %s\n"
+msgstr "%s നിര്‍ത്തിയിരിക്കുന്നു\n"
+
+#: ../utils/imsettings-stop.c:82
+#, c-format
+msgid "Failed to stop IM process `%s'\n"
+msgstr "IM പ്രക്രിയ `%s' നിര്‍ത്തുന്നതില്‍ പരാജയം\n"
+
+#: ../utils/imsettings-restart.c:43
+msgid "Force restarting the IM process regradless of any errors."
+msgstr "പിശകുകളുണ്ടേലും ഐഎം പ്രക്രിയ നിര്‍ബന്ധമായും വീണ്ടും ആരംഭിക്കുക."
+
+#: ../imsettings/imsettings-info.c:506
+msgid "Language"
+msgstr "ഭാഷ"
+
+#: ../imsettings/imsettings-info.c:507
+msgid "A language to pull the information in."
+msgstr "വിവരങ്ങള്‍ ലഭ്യമാക്കുന്നതിനുള്ള ഒരു ഭാഷ."
+
+#: ../imsettings/imsettings-info.c:512
+msgid "Filename"
+msgstr "ഫയല്‍നാമം"
+
+#: ../imsettings/imsettings-info.c:513
+msgid "A filename referring to the IM information."
+msgstr "ഐഎം വിവരങ്ങള്‍ സൂചിപ്പിക്കുന്ന ഒരു ഫയല്‍നാമം."
+
+#: ../imsettings/imsettings-info.c:518
+msgid "GTK+ immodule"
+msgstr "GTK+ immodule"
+
+#: ../imsettings/imsettings-info.c:519
+msgid "A module name used for GTK+"
+msgstr "GTK+-ന് ഉപയോഗിക്കുന്ന ഘടകനാമം"
+
+#: ../imsettings/imsettings-info.c:524
+msgid "Qt immodule"
+msgstr "Qt immodule"
+
+#: ../imsettings/imsettings-info.c:525
+msgid "A module name used for Qt"
+msgstr "Qt-യ്ക്ക് ഉപയോഗിക്കുന്ന ഘടകനാമം"
+
+#: ../imsettings/imsettings-info.c:530
+msgid "XIM name"
+msgstr "XIM നാമം"
+
+#: ../imsettings/imsettings-info.c:536
+msgid "Ignore flag"
+msgstr "ഫ്ലാഗ് വേണ്ടെന്ന് വയ്ക്കുക"
+
+#: ../imsettings/imsettings-info.c:537
+msgid "A flag to not list up."
+msgstr "ലിസ്റ്റ് ചെയ്ത് കാണിക്കാതിരിക്കുന്നതിനുള്ള ഫ്ലാഗ്."
+
+#: ../imsettings/imsettings-info.c:542
+msgid "XIM server program name"
+msgstr "XIM സര്‍വര്‍ പ്രോഗ്രാമിന്റെ പേര്"
+
+#: ../imsettings/imsettings-info.c:543
+msgid "XIM server program to be run"
+msgstr "പ്രവര്‍ത്തിക്കുന്നതിനുള്ള XIM സര്‍വര്‍ പ്രോഗ്രാം"
+
+#: ../imsettings/imsettings-info.c:548
+msgid "XIM server program's options"
+msgstr "XIM സര്‍വര്‍ പ്രോഗ്രാമിന്റെ ഉപാധികള്‍"
+
+#: ../imsettings/imsettings-info.c:549
+msgid "Command line options for XIM server program"
+msgstr "XIM സര്‍വര്‍ പ്രോഗ്രാമിനുള്ള കമാന്‍ഡ് ലൈന്‍ ഉപാധികള്‍"
+
+#: ../imsettings/imsettings-info.c:554
+msgid "Preference program name"
+msgstr "മുന്‍ഗണനയുള്ള പ്രോഗ്രാമിന്റെ നാമം"
+
+#: ../imsettings/imsettings-info.c:555
+msgid "Preference program to be run"
+msgstr "പ്രവര്‍ത്തിക്കുന്നതിന് മുന്‍ഗണനയുള്ള പ്രോഗ്രാം"
+
+#: ../imsettings/imsettings-info.c:560
+msgid "Preference program's options"
+msgstr "മുന്‍ഗണനയുള്ള പ്രോഗ്രാമിന്റെ ഉപാധികള്‍"
+
+#: ../imsettings/imsettings-info.c:561
+msgid "Command line options for preference program"
+msgstr "മുന്‍ഗണനയുള്ള പ്രോഗ്രാമിനുള്ള കമാന്‍ഡ് ലൈന്‍ ഉപാധികള്‍"
+
+#: ../imsettings/imsettings-info.c:566
+msgid "Auxiliary program name"
+msgstr "ഓക്സിലിയറി പ്രോഗ്രാമിന്റെ പേര്"
+
+#: ../imsettings/imsettings-info.c:567
+msgid "Auxiliary program to be run"
+msgstr "പ്രവര്‍ത്തിക്കുന്നതിനുള്ള ഓക്സിലിയറി പ്രോഗ്രാം"
+
+#: ../imsettings/imsettings-info.c:572
+msgid "Auxiliary program's options"
+msgstr "ഓക്സിലിയറി പ്രോഗ്രാമിനുള്ള ഉപാധികള്‍"
+
+#: ../imsettings/imsettings-info.c:573
+msgid "Command line options for auxiliary program"
+msgstr "ഓക്സിലിയറി പ്രോഗ്രാമിനുള്ള കമാന്‍ഡ് ലൈന്‍ ഉപാധികള്‍"
+
+#: ../imsettings/imsettings-info.c:578 ../imsettings/imsettings-info.c:579
+msgid "Short Description"
+msgstr "ചെറിയ വിവരണം"
+
+#: ../imsettings/imsettings-info.c:584 ../imsettings/imsettings-info.c:585
+msgid "Long Description"
+msgstr "വലിയ വിശദീകരണം"
+
+#: ../imsettings/imsettings-info.c:590
+msgid "System Default"
+msgstr "സിസ്റ്റം ഡീഫോള്‍ട്ട്"
+
+#: ../imsettings/imsettings-info.c:591
+msgid "Whether or not IM is a system default."
+msgstr "ഐഎം സിസ്റ്റം ഡീഫോള്‍ട്ട് ആണോ എന്ന്."
+
+#: ../imsettings/imsettings-info.c:596
+msgid "User Default"
+msgstr "യൂസര്‍ ഡീഫോള്‍ട്ട്"
+
+#: ../imsettings/imsettings-info.c:597
+msgid "Whether or not IM is an user default."
+msgstr "ഐഎം യൂസര്‍ ഡീഫോള്‍ട്ട് ആണോ എന്ന്."
+
+#: ../imsettings/imsettings-info.c:602
+msgid "XIM"
+msgstr "XIM"
+
+#: ../imsettings/imsettings-info.c:603
+msgid "Whether or not IM is a XIM server."
+msgstr "ഐഎം ഒരു XIM സര്‍വര്‍ ആണോ എന്ന്."
+
+#: ../imsettings/imsettings-request.c:169
+msgid "DBus Interface"
+msgstr "ഡിബസ് ഇന്റര്‍ഫെയിസ്"
+
+#: ../imsettings/imsettings-request.c:170
+msgid "Interface name to connect to DBus"
+msgstr "ഡിബസിലേക്ക് കണക്ട് ചെയ്യുന്നതിനുള്ള ഇന്റര്‍ഫെയിസ് നാമം"
+
+#: ../imsettings/imsettings-request.c:175
+#: ../imsettings/imsettings-observer.c:729
+msgid "DBus connection"
+msgstr "ഡിബസ് കണക്ഷന്‍"
+
+#: ../imsettings/imsettings-request.c:176
+#: ../imsettings/imsettings-observer.c:730
+msgid "An object to be a DBus connection"
+msgstr "ഡിബസ് കണക്ഷനാകുന്നതിനുള്ള ഒരു ഒബ്ജക്ട്"
+
+#: ../imsettings/imsettings-request.c:181
+msgid "Locale"
+msgstr "ലൊക്കെയില്‍"
+
+#: ../imsettings/imsettings-request.c:182
+msgid "Locale to get the imsettings information"
+msgstr "ഐഎം വിവരങ്ങള്‍ ലഭ്യമാകുന്നതിനുള്ള ലൊക്കെയില്‍"
+
+#: ../imsettings/imsettings-request.c:239
+#: ../imsettings/imsettings-request.c:272
+#: ../imsettings/imsettings-request.c:290
+#: ../imsettings/imsettings-request.c:310
+#: ../imsettings/imsettings-request.c:331
+#: ../imsettings/imsettings-request.c:355
+#: ../imsettings/imsettings-request.c:380
+#: ../imsettings/imsettings-request.c:405
+#: ../imsettings/imsettings-request.c:426
+#: ../imsettings/imsettings-request.c:446
+#: ../imsettings/imsettings-request.c:466
+#: ../imsettings/imsettings-request.c:486
+#: ../imsettings/imsettings-request.c:506
+#: ../imsettings/imsettings-request.c:526
+#: ../imsettings/imsettings-request.c:552
+#: ../imsettings/imsettings-request.c:602
+#: ../imsettings/imsettings-request.c:649
+#, c-format
+msgid ""
+"Failed to invoke a method `%s':\n"
+"  %s"
+msgstr ""
+"`%s' എന്ന രീതി ആരംഭിക്കുന്നതില്‍ പരാജയപ്പെട്ടു:\n"
+"  %s"
+
+#: ../imsettings/imsettings-request.c:695
+#, c-format
+msgid ""
+"Failed to invoke a method `%s' on %s:\n"
+"  %s"
+msgstr ""
+"`%s' എന്ന രീതി %s-ല്‍ ആരംഭിക്കുന്നതില്‍ പരാജയപ്പെട്ടു:\n"
+"  %s"
+
+#: ../imsettings/imsettings-observer.c:277
+#, c-format
+msgid "Invalid IM module type: %d"
+msgstr "തെറ്റായ ഐഎം ഘടക രീതിയിലുള്ള: %d"
+
+#: ../imsettings/imsettings-observer.c:717
+msgid "IM module name"
+msgstr "ഐഎം ഘടകനാമം"
+
+#: ../imsettings/imsettings-observer.c:718
+msgid "A target IM module name that to observe signals"
+msgstr "സിഗ്നലുകള്‍ നിരീക്ഷിക്കുന്നതിനുള്ള ഐഎം ഘടകനാമം"
+
+#: ../imsettings/imsettings-observer.c:723
+msgid "Replace"
+msgstr "മാറ്റിസ്ഥാപിക്കുക"
+
+#~ msgid "User Specific"
+#~ msgstr "ഉപയോക്താവിനധിഷ്ഠിതമായ"
+
+#~ msgid "xinputrc was modified by the user"
+#~ msgstr "ഉപയോക്താവ് xinputrc -ല്‍ മാറ്റം വരുത്തിയിരിക്കുന്നു"
+
+#~ msgid "Updating Input Method list"
+#~ msgstr "ഇന്‍പുട്ട് രീതിയുടെ പട്ടിക പരിഷ്കരിക്കുന്നു"
+
+#~ msgid "Failed to start Input Method"
+#~ msgstr "ഇന്‍പുട്ട് രീതി ആരംഭിക്കുവാന്‍ സാധിച്ചില്ല"
+
+#~ msgid "Starting Input Method - %s"
+#~ msgstr "ഇന്‍പുട്ട് രീതി ആരംഭിക്കുന്നു - %s"
+
+#~ msgid "Stopping Input Method - %s"
+#~ msgstr "ഇന്‍പുട്ട് രീതി നിര്‍ത്തുന്നു - %s"
+
+#~ msgid "Parent Window"
+#~ msgstr "പേരന്റ് ജാലകം"
+
+#~ msgid "GtkWindow that points to the parent window"
+#~ msgstr "പേരന്റ് ജാലകത്തിലേക്ക് സൂചിപ്പിക്കുന്ന GtkWindow"
+
+#~ msgid "Work in progress..."
+#~ msgstr "ജോലി പുരോഗതിയില്‍..."
+
+#~ msgid "Use %s"
+#~ msgstr "%s ഉപയോഗിക്കുക"
+
+#~ msgid " (legacy)"
+#~ msgstr " (പാരമ്പര്യം)"
+
+#~ msgid " (recommended)"
+#~ msgstr " (ഉചിതമായ)"
+
+#~ msgid "<b>Input Method</b>"
+#~ msgstr "<b>ഇന്‍പുട്ട് രീതി</b>"
+
+#~ msgid "_Enable input method feature"
+#~ msgstr "ഇന്‍പുട്ട് രീതി _സജ്ജമാക്കുക"
+
+#~ msgid ""
+#~ "<small><i>Note: this change will not take effect until you next log in, "
+#~ "except GTK+ applications.</i></small>"
+#~ msgstr ""
+#~ "<small><i>കുറിപ്പ്: GTK+ പ്രയോഗങ്ങള്‍ക്ക് ഒഴികെ, നിങ്ങള്‍ അടുത്ത തവണ ലോഗിന്‍ ചെയ്യുമ്പോള്‍ "
+#~ "മാത്രമേ ഈ മാറ്റം കംപ്യൂട്ടര്‍ അംഗീകരിക്കൂ.</i></small>"
+
+#~ msgid "Input Method _Preferences..."
+#~ msgstr "ഇന്‍പുട്ട് രീതിയ്ക്കുള്ള _മുന്‍ഗണനകള്‍..."
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">No input method is available</span>"
+#~ msgstr "<span weight=\"bold\" size=\"larger\">ഒരു ഇന്‍പുട്ട് രീതിയും ലഭ്യമല്ല</span>"
+
+#~ msgid "Please install any input methods before running if you like."
+#~ msgstr ""
+#~ "നിങ്ങള്‍ക്ക് ആവശ്യമെങ്കില്‍, പ്രവര്‍ത്തനത്തിന് മുമ്പ് ഏതെങ്കിലും ഇന്‍പുട്ട് രീതി ദയവായി ഇന്‍സ്റ്റോള്‍ "
+#~ "ചെയ്യുക."
+
+#~ msgid "IM Chooser - Input Method configuration tool"
+#~ msgstr "IM ചൂസര്‍ - ഇന്‍പുട്ട് രീതി സജ്ജമാക്കുന്ന സംവിധാനം"
+
+#~ msgid "_Log Out"
+#~ msgstr "പുറത്ത് കടക്കുക (_L)"
+
+#~ msgid ""
+#~ "Choose the input method to be used or disable the input method usage on "
+#~ "the desktop"
+#~ msgstr ""
+#~ "ഡസ്ക്ടോപ്പില്‍ ഏത് ഇന്‍പുട്ട് രീതി ഉപയോഗിക്കണം അല്ലെങ്കില്‍ ഏത് നിര്‍ജ്ജീവമാക്കണം എന്ന് "
+#~ "തിരഞ്ഞെടുക്കുക"
+
+#~ msgid "Input Method"
+#~ msgstr "ഇന്‍പുട്ട് രീതി"

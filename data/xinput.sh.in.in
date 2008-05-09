@@ -1,0 +1,78 @@
+#!/bin/bash
+# Copyright (C) 1999-2004,2007-2008 Red Hat, Inc. All rights reserved. This
+# copyrighted material is made available to anyone wishing to use, modify,
+# copy, or redistribute it subject to the terms and conditions of the
+# GNU General Public License version 2.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+# X Input method setup script
+
+function run_imsettings() {
+    which imsettings-start > /dev/null 2>&1 && LANG="$tmplang" imsettings-start -n "$IMSETTINGS_MODULE" || :
+    which imsettings-xim > /dev/null 2>&1 && imsettings-xim &
+}
+
+USER_XINPUTRC="$HOME/.xinputrc"
+SYS_XINPUTRC="@XINPUTRC_PATH@/xinputrc"
+
+# Load up the user and system locale settings
+oldterm=$TERM
+unset TERM
+if [ -r /etc/profile.d/lang.sh ]; then
+    # for Fedora etc
+    source /etc/profile.d/lang.sh
+elif [ -r /etc/default/locale ]; then
+    # for Debian
+    source /etc/default/locale
+fi
+[ -n "$oldterm" ] && export TERM=$oldterm
+
+tmplang=${LC_CTYPE:-${LANG:-"en_US.UTF-8"}}
+
+# unset env vars to be safe
+unset XIM XIM_PROGRAM XIM_ARGS XMODIFIERS GTK_IM_MODULE QT_IM_MODULE AUXILIARY_PROGRAM AUXILIARY_ARGS
+
+[ -z "$IMSETTINGS_DISABLE_USER_XINPUTRC" ] && IMSETTINGS_DISABLE_USER_XINPUTRC=no
+
+if [ -r "$USER_XINPUTRC" -a "x$IMSETTINGS_DISABLE_USER_XINPUTRC" = "xno" ]; then
+    source "$USER_XINPUTRC"
+    if [ ! -h "$USER_XINPUTRC" ]; then
+	SHORT_DESC="User Specific"
+    fi
+elif [ -r "$SYS_XINPUTRC" ]; then
+    source "$SYS_XINPUTRC"
+fi
+
+[ -z "$XIM" ] && XIM=none
+
+# Update XSETTINGS for immodule
+[ -x /usr/bin/gconftool-2 ] && /usr/bin/gconftool-2 -t string -s /desktop/gnome/interface/gtk-im-module "$GTK_IM_MODULE" || :
+
+# Ensure GTK_IM_MODULE is empty. otherwise GTK+ doesn't pick up immodule through XSETTINGS
+unset GTK_IM_MODULE
+export GTK_IM_MODULE
+
+# FIXME: Qt doesn't support XSETTINGS for immodule yet.
+#        We still need to go with the older way.
+[ -n "$QT_IM_MODULE" ] && export QT_IM_MODULE
+
+# setup XMODIFIERS
+XMODIFIERS="@im=imsettings"
+export XMODIFIERS
+
+# start IM via imsettings
+IMSETTINGS_MODULE=${SHORT_DESC:-${XIM}}
+[ -z "$IMSETTINGS_MODULE" ] && IMSETTINGS_MODULE="none"
+# NOTE: Please make sure the session bus is established before running this script.
+if [ -n "$DBUS_SESSION_BUS_ADDRESS" ]; then
+    # Yes, we are in the dbus session
+    run_imsettings
+else
+    # We may need a hack to slip into the dbus session.
+    echo "***"
+    echo "*** No DBus session hasn't been established yet. giving up to deal with Input Method with imsettings."
+    echo "***"
+fi

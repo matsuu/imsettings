@@ -1,0 +1,16 @@
+backends/gconf/main.c
+backends/xim/protocol.c
+backends/xim/connection.c
+backends/xim/server.c
+backends/xim/main.c
+backends/xim/loopback.c
+src/factory_info.c
+src/factory.c
+utils/imsettings-start.c
+utils/imsettings-stop.c
+utils/imsettings-reload.c
+utils/imsettings-restart.c
+utils/imsettings-list.c
+imsettings/imsettings-info.c
+imsettings/imsettings-request.c
+imsettings/imsettings-observer.c

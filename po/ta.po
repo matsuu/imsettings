@@ -1,0 +1,546 @@
+# translation of im-chooser.trunk.ta.po to Tamil
+# Tamil translations for im-chooser package.
+# Copyright (C) 2006 Red Hat, Inc. All rights reserved.
+# This file is distributed under the same license as the im-chooser package.
+#
+# Automatically generated, 2006.
+# Felix <ifelix@redhat.com>, 2006.
+# I. Felix <ifelix@redhat.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: im-chooser.trunk.ta\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-05-09 19:05+0900\n"
+"PO-Revision-Date: 2008-03-18 08:52+0530\n"
+"Last-Translator: I. Felix <ifelix@redhat.com>\n"
+"Language-Team: Tamil <fedora-trans-ta@redhat.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+
+#: ../backends/gconf/main.c:184 ../src/factory_info.c:645 ../src/factory.c:744
+#: ../imsettings/imsettings-observer.c:724
+msgid "Replace the running settings daemon with new instance."
+msgstr "புதிய நிகழ்வுடன் இயங்கும் டீமான் அமைவுகளை மாற்றவும்"
+
+#: ../backends/gconf/main.c:206 ../backends/xim/main.c:209
+#: ../src/factory_info.c:667 ../src/factory.c:771
+#: ../utils/imsettings-start.c:67 ../utils/imsettings-stop.c:63
+#: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:65
+msgid "Unknown error in parsing the command lines."
+msgstr "கட்டளை வரிகளை பகுக்கும் போது தெரியாத பிழை."
+
+#: ../backends/xim/protocol.c:1356 ../backends/xim/connection.c:197
+#: ../backends/xim/server.c:444
+#, fuzzy
+msgid "X display"
+msgstr "X காட்சி பெயர்"
+
+#: ../backends/xim/protocol.c:1357 ../backends/xim/connection.c:198
+#: ../backends/xim/server.c:445 ../backends/xim/main.c:177
+#: ../src/factory.c:745
+msgid "X display to use"
+msgstr "பயன்படுத்தி X காட்சி"
+
+#: ../backends/xim/protocol.c:1361 ../backends/xim/connection.c:226
+#: ../backends/xim/server.c:455
+#, fuzzy
+msgid "Verbose flag"
+msgstr "கொடியை தவிர்த்தல்"
+
+#: ../backends/xim/protocol.c:1362 ../backends/xim/connection.c:227
+#: ../backends/xim/server.c:456
+msgid "Output a lot of helpful messages to debug"
+msgstr ""
+
+#: ../backends/xim/protocol.c:1367
+msgid "Connection object"
+msgstr ""
+
+#: ../backends/xim/protocol.c:1368
+msgid "XIMConnection Gobject"
+msgstr ""
+
+#: ../backends/xim/connection.c:202
+msgid "Window ID"
+msgstr ""
+
+#: ../backends/xim/connection.c:203
+msgid "Window ID for the client"
+msgstr ""
+
+#: ../backends/xim/connection.c:210
+msgid "Communication Window ID"
+msgstr ""
+
+#: ../backends/xim/connection.c:211 ../backends/xim/loopback.c:943
+msgid "Window ID to communicate the client"
+msgstr ""
+
+#: ../backends/xim/connection.c:218 ../backends/xim/loopback.c:950
+msgid "Selection Atom"
+msgstr ""
+
+#: ../backends/xim/connection.c:219 ../backends/xim/loopback.c:951
+msgid "Atom for selection"
+msgstr ""
+
+#: ../backends/xim/connection.c:232
+msgid "Protocol"
+msgstr ""
+
+#: ../backends/xim/connection.c:233
+msgid "GType to deal with the XIM protocol"
+msgstr ""
+
+#: ../backends/xim/connection.c:238
+msgid "XIMProtocol"
+msgstr ""
+
+#: ../backends/xim/connection.c:239
+msgid "GObject of GObject"
+msgstr ""
+
+#: ../backends/xim/server.c:449 ../imsettings/imsettings-info.c:531
+msgid "XIM server name"
+msgstr "XIM சேவையக பெயர்"
+
+#: ../backends/xim/server.c:450
+#, fuzzy
+msgid "XIM server name to be connected"
+msgstr "இயங்க வேண்டிய XIM சேவையக பெயர்"
+
+#: ../backends/xim/main.c:177 ../src/factory.c:745
+msgid "DISPLAY"
+msgstr "DISPLAY"
+
+#: ../backends/xim/main.c:178
+#, fuzzy
+msgid "Replace the running XIM server with new instance."
+msgstr "புதிய நிகழ்வுடன் இயங்கும் டீமான் அமைவுகளை மாற்றவும்"
+
+#: ../backends/xim/main.c:179
+msgid "Output the debugging logs"
+msgstr ""
+
+#: ../backends/xim/loopback.c:942
+msgid "Selection Window ID"
+msgstr ""
+
+#: ../src/factory_info.c:127
+#, c-format
+msgid "Reloading...\n"
+msgstr "மீண்டும் ஏற்றுகிறது...\n"
+
+#: ../src/factory_info.c:188
+#, c-format
+msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
+msgstr "`%s' இலிருந்து %sக்கு இரட்டை உள்ளீடு. SHORT_DESC தனித்தன்மையாக இருக்க வேண்டும்."
+
+#: ../src/factory_info.c:446 ../src/factory_info.c:484
+#: ../src/factory_info.c:500 ../src/factory_info.c:518
+#, c-format
+msgid "Timed out to initialize %s services."
+msgstr "%s சேவைகளை துவக்க நேரம் முடிந்தது."
+
+#: ../src/factory_info.c:469
+#, c-format
+msgid "No input methods available on your system."
+msgstr "உங்கள் கணினியில் உள்ளீடு முறைகள் எதுவும் இல்லை."
+
+#: ../src/factory_info.c:526 ../src/factory.c:489 ../src/factory.c:656
+#, c-format
+msgid "No such input method on your system: %s"
+msgstr "உங்கள் கணினியில் இதுபோன்ற உள்ளீடு முறை இல்லை: %s"
+
+#: ../src/factory.c:138
+#, c-format
+msgid "Failed to remove a pidfile: %s"
+msgstr "ஒரு pidfileஐ நீக்க முடியவில்லை: %s"
+
+#: ../src/factory.c:180
+#, c-format
+msgid "Failed to open a pidfile: %s"
+msgstr "pidfile ஐ திறக்க முடியவில்லை: %s"
+
+#: ../src/factory.c:271
+#, c-format
+msgid "Couldn't determine the pid for %s process."
+msgstr "%s processக்கு pid வரையறுக்க முடியவில்லை."
+
+#: ../src/factory.c:301
+#, c-format
+msgid "Couldn't send a signal to the %s process successfully."
+msgstr "ஒரு சிக்னலை %s செயலுக்கு அனுப்ப முடியவில்லை."
+
+#: ../src/factory.c:325 ../src/factory.c:611
+#, c-format
+msgid "Failed to get a place of home directory."
+msgstr "இல்ல அடைவில் ஒரு இடத்தைப் பெற முடியவில்லை."
+
+#: ../src/factory.c:342
+#, c-format
+msgid "Failed to revert the backup file: %s"
+msgstr "பின்சேமிப்பு கோப்பினை திரும்ப எடுக்க முடியவில்லை: %s"
+
+#: ../src/factory.c:354
+#, c-format
+msgid "Failed to create a backup file: %s"
+msgstr "ஒரு பின் சேமிப்பு கோப்பினை உருவாக்க முடியவில்லை: %s"
+
+#: ../src/factory.c:363
+#, c-format
+msgid "Failed to remove a .xinputrc file: %s"
+msgstr "ஒரு .xinputrc கோப்பினை நீக்க முடியவில்லை: %s"
+
+#: ../src/factory.c:374
+#, c-format
+msgid "Failed to make a symlink: %s"
+msgstr "ஒரு symlinkஐ உருவாக்க முடியவில்லை: %s"
+
+#: ../src/factory.c:509
+#, c-format
+msgid "No XIM server is available in %s"
+msgstr "%s இல் XIM சேவையகம் இல்லை"
+
+#: ../src/factory.c:700
+msgid "X display name"
+msgstr "X காட்சி பெயர்"
+
+#: ../src/factory.c:701
+msgid "X display name to use"
+msgstr "பயன்படுத்தி X காட்சி பெயர்"
+
+#. FIXME
+#: ../src/factory.c:748
+msgid "X screen to use"
+msgstr "பயன்படுத்தி X திரை"
+
+#: ../src/factory.c:748
+msgid "SCREEN"
+msgstr "SCREEN"
+
+#: ../src/factory.c:779
+#, c-format
+msgid "Failed to open a X display."
+msgstr "ஒரு X காட்சியை திறக்க முடியவில்லை."
+
+#: ../utils/imsettings-start.c:44 ../utils/imsettings-stop.c:43
+#: ../utils/imsettings-restart.c:44
+msgid "Do not update .xinputrc."
+msgstr ".xinputrc.ஐ மேம்படுத்த வேண்டாம்."
+
+#: ../utils/imsettings-start.c:85
+#, fuzzy, c-format
+msgid "Started %s\n"
+msgstr "%s நிறுத்தப்பட்டது\n"
+
+#: ../utils/imsettings-start.c:87
+#, fuzzy, c-format
+msgid "Failed to start IM process `%s'\n"
+msgstr "IM செயல் `%s'ஐ நிறுத்த முடியவில்லை\n"
+
+#: ../utils/imsettings-stop.c:42 ../utils/imsettings-reload.c:42
+msgid "Force reloading the configuration, including restarting the process."
+msgstr "செயல்முறையை மறுதுவக்குவதையும் சேர்த்து கட்டமைப்பையும் மீண்டும் ஏற்றுகிறது."
+
+#: ../utils/imsettings-stop.c:80
+#, c-format
+msgid "Stopped %s\n"
+msgstr "%s நிறுத்தப்பட்டது\n"
+
+#: ../utils/imsettings-stop.c:82
+#, c-format
+msgid "Failed to stop IM process `%s'\n"
+msgstr "IM செயல் `%s'ஐ நிறுத்த முடியவில்லை\n"
+
+#: ../utils/imsettings-restart.c:43
+msgid "Force restarting the IM process regradless of any errors."
+msgstr ""
+
+#: ../imsettings/imsettings-info.c:506
+msgid "Language"
+msgstr "மொழி"
+
+#: ../imsettings/imsettings-info.c:507
+msgid "A language to pull the information in."
+msgstr "ஒரு மொழி எடுக்கும் தகவல்."
+
+#: ../imsettings/imsettings-info.c:512
+msgid "Filename"
+msgstr "கோப்பு பெயர்"
+
+#: ../imsettings/imsettings-info.c:513
+msgid "A filename referring to the IM information."
+msgstr "IM தகவலை குறிப்பிடும் கோப்பு பெயர்."
+
+#: ../imsettings/imsettings-info.c:518
+msgid "GTK+ immodule"
+msgstr "GTK+ immodule"
+
+#: ../imsettings/imsettings-info.c:519
+msgid "A module name used for GTK+"
+msgstr "GTK+க்கு பயன்படுத்தப்பட்ட ஒரு தொகுதி பெயர்"
+
+#: ../imsettings/imsettings-info.c:524
+msgid "Qt immodule"
+msgstr "Qt immodule"
+
+#: ../imsettings/imsettings-info.c:525
+msgid "A module name used for Qt"
+msgstr "Qtக்கு பயன்படுத்தப்பட்ட ஒரு தொகுதி பெயர்"
+
+#: ../imsettings/imsettings-info.c:530
+msgid "XIM name"
+msgstr "XIM பெயர்"
+
+#: ../imsettings/imsettings-info.c:536
+msgid "Ignore flag"
+msgstr "கொடியை தவிர்த்தல்"
+
+#: ../imsettings/imsettings-info.c:537
+msgid "A flag to not list up."
+msgstr "பட்டியலிட வேண்டாத ஒரு கொடி"
+
+#: ../imsettings/imsettings-info.c:542
+msgid "XIM server program name"
+msgstr "XIM சேவையக நிரல் பெயர்"
+
+#: ../imsettings/imsettings-info.c:543
+msgid "XIM server program to be run"
+msgstr "இயங்க வேண்டிய XIM சேவையக பெயர்"
+
+#: ../imsettings/imsettings-info.c:548
+msgid "XIM server program's options"
+msgstr "XIM சேவையக நிரலின் விருப்பங்கள்"
+
+#: ../imsettings/imsettings-info.c:549
+msgid "Command line options for XIM server program"
+msgstr "XIM சேவையக நிரலுக்கான கட்டளை வரி விருப்பங்கள்"
+
+#: ../imsettings/imsettings-info.c:554
+msgid "Preference program name"
+msgstr "விருப்ப நிரல் பெயர்"
+
+#: ../imsettings/imsettings-info.c:555
+msgid "Preference program to be run"
+msgstr "இயங்க வேண்டிய விருப்ப நிரல்"
+
+#: ../imsettings/imsettings-info.c:560
+msgid "Preference program's options"
+msgstr "விருப்ப நிரலின் விருப்பங்கள்"
+
+#: ../imsettings/imsettings-info.c:561
+msgid "Command line options for preference program"
+msgstr "விருப்பமான நிரலுக்கான கட்டளை வரி விருப்பங்கள்"
+
+#: ../imsettings/imsettings-info.c:566
+msgid "Auxiliary program name"
+msgstr "கூடுதல் நிரல் பெயர்"
+
+#: ../imsettings/imsettings-info.c:567
+msgid "Auxiliary program to be run"
+msgstr "இயங்க வேண்டிய கூடுதல் நிரல்"
+
+#: ../imsettings/imsettings-info.c:572
+msgid "Auxiliary program's options"
+msgstr "கூடுதல் நிரலின் விருப்பங்கள்"
+
+#: ../imsettings/imsettings-info.c:573
+msgid "Command line options for auxiliary program"
+msgstr "கூடுதல் நிரலுக்கான கட்டளை வரி விருப்பங்கள்"
+
+#: ../imsettings/imsettings-info.c:578 ../imsettings/imsettings-info.c:579
+msgid "Short Description"
+msgstr "சிறிய விவரம்"
+
+#: ../imsettings/imsettings-info.c:584 ../imsettings/imsettings-info.c:585
+msgid "Long Description"
+msgstr "நீண்ட விவரம்"
+
+#: ../imsettings/imsettings-info.c:590
+msgid "System Default"
+msgstr "கணினி முன்னுரிமை"
+
+#: ../imsettings/imsettings-info.c:591
+msgid "Whether or not IM is a system default."
+msgstr "IM கணினி முன்னிருப்பாக இருக்க வேண்டுமா அல்லது வேண்டாமா."
+
+#: ../imsettings/imsettings-info.c:596
+msgid "User Default"
+msgstr "பயனர் முன்னிருப்பு"
+
+#: ../imsettings/imsettings-info.c:597
+msgid "Whether or not IM is an user default."
+msgstr "IM பயனர் முன்னிருப்பாக இருக்க வேண்டுமா அல்லது வேண்டாமா."
+
+#: ../imsettings/imsettings-info.c:602
+msgid "XIM"
+msgstr "XIM"
+
+#: ../imsettings/imsettings-info.c:603
+msgid "Whether or not IM is a XIM server."
+msgstr "IM XIM சேவையகமாக இருக்க வேண்டுமா அல்லது வேண்டாமா."
+
+#: ../imsettings/imsettings-request.c:169
+msgid "DBus Interface"
+msgstr "DBus முகப்பு"
+
+#: ../imsettings/imsettings-request.c:170
+msgid "Interface name to connect to DBus"
+msgstr "முகப்பு பெயர் DBusஉடன் இணைக்கப்படும்"
+
+#: ../imsettings/imsettings-request.c:175
+#: ../imsettings/imsettings-observer.c:729
+msgid "DBus connection"
+msgstr "DBus இணைப்பு"
+
+#: ../imsettings/imsettings-request.c:176
+#: ../imsettings/imsettings-observer.c:730
+msgid "An object to be a DBus connection"
+msgstr "ஒரு பொருள் ஒரு DBus இணைப்பாக இருக்கும்"
+
+#: ../imsettings/imsettings-request.c:181
+msgid "Locale"
+msgstr "மொழி"
+
+#: ../imsettings/imsettings-request.c:182
+msgid "Locale to get the imsettings information"
+msgstr "imsettings தகவலை பெறும் மொழி"
+
+#: ../imsettings/imsettings-request.c:239
+#: ../imsettings/imsettings-request.c:272
+#: ../imsettings/imsettings-request.c:290
+#: ../imsettings/imsettings-request.c:310
+#: ../imsettings/imsettings-request.c:331
+#: ../imsettings/imsettings-request.c:355
+#: ../imsettings/imsettings-request.c:380
+#: ../imsettings/imsettings-request.c:405
+#: ../imsettings/imsettings-request.c:426
+#: ../imsettings/imsettings-request.c:446
+#: ../imsettings/imsettings-request.c:466
+#: ../imsettings/imsettings-request.c:486
+#: ../imsettings/imsettings-request.c:506
+#: ../imsettings/imsettings-request.c:526
+#: ../imsettings/imsettings-request.c:552
+#: ../imsettings/imsettings-request.c:602
+#: ../imsettings/imsettings-request.c:649
+#, c-format
+msgid ""
+"Failed to invoke a method `%s':\n"
+"  %s"
+msgstr ""
+"முறை `%s'ஐ எடுக்க முடியவில்லை:\n"
+"  %s"
+
+#: ../imsettings/imsettings-request.c:695
+#, c-format
+msgid ""
+"Failed to invoke a method `%s' on %s:\n"
+"  %s"
+msgstr ""
+"முறை `%s'ஐ %s இல் எடுக்க முடியவில்லை:\n"
+"  %s"
+
+#: ../imsettings/imsettings-observer.c:277
+#, c-format
+msgid "Invalid IM module type: %d"
+msgstr "தவறான IM தொகுதி வகை: %d"
+
+#: ../imsettings/imsettings-observer.c:717
+msgid "IM module name"
+msgstr "IM தொகுதி பெயர்"
+
+#: ../imsettings/imsettings-observer.c:718
+msgid "A target IM module name that to observe signals"
+msgstr "ஒரு இலக்கு IM தொகுதி பெயர் சிக்னல்களை எடுக்கிறது"
+
+#: ../imsettings/imsettings-observer.c:723
+msgid "Replace"
+msgstr "மாற்றுதல்"
+
+#~ msgid "User Specific"
+#~ msgstr "பயனர் குறிப்பீடு"
+
+#~ msgid "xinputrc was modified by the user"
+#~ msgstr "xinputrc பயனரால் மாற்றப்பட்டது"
+
+#~ msgid "Updating Input Method list"
+#~ msgstr "உள்ளீடு முறை பட்டியலை மேம்படுத்துதல்"
+
+#~ msgid "Failed to start Input Method"
+#~ msgstr "உள்ளீடு முறையை துவக்க முடியவில்லை"
+
+#~ msgid "Starting Input Method - %s"
+#~ msgstr "உள்ளீடு முறையை துவக்குகிறது - %s"
+
+#~ msgid "Stopping Input Method - %s"
+#~ msgstr "உள்ளீடு முறையை நிறுத்துகிறது - %s"
+
+#~ msgid "Parent Window"
+#~ msgstr "தாய் சாளரம்"
+
+#~ msgid "GtkWindow that points to the parent window"
+#~ msgstr "GtkWindow தாய் சாளரத்தை குறிக்கிறது"
+
+#~ msgid "Work in progress..."
+#~ msgstr "பணி நடந்து கொண்டிருக்கிறது..."
+
+#~ msgid "Use %s"
+#~ msgstr "%sஐ பயன்படுத்தல்"
+
+#~ msgid " (legacy)"
+#~ msgstr " (legacy)"
+
+#~ msgid " (recommended)"
+#~ msgstr " (பரிந்துரைக்கப்பட்டது)"
+
+#~ msgid "<b>Input Method</b>"
+#~ msgstr "<b>உள்ளீடு முறை</b>"
+
+#~ msgid "_Enable input method feature"
+#~ msgstr "உள்ளீடு முறை வசதியை செயல்படுத்தவும் (_E)"
+
+#~ msgid ""
+#~ "<small><i>Note: this change will not take effect until you next log in, "
+#~ "except GTK+ applications.</i></small>"
+#~ msgstr ""
+#~ "<small><i>குறிப்பு: GTK+பயன்பாடுகள் தவிர, மற்றவை அடுத்த புகுபதிவு செய்யும் வரை "
+#~ "இந்த மாற்றங்கள் செயல்படுத்தப்படாது.</i></small>"
+
+#~ msgid "Input Method _Preferences..."
+#~ msgstr "உள்ளீடு முறை விருப்பங்கள் (_P)..."
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">No input method is available</span>"
+#~ msgstr "<span weight=\"bold\" size=\"larger\">உள்ளீடு முறை எதுவும் இல்லை</span>"
+
+#~ msgid "Please install any input methods before running if you like."
+#~ msgstr "விரும்பினால் இயக்கும் முன் ஏதாவது உள்ளீடு முறைகளை நிறுவவும்."
+
+#~ msgid "IM Chooser - Input Method configuration tool"
+#~ msgstr "IM தேர்ந்தெடுத்தல் - உள்ளீடு முறை கட்டமைப்பு கருவி"
+
+#~ msgid "_Log Out"
+#~ msgstr "வெளியேறுதல் (_L)"
+
+#~ msgid ""
+#~ "Choose the input method to be used or disable the input method usage on "
+#~ "the desktop"
+#~ msgstr ""
+#~ "பயன்படுத்த அல்லது உள்ளீடு முறை பயன்பாட்டை பணிமேடையில் செயல்நீக்க உள்ளீடு முறையை "
+#~ "தேர்ந்தெடுக்கவும்"
+
+#~ msgid "Input Method"
+#~ msgstr "உள்ளீடு முறை"

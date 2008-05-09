@@ -1,0 +1,130 @@
+# translation of mn.po to mongolia
+# translation of mn.po to
+# Copyright (C) 2007 THE mn'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the mn package.
+# naranhuu <naranhuu@localhost.localdomain>, 2007.
+# naranhuu <naranhuu@gmail.com>, 2007.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: mn\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-10-19 01:21-0700\n"
+"PO-Revision-Date: 2008-03-01 18:06+0900\n"
+"Last-Translator: naranhuu <naranhuu@gmail.com>\n"
+"Language-Team: mongolia <openmn-translation@lists.sf.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit"
+
+#: ../src/im-chooser.c:482 ../src/im-chooser-simple.c:623
+msgid ""
+"<small><i>Note: this change will not take effect until you next log in.</i></"
+"small>"
+msgstr ""
+"<small><i>Мэдэгдэл: энэ өөрчлөлт нь таныг дараагийн удаа нэвтрэх хүртэл хүчингүй байна.</i></"
+"small>"
+
+#: ../src/im-chooser.c:486 ../src/im-chooser-simple.c:610
+msgid "<b>Input Method</b>"
+msgstr "<b>Оруулах Зарчим</b>"
+
+#: ../src/im-chooser.c:496
+msgid "No valid IM installed"
+msgstr "Хүчингүй Оруулах Зарчим суулгагдсан байна"
+
+#: ../src/im-chooser.c:514
+msgid "_Use default Input Method for your language"
+msgstr "Зориулалтын Оруулах Зарчмыг ашиглах(_U)"
+
+#: ../src/im-chooser.c:516
+msgid ""
+"Your system chooses the appropriate Input Method for your language "
+"automatically from among Input Methods installed on your system."
+msgstr "Системд суулгагдсан Оруулах Зарчмуудаас таны хэлэндтохирохыг сонгож байна."
+
+#: ../src/im-chooser.c:519
+msgid "Choose _specific Input Method"
+msgstr "Тусгай Оруулах Зарчим Сонгох(_S)"
+
+#: ../src/im-chooser.c:521
+msgid ""
+"Use the specific Input Method that you prefer regardless what Input Method "
+"the system recommends."
+msgstr "Системын санал болгосон Оруулах Зарчмаас илүү гэж үзэж байгаа тусгай Оруулах Зарчмыг сонгох"
+
+#: ../src/im-chooser.c:527
+msgid "_Do not use Input Method"
+msgstr "Оруулах Зарчмыг ашиглахгүй(_D)"
+
+#: ../src/im-chooser.c:529
+msgid "Do not use Input Method no matter what language the desktop is running on."
+msgstr "Дэлгэцэн дээр ямар хэл ашиглагдаж байгаа нь хамаагүй. Оруулах Зарчмыг ашиглахгүй."
+
+#: ../src/im-chooser.c:532
+msgid "Use legacy _Input Method"
+msgstr "Оруулах Зарчмыг ашиглах(_I) "
+
+#: ../src/im-chooser.c:534
+msgid ""
+"Use X Input Method anyway. In fact, which input method will be chosen for "
+"the desktop session, depends on the desktop language."
+msgstr "Ямар ч байсан X·Оруулах Зарчмыг ашиглах.·Дэлгэцэнд ашиглах Оруулах Зарчим нь хэлнээс хамааралтай юм."
+
+#: ../src/im-chooser-simple.c:446
+#, c-format
+msgid "Use %s"
+msgstr "%s -г ашиглах"
+
+#: ../src/im-chooser-simple.c:448
+msgid " (Legacy)"
+msgstr "(Legacy)"
+
+#: ../src/im-chooser-simple.c:450
+msgid " (Recommend)"
+msgstr "(Санал болгож байна)"
+
+#: ../src/im-chooser-simple.c:616
+msgid "_Enable input method feature"
+msgstr "Оруулах зарчмын онцлогийг идэвхжүүлэх(_E)"
+
+#: ../src/im-chooser-simple.c:655
+msgid "Input Method _Preferences..."
+msgstr "Оруулах Зарчим Тохируулга...(_P)"
+
+#: ../src/main.c:66
+msgid "<span weight=\"bold\" size=\"larger\">No input method is available</span>"
+msgstr "<span·weight=\"bold\"·size=\"larger\">Оруулах зарчим боломжгүй</span>"
+
+#: ../src/main.c:69
+msgid "Please install any input methods before running if you like."
+msgstr "Оруулах зарчмыг ашиглах бол ажиллуулахаасаа өмнө суулгана уу?"
+
+#: ../src/main.c:170
+msgid "IM Chooser - Input Method configuration tool"
+msgstr "ОЗ Сонгогч·-·Оруулах Зарчим тохируулах хэрэгсэл"
+
+#: ../src/main.c:178
+msgid "_Log Out"
+msgstr "Гарах(_L)"
+
+#: ../src/xinput.c:179
+msgid "xinputrc was modified by the user"
+msgstr "хэрэглэгч xinputrc-г өөрчилсөн байна"
+
+#. label that uses to indicate their own .xinputrc
+#: ../src/im-chooser-private.h:36
+msgid "User Specific"
+msgstr "Тусгай"
+
+#: ../src/im-chooser.desktop.in.in.h:1
+msgid "Input Method"
+msgstr "Оруулах Зарчим"
+
+#: ../src/im-chooser.desktop.in.in.h:2
+msgid ""
+"Input Method configuration tool to choose the Input Method to be used or "
+"disable Input Method usage on the desktop"
+msgstr "Оруулах Зарчим тохируулах хэрэгсэл нь Оруулах Зарчимыг сонгох буюу идэвхгүй болгоход хэрэглэгдэнэ"
+

@@ -1,0 +1,37 @@
+2008-03-11  Akira TAGOH  <tagoh@redhat.com>
+
+	* POTFILES.in: Update.
+
+2008-02-19  Akira TAGOH  <tagoh@redhat.com>
+
+	* POTFILES.in: Update.
+
+2008-02-01  Akira TAGOH  <tagoh@redhat.com>
+
+	* POTFILES.in: Update.
+
+2007-09-25  Akira TAGOH  <tagoh@redhat.com>
+
+	* bg.po: Update Bulgarian translation from Doncho N. Gunchev.
+
+2007-09-20  Akira TAGOH  <tagoh@redhat.com>
+
+	* POTFILES.in: Add src/xinput.c.
+
+2007-09-06  Akira TAGOH  <tagoh@redhat.com>
+
+	* pl.po: Updated Polish translation from Piotr Drąg
+
+2006-07-22  Akira TAGOH  <at@gclab.org>
+
+	* ja.po: updated Japanese translation.
+
+2006-07-10  Akira TAGOH  <at@gclab.org>
+
+	* POTFILES.in: added src/im-chooser.desktop.in.in.
+
+	* ja.po: updated Japanese translation.
+
+2006-06-07  Akira TAGOH  <at@gclab.org>
+
+	* ja.po: added Japanese translation.

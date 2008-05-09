@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=com.redhat.imsettings.Qt
+Exec=@libexecdir@/qt-im-settings-daemon

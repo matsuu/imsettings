@@ -1,0 +1,74 @@
+#!/bin/bash
+# xinputinfo.sh
+# Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+#
+# Authors:
+#   Akira TAGOH  <tagoh@redhat.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330,
+# Boston, MA 02111-1307, USA.
+
+USER_XINPUTRC="$HOME/.xinputrc"
+SYS_XINPUTRC="@XINPUTRC_PATH@/xinputrc"
+
+# Load up the user and system locale settings
+oldterm=$TERM
+unset TERM
+if [ -r /etc/profile.d/lang.sh ]; then
+    # for Fedora etc
+    source /etc/profile.d/lang.sh
+elif [ -r /etc/default/locale ]; then
+    # for Debian
+    source /etc/default/locale
+fi
+[ -n "$oldterm" ] && export TERM=$oldterm
+
+tmplang=${LC_CTYPE:-${LANG:-"en_US.UTF-8"}}
+
+# unset env vars to be safe
+unset XIM XIM_PROGRAM XIM_ARGS XMODIFIERS GTK_IM_MODULE QT_IM_MODULE AUXILIARY_PROGRAM AUXILIARY_ARGS
+
+if [ $# -gt 0 ]; then
+    source $1
+else
+    [ -z "$IMSETTINGS_DISABLE_USER_XINPUTRC" ] && IMSETTINGS_DISABLE_USER_XINPUTRC=no
+
+    if [ -r "$USER_XINPUTRC" -a "x$IMSETTINGS_DISABLE_USER_XINPUTRC" = "xno" ]; then
+	source "$USER_XINPUTRC"
+    elif [ -r "$SYS_XINPUTRC" ]; then
+	source "$SYS_XINPUTRC"
+    fi
+fi
+
+[ -z "$XIM" ] && XIM=none
+[ -n "$GTK_IM_MODULE" ] && export GTK_IM_MODULE
+[ -n "$QT_IM_MODULE" ] && export QT_IM_MODULE
+# For backward compatibility
+[ -z "$IMSETTINGS_IGNORE_ME" ] && IMSETTINGS_IGNORE_ME=$IM_CHOOSER_IGNORE_ME
+
+cat <<EOF
+GTK_IM_MODULE=$GTK_IM_MODULE
+QT_IM_MODULE=$QT_IM_MODULE
+XIM=$XIM
+IMSETTINGS_IGNORE_ME=$IMSETTINGS_IGNORE_ME
+XIM_PROGRAM=$XIM_PROGRAM
+XIM_ARGS="`echo $XIM_ARGS | sed -e "s/\\\\([\\"']\\\\)/\\\\\\\\\\\\1/g"`"
+PREFERENCE_PROGRAM=$PREFERENCE_PROGRAM
+PREFERENCE_ARGS="`echo $PREFERENCE_ARGS | sed -e "s/\\\\([\\"']\\\\)/\\\\\\\\\\\\1/g"`"
+AUXILIARY_PROGRAM=$AUXILIARY_PROGRAM
+AUXILIARY_ARGS="`echo $AUXILIARY_ARGS | sed -e "s/\\\\([\\"']\\\\)/\\\\\\\\\\\\1/g"`"
+SHORT_DESC="`echo $SHORT_DESC | sed -e "s/\\\\([\\"']\\\\)/\\\\\\\\\\\\1/g"`"
+LONG_DESC="`echo $LONG_DESC | sed -e "s/\\\\([\\"']\\\\)/\\\\\\\\\\\\1/g"`"
+EOF

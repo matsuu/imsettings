@@ -1,0 +1,541 @@
+# translation of im-chooser.trunk.po to Bengali INDIA
+# Bengali India translations for im-chooser package
+# Copyright (C) 2006 Red Hat, Inc. All rights reserved.
+# This file is distributed under the same license as the im-chooser package.
+#
+# Automatically generated, 2006.
+# Runa Bhattacharjee <runab@redhat.com>, 2006.
+# Runa Bhattacharjee <runabh@gmail.com>, 2007.
+# Runa Bhattacharjee <runab@fedoraproject.org>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: im-chooser.trunk\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-05-09 19:05+0900\n"
+"PO-Revision-Date: 2008-04-04 20:17+0530\n"
+"Last-Translator: Runa Bhattacharjee <runab@fedoraproject.org>\n"
+"Language-Team: Bengali INDIA <fedora-trans-bn_IN@redhat.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: ../backends/gconf/main.c:184 ../src/factory_info.c:645 ../src/factory.c:744
+#: ../imsettings/imsettings-observer.c:724
+msgid "Replace the running settings daemon with new instance."
+msgstr "বৈশিষ্ট্য নির্ধারণকারী বর্তমানে চলমান ডেমনের নতুন ইনস্ট্যান্স নির্ধারণ করুন।"
+
+#: ../backends/gconf/main.c:206 ../backends/xim/main.c:209
+#: ../src/factory_info.c:667 ../src/factory.c:771
+#: ../utils/imsettings-start.c:67 ../utils/imsettings-stop.c:63
+#: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:65
+msgid "Unknown error in parsing the command lines."
+msgstr "কমান্ড লাইন পার্স করতে অজানা সমস্যা।"
+
+#: ../backends/xim/protocol.c:1356 ../backends/xim/connection.c:197
+#: ../backends/xim/server.c:444
+#, fuzzy
+msgid "X display"
+msgstr "X ডিসপ্লের নাম"
+
+#: ../backends/xim/protocol.c:1357 ../backends/xim/connection.c:198
+#: ../backends/xim/server.c:445 ../backends/xim/main.c:177
+#: ../src/factory.c:745
+msgid "X display to use"
+msgstr "ব্যবহারের জন্য চিহ্নিত X ডিসপ্ল"
+
+#: ../backends/xim/protocol.c:1361 ../backends/xim/connection.c:226
+#: ../backends/xim/server.c:455
+#, fuzzy
+msgid "Verbose flag"
+msgstr "ফ্ল্যাগ অগ্রাহ্য করা হবে"
+
+#: ../backends/xim/protocol.c:1362 ../backends/xim/connection.c:227
+#: ../backends/xim/server.c:456
+msgid "Output a lot of helpful messages to debug"
+msgstr ""
+
+#: ../backends/xim/protocol.c:1367
+msgid "Connection object"
+msgstr ""
+
+#: ../backends/xim/protocol.c:1368
+msgid "XIMConnection Gobject"
+msgstr ""
+
+#: ../backends/xim/connection.c:202
+msgid "Window ID"
+msgstr ""
+
+#: ../backends/xim/connection.c:203
+msgid "Window ID for the client"
+msgstr ""
+
+#: ../backends/xim/connection.c:210
+msgid "Communication Window ID"
+msgstr ""
+
+#: ../backends/xim/connection.c:211 ../backends/xim/loopback.c:943
+msgid "Window ID to communicate the client"
+msgstr ""
+
+#: ../backends/xim/connection.c:218 ../backends/xim/loopback.c:950
+msgid "Selection Atom"
+msgstr ""
+
+#: ../backends/xim/connection.c:219 ../backends/xim/loopback.c:951
+msgid "Atom for selection"
+msgstr ""
+
+#: ../backends/xim/connection.c:232
+msgid "Protocol"
+msgstr ""
+
+#: ../backends/xim/connection.c:233
+msgid "GType to deal with the XIM protocol"
+msgstr ""
+
+#: ../backends/xim/connection.c:238
+msgid "XIMProtocol"
+msgstr ""
+
+#: ../backends/xim/connection.c:239
+msgid "GObject of GObject"
+msgstr ""
+
+#: ../backends/xim/server.c:449 ../imsettings/imsettings-info.c:531
+msgid "XIM server name"
+msgstr "XIM সার্ভারের নাম"
+
+#: ../backends/xim/server.c:450
+#, fuzzy
+msgid "XIM server name to be connected"
+msgstr "সঞ্চালনের উদ্দেশ্যে চিহ্নিত XIM সার্ভার প্রোগ্রামের নাম"
+
+#: ../backends/xim/main.c:177 ../src/factory.c:745
+msgid "DISPLAY"
+msgstr "DISPLAY"
+
+#: ../backends/xim/main.c:178
+#, fuzzy
+msgid "Replace the running XIM server with new instance."
+msgstr "বৈশিষ্ট্য নির্ধারণকারী বর্তমানে চলমান ডেমনের নতুন ইনস্ট্যান্স নির্ধারণ করুন।"
+
+#: ../backends/xim/main.c:179
+msgid "Output the debugging logs"
+msgstr ""
+
+#: ../backends/xim/loopback.c:942
+msgid "Selection Window ID"
+msgstr ""
+
+#: ../src/factory_info.c:127
+#, c-format
+msgid "Reloading...\n"
+msgstr "পুনরায় লোড করা হচ্ছে...\n"
+
+#: ../src/factory_info.c:188
+#, c-format
+msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
+msgstr ""
+"`%s' এন্ট্রিটি %s থেকে প্রাপ্ত এন্ট্রির প্রতিলিপি। SHORT_DESC স্বতন্ত্র মান হওয়া আবশ্যক।"
+
+#: ../src/factory_info.c:446 ../src/factory_info.c:484
+#: ../src/factory_info.c:500 ../src/factory_info.c:518
+#, c-format
+msgid "Timed out to initialize %s services."
+msgstr "%s পরিসেবা আরম্ভের পূর্বে সময়সীমা উত্তীর্ণ হয়েছে।"
+
+#: ../src/factory_info.c:469
+#, c-format
+msgid "No input methods available on your system."
+msgstr "সিস্টেমের মধ্যে কোনো ইনপুট পদ্ধতি উপস্থিত নেই।"
+
+#: ../src/factory_info.c:526 ../src/factory.c:489 ../src/factory.c:656
+#, c-format
+msgid "No such input method on your system: %s"
+msgstr "সিস্টেমের মধ্যে কোনো ইনপুট পদ্ধতি উপস্থিত নেই: %s"
+
+#: ../src/factory.c:138
+#, c-format
+msgid "Failed to remove a pidfile: %s"
+msgstr "pidfile মুছে ফেলতে ব্যর্থ: %s"
+
+#: ../src/factory.c:180
+#, c-format
+msgid "Failed to open a pidfile: %s"
+msgstr "pidfile খুলতে ব্যর্থ: %s"
+
+#: ../src/factory.c:271
+#, c-format
+msgid "Couldn't determine the pid for %s process."
+msgstr "%s প্রসেসের pid নির্ধারণ করতে ব্যর্থ।"
+
+#: ../src/factory.c:301
+#, c-format
+msgid "Couldn't send a signal to the %s process successfully."
+msgstr "%s প্রসেসকে সংকেত পাঠানো যায়নি।"
+
+#: ../src/factory.c:325 ../src/factory.c:611
+#, c-format
+msgid "Failed to get a place of home directory."
+msgstr "ব্যক্তিগত (home) ডিরেক্টরির স্থান নির্ধারণ করতে ব্যর্থ।"
+
+#: ../src/factory.c:342
+#, c-format
+msgid "Failed to revert the backup file: %s"
+msgstr "ব্যাক-আপ ফাইলে প্রত্যাবর্তন করতে ব্যর্থ: %s"
+
+#: ../src/factory.c:354
+#, c-format
+msgid "Failed to create a backup file: %s"
+msgstr "ব্যাক-আপ ফাইল নির্মাণ করতে ব্যর্থ: %s"
+
+#: ../src/factory.c:363
+#, c-format
+msgid "Failed to remove a .xinputrc file: %s"
+msgstr ".xinputrc ফাইল মুছে ফেলতে ব্যর্থ: %s"
+
+#: ../src/factory.c:374
+#, c-format
+msgid "Failed to make a symlink: %s"
+msgstr "symlink নির্মাণ করতে ব্যর্থ: %s"
+
+#: ../src/factory.c:509
+#, c-format
+msgid "No XIM server is available in %s"
+msgstr "%s-র মধ্যে কোনো XIM সার্ভার উপস্থিত নেই"
+
+#: ../src/factory.c:700
+msgid "X display name"
+msgstr "X ডিসপ্লের নাম"
+
+#: ../src/factory.c:701
+msgid "X display name to use"
+msgstr "ব্যবহারের জন্য চিহ্নিত X ডিসপ্লের নাম"
+
+#. FIXME
+#: ../src/factory.c:748
+msgid "X screen to use"
+msgstr "ব্যবহারের জন্য চিহ্নিত X স্ক্রিন"
+
+#: ../src/factory.c:748
+msgid "SCREEN"
+msgstr "SCREEN"
+
+#: ../src/factory.c:779
+#, c-format
+msgid "Failed to open a X display."
+msgstr "X ডিসপ্লে আরম্ভ করতে ব্যর্থ।"
+
+#: ../utils/imsettings-start.c:44 ../utils/imsettings-stop.c:43
+#: ../utils/imsettings-restart.c:44
+msgid "Do not update .xinputrc."
+msgstr ".xinputrc আপডেট করা হবে না।"
+
+#: ../utils/imsettings-start.c:85
+#, fuzzy, c-format
+msgid "Started %s\n"
+msgstr "%s বন্ধ করা আছে\n"
+
+#: ../utils/imsettings-start.c:87
+#, fuzzy, c-format
+msgid "Failed to start IM process `%s'\n"
+msgstr "IM প্রসেস `%s' বন্ধ করতে ব্যর্থ\n"
+
+#: ../utils/imsettings-stop.c:42 ../utils/imsettings-reload.c:42
+msgid "Force reloading the configuration, including restarting the process."
+msgstr "বলপূর্বক কনফিগারেশনে পুনরায় লোড করে প্রসেস পুনরারম্ভ করা হচ্ছে।"
+
+#: ../utils/imsettings-stop.c:80
+#, c-format
+msgid "Stopped %s\n"
+msgstr "%s বন্ধ করা আছে\n"
+
+#: ../utils/imsettings-stop.c:82
+#, c-format
+msgid "Failed to stop IM process `%s'\n"
+msgstr "IM প্রসেস `%s' বন্ধ করতে ব্যর্থ\n"
+
+#: ../utils/imsettings-restart.c:43
+msgid "Force restarting the IM process regradless of any errors."
+msgstr "ভুল ত্রুটি নির্বিশেষে IM প্রসেসটি বলপূর্বক পুনরায় আরম্ভ করা হচ্ছে।"
+
+#: ../imsettings/imsettings-info.c:506
+msgid "Language"
+msgstr "ভাষা"
+
+#: ../imsettings/imsettings-info.c:507
+msgid "A language to pull the information in."
+msgstr "তথ্যা প্রাপ্ত করতে ব্যবহৃত ভাষা।"
+
+#: ../imsettings/imsettings-info.c:512
+msgid "Filename"
+msgstr "Filename"
+
+#: ../imsettings/imsettings-info.c:513
+msgid "A filename referring to the IM information."
+msgstr "ইনপুট পদ্ধতির তথ্য উল্লেখকারী ফাইলের নাম।"
+
+#: ../imsettings/imsettings-info.c:518
+msgid "GTK+ immodule"
+msgstr "GTK+ immodule"
+
+#: ../imsettings/imsettings-info.c:519
+msgid "A module name used for GTK+"
+msgstr "GTK+-র জন্য ব্যবহৃত মডিউলের নাম"
+
+#: ../imsettings/imsettings-info.c:524
+msgid "Qt immodule"
+msgstr "Qt immodule"
+
+#: ../imsettings/imsettings-info.c:525
+msgid "A module name used for Qt"
+msgstr "Qt দ্বারা ব্যবহৃত মডিউলের নাম"
+
+#: ../imsettings/imsettings-info.c:530
+msgid "XIM name"
+msgstr "XIM-র নাম"
+
+#: ../imsettings/imsettings-info.c:536
+msgid "Ignore flag"
+msgstr "ফ্ল্যাগ অগ্রাহ্য করা হবে"
+
+#: ../imsettings/imsettings-info.c:537
+msgid "A flag to not list up."
+msgstr "তালিকা প্রদর্শন না করার জন্য ফ্ল্যাগ।"
+
+#: ../imsettings/imsettings-info.c:542
+msgid "XIM server program name"
+msgstr "XIM সার্ভার প্রোগ্রামের নাম"
+
+#: ../imsettings/imsettings-info.c:543
+msgid "XIM server program to be run"
+msgstr "সঞ্চালনের উদ্দেশ্যে চিহ্নিত XIM সার্ভার প্রোগ্রামের নাম"
+
+#: ../imsettings/imsettings-info.c:548
+msgid "XIM server program's options"
+msgstr "XIM সার্ভার প্রোগ্রাম সংক্রান্ত বিকল্প"
+
+#: ../imsettings/imsettings-info.c:549
+msgid "Command line options for XIM server program"
+msgstr "XIM সার্ভার প্রোগ্রামের জন্য কমান্ড-লাইন থেকে ব্যবহারযোগ্য বিকল্প"
+
+#: ../imsettings/imsettings-info.c:554
+msgid "Preference program name"
+msgstr "পছন্দ সংক্রান্ত প্রোগ্রামের নাম"
+
+#: ../imsettings/imsettings-info.c:555
+msgid "Preference program to be run"
+msgstr "সঞ্চালনের জন্য চিহ্নিত পছন্দ সংক্রান্ত প্রোগ্রাম"
+
+#: ../imsettings/imsettings-info.c:560
+msgid "Preference program's options"
+msgstr "পছন্দ সংক্রান্ত প্রোগ্রামের বিবিধ বিকল্প"
+
+#: ../imsettings/imsettings-info.c:561
+msgid "Command line options for preference program"
+msgstr "পছন্দ সংক্রান্ত প্রোগ্রামের জন্য কমান্ড-লাইন থেকে ব্যবহারযোগ্য বিবিধ বিকল্প"
+
+#: ../imsettings/imsettings-info.c:566
+msgid "Auxiliary program name"
+msgstr "অক্সিলিয়ারি প্রোগ্রামের নাম"
+
+#: ../imsettings/imsettings-info.c:567
+msgid "Auxiliary program to be run"
+msgstr "সঞ্চালনের জন্য চিহ্নিত অক্সিলিয়ারি প্রোগ্রাম"
+
+#: ../imsettings/imsettings-info.c:572
+msgid "Auxiliary program's options"
+msgstr "অক্সিলিয়ারি প্রোগ্রামের বিবিধ বিকল্প"
+
+#: ../imsettings/imsettings-info.c:573
+msgid "Command line options for auxiliary program"
+msgstr "অক্সিলিয়ারি প্রোগ্রামের জন্য কমান্ড-লাইন থেকে ব্যবহারযোগ্য বিবিধ বিকল্প"
+
+#: ../imsettings/imsettings-info.c:578 ../imsettings/imsettings-info.c:579
+msgid "Short Description"
+msgstr "সংক্ষিপ্ত বিবরণ"
+
+#: ../imsettings/imsettings-info.c:584 ../imsettings/imsettings-info.c:585
+msgid "Long Description"
+msgstr "বিস্তারিত বিবরণ"
+
+#: ../imsettings/imsettings-info.c:590
+msgid "System Default"
+msgstr "সিস্টেমের ডিফল্ট"
+
+#: ../imsettings/imsettings-info.c:591
+msgid "Whether or not IM is a system default."
+msgstr "ইনপুট পদ্ধতিটি সিস্টেমের ডিফল্ট রূপে চিহ্নিত কি না।"
+
+#: ../imsettings/imsettings-info.c:596
+msgid "User Default"
+msgstr "ব্যবহারকারীর ডিফল্ট"
+
+#: ../imsettings/imsettings-info.c:597
+msgid "Whether or not IM is an user default."
+msgstr "ইনপুট পদ্ধতিটি ব্যবহারকারীর ডিফল্ট রূপে চিহ্নিত কি না।"
+
+#: ../imsettings/imsettings-info.c:602
+msgid "XIM"
+msgstr "XIM"
+
+#: ../imsettings/imsettings-info.c:603
+msgid "Whether or not IM is a XIM server."
+msgstr "ইনপুট পদ্ধতিটি XIM সার্ভার কি না।"
+
+#: ../imsettings/imsettings-request.c:169
+msgid "DBus Interface"
+msgstr "DBus ইন্টার-ফেস"
+
+#: ../imsettings/imsettings-request.c:170
+msgid "Interface name to connect to DBus"
+msgstr "DBus-র সাথে সংযোগ স্থাপনকারী ইন্টারফেসের নাম"
+
+#: ../imsettings/imsettings-request.c:175
+#: ../imsettings/imsettings-observer.c:729
+msgid "DBus connection"
+msgstr "DBus সংযোগ"
+
+#: ../imsettings/imsettings-request.c:176
+#: ../imsettings/imsettings-observer.c:730
+msgid "An object to be a DBus connection"
+msgstr "DBus সংযোগ রূপে ধার্য করার উদ্দেশ্যে কোনো বস্তু"
+
+#: ../imsettings/imsettings-request.c:181
+msgid "Locale"
+msgstr "লোকেইল"
+
+#: ../imsettings/imsettings-request.c:182
+msgid "Locale to get the imsettings information"
+msgstr "imsettings সংক্রান্ত তথ্য প্রাপ্ত করার উদ্দেশ্যে চিহ্নিত লোকেইল"
+
+#: ../imsettings/imsettings-request.c:239
+#: ../imsettings/imsettings-request.c:272
+#: ../imsettings/imsettings-request.c:290
+#: ../imsettings/imsettings-request.c:310
+#: ../imsettings/imsettings-request.c:331
+#: ../imsettings/imsettings-request.c:355
+#: ../imsettings/imsettings-request.c:380
+#: ../imsettings/imsettings-request.c:405
+#: ../imsettings/imsettings-request.c:426
+#: ../imsettings/imsettings-request.c:446
+#: ../imsettings/imsettings-request.c:466
+#: ../imsettings/imsettings-request.c:486
+#: ../imsettings/imsettings-request.c:506
+#: ../imsettings/imsettings-request.c:526
+#: ../imsettings/imsettings-request.c:552
+#: ../imsettings/imsettings-request.c:602
+#: ../imsettings/imsettings-request.c:649
+#, c-format
+msgid ""
+"Failed to invoke a method `%s':\n"
+"  %s"
+msgstr ""
+"`%s' মেথড আরম্ভ করতে ব্যর্থ:\n"
+"  %s"
+
+#: ../imsettings/imsettings-request.c:695
+#, c-format
+msgid ""
+"Failed to invoke a method `%s' on %s:\n"
+"  %s"
+msgstr ""
+"`%s' মেথডটি %s-র উপর আরম্ভ করতে ব্যর্থ:\n"
+"  %s"
+
+#: ../imsettings/imsettings-observer.c:277
+#, c-format
+msgid "Invalid IM module type: %d"
+msgstr "ইনপুট পদ্ধতি মডিউলের ধরন বৈধ না: %d"
+
+#: ../imsettings/imsettings-observer.c:717
+msgid "IM module name"
+msgstr "ইনপুট পদ্ধতির মডিউলের নাম"
+
+#: ../imsettings/imsettings-observer.c:718
+msgid "A target IM module name that to observe signals"
+msgstr "সংকেত নিরীক্ষণের জন্য চিহ্নিত IM মডিউলের নাম"
+
+#: ../imsettings/imsettings-observer.c:723
+msgid "Replace"
+msgstr "প্রতিস্থাপন"
+
+#~ msgid "User Specific"
+#~ msgstr "ব্যবহারকারী সুনির্দিষ্ট"
+
+#~ msgid "xinputrc was modified by the user"
+#~ msgstr "ব্যবহারকারী দ্বারা xinputrc পরিবর্তিত হয়েছে"
+
+#~ msgid "Updating Input Method list"
+#~ msgstr "ইনপুট পদ্ধতির তালিকা আপডেট করা হচ্ছে"
+
+#~ msgid "Failed to start Input Method"
+#~ msgstr "ইনপুট পদ্ধতি আরম্ভ করতে ব্যর্থ"
+
+#~ msgid "Starting Input Method - %s"
+#~ msgstr "ইনপুট পদ্ধতি আরম্ভ করা হচ্ছে - %s"
+
+#~ msgid "Stopping Input Method - %s"
+#~ msgstr "ইনপুট পদ্ধতি বন্ধ করা হচ্ছে - %s"
+
+#~ msgid "Parent Window"
+#~ msgstr "ঊর্ধ্বতন উইন্ডো"
+
+#~ msgid "GtkWindow that points to the parent window"
+#~ msgstr "ঊর্ধ্বতন উইন্ডো নির্দেশকারী GtkWindow"
+
+#~ msgid "Work in progress..."
+#~ msgstr "কাজ চলছে..."
+
+#~ msgid "Use %s"
+#~ msgstr "%s ব্যবহার করা হবে"
+
+#~ msgid " (legacy)"
+#~ msgstr " (লিগ্যাসি)"
+
+#~ msgid " (recommended)"
+#~ msgstr " (প্রস্তাবিত)"
+
+#~ msgid "<b>Input Method</b>"
+#~ msgstr "<b>ইনপুট পদ্ধতি</b>"
+
+#~ msgid "_Enable input method feature"
+#~ msgstr "ইনপুট পদ্ধতির বৈশিষ্ট্য সক্রিয় করুন (_E)"
+
+#~ msgid ""
+#~ "<small><i>Note: this change will not take effect until you next log in, "
+#~ "except GTK+ applications.</i></small>"
+#~ msgstr ""
+#~ "<small><i>উল্লেখ্য: GTK+ অ্যাপ্লিকেশন ভিন্ন অন্য অ্যাপ্লিকেশনের ক্ষেত্রে এই "
+#~ "পরিবর্তনগুলি, পরবর্তী বার লগ-ইন না করা অবধি প্রয়োগ করা হবে না।</i></small>"
+
+#~ msgid "Input Method _Preferences..."
+#~ msgstr "ইনপুট পদ্ধতি সংক্রান্ত পছন্দসই মান...(_P)"
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">No input method is available</span>"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">কোনো ইনপুট পদ্ধতি উপস্থিত নেই</span>"
+
+#~ msgid "Please install any input methods before running if you like."
+#~ msgstr "ইনপুট পদ্ধতি প্রয়োগ করার পূর্বে অনুগ্রহ করে সেগুলি ইনস্টল করুন।"
+
+#~ msgid "IM Chooser - Input Method configuration tool"
+#~ msgstr "IM Chooser - ইনপুট পদ্ধতি কনফিগার করতে ব্যবহৃত সামগ্রী"
+
+#~ msgid "_Log Out"
+#~ msgstr "লগ আউট করুন (_L)"
+
+#~ msgid ""
+#~ "Choose the input method to be used or disable the input method usage on "
+#~ "the desktop"
+#~ msgstr ""
+#~ "ব্যবহারযোগ্য ইনপুট পদ্ধতি নির্ধারণ করুন অথবা ডেস্কটপের মধ্যে ইনপুট পদ্ধতি নিষ্ক্রিয় "
+#~ "করুন"
+
+#~ msgid "Input Method"
+#~ msgstr "ইনপুট পদ্ধতি"

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<node name="/com/redhat/imsettings">
+  <interface name="com.redhat.imsettings">
+    <method name="StartIM">
+      <arg type="s" name="lang" direction="in" />
+      <arg type="s" name="module" direction="in" />
+      <arg type="b" name="update_xinputrc" direction="in" />
+      <arg type="b" name="ret" direction="out" />
+    </method>
+    <method name="StopIM">
+      <arg type="s" name="module" direction="in" />
+      <arg type="b" name="update_xinputrc" direction="in" />
+      <arg type="b" name="force" direction="in" />
+      <arg type="b" name="ret" direction="out" />
+    </method>
+    <method name="WhatInputMethodIsRunning">
+      <arg type="s" name="ret" direction="out">
+	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
+      </arg>
+    </method>
+  </interface>
+  <interface name="com.redhat.imsettings.IMInfo">
+    <method name="GetList">
+      <arg type="s" name="lang" direction="in" />
+      <arg type="as" name="ret" direction="out" />
+    </method>
+    <method name="GetCurrentUserIM">
+      <arg type="s" name="ret" direction="out">
+	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
+      </arg>
+    </method>
+    <method name="GetCurrentSystemIM">
+      <arg type="s" name="ret" direction="out">
+	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
+      </arg>
+    </method>
+    <method name="GetXinputFilename">
+      <arg type="s" name="imname" direction="in" />
+      <arg type="s" name="ret" direction="out">
+	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
+      </arg>
+    </method>
+    <method name="GetIMModuleName">
+      <arg type="s" name="imname" direction="in" />
+      <arg type="u" name="type" direction="in" />
+      <arg type="s" name="ret" direction="out">
+	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
+      </arg>
+    </method>
+    <method name="GetXimProgram">
+      <arg type="s" name="imname" direction="in" />
+      <arg type="s" name="progname" direction="out">
+	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
+      </arg>
+      <arg type="s" name="progargs" direction="out">
+	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
+      </arg>
+    </method>
+    <method name="GetPreferencesProgram">
+      <arg type="s" name="imname" direction="in" />
+      <arg type="s" name="progname" direction="out">
+	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
+      </arg>
+      <arg type="s" name="progargs" direction="out">
+	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
+      </arg>
+    </method>
+    <method name="GetAuxiliaryProgram">
+      <arg type="s" name="imname" direction="in" />
+      <arg type="s" name="progname" direction="out">
+	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
+      </arg>
+      <arg type="s" name="progargs" direction="out">
+	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
+      </arg>
+    </method>
+    <method name="GetShortDescription">
+      <arg type="s" name="imname" direction="in" />
+      <arg type="s" name="ret" direction="out">
+	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
+      </arg>
+    </method>
+    <method name="GetLongDescription">
+      <arg type="s" name="imname" direction="in" />
+      <arg type="s" name="ret" direction="out">
+	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
+      </arg>
+    </method>
+    <method name="IsSystemDefault">
+      <arg type="s" name="imname" direction="in" />
+      <arg type="b" name="ret" direction="out" />
+    </method>
+    <method name="IsUserDefault">
+      <arg type="s" name="imname" direction="in" />
+      <arg type="b" name="ret" direction="out" />
+    </method>
+    <method name="IsXim">
+      <arg type="s" name="imname" direction="in" />
+      <arg type="b" name="ret" direction="out" />
+    </method>
+    <method name="GetSupportedLanguage">
+      <arg type="s" name="imname" direction="in" />
+      <arg type="s" name="ret" direction="out">
+	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
+      </arg>
+    </method>
+  </interface>
+</node>

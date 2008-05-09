@@ -1,0 +1,5 @@
+Name: IMSettings Uninstalled
+Description: Delivery framework for general Input Method configuration
+Version: @VERSION@
+Libs: ${pc_top_builddir}/${pcfiledir}/imsettings/libimsettings.la
+Cflags: -I${pc_top_builddir}/${pcfiledir} -I${pc_top_builddir}/${pcfiledir}/@srcdir@

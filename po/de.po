@@ -1,0 +1,584 @@
+# translation of de.po to 
+# German translations for im-chooser package.
+# Copyright (C) 2006 Red Hat, Inc. All rights reserved.
+# This file is distributed under the same license as the im-chooser package.
+# Automatically generated, 2006.
+# Timo Trinks <ttrinks@redhat.com>, 2006.
+# Fabian Affolter <fab@fedoraproject.org>, 2007,2008.
+# Dominik Sandjaja <dominiksandjaja@fedoraproject.org>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Desktop Input Method configuration tool\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-05-09 19:05+0900\n"
+"PO-Revision-Date: 2008-04-03 09:40+0100\n"
+"Last-Translator: Dominik Sandjaja <dominiksandjaja@fedoraproject.org>\n"
+"Language-Team: German Translation team <fedora-trans-de@redhat.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: KBabel 1.9.1\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../backends/gconf/main.c:184 ../src/factory_info.c:645 ../src/factory.c:744
+#: ../imsettings/imsettings-observer.c:724
+msgid "Replace the running settings daemon with new instance."
+msgstr "Ersetze den laufenden Einstellungsdämon durch eine neue Instanz."
+
+#: ../backends/gconf/main.c:206 ../backends/xim/main.c:209
+#: ../src/factory_info.c:667 ../src/factory.c:771
+#: ../utils/imsettings-start.c:67 ../utils/imsettings-stop.c:63
+#: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:65
+msgid "Unknown error in parsing the command lines."
+msgstr "Unbekannter Fehler beim Parsen der Befehlszeilen."
+
+#: ../backends/xim/protocol.c:1356 ../backends/xim/connection.c:197
+#: ../backends/xim/server.c:444
+#, fuzzy
+msgid "X display"
+msgstr "X-Bildschirmname"
+
+#: ../backends/xim/protocol.c:1357 ../backends/xim/connection.c:198
+#: ../backends/xim/server.c:445 ../backends/xim/main.c:177
+#: ../src/factory.c:745
+msgid "X display to use"
+msgstr "X-Anzeige, die verwendet werden soll"
+
+#: ../backends/xim/protocol.c:1361 ../backends/xim/connection.c:226
+#: ../backends/xim/server.c:455
+#, fuzzy
+msgid "Verbose flag"
+msgstr "Flag ignorieren"
+
+#: ../backends/xim/protocol.c:1362 ../backends/xim/connection.c:227
+#: ../backends/xim/server.c:456
+msgid "Output a lot of helpful messages to debug"
+msgstr ""
+
+#: ../backends/xim/protocol.c:1367
+msgid "Connection object"
+msgstr ""
+
+#: ../backends/xim/protocol.c:1368
+msgid "XIMConnection Gobject"
+msgstr ""
+
+#: ../backends/xim/connection.c:202
+msgid "Window ID"
+msgstr ""
+
+#: ../backends/xim/connection.c:203
+msgid "Window ID for the client"
+msgstr ""
+
+#: ../backends/xim/connection.c:210
+msgid "Communication Window ID"
+msgstr ""
+
+#: ../backends/xim/connection.c:211 ../backends/xim/loopback.c:943
+msgid "Window ID to communicate the client"
+msgstr ""
+
+#: ../backends/xim/connection.c:218 ../backends/xim/loopback.c:950
+msgid "Selection Atom"
+msgstr ""
+
+#: ../backends/xim/connection.c:219 ../backends/xim/loopback.c:951
+msgid "Atom for selection"
+msgstr ""
+
+#: ../backends/xim/connection.c:232
+msgid "Protocol"
+msgstr ""
+
+#: ../backends/xim/connection.c:233
+msgid "GType to deal with the XIM protocol"
+msgstr ""
+
+#: ../backends/xim/connection.c:238
+msgid "XIMProtocol"
+msgstr ""
+
+#: ../backends/xim/connection.c:239
+msgid "GObject of GObject"
+msgstr ""
+
+#: ../backends/xim/server.c:449 ../imsettings/imsettings-info.c:531
+msgid "XIM server name"
+msgstr "XIM-Servername"
+
+#: ../backends/xim/server.c:450
+#, fuzzy
+msgid "XIM server name to be connected"
+msgstr "XIM-Serverprogrammname, welches laufen gelassen wird"
+
+#: ../backends/xim/main.c:177 ../src/factory.c:745
+msgid "DISPLAY"
+msgstr "ANZEIGE"
+
+#: ../backends/xim/main.c:178
+#, fuzzy
+msgid "Replace the running XIM server with new instance."
+msgstr "Ersetze den laufenden Einstellungsdämon durch eine neue Instanz."
+
+#: ../backends/xim/main.c:179
+msgid "Output the debugging logs"
+msgstr ""
+
+#: ../backends/xim/loopback.c:942
+msgid "Selection Window ID"
+msgstr ""
+
+#: ../src/factory_info.c:127
+#, c-format
+msgid "Reloading...\n"
+msgstr "Neuladen...\n"
+
+#: ../src/factory_info.c:188
+#, c-format
+msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
+msgstr "Doppelter Eintrag `%s' von %s. SHORT_DESC hat einmalig zu sein."
+
+#: ../src/factory_info.c:446 ../src/factory_info.c:484
+#: ../src/factory_info.c:500 ../src/factory_info.c:518
+#, c-format
+msgid "Timed out to initialize %s services."
+msgstr "Zeit zum Initialisieren der %s-Dienste abgelaufen."
+
+#: ../src/factory_info.c:469
+#, c-format
+msgid "No input methods available on your system."
+msgstr "Keine Eingabemethoden verfügbar auf Ihrem System."
+
+#: ../src/factory_info.c:526 ../src/factory.c:489 ../src/factory.c:656
+#, c-format
+msgid "No such input method on your system: %s"
+msgstr "Keine solche Eingabemethoden auf Ihrem System: %s"
+
+#: ../src/factory.c:138
+#, c-format
+msgid "Failed to remove a pidfile: %s"
+msgstr "Entfernen einer pid-Datei fehlgeschlagen: %s"
+
+#: ../src/factory.c:180
+#, c-format
+msgid "Failed to open a pidfile: %s"
+msgstr "Öffnen einer pid-Datei fehlgeschlagen: %s"
+
+#: ../src/factory.c:271
+#, c-format
+msgid "Couldn't determine the pid for %s process."
+msgstr "Konnte pid für %s Prozess nicht bestimmen."
+
+#: ../src/factory.c:301
+#, c-format
+msgid "Couldn't send a signal to the %s process successfully."
+msgstr "Konnte kein Signal an den %s Prozess senden"
+
+#: ../src/factory.c:325 ../src/factory.c:611
+#, c-format
+msgid "Failed to get a place of home directory."
+msgstr "Konnte Homeverzeichnis nicht finden"
+
+#: ../src/factory.c:342
+#, c-format
+msgid "Failed to revert the backup file: %s"
+msgstr "Zurückgreifen auf die Sicherungsdatei fehlgeschlagen: %s"
+
+#: ../src/factory.c:354
+#, c-format
+msgid "Failed to create a backup file: %s"
+msgstr "Erzeugen einer Sicherungsdatei fehlgeschlagen: %s"
+
+#: ../src/factory.c:363
+#, c-format
+msgid "Failed to remove a .xinputrc file: %s"
+msgstr "Entfernen einer .xinputrc-Datei fehlgeschlagen: %s"
+
+#: ../src/factory.c:374
+#, c-format
+msgid "Failed to make a symlink: %s"
+msgstr "Erzeugen eines symlink fehlgeschlagen: %s"
+
+#: ../src/factory.c:509
+#, c-format
+msgid "No XIM server is available in %s"
+msgstr "Kein XIM-Server ist verfügbar in %s"
+
+#: ../src/factory.c:700
+msgid "X display name"
+msgstr "X-Bildschirmname"
+
+#: ../src/factory.c:701
+msgid "X display name to use"
+msgstr "X-Bildschirmname, der verwendet werden soll"
+
+#. FIXME
+#: ../src/factory.c:748
+msgid "X screen to use"
+msgstr "X-Bildschirm, der verwendet werden soll"
+
+#: ../src/factory.c:748
+msgid "SCREEN"
+msgstr "BILDSCHIRM"
+
+#: ../src/factory.c:779
+#, c-format
+msgid "Failed to open a X display."
+msgstr "Öffnen eines X-Anzeige fehlgeschlagen"
+
+#: ../utils/imsettings-start.c:44 ../utils/imsettings-stop.c:43
+#: ../utils/imsettings-restart.c:44
+msgid "Do not update .xinputrc."
+msgstr ".xinputrc nicht aktualisieren."
+
+#: ../utils/imsettings-start.c:85
+#, fuzzy, c-format
+msgid "Started %s\n"
+msgstr "Gestoppt %s\n"
+
+#: ../utils/imsettings-start.c:87
+#, fuzzy, c-format
+msgid "Failed to start IM process `%s'\n"
+msgstr "Stoppen des IM-Prozess fehlgeschlagen `%s'\n"
+
+#: ../utils/imsettings-stop.c:42 ../utils/imsettings-reload.c:42
+msgid "Force reloading the configuration, including restarting the process."
+msgstr ""
+"Neuladen der Konfiguration forcieren, inklusive neustarten des Prozesses."
+
+#: ../utils/imsettings-stop.c:80
+#, c-format
+msgid "Stopped %s\n"
+msgstr "Gestoppt %s\n"
+
+#: ../utils/imsettings-stop.c:82
+#, c-format
+msgid "Failed to stop IM process `%s'\n"
+msgstr "Stoppen des IM-Prozess fehlgeschlagen `%s'\n"
+
+#: ../utils/imsettings-restart.c:43
+msgid "Force restarting the IM process regradless of any errors."
+msgstr "Erzwinge Neustart des IM-Prozesses, auch bei Fehlern."
+
+#: ../imsettings/imsettings-info.c:506
+msgid "Language"
+msgstr "Sprache"
+
+#: ../imsettings/imsettings-info.c:507
+msgid "A language to pull the information in."
+msgstr "Eine Sprache zum Beziehen der Informationen."
+
+#: ../imsettings/imsettings-info.c:512
+msgid "Filename"
+msgstr "Dateiname"
+
+#: ../imsettings/imsettings-info.c:513
+msgid "A filename referring to the IM information."
+msgstr "Ein auf die IM-Informationen bezugnehmenden Dateinamen."
+
+#: ../imsettings/imsettings-info.c:518
+msgid "GTK+ immodule"
+msgstr "GTK+-IMModul"
+
+#: ../imsettings/imsettings-info.c:519
+msgid "A module name used for GTK+"
+msgstr "Ein Modulname für die Verwendung mit GTK+"
+
+#: ../imsettings/imsettings-info.c:524
+msgid "Qt immodule"
+msgstr "QT-Immodul"
+
+#: ../imsettings/imsettings-info.c:525
+msgid "A module name used for Qt"
+msgstr "Ein Modulname, welcher für QT benutzt wird"
+
+#: ../imsettings/imsettings-info.c:530
+msgid "XIM name"
+msgstr "XIM-Name"
+
+#: ../imsettings/imsettings-info.c:536
+msgid "Ignore flag"
+msgstr "Flag ignorieren"
+
+#: ../imsettings/imsettings-info.c:537
+msgid "A flag to not list up."
+msgstr "Ein Flag zum Nichtaufführen."
+
+#: ../imsettings/imsettings-info.c:542
+msgid "XIM server program name"
+msgstr "XIM-Serverprogrammname"
+
+#: ../imsettings/imsettings-info.c:543
+msgid "XIM server program to be run"
+msgstr "XIM-Serverprogrammname, welches laufen gelassen wird"
+
+#: ../imsettings/imsettings-info.c:548
+msgid "XIM server program's options"
+msgstr "XIM-Serverprogrammname-Optionen"
+
+#: ../imsettings/imsettings-info.c:549
+msgid "Command line options for XIM server program"
+msgstr "Kommandozeilen-Optionen für XIM-Serverprogramm"
+
+#: ../imsettings/imsettings-info.c:554
+msgid "Preference program name"
+msgstr "Vorzugsprogrammname"
+
+#: ../imsettings/imsettings-info.c:555
+msgid "Preference program to be run"
+msgstr "Vorzugsprogramm, welches laufen gelassen wird"
+
+#: ../imsettings/imsettings-info.c:560
+msgid "Preference program's options"
+msgstr "Vorzugsprogrammname-Optionen"
+
+#: ../imsettings/imsettings-info.c:561
+msgid "Command line options for preference program"
+msgstr "Kommandozeilen-Optionen für Vorzugsprogramm"
+
+#: ../imsettings/imsettings-info.c:566
+msgid "Auxiliary program name"
+msgstr "Hilfsprogrammname"
+
+#: ../imsettings/imsettings-info.c:567
+msgid "Auxiliary program to be run"
+msgstr "Hilfsprogramm, welches laufen gelassen wird"
+
+#: ../imsettings/imsettings-info.c:572
+msgid "Auxiliary program's options"
+msgstr "Hilfsprogrammname-Optionen"
+
+#: ../imsettings/imsettings-info.c:573
+msgid "Command line options for auxiliary program"
+msgstr "Kommandozeilen-Optionen für Hilfsprogramm"
+
+#: ../imsettings/imsettings-info.c:578 ../imsettings/imsettings-info.c:579
+msgid "Short Description"
+msgstr "Kurze Beschreibung"
+
+#: ../imsettings/imsettings-info.c:584 ../imsettings/imsettings-info.c:585
+msgid "Long Description"
+msgstr "Lange Beschreibung"
+
+#: ../imsettings/imsettings-info.c:590
+msgid "System Default"
+msgstr "System-Vorgabe"
+
+#: ../imsettings/imsettings-info.c:591
+msgid "Whether or not IM is a system default."
+msgstr "Ob Sie wollen oder nicht IM ist ein System-Standard."
+
+#: ../imsettings/imsettings-info.c:596
+msgid "User Default"
+msgstr "Benutzer-Vorgabe"
+
+#: ../imsettings/imsettings-info.c:597
+msgid "Whether or not IM is an user default."
+msgstr "Ob Sie wollen oder nicht IM ist Benutzer-Standard."
+
+#: ../imsettings/imsettings-info.c:602
+msgid "XIM"
+msgstr "XIM"
+
+#: ../imsettings/imsettings-info.c:603
+msgid "Whether or not IM is a XIM server."
+msgstr "Ob Sie wollen oder nicht IM ist ein XIM-Server."
+
+#: ../imsettings/imsettings-request.c:169
+msgid "DBus Interface"
+msgstr "DBus-Schnittstelle"
+
+#: ../imsettings/imsettings-request.c:170
+msgid "Interface name to connect to DBus"
+msgstr "Schnittstellen-Name für die Verbindung zu DBus"
+
+#: ../imsettings/imsettings-request.c:175
+#: ../imsettings/imsettings-observer.c:729
+msgid "DBus connection"
+msgstr "DBus-Verbindung"
+
+#: ../imsettings/imsettings-request.c:176
+#: ../imsettings/imsettings-observer.c:730
+msgid "An object to be a DBus connection"
+msgstr "Ein Objekt kann eine DBus-Verbindung sein"
+
+#: ../imsettings/imsettings-request.c:181
+msgid "Locale"
+msgstr "Gebietsschema "
+
+#: ../imsettings/imsettings-request.c:182
+msgid "Locale to get the imsettings information"
+msgstr "Gebietsschema zum Beziehen der IM-Einstellungsinformationen"
+
+#: ../imsettings/imsettings-request.c:239
+#: ../imsettings/imsettings-request.c:272
+#: ../imsettings/imsettings-request.c:290
+#: ../imsettings/imsettings-request.c:310
+#: ../imsettings/imsettings-request.c:331
+#: ../imsettings/imsettings-request.c:355
+#: ../imsettings/imsettings-request.c:380
+#: ../imsettings/imsettings-request.c:405
+#: ../imsettings/imsettings-request.c:426
+#: ../imsettings/imsettings-request.c:446
+#: ../imsettings/imsettings-request.c:466
+#: ../imsettings/imsettings-request.c:486
+#: ../imsettings/imsettings-request.c:506
+#: ../imsettings/imsettings-request.c:526
+#: ../imsettings/imsettings-request.c:552
+#: ../imsettings/imsettings-request.c:602
+#: ../imsettings/imsettings-request.c:649
+#, c-format
+msgid ""
+"Failed to invoke a method `%s':\n"
+"  %s"
+msgstr ""
+"Aufruf einer Methode fehlgeschlagen `%s':\n"
+"  %s"
+
+#: ../imsettings/imsettings-request.c:695
+#, c-format
+msgid ""
+"Failed to invoke a method `%s' on %s:\n"
+"  %s"
+msgstr ""
+"Aufruf einer Methode fehlgeschlagen`%s' auf %s:\n"
+"  %s"
+
+#: ../imsettings/imsettings-observer.c:277
+#, c-format
+msgid "Invalid IM module type: %d"
+msgstr "Ungültiger IM-Modultyp: %d"
+
+#: ../imsettings/imsettings-observer.c:717
+msgid "IM module name"
+msgstr "IM-Modulname"
+
+#: ../imsettings/imsettings-observer.c:718
+msgid "A target IM module name that to observe signals"
+msgstr "Ein Ziel-IM-Modulname zum Überwachen der Signale"
+
+#: ../imsettings/imsettings-observer.c:723
+msgid "Replace"
+msgstr "Ersetze"
+
+#~ msgid "User Specific"
+#~ msgstr "Benutzerdefiniert"
+
+#~ msgid "xinputrc was modified by the user"
+#~ msgstr "xinputrc wurde durch den Benutzer geändert"
+
+#~ msgid "Updating Input Method list"
+#~ msgstr "Aktualisiere Eingabemethoden-Liste"
+
+#~ msgid "Failed to start Input Method"
+#~ msgstr "Start der Eingabemethode fehlgeschlagen"
+
+#~ msgid "Starting Input Method - %s"
+#~ msgstr "Starte Eingabemethode - %s"
+
+#~ msgid "Stopping Input Method - %s"
+#~ msgstr "Stoppe Eingabemethode - %s"
+
+#~ msgid "Parent Window"
+#~ msgstr "Elternfenster"
+
+#~ msgid "GtkWindow that points to the parent window"
+#~ msgstr "GtkWindow welches auf das Elternfenster verweist"
+
+#~ msgid "Work in progress..."
+#~ msgstr "In Arbeit …"
+
+#~ msgid "Use %s"
+#~ msgstr "%s verwenden"
+
+#~ msgid " (legacy)"
+#~ msgstr " (veraltet)"
+
+#~ msgid " (recommended)"
+#~ msgstr " (empfohlen)"
+
+#~ msgid "<b>Input Method</b>"
+#~ msgstr "<b>Eingabemethode</b>"
+
+#~ msgid "_Enable input method feature"
+#~ msgstr "Eingabemethoden-_Funktion aktivieren"
+
+#~ msgid ""
+#~ "<small><i>Note: this change will not take effect until you next log in, "
+#~ "except GTK+ applications.</i></small>"
+#~ msgstr ""
+#~ "<small><i>Hinweis: Diese Änderung wird erst aktiv, wenn Sie sich das "
+#~ "nächste Mal anmelden, außer bei GTK+-Anwendungen.</i></small>"
+
+#~ msgid "Input Method _Preferences..."
+#~ msgstr "_Einstellungen zur Eingabemethode..."
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">No input method is available</span>"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Keine Eingabemethoden verfügbar</"
+#~ "span>"
+
+#~ msgid "Please install any input methods before running if you like."
+#~ msgstr ""
+#~ "Bitte installieren Sie eine Eingabemethode, bevor Sie sie laufen lassen, "
+#~ "wenn Sie wollen."
+
+#~ msgid "IM Chooser - Input Method configuration tool"
+#~ msgstr "IM Chooser - Das Konfigurationswerkzeug für die Eingabemethode"
+
+#~ msgid "_Log Out"
+#~ msgstr "_Abmelden"
+
+#~ msgid ""
+#~ "Choose the input method to be used or disable the input method usage on "
+#~ "the desktop"
+#~ msgstr ""
+#~ "Wählen Sie die Eingabemethode, welche verwendet werden soll oder "
+#~ "deaktivieren Sie die Verwendung von Eingabemethoden auf dem Desktop."
+
+#~ msgid "Input Method"
+#~ msgstr "Eingabemethode"
+
+#~ msgid "No valid IM installed"
+#~ msgstr "Keine gültige Eingabemethode installiert"
+
+#~ msgid "_Use default Input Method for your language"
+#~ msgstr "_Standardmäßige Eingabemethode für Ihre Sprache verwenden"
+
+#~ msgid ""
+#~ "Your system chooses the appropriate Input Method for your language "
+#~ "automatically from among Input Methods installed on your system."
+#~ msgstr ""
+#~ "Ihr System wählt automatisch die passende Eingabemethode für Ihre Sprache "
+#~ "aus den auf Ihrem System installierten Eingabemethoden."
+
+#~ msgid "Choose _specific Input Method"
+#~ msgstr "_Bestimmte Eingabemethode auswählen"
+
+#~ msgid ""
+#~ "Use the specific Input Method that you prefer regardless what Input "
+#~ "Method the system recommends."
+#~ msgstr ""
+#~ "Verwenden Sie Ihre bevorzugte Eingabemethode, unabhängig davon, welche "
+#~ "Eingabemethode das System empfiehlt."
+
+#~ msgid ""
+#~ "Do not use Input Method no matter what language the desktop is running on."
+#~ msgstr ""
+#~ "Eingabemethoden komplett deaktivieren, unabhängig davon, mit welcher "
+#~ "Sprache der Desktop läuft."
+
+#~ msgid "Use legacy _Input Method"
+#~ msgstr "_Alte Eingabemethode verwenden"
+
+#~ msgid ""
+#~ "Use X Input Method anyway. In fact, which input method will be chosen for "
+#~ "the desktop session, depends on the desktop language."
+#~ msgstr ""
+#~ "X-Eingabemethode trotzdem verwenden. Eigentlich hängt die Wahl der "
+#~ "Eingabemethode für die Desktop-Session von der Desktop-Sprache ab."
