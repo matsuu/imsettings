@@ -1,3 +1,15 @@
+2008-05-11  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-info.c: Inherit from IMSettingsObject to
+	dump/load the object.
+
+	* imsettings/imsettings-utils.h (imsettings_n_pad4)
+	(imsettings_pad4, imsettings_skip_pad4, imsettings_swap16)
+	(imsettings_swapu16, imsettings_swap32, imsettings_swapu32)
+	(imsettings_swap64, imsettings_swapu64): new macros.
+
+	* imsettings/imsettings-object.c: new.
+
 2008-04-29  Akira TAGOH  <tagoh@redhat.com>
 
 	* src/factory.c (_get_pid): new.

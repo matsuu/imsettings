@@ -29,6 +29,54 @@
 
 G_BEGIN_DECLS
 
+#define imsettings_n_pad4(_n_) ((4 - ((_n_) % 4)) % 4)
+#define imsettings_pad4(_s_,_n_)					\
+	G_STMT_START {							\
+		gint __n__ = imsettings_n_pad4 (_n_);			\
+		gint __i__;						\
+									\
+		for (__i__ = 0; __i__ < __n__; __i__++)			\
+			g_data_output_stream_put_byte((_s_), 0, NULL, NULL); \
+	} G_STMT_END
+#define imsettings_skip_pad4(_s_,_n_)					\
+	G_STMT_START {							\
+		gint __n__ = imsettings_n_pad4 (_n_);			\
+		gint __i__;						\
+									\
+		for (__i__ = 0; __i__ < __n__; __i__++)			\
+			g_data_input_stream_read_byte((_s_), NULL, NULL); \
+	} G_STMT_END
+#define imsettings_swap16(_o_,_v_)					\
+	((imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() && \
+	  imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB) ?	\
+	 GINT16_TO_BE (_v_) :						\
+	 GINT16_TO_LE (_v_))
+#define imsettings_swapu16(_o_,_v_)					\
+	((imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() && \
+	  imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB) ?	\
+	 GUINT16_TO_BE (_v_) :						\
+	 GUINT16_TO_LE (_v_))
+#define imsettings_swap32(_o_,_v_)					\
+	((imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() && \
+	  imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB) ?	\
+	 GINT32_TO_BE (_v_) :						\
+	 GINT32_TO_LE (_v_))
+#define imsettings_swapu32(_o_,_v_)					\
+	((imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() && \
+	  imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB) ?	\
+	 GUINT32_TO_BE (_v_) :						\
+	 GUINT32_TO_LE (_v_))
+#define imsettings_swap64(_o_,_v_)					\
+	((imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() && \
+	  imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB) ?	\
+	 GINT64_TO_BE (_v_) :						\
+	 GINT64_TO_LE (_v_))
+#define imsettings_swapu64(_o_,_v_)					\
+	((imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() && \
+	  imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB) ?	\
+	 GUINT64_TO_BE (_v_) :						\
+	 GUINT64_TO_LE (_v_))
+
 #define IMSETTINGS_GERROR	(imsettings_g_error_quark())
 
 
@@ -44,7 +92,7 @@ enum {
 };
 
 GQuark  imsettings_g_error_quark                    (void);
-gchar  *imsettings_generate_dbus_path_from_interface(const gchar    *interface) G_GNUC_MALLOC;
+gchar  *imsettings_generate_dbus_path_from_interface(const gchar *interface) G_GNUC_MALLOC;
 
 G_END_DECLS
 

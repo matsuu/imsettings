@@ -35,6 +35,7 @@ CLEANFILES =						\
 imsettings_public_headers =				\
 	imsettings.h					\
 	imsettings-info.h				\
+	imsettings-object.h				\
 	imsettings-observer.h				\
 	imsettings-request.h				\
 	imsettings-utils.h				\
@@ -55,6 +56,7 @@ imsettings_built_sources =				\
 	$(NULL)
 imsettings_sources =					\
 	imsettings-info.c				\
+	imsettings-object.c				\
 	imsettings-observer.c				\
 	imsettings-request.c				\
 	imsettings-utils.c				\

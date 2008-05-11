@@ -24,7 +24,7 @@
 #ifndef __IMSETTINGS_IMSETTINGS_INFO_H__
 #define __IMSETTINGS_IMSETTINGS_INFO_H__
 
-#include <glib-object.h>
+#include <imsettings/imsettings-object.h>
 
 G_BEGIN_DECLS
 
@@ -40,10 +40,10 @@ typedef struct _IMSettingsInfoClass	IMSettingsInfoClass;
 typedef struct _IMSettingsInfo		IMSettingsInfo;
 
 struct _IMSettingsInfoClass {
-	GObjectClass parent_class;
+	IMSettingsObjectClass parent_class;
 };
 struct _IMSettingsInfo {
-	GObject parent_instance;
+	IMSettingsObject parent_instance;
 };
 
 

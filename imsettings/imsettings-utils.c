@@ -25,7 +25,6 @@
 #include "config.h"
 #endif
 
-#include <glib.h>
 #include "imsettings-utils.h"
 
 

@@ -30,6 +30,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <glib/gi18n-lib.h>
+#include "imsettings-utils.h"
 #include "imsettings-info.h"
 #include "imsettings-info-private.h"
 
@@ -92,13 +93,14 @@ enum {
 	PROP_IS_SYSTEM_DEFAULT,
 	PROP_IS_USER_DEFAULT,
 	PROP_IS_XIM,
+	LAST_PROP
 };
 
 
 static GPtrArray *_imsettings_filename_list = NULL;
 
 
-G_DEFINE_TYPE (IMSettingsInfo, imsettings_info, G_TYPE_OBJECT);
+G_DEFINE_TYPE (IMSettingsInfo, imsettings_info, IMSETTINGS_TYPE_OBJECT);
 
 /*
  * Private functions
@@ -490,9 +492,64 @@ imsettings_info_finalize(GObject *object)
 }
 
 static void
+imsettings_info_dump(IMSettingsObject  *object,
+		     GDataOutputStream *stream)
+{
+	IMSettingsInfoPrivate *priv = IMSETTINGS_INFO_GET_PRIVATE (object);
+	gsize len;
+
+	if (IMSETTINGS_OBJECT_CLASS (imsettings_info_parent_class)->dump)
+		IMSETTINGS_OBJECT_CLASS (imsettings_info_parent_class)->dump(object, stream);
+
+	/* PROP_LANGUAGE */
+	len = strlen(priv->language);
+	g_data_output_stream_put_uint32(stream, len, NULL, NULL);
+	g_data_output_stream_put_string(stream, priv->language, NULL, NULL);
+	imsettings_pad4 (stream, len);
+	/* PROP_FILENAME */
+	len = strlen(priv->filename);
+	g_data_output_stream_put_uint32(stream, len, NULL, NULL);
+	g_data_output_stream_put_string(stream, priv->filename, NULL, NULL);
+	imsettings_pad4 (stream, len);
+}
+
+static void
+imsettings_info_load(IMSettingsObject *object,
+		     GDataInputStream *stream)
+{
+	IMSettingsInfoPrivate *priv = IMSETTINGS_INFO_GET_PRIVATE (object);
+	gsize len;
+	GString *s = g_string_new(NULL);
+
+	if (IMSETTINGS_OBJECT_CLASS (imsettings_info_parent_class)->load)
+		IMSETTINGS_OBJECT_CLASS (imsettings_info_parent_class)->load(object, stream);
+
+	/* PROP_LANGUAGE */
+	len = imsettings_swapu32 (object,
+				  g_data_input_stream_read_uint32(stream, NULL, NULL));
+	while (len > 0) {
+		g_string_append_c(s, g_data_input_stream_read_byte(stream, NULL, NULL));
+		len--;
+	}
+	priv->language = g_string_free(s, FALSE);
+	imsettings_skip_pad4 (stream, len);
+	/* PROP_FILENAME */
+	s = g_string_new(NULL);
+	len = imsettings_swapu32 (object,
+				  g_data_input_stream_read_uint32(stream, NULL, NULL));
+	while (len > 0) {
+		g_string_append_c(s, g_data_input_stream_read_byte(stream, NULL, NULL));
+		len--;
+	}
+	priv->filename = g_string_free(s, FALSE);
+	imsettings_skip_pad4 (stream, len);
+}
+
+static void
 imsettings_info_class_init(IMSettingsInfoClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+	IMSettingsObjectClass *imsettings_class = IMSETTINGS_OBJECT_CLASS (klass);
 
 	g_type_class_add_private(klass, sizeof (IMSettingsInfoPrivate));
 
@@ -500,19 +557,27 @@ imsettings_info_class_init(IMSettingsInfoClass *klass)
 	object_class->get_property = imsettings_info_get_property;
 	object_class->finalize     = imsettings_info_finalize;
 
+	imsettings_class->dump = imsettings_info_dump;
+	imsettings_class->load = imsettings_info_load;
+
 	/* properties */
-	g_object_class_install_property(object_class, PROP_LANGUAGE,
-					g_param_spec_string("language",
-							    _("Language"),
-							    _("A language to pull the information in."),
-							    NULL,
-							    G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
-	g_object_class_install_property(object_class, PROP_FILENAME,
-					g_param_spec_string("filename",
-							    _("Filename"),
-							    _("A filename referring to the IM information."),
-							    NULL,
-							    G_PARAM_READWRITE));
+	/* those properties has to be dumped/loaded by self dumper/loader
+	 * because we have to avoid overwriting by imsettings_info_notify_properties().
+	 */
+	imsettings_object_class_install_property(imsettings_class, PROP_LANGUAGE,
+						 g_param_spec_string("language",
+								     _("Language"),
+								     _("A language to pull the information in."),
+								     NULL,
+								     G_PARAM_READWRITE | G_PARAM_CONSTRUCT),
+						 TRUE);
+	imsettings_object_class_install_property(imsettings_class, PROP_FILENAME,
+						 g_param_spec_string("filename",
+								     _("Filename"),
+								     _("A filename referring to the IM information."),
+								     NULL,
+								     G_PARAM_READWRITE),
+						 TRUE);
 	g_object_class_install_property(object_class, PROP_GTK_IMM,
 					g_param_spec_string("gtkimm",
 							    _("GTK+ immodule"),
