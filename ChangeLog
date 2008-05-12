@@ -1,3 +1,7 @@
+2008-05-12  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (_get_pid): check the existence of the pid file first.
+
 2008-05-11  Akira TAGOH  <tagoh@redhat.com>
 
 	* imsettings/imsettings-info.c: Inherit from IMSettingsObject to

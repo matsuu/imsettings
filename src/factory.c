@@ -262,6 +262,13 @@ _get_pid(const gchar  *pidfile,
 	gchar *contents = NULL;
 	gsize len = 0;
 
+	/* check the existence first to get rid of the unnecessary error output */
+	if (!g_file_test(pidfile, G_FILE_TEST_EXISTS)) {
+		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_NOENT,
+			    _("%s: No such file or directory"),
+			    pidfile);
+		return 0;
+	}
 	if (!g_file_get_contents(pidfile, &contents, &len, error))
 		return 0;
 
