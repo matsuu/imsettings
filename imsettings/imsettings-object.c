@@ -90,8 +90,8 @@ imsettings_object_real_dump(IMSettingsObject  *object,
 					NULL, NULL);
 	g_hash_table_iter_init(&iter, hash);
 	while (g_hash_table_iter_next(&iter, &key, &value)) {
-		g_data_output_stream_put_uint32(stream, (guint32)key, NULL, NULL);
-		g_data_output_stream_put_uint32(stream, (guint32)value, NULL, NULL);
+		g_data_output_stream_put_uint32(stream, GPOINTER_TO_UINT (key), NULL, NULL);
+		g_data_output_stream_put_uint32(stream, GPOINTER_TO_UINT (value), NULL, NULL);
 	}
 }
 
@@ -107,7 +107,7 @@ imsettings_object_real_load(IMSettingsObject *object,
 		k = imsettings_swapu32 (object, g_data_input_stream_read_uint32(stream, NULL, NULL));
 		v = imsettings_swapu32 (object, g_data_input_stream_read_uint32(stream, NULL, NULL));
 		g_hash_table_insert(IMSETTINGS_OBJECT_GET_CLASS (object)->imsettings_properties,
-				    (gpointer)k, (gpointer)v);
+				    GUINT_TO_POINTER (k), GUINT_TO_POINTER (v));
 	}
 }
 

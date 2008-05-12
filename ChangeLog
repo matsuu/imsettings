@@ -1,5 +1,9 @@
 2008-05-12  Akira TAGOH  <tagoh@redhat.com>
 
+	* imsettings/imsettings-object.c (imsettings_object_real_dump):
+	Use macro to convert the variable type.
+	(imsettings_object_real_load): likewise.
+
 	* src/factory.c (_get_pid): check the existence of the pid file first.
 
 2008-05-11  Akira TAGOH  <tagoh@redhat.com>
