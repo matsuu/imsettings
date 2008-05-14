@@ -1,3 +1,8 @@
+2008-05-14  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (imsettings_manager_real_what_im_is_running):
+	Ignore an error if the pid file doesn't exist. (RH#445129)
+
 2008-05-12  Akira TAGOH  <tagoh@redhat.com>
 
 	* imsettings/imsettings-object.c (imsettings_object_real_dump):

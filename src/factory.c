@@ -667,6 +667,14 @@ imsettings_manager_real_what_im_is_running(IMSettingsObserver  *observer,
 		pidfile = _build_pidfilename(xinputfile, priv->display_name, "xim");
 		pid = _get_pid(pidfile, "xim", error);
 		if (pid == 0) {
+			if (g_error_matches(*error, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
+				/* No pidfile is available. there aren't anything else to do.
+				 * basically this is no problem. someone may just did stop an IM
+				 * actually not running.
+				 */
+				g_error_free(*error);
+				*error = NULL;
+			}
 			g_free(module);
 			module = NULL;
 		} else {
