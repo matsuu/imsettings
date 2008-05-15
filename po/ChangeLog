@@ -1,3 +1,7 @@
+2008-05-15  Akira TAGOH  <tagoh@redhat.com>
+
+	* POTFILES.in: Add backends/xfce/imsettings_plugin.c
+
 2008-03-11  Akira TAGOH  <tagoh@redhat.com>
 
 	* POTFILES.in: Update.

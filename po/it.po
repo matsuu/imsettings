@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser.trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-09 19:05+0900\n"
+"POT-Creation-Date: 2008-05-15 20:22+0900\n"
 "PO-Revision-Date: 2008-04-08 05:36+0200\n"
 "Last-Translator: Francesco Tombolini <tombo@adamantio.net>\n"
 "Language-Team: Italiano <fedora-trans-it@redhat.com>\n"
@@ -19,13 +19,13 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../backends/gconf/main.c:184 ../src/factory_info.c:645 ../src/factory.c:744
+#: ../backends/gconf/main.c:184 ../src/factory_info.c:645 ../src/factory.c:759
 #: ../imsettings/imsettings-observer.c:724
 msgid "Replace the running settings daemon with new instance."
 msgstr "Sostituire le impostazioni correnti del demone con una nuova istanza."
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:209
-#: ../src/factory_info.c:667 ../src/factory.c:771
+#: ../src/factory_info.c:667 ../src/factory.c:786
 #: ../utils/imsettings-start.c:67 ../utils/imsettings-stop.c:63
 #: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:65
 msgid "Unknown error in parsing the command lines."
@@ -39,7 +39,7 @@ msgstr "Nome del display X"
 
 #: ../backends/xim/protocol.c:1357 ../backends/xim/connection.c:198
 #: ../backends/xim/server.c:445 ../backends/xim/main.c:177
-#: ../src/factory.c:745
+#: ../src/factory.c:760
 msgid "X display to use"
 msgstr "Display X da utilizzare"
 
@@ -102,7 +102,7 @@ msgstr ""
 msgid "GObject of GObject"
 msgstr ""
 
-#: ../backends/xim/server.c:449 ../imsettings/imsettings-info.c:531
+#: ../backends/xim/server.c:449 ../imsettings/imsettings-info.c:596
 msgid "XIM server name"
 msgstr "Nome del server XIM"
 
@@ -111,7 +111,7 @@ msgstr "Nome del server XIM"
 msgid "XIM server name to be connected"
 msgstr "Il programma server XIM da eseguire"
 
-#: ../backends/xim/main.c:177 ../src/factory.c:745
+#: ../backends/xim/main.c:177 ../src/factory.c:760
 msgid "DISPLAY"
 msgstr "DISPLAY"
 
@@ -149,7 +149,7 @@ msgstr "Tempo scaduto per inizializzare i servizi %s."
 msgid "No input methods available on your system."
 msgstr "Nessun metodo di input disponibile sul sistema."
 
-#: ../src/factory_info.c:526 ../src/factory.c:489 ../src/factory.c:656
+#: ../src/factory_info.c:526 ../src/factory.c:496 ../src/factory.c:663
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "Non c'è un tale metodo di input su questo sistema: %s"
@@ -164,64 +164,69 @@ msgstr "Impossibile rimuovere un file pid: %s"
 msgid "Failed to open a pidfile: %s"
 msgstr "Impossibile aprire un file pid: %s"
 
-#: ../src/factory.c:271
+#: ../src/factory.c:268
+#, c-format
+msgid "%s: No such file or directory"
+msgstr ""
+
+#: ../src/factory.c:278
 #, c-format
 msgid "Couldn't determine the pid for %s process."
 msgstr "Impossibile determinare il pid per il processo %s."
 
-#: ../src/factory.c:301
+#: ../src/factory.c:308
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "Impossibile inviare con successo un segnale al processo %s."
 
-#: ../src/factory.c:325 ../src/factory.c:611
+#: ../src/factory.c:332 ../src/factory.c:618
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr "Impossibile ottenere un posto nella cartella home."
 
-#: ../src/factory.c:342
+#: ../src/factory.c:349
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "Impossibile ripristinare il file di backup: %s"
 
-#: ../src/factory.c:354
+#: ../src/factory.c:361
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "Impossibile creare il file di backup: %s"
 
-#: ../src/factory.c:363
+#: ../src/factory.c:370
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "Impossibile rimuovere un file .xinputrc: %s"
 
-#: ../src/factory.c:374
+#: ../src/factory.c:381
 #, c-format
 msgid "Failed to make a symlink: %s"
 msgstr "Impossibile creare un symlink: %s"
 
-#: ../src/factory.c:509
+#: ../src/factory.c:516
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr "Nessun server XIM è disponibile in %s"
 
-#: ../src/factory.c:700
+#: ../src/factory.c:715
 msgid "X display name"
 msgstr "Nome del display X"
 
-#: ../src/factory.c:701
+#: ../src/factory.c:716
 msgid "X display name to use"
 msgstr "Nome del display X da usare"
 
 #. FIXME
-#: ../src/factory.c:748
+#: ../src/factory.c:763
 msgid "X screen to use"
 msgstr "Schermo X da usare"
 
-#: ../src/factory.c:748
+#: ../src/factory.c:763
 msgid "SCREEN"
 msgstr "SCHERMO"
 
-#: ../src/factory.c:779
+#: ../src/factory.c:794
 #, c-format
 msgid "Failed to open a X display."
 msgstr "Impossibile aprire un display X."
@@ -260,127 +265,127 @@ msgstr "Impossibile arrestare il processo IM `%s'\n"
 msgid "Force restarting the IM process regradless of any errors."
 msgstr "Forza il riavvio del processo IM senza riguardo di qualsiasi errore."
 
-#: ../imsettings/imsettings-info.c:506
+#: ../imsettings/imsettings-info.c:569
 msgid "Language"
 msgstr "Linguaggio"
 
-#: ../imsettings/imsettings-info.c:507
+#: ../imsettings/imsettings-info.c:570
 msgid "A language to pull the information in."
 msgstr "Un linguaggio da cui trarre le informazioni."
 
-#: ../imsettings/imsettings-info.c:512
+#: ../imsettings/imsettings-info.c:576
 msgid "Filename"
 msgstr "Nome del file"
 
-#: ../imsettings/imsettings-info.c:513
+#: ../imsettings/imsettings-info.c:577
 msgid "A filename referring to the IM information."
 msgstr "Nome di un file di riferimento alle informazioni di IM."
 
-#: ../imsettings/imsettings-info.c:518
+#: ../imsettings/imsettings-info.c:583
 msgid "GTK+ immodule"
 msgstr "Modulo im GTK+"
 
-#: ../imsettings/imsettings-info.c:519
+#: ../imsettings/imsettings-info.c:584
 msgid "A module name used for GTK+"
 msgstr "Il nome di un modulo usato per GTK+"
 
-#: ../imsettings/imsettings-info.c:524
+#: ../imsettings/imsettings-info.c:589
 msgid "Qt immodule"
 msgstr "Modulo im QT"
 
-#: ../imsettings/imsettings-info.c:525
+#: ../imsettings/imsettings-info.c:590
 msgid "A module name used for Qt"
 msgstr "Il nome di un modulo usato per QT"
 
-#: ../imsettings/imsettings-info.c:530
+#: ../imsettings/imsettings-info.c:595
 msgid "XIM name"
 msgstr "Nome XIM"
 
-#: ../imsettings/imsettings-info.c:536
+#: ../imsettings/imsettings-info.c:601
 msgid "Ignore flag"
 msgstr "Ignora flag"
 
-#: ../imsettings/imsettings-info.c:537
+#: ../imsettings/imsettings-info.c:602
 msgid "A flag to not list up."
 msgstr "Un flag da non elencare."
 
-#: ../imsettings/imsettings-info.c:542
+#: ../imsettings/imsettings-info.c:607
 msgid "XIM server program name"
 msgstr "Il nome del programma server XIM"
 
-#: ../imsettings/imsettings-info.c:543
+#: ../imsettings/imsettings-info.c:608
 msgid "XIM server program to be run"
 msgstr "Il programma server XIM da eseguire"
 
-#: ../imsettings/imsettings-info.c:548
+#: ../imsettings/imsettings-info.c:613
 msgid "XIM server program's options"
 msgstr "Opzioni del programma XIM server"
 
-#: ../imsettings/imsettings-info.c:549
+#: ../imsettings/imsettings-info.c:614
 msgid "Command line options for XIM server program"
 msgstr "Opzioni per la linea di comando del programma server XIM"
 
-#: ../imsettings/imsettings-info.c:554
+#: ../imsettings/imsettings-info.c:619
 msgid "Preference program name"
 msgstr "Nome del programma delle preferenze"
 
-#: ../imsettings/imsettings-info.c:555
+#: ../imsettings/imsettings-info.c:620
 msgid "Preference program to be run"
 msgstr "Programma delle preferenze da eseguire"
 
-#: ../imsettings/imsettings-info.c:560
+#: ../imsettings/imsettings-info.c:625
 msgid "Preference program's options"
 msgstr "Opzioni del programma delle preferenze"
 
-#: ../imsettings/imsettings-info.c:561
+#: ../imsettings/imsettings-info.c:626
 msgid "Command line options for preference program"
 msgstr "Opzioni della linea di comando per il programma delle preferenze"
 
-#: ../imsettings/imsettings-info.c:566
+#: ../imsettings/imsettings-info.c:631
 msgid "Auxiliary program name"
 msgstr "Nome del programma ausiliario"
 
-#: ../imsettings/imsettings-info.c:567
+#: ../imsettings/imsettings-info.c:632
 msgid "Auxiliary program to be run"
 msgstr "Programma ausiliario da eseguire"
 
-#: ../imsettings/imsettings-info.c:572
+#: ../imsettings/imsettings-info.c:637
 msgid "Auxiliary program's options"
 msgstr "Opzioni del programma ausiliario"
 
-#: ../imsettings/imsettings-info.c:573
+#: ../imsettings/imsettings-info.c:638
 msgid "Command line options for auxiliary program"
 msgstr "Opzioni della linea di comando per il programma ausiliario"
 
-#: ../imsettings/imsettings-info.c:578 ../imsettings/imsettings-info.c:579
+#: ../imsettings/imsettings-info.c:643 ../imsettings/imsettings-info.c:644
 msgid "Short Description"
 msgstr "Breve descrizione"
 
-#: ../imsettings/imsettings-info.c:584 ../imsettings/imsettings-info.c:585
+#: ../imsettings/imsettings-info.c:649 ../imsettings/imsettings-info.c:650
 msgid "Long Description"
 msgstr "Descrizione completa"
 
-#: ../imsettings/imsettings-info.c:590
+#: ../imsettings/imsettings-info.c:655
 msgid "System Default"
 msgstr "Impostazioni predefinite di sistema"
 
-#: ../imsettings/imsettings-info.c:591
+#: ../imsettings/imsettings-info.c:656
 msgid "Whether or not IM is a system default."
 msgstr "Quando o no IM è impostato come predefinito per il sistema."
 
-#: ../imsettings/imsettings-info.c:596
+#: ../imsettings/imsettings-info.c:661
 msgid "User Default"
 msgstr "Impostazioni predefinite per l'utente"
 
-#: ../imsettings/imsettings-info.c:597
+#: ../imsettings/imsettings-info.c:662
 msgid "Whether or not IM is an user default."
 msgstr "Quando o no IM è impostato come predefinito per l'utente."
 
-#: ../imsettings/imsettings-info.c:602
+#: ../imsettings/imsettings-info.c:667
 msgid "XIM"
 msgstr "XIM"
 
-#: ../imsettings/imsettings-info.c:603
+#: ../imsettings/imsettings-info.c:668
 msgid "Whether or not IM is a XIM server."
 msgstr "Quando o no IM è un server XIM."
 

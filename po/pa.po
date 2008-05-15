@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-09 19:05+0900\n"
+"POT-Creation-Date: 2008-05-15 20:22+0900\n"
 "PO-Revision-Date: 2008-03-28 11:18+0530\n"
 "Last-Translator: Jaswinder Singh <jsingh@redhat.com>\n"
 "Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
@@ -21,13 +21,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "\n"
 
-#: ../backends/gconf/main.c:184 ../src/factory_info.c:645 ../src/factory.c:744
+#: ../backends/gconf/main.c:184 ../src/factory_info.c:645 ../src/factory.c:759
 #: ../imsettings/imsettings-observer.c:724
 msgid "Replace the running settings daemon with new instance."
 msgstr "ਚੱਲ ਰਹੇ ਸੈਟਿੰਗ ਡੈਮਨ ਨੂੰ ਨਵੇਂ ਨਿਰਧਾਰਨ ਨਾਲ ਤਬਦੀਲ ਕਰੋ।"
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:209
-#: ../src/factory_info.c:667 ../src/factory.c:771
+#: ../src/factory_info.c:667 ../src/factory.c:786
 #: ../utils/imsettings-start.c:67 ../utils/imsettings-stop.c:63
 #: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:65
 msgid "Unknown error in parsing the command lines."
@@ -41,7 +41,7 @@ msgstr "X ਦਰਿਸ਼ ਨਾਂ"
 
 #: ../backends/xim/protocol.c:1357 ../backends/xim/connection.c:198
 #: ../backends/xim/server.c:445 ../backends/xim/main.c:177
-#: ../src/factory.c:745
+#: ../src/factory.c:760
 msgid "X display to use"
 msgstr "ਵਰਤਣ ਲਈ X ਦਰਿਸ਼"
 
@@ -104,7 +104,7 @@ msgstr ""
 msgid "GObject of GObject"
 msgstr ""
 
-#: ../backends/xim/server.c:449 ../imsettings/imsettings-info.c:531
+#: ../backends/xim/server.c:449 ../imsettings/imsettings-info.c:596
 msgid "XIM server name"
 msgstr "XIM ਸਰਵਰ ਨਾਂ"
 
@@ -113,7 +113,7 @@ msgstr "XIM ਸਰਵਰ ਨਾਂ"
 msgid "XIM server name to be connected"
 msgstr "ਚੱਲਾਉਣ ਲਈ XIM ਸਰਵਰ ਪਰੋਗਰਾਮ"
 
-#: ../backends/xim/main.c:177 ../src/factory.c:745
+#: ../backends/xim/main.c:177 ../src/factory.c:760
 msgid "DISPLAY"
 msgstr "DISPLAY"
 
@@ -151,7 +151,7 @@ msgstr "%s ਸਰਵਿਸਾਂ ਚਾਲੂ ਕਰਨ ਦਾ ਸਮਾਂ ਲ�
 msgid "No input methods available on your system."
 msgstr "ਤੁਹਾਡੇ ਸਿਸਟਮ ਉੱਪਰ ਕੋਈ ਇੰਪੁੱਟ ਵਿਧੀ ਉਪਲੱਬਧ ਨਹੀਂ ਹੈ।"
 
-#: ../src/factory_info.c:526 ../src/factory.c:489 ../src/factory.c:656
+#: ../src/factory_info.c:526 ../src/factory.c:496 ../src/factory.c:663
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "ਤੁਹਾਡੇ ਸਿਸਟਮ ਉੱਪਰ ਕੋਈ ਅਜਿਹਾ ਇੰਪੁੱਟ ਢੰਗ ਨਹੀਂ ਹੈ: %s"
@@ -166,64 +166,69 @@ msgstr "ਇੱਕ pidfile ਨੂੰ ਹਟਾਉਣ ਵਿੱਚ ਫੇਲ: %s"
 msgid "Failed to open a pidfile: %s"
 msgstr "ਇੱਕ pidfile ਨੂੰ ਖੋਲਣ ਵਿੱਚ ਫੇਲ: %s"
 
-#: ../src/factory.c:271
+#: ../src/factory.c:268
+#, c-format
+msgid "%s: No such file or directory"
+msgstr ""
+
+#: ../src/factory.c:278
 #, c-format
 msgid "Couldn't determine the pid for %s process."
 msgstr "%s ਕਾਰਜ ਲਈ pid ਤਾ ਕਰਨ ਵਿੱਚ ਫੇਲ ਹੋਇਆ।"
 
-#: ../src/factory.c:301
+#: ../src/factory.c:308
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "%s ਕਾਰਜ ਨੂੰ ਸਫਲਤਾਪੂਰਕ ਸਿਗਨਲ ਨਹੀਂ ਭੇਜ ਸਕਿਆ।"
 
-#: ../src/factory.c:325 ../src/factory.c:611
+#: ../src/factory.c:332 ../src/factory.c:618
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr "ਘਰੇਲੂ ਡਾਇਰੈਕਟਰੀ ਦਾ ਥਾਂ ਪਤਾ ਕਰਨ ਵਿੱਚ ਫੇਲ ਹੋਇਆ।"
 
-#: ../src/factory.c:342
+#: ../src/factory.c:349
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "ਬੈਕਅੱਪ ਫਾਇਲ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਫੇਲ : %s"
 
-#: ../src/factory.c:354
+#: ../src/factory.c:361
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "ਬੈਕਅੱਪ ਫਾਇਲ ਬਣਾਉਣ ਵਿੱਚ ਫੇਲ: %s"
 
-#: ../src/factory.c:363
+#: ../src/factory.c:370
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "ਇੱਕ .xinputrc ਫਾਇਲ ਹਟਾਉਣ ਵਿੱਚ ਫੇਲ: %s"
 
-#: ../src/factory.c:374
+#: ../src/factory.c:381
 #, c-format
 msgid "Failed to make a symlink: %s"
 msgstr "symlink ਬਣਾਉਣ ਵਿੱਚ ਫੇਲ: %s"
 
-#: ../src/factory.c:509
+#: ../src/factory.c:516
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr "%s ਵਿੱਚ ਕੋਈ XIM ਸਰਵਰ ਉਪਲੱਬਧ ਨਹੀਂ ਹੈ"
 
-#: ../src/factory.c:700
+#: ../src/factory.c:715
 msgid "X display name"
 msgstr "X ਦਰਿਸ਼ ਨਾਂ"
 
-#: ../src/factory.c:701
+#: ../src/factory.c:716
 msgid "X display name to use"
 msgstr "ਵਰਤਣ ਲਈ X ਦਰਿਸ਼ ਨਾਂ"
 
 #. FIXME
-#: ../src/factory.c:748
+#: ../src/factory.c:763
 msgid "X screen to use"
 msgstr "ਵਰਤਣ ਲਈ X ਸਕਰੀਨ"
 
-#: ../src/factory.c:748
+#: ../src/factory.c:763
 msgid "SCREEN"
 msgstr "SCREEN"
 
-#: ../src/factory.c:779
+#: ../src/factory.c:794
 #, c-format
 msgid "Failed to open a X display."
 msgstr "X ਦਰਿਸ਼ ਖੋਲਣ ਲਈ ਫੇਲ।"
@@ -261,127 +266,127 @@ msgstr "IM ਕਾਰਜ `%s' ਨੂੰ ਰੋਕਣ ਵਿੱਚ ਫੇਲ\n"
 msgid "Force restarting the IM process regradless of any errors."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:506
+#: ../imsettings/imsettings-info.c:569
 msgid "Language"
 msgstr "ਭਾਸ਼ਾ"
 
-#: ../imsettings/imsettings-info.c:507
+#: ../imsettings/imsettings-info.c:570
 msgid "A language to pull the information in."
 msgstr "ਜਾਣਕਾਰੀ ਦੇਣ ਲਈ ਭਾਸ਼ਾ।"
 
-#: ../imsettings/imsettings-info.c:512
+#: ../imsettings/imsettings-info.c:576
 msgid "Filename"
 msgstr "ਫਾਇਲ-ਨਾਂ"
 
-#: ../imsettings/imsettings-info.c:513
+#: ../imsettings/imsettings-info.c:577
 msgid "A filename referring to the IM information."
 msgstr "IM ਜਾਣਕਾਰੀ ਦਾ ਹਵਾਲਾ ਦੇਣ ਵਾਲੀ ਇੱਕ ਫਾਇਲ।"
 
-#: ../imsettings/imsettings-info.c:518
+#: ../imsettings/imsettings-info.c:583
 msgid "GTK+ immodule"
 msgstr "GTK+ immodule"
 
-#: ../imsettings/imsettings-info.c:519
+#: ../imsettings/imsettings-info.c:584
 msgid "A module name used for GTK+"
 msgstr "GTK+ ਲਈ ਵਰਤਿਆ ਜਾਂਦਾ ਇੱਕ ਮੈਡਿਊਲ ਨਾਂ"
 
-#: ../imsettings/imsettings-info.c:524
+#: ../imsettings/imsettings-info.c:589
 msgid "Qt immodule"
 msgstr "Qt immodule"
 
-#: ../imsettings/imsettings-info.c:525
+#: ../imsettings/imsettings-info.c:590
 msgid "A module name used for Qt"
 msgstr "Qt ਲਈ ਵਰਤਿਆ ਜਾਂਦਾ ਇੱਕ ਮੈਡਿਊਲ ਨਾਂ"
 
-#: ../imsettings/imsettings-info.c:530
+#: ../imsettings/imsettings-info.c:595
 msgid "XIM name"
 msgstr "XIM ਨਾਂ"
 
-#: ../imsettings/imsettings-info.c:536
+#: ../imsettings/imsettings-info.c:601
 msgid "Ignore flag"
 msgstr "ਫਲੈਗ ਅਣਡਿੱਠਾ"
 
-#: ../imsettings/imsettings-info.c:537
+#: ../imsettings/imsettings-info.c:602
 msgid "A flag to not list up."
 msgstr "ਨਾ ਵੇਖਾਉਣ ਲਈ ਫਲੈਗ।"
 
-#: ../imsettings/imsettings-info.c:542
+#: ../imsettings/imsettings-info.c:607
 msgid "XIM server program name"
 msgstr "XIM ਸਰਵਰ ਪਰੋਗਰਾਮ ਨਾਂ"
 
-#: ../imsettings/imsettings-info.c:543
+#: ../imsettings/imsettings-info.c:608
 msgid "XIM server program to be run"
 msgstr "ਚੱਲਾਉਣ ਲਈ XIM ਸਰਵਰ ਪਰੋਗਰਾਮ"
 
-#: ../imsettings/imsettings-info.c:548
+#: ../imsettings/imsettings-info.c:613
 msgid "XIM server program's options"
 msgstr "XIM ਸਰਵਰ ਪਰੋਗਰਾਮ ਦੀਆਂ ਚੋਣਾਂ"
 
-#: ../imsettings/imsettings-info.c:549
+#: ../imsettings/imsettings-info.c:614
 msgid "Command line options for XIM server program"
 msgstr "XIM ਸਰਵਰ ਪਰੋਗਰਾਮ ਲਈ ਕਮਾਂਡ ਲਾਈਨ ਚੋਣਾਂ"
 
-#: ../imsettings/imsettings-info.c:554
+#: ../imsettings/imsettings-info.c:619
 msgid "Preference program name"
 msgstr "ਪਸੰਦ ਪਰੋਗਰਾਮ ਨਾਂ"
 
-#: ../imsettings/imsettings-info.c:555
+#: ../imsettings/imsettings-info.c:620
 msgid "Preference program to be run"
 msgstr "ਚਲਾਉਣ ਲਈ ਪਸੰਦ ਪਰੋਗਰਾਮ"
 
-#: ../imsettings/imsettings-info.c:560
+#: ../imsettings/imsettings-info.c:625
 msgid "Preference program's options"
 msgstr "ਪਸੰਦ ਪਰੋਗਰਾਮ ਦੀਆਂ ਚੋਣਾਂ"
 
-#: ../imsettings/imsettings-info.c:561
+#: ../imsettings/imsettings-info.c:626
 msgid "Command line options for preference program"
 msgstr "ਪਸੰਦ ਪਰੋਗਰਾਮ ਲਈ ਕਮਾਂਡ ਲਾਈਨ ਚੋਣਾਂ"
 
-#: ../imsettings/imsettings-info.c:566
+#: ../imsettings/imsettings-info.c:631
 msgid "Auxiliary program name"
 msgstr "Auxiliary ਪਰੋਗਰਾਮ ਨਾਂ"
 
-#: ../imsettings/imsettings-info.c:567
+#: ../imsettings/imsettings-info.c:632
 msgid "Auxiliary program to be run"
 msgstr "ਚਲਾਉਣ ਲਈ Auxiliary ਪਰੋਗਰਾਮ"
 
-#: ../imsettings/imsettings-info.c:572
+#: ../imsettings/imsettings-info.c:637
 msgid "Auxiliary program's options"
 msgstr "Auxiliary ਪਰਗੋਰਾਮ ਦੀਆਂ ਚੋਣਾਂ"
 
-#: ../imsettings/imsettings-info.c:573
+#: ../imsettings/imsettings-info.c:638
 msgid "Command line options for auxiliary program"
 msgstr "auxiliary ਪਰੋਗਰਾਮ ਲਈ ਕਮਾਂਡ ਲਾਈਨ ਚੋਣਾਂ"
 
-#: ../imsettings/imsettings-info.c:578 ../imsettings/imsettings-info.c:579
+#: ../imsettings/imsettings-info.c:643 ../imsettings/imsettings-info.c:644
 msgid "Short Description"
 msgstr "ਸੰਖੇਪ ਵੇਰਵਾ"
 
-#: ../imsettings/imsettings-info.c:584 ../imsettings/imsettings-info.c:585
+#: ../imsettings/imsettings-info.c:649 ../imsettings/imsettings-info.c:650
 msgid "Long Description"
 msgstr "ਵਿਸਥਾਰ ਵੇਰਵਾ"
 
-#: ../imsettings/imsettings-info.c:590
+#: ../imsettings/imsettings-info.c:655
 msgid "System Default"
 msgstr "ਸਿਸਟਮ ਮੂਲ"
 
-#: ../imsettings/imsettings-info.c:591
+#: ../imsettings/imsettings-info.c:656
 msgid "Whether or not IM is a system default."
 msgstr "IM ਇੱਕ ਸਿਸਟਮ ਮੂਲ ਹੈ ਜਾਂ ਨਹੀਂ।"
 
-#: ../imsettings/imsettings-info.c:596
+#: ../imsettings/imsettings-info.c:661
 msgid "User Default"
 msgstr "ਉਪਭੋਗੀ ਮੂਲ"
 
-#: ../imsettings/imsettings-info.c:597
+#: ../imsettings/imsettings-info.c:662
 msgid "Whether or not IM is an user default."
 msgstr "IM ਇੱਕ ਉਪਭੋਗੀ ਮੂਲ ਹੈ ਜਾਂ ਨਹੀਂ।"
 
-#: ../imsettings/imsettings-info.c:602
+#: ../imsettings/imsettings-info.c:667
 msgid "XIM"
 msgstr "XIM"
 
-#: ../imsettings/imsettings-info.c:603
+#: ../imsettings/imsettings-info.c:668
 msgid "Whether or not IM is a XIM server."
 msgstr "IM ਇੱਕ XIM ਸਰਵਰ ਹੈ ਜਾਂ ਨਹੀਂ।"
 

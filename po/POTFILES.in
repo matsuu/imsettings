@@ -1,4 +1,5 @@
 backends/gconf/main.c
+backends/xfce/imsettings_plugin.c
 backends/xim/protocol.c
 backends/xim/connection.c
 backends/xim/server.c
