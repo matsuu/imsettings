@@ -1,0 +1,133 @@
+IMSettings
+==============
+IMSettings is a framework that delivers Input Method
+settings and applies the changes immediately. so it will
+takes an effect without restarting applications and the
+desktop.
+
+Background
+==============
+Input Method is used to input some dozens of characters that
+can't be represented with ASCII characters, with some
+framework such as XIM and SCIM via GTK+/Qt
+immodule. particularly which to handle languages that is a
+bit complex to do the same thing with the keyboard layout
+such as XKB.  In the past, those frameworks has been applied
+through the environment variables, such as XMODIFIERS and
+GTK_IM_MODULE. and can't be influenced immediately and can't
+be without restarting the desktop because of its nature -
+it's being inherited from the parent process unless it's
+being brought up with the obvious thing from the terminal
+say.  Also, there are no such framework to bring up the
+necessary process at the run time - of course anyone could
+runs it manually though, it's totally out of focus on this
+project.
+
+Features
+============
+* Provide the information of Input Method through IMSettings
+* Provide the DBus service to start/stop process of Input
+  Method
+* Provide the way to apply Input Method to applications
+  immediately
+
+Scope
+=========
+IMSettings may helps when:
+
+* you may want to disable Input Method entirely to use
+  features on any applications, which actually can't use
+  with Input Method because of the key conflicting.
+* you may try another Input Method without closing current
+  desktop session.
+* someone may wants to borrow your desktop temporarily,
+  which uses different Input Method.
+* the appropriate Input Methods needs to be installed by
+  default regardless of you use, such as Live image.
+
+Supported Toolkits
+======================
+* GTK+ (with GConf backend)
+* Xfce (with GConf backend and a plugin for xfce-mcs-manager)
+* X (with IMSettings XIM server)
+
+Information files for Input Method
+======================================
+To make Input Methods available from IMSettings, every Input
+Methods that hopes so has to have the information file to
+let IMSettings know. those files is usually put under a
+directory where you can change the default value with
+--with-xinputdir. the filename has to contain .conf or
+something that you can also change the default value with
+--with-xinput-suffix to avoid listing every Input Methods
+that might not work for some languages. Input Methods
+doesn't support multiple languages such as XIM doesn't have
+to have .conf suffix or so. xim.conf can deals with such
+configuration files properly for appropriate languages
+according to current locale.
+
+Available parameters
+========================
+
+The following parameters can be described as the shell
+environment variables like FOO=BAR in the information file.
+
+* AUXILIARY_PROGRAM=<string>
+
+  An optional program that may want to bring up for Input
+  Method, such as the panel and the toolbar and so on.
+
+* AUXILIARY_ARGS=<string>
+
+  A list of command line options for AUXILIARY_PROGRAM.
+
+* GTK_IM_MODULE=<string>
+
+  GTK+ immodule name that want to use.
+
+* IMSETTINGS_IGNORE_ME=<boolean>
+
+  A parameter to hide Input Method from the inventory. you
+  however can still take an action against such Input Method
+  via IMSettings.
+
+* LONG_DESC=<string>
+
+  An optional long description to explain what this Input
+  Method is.
+
+* PREFERENCE_PROGRAM=<string>
+
+  An optional program that set up Input Method. IMSettings
+  itself do nothing on this parameter. but other tools, such
+  as im-chooser will take an action for that.
+
+* PREFERENCE_ARGS=<string>
+
+  A list of command line options for PREFERENCE_PROGRAM.
+
+* QT_IM_MODULE=<string>
+
+  Qt immodule name that want to use.
+
+* SHORT_DESC=<string>
+
+  An optional short description to explain what this Input
+  Method is. this variable is also sued for the key to do
+  something on IMSettings. e.g. to start/stop Input Method
+  and get the information and so on. so this parameter has
+  to be unique.
+
+* XIM=<string>
+
+  This variable is used for XIM. actually it looks like
+  XMODIFIERS=@im=$XIM.
+
+* XIM_PROGRAM=<string>
+
+  A XIM server be brought up to communicate through XIM
+  protocol.
+
+* XIM_ARGS=<string>
+
+  A list of command line options for XIM_PROGRAM.

@@ -1,3 +1,7 @@
+2008-05-15  Akira TAGOH  <tagoh@redhat.com>
+
+	* README: Add more docs.
+
 2008-05-14  Akira TAGOH  <tagoh@redhat.com>
 
 	* src/factory.c (imsettings_manager_real_what_im_is_running):
