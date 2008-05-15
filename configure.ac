@@ -78,6 +78,9 @@ PKG_CHECK_MODULES(IMSETTINGS, dbus-1 >= $DBUS_REQUIRED
 			      gio-2.0 >= $GIO_REQUIRED)
 PKG_CHECK_MODULES(IMINFO, gthread-2.0 gamin)
 PKG_CHECK_MODULES(X11, x11)
+PKG_CHECK_MODULES(CHECK, check >= $CHECK_REQUIRED,
+	[use_check="yes"],
+	[use_check="no"])
 PKG_CHECK_MODULES(GCONF, gconf-2.0,
 	[use_gconf="yes"],
 	[use_gconf="no"])
@@ -110,6 +113,7 @@ AC_SUBST(XFCE_LIBS)
 AC_SUBST(XIM_CFLAGS)
 AC_SUBST(XIM_LIBS)
 
+AM_CONDITIONAL(ENABLE_UNIT_TEST, test x$use_check != xno)
 AM_CONDITIONAL(ENABLE_GCONF, test x$use_gconf != xno)
 AM_CONDITIONAL(ENABLE_QT, test x$use_qt != xno)
 AM_CONDITIONAL(ENABLE_XFCE, test x$use_xfce != xno)
@@ -258,29 +262,31 @@ echo ""
 echo "========== Build Information =========="
 echo " CFLAGS:                 $CFLAGS $IMSETTINGS_CFLAGS"
 echo " LDFLAGS:                $LDFLAGS $IMSETTINGS_LIBS"
-echo " XINPUT_PATH:                $XINPUT_PATH"
-echo " XINPUTRC_PATH:              $XINPUTRC_PATH"
-echo " XINIT_PATH:                 $XINIT_PATH"
-echo " XINPUTSH:                   $XINPUTSH"
-echo " XINPUT_SUFFIX:              $XINPUT_SUFFIX"
-echo " GConf support:              $use_gconf"
+echo " GConf support:          $use_gconf"
 if test "x$use_gconf" = "xyes"; then
-   echo "   CFLAGS:                   $GCONF_CFLAGS"
-   echo "   LDFLAGS:                  $GCONF_LIBS"
+   echo "   CFLAGS:               $GCONF_CFLAGS"
+   echo "   LDFLAGS:              $GCONF_LIBS"
 fi
-echo " Qt support:                 $use_qt"
+echo " Qt support:             $use_qt"
 if test "x$use_qt" = "xyes"; then
-   echo "   CFLAGS:                   $QT_CFLAGS"
-   echo "   LDFLAGS:                  $QT_LIBS"
+   echo "   CFLAGS:               $QT_CFLAGS"
+   echo "   LDFLAGS:              $QT_LIBS"
 fi
-echo " Xfce support:               $use_xfce"
+echo " Xfce support:           $use_xfce"
 if test "x$use_xfce" = "xyes"; then
-   echo "   CFLAGS:                   $XFCE_CFLAGS"
-   echo "   LDFLAGS:                  $XFCE_LIBS"
+   echo "   CFLAGS:               $XFCE_CFLAGS"
+   echo "   LDFLAGS:              $XFCE_LIBS"
 fi
-echo " XIM support:                $use_xim"
+echo " XIM support:            $use_xim"
 if test "x$use_xim" = "xyes"; then
-   echo "   CFLAGS:                   $XIM_CFLAGS"
-   echo "   LDFLAGS:                  $XIM_LIBS"
+   echo "   CFLAGS:               $XIM_CFLAGS"
+   echo "   LDFLAGS:              $XIM_LIBS"
 fi
+echo " XINPUT_PATH:            $XINPUT_PATH"
+echo " XINPUTRC_PATH:          $XINPUTRC_PATH"
+echo " XINIT_PATH:             $XINIT_PATH"
+echo " XINPUTSH:               $XINPUTSH"
+echo " XINPUT_SUFFIX:          $XINPUT_SUFFIX"
+echo " Rebuilds:               $enable_rebuilds"
+echo " Unit testing:           $use_check"
 echo ""
