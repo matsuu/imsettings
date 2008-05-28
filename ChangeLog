@@ -1,3 +1,29 @@
+2008-05-28  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/imsettings-info.c: New testcase for IMSettingsInfo.
+
+	* imsettings/imsettings-object.c (_swap16, _swapu16, _swap32)
+	(_swapu32, _swap64, _swapu64): Fix a typo.
+	(imsettings_object_dump): Lookup the table first to check
+	if the property is supposed to dump in the own way.
+	(imsettings_object_dump): Fix an endian issue to update the amount
+	of property.
+	(imsettings_object_load_from_stream): Initialize GValue before puting
+	a value.
+
+	* imsettings/imsettings-utils.h (imsettings_swap16)
+	(imsettings_swapu16, imsettings_swap32, imsettings_swapu32)
+	(imsettings_swap64, imsettings_swapu64): Fix a typo.
+
+	* imsettings/imsettings-info.c (imsettings_info_get_property):
+	Add PROP_LANGUAGE, missing property.
+	(imsettings_info_dump): Fix a crash if no language is given.
+	(imsettings_info_dump): Add more self-dump for PROP_SHORT_DESC and
+	PROP_IS_XIM.
+	(imsettings_info_load): likewise.
+	(imsettings_info_get_language): new function.
+	(imsettings_info_compare): Add a debugging code.
+
 2008-05-15  Akira TAGOH  <tagoh@redhat.com>
 
 	* configure.ac: Add checking if "check" is available.

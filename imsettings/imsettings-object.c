@@ -39,23 +39,35 @@
 #define _pad4		imsettings_pad4
 #define _skip_pad4	imsettings_skip_pad4
 #define _swap16(_v_)							\
-	((byte_order != _imsettings_host_byte_order &&			\
-	  _imsettings_host_byte_order == IMSETTINGS_OBJECT_MSB) ? GINT16_TO_BE (_v_) : GINT16_TO_LE (_v_))
+	(byte_order != _imsettings_host_byte_order ?			\
+	 (_imsettings_host_byte_order == IMSETTINGS_OBJECT_MSB ?	\
+	  GINT16_TO_BE (_v_) : GINT16_TO_LE (_v_)) :			\
+	 (_v_))
 #define _swapu16(_v_)							\
-	((byte_order != _imsettings_host_byte_order &&			\
-	  _imsettings_host_byte_order == IMSETTINGS_OBJECT_MSB) ? GUINT16_TO_BE (_v_) : GUINT16_TO_LE (_v_))
+	(byte_order != _imsettings_host_byte_order ?			\
+	 (_imsettings_host_byte_order == IMSETTINGS_OBJECT_MSB ?	\
+	  GUINT16_TO_BE (_v_) : GUINT16_TO_LE (_v_)) :			\
+	 (_v_))
 #define _swap32(_v_)							\
-	((byte_order != _imsettings_host_byte_order &&			\
-	  _imsettings_host_byte_order == IMSETTINGS_OBJECT_MSB) ? GINT32_TO_BE (_v_) : GINT32_TO_LE (_v_))
+	(byte_order != _imsettings_host_byte_order ?			\
+	 (_imsettings_host_byte_order == IMSETTINGS_OBJECT_MSB ?	\
+	  GINT32_TO_BE (_v_) : GINT32_TO_LE (_v_)) :			\
+	 (_v_))
 #define _swapu32(_v_)							\
-	((byte_order != _imsettings_host_byte_order &&			\
-	  _imsettings_host_byte_order == IMSETTINGS_OBJECT_MSB) ? GUINT32_TO_BE (_v_) : GUINT32_TO_LE (_v_))
+	(byte_order != _imsettings_host_byte_order ?			\
+	 (_imsettings_host_byte_order == IMSETTINGS_OBJECT_MSB ?	\
+	  GUINT32_TO_BE (_v_) : GUINT32_TO_LE (_v_)) :			\
+	 (_v_))
 #define _swap64(_v_)							\
-	((byte_order != _imsettings_host_byte_order &&			\
-	  _imsettings_host_byte_order == IMSETTINGS_OBJECT_MSB) ? GINT64_TO_BE (_v_) : GINT64_TO_LE (_v_))
+	(byte_order != _imsettings_host_byte_order ?			\
+	 (_imsettings_host_byte_order == IMSETTINGS_OBJECT_MSB ?	\
+	  GINT64_TO_BE (_v_) : GINT64_TO_LE (_v_)) :			\
+	 (_v_))
 #define _swapu64(_v_)							\
-	((byte_order != _imsettings_host_byte_order &&			\
-	  _imsettings_host_byte_order == IMSETTINGS_OBJECT_MSB) ? GUINT64_TO_BE (_v_) : GUINT64_TO_LE (_v_))
+	(byte_order != _imsettings_host_byte_order ?			\
+	 (_imsettings_host_byte_order == IMSETTINGS_OBJECT_MSB ?	\
+	  GUINT64_TO_BE (_v_) : GUINT64_TO_LE (_v_)) :			\
+	 (_v_))
 
 static const guint8 _imsettings_dump_major_version = 1;
 static const guint8 _imsettings_dump_minor_version = 0;
@@ -277,17 +289,20 @@ imsettings_object_dump(IMSettingsObject *object)
 
 		prop_name = g_param_spec_get_name(pspecs[i]);
 
-		if ((pspecs[i]->flags & G_PARAM_READABLE) == 0 ||
-		    (pspecs[i]->flags & (G_PARAM_CONSTRUCT|G_PARAM_CONSTRUCT_ONLY)) != 0) {
-			/* can't be exported in the usual way */
-			n--;
-			if (g_hash_table_lookup(IMSETTINGS_OBJECT_GET_CLASS (object)->imsettings_properties,
-						GUINT_TO_POINTER (pspecs[i]->param_id)) == NULL) {
+		if (g_hash_table_lookup(IMSETTINGS_OBJECT_GET_CLASS (object)->imsettings_properties,
+					GUINT_TO_POINTER (pspecs[i]->param_id)) == NULL) {
+			if ((pspecs[i]->flags & G_PARAM_READABLE) == 0 ||
+			    (pspecs[i]->flags & G_PARAM_WRITABLE) == 0 ||
+			    (pspecs[i]->flags & (G_PARAM_CONSTRUCT|G_PARAM_CONSTRUCT_ONLY)) != 0) {
 				/* no way of dumping this property */
-				g_warning("Unable to dump a property `%s' of %s",
-					  prop_name,
-					  g_type_name(G_OBJECT_TYPE (object)));
+				g_printerr("Unable to dump a property `%s' of %s",
+					   prop_name,
+					   g_type_name(G_OBJECT_TYPE (object)));
+				return NULL;
 			}
+		} else {
+			/* this property doesn't want to be exported in the usual way */
+			n--;
 			continue;
 		}
 
@@ -380,18 +395,26 @@ imsettings_object_dump(IMSettingsObject *object)
 		else
 			np = GUINT32_TO_LE (np);
 
-		((gchar *)v)[8] = (np >> 24) & 0xff;
-		((gchar *)v)[9] = (np >> 16) & 0xff;
-		((gchar *)v)[10] = (np >> 8) & 0xff;
-		((gchar *)v)[11] = np & 0xff;
+		((gchar *)v)[8] = ((gchar *)&np)[0];
+		((gchar *)v)[9] = ((gchar *)&np)[1];
+		((gchar *)v)[10] = ((gchar *)&np)[2];
+		((gchar *)v)[11] = ((gchar *)&np)[3];
 	}
 
-	IMSETTINGS_OBJECT_CLASS (object)->dump(object, stream);
+	if (IMSETTINGS_OBJECT_GET_CLASS (object)->dump) {
+		IMSETTINGS_OBJECT_GET_CLASS (object)->dump(object, stream);
+	} else {
+		g_printerr("Failed to dump the details");
+		g_string_free(retval, TRUE);
+		retval = NULL;
+		goto end;
+	}
 
 	g_string_append_len(retval,
 			    g_memory_output_stream_get_data(G_MEMORY_OUTPUT_STREAM (base_stream)),
 			    g_memory_output_stream_get_size(G_MEMORY_OUTPUT_STREAM (base_stream)));
 
+  end:
 	g_object_unref(stream);
 	g_object_unref(base_stream);
 
@@ -464,40 +487,49 @@ imsettings_object_load_from_stream(GDataInputStream *stream)
 
 		switch (value_type) {
 		    case G_TYPE_CHAR:
+			    g_value_init(&params[n].value, G_TYPE_CHAR);
 			    g_value_set_char(&params[n].value,
 					     g_data_input_stream_read_byte(stream, NULL, NULL));
 			    _skip_pad4 (stream, 1);
 			    break;
 		    case G_TYPE_UCHAR:
+			    g_value_init(&params[n].value, G_TYPE_UCHAR);
 			    g_value_set_uchar(&params[n].value,
 					      g_data_input_stream_read_byte(stream, NULL, NULL));
 			    _skip_pad4 (stream, 1);
 			    break;
 		    case G_TYPE_BOOLEAN:
+			    g_value_init(&params[n].value, G_TYPE_BOOLEAN);
 			    g_value_set_boolean(&params[n].value,
 						_swapu32 (g_data_input_stream_read_uint32(stream, NULL, NULL)));
 			    break;
 		    case G_TYPE_INT:
+			    g_value_init(&params[n].value, G_TYPE_INT);
 			    g_value_set_int(&params[n].value,
 					    _swap32 (g_data_input_stream_read_int32(stream, NULL, NULL)));
 			    break;
 		    case G_TYPE_UINT:
+			    g_value_init(&params[n].value, G_TYPE_UINT);
 			    g_value_set_uint(&params[n].value,
 					     _swapu32 (g_data_input_stream_read_uint32(stream, NULL, NULL)));
 			    break;
 		    case G_TYPE_LONG:
+			    g_value_init(&params[n].value, G_TYPE_LONG);
 			    g_value_set_long(&params[n].value,
 					     _swap32 (g_data_input_stream_read_int32(stream, NULL, NULL)));
 			    break;
 		    case G_TYPE_ULONG:
+			    g_value_init(&params[n].value, G_TYPE_ULONG);
 			    g_value_set_ulong(&params[n].value,
 					      _swapu32 (g_data_input_stream_read_uint32(stream, NULL, NULL)));
 			    break;
 		    case G_TYPE_INT64:
+			    g_value_init(&params[n].value, G_TYPE_INT64);
 			    g_value_set_int64(&params[n].value,
 					      _swap64 (g_data_input_stream_read_int64(stream, NULL, NULL)));
 			    break;
 		    case G_TYPE_UINT64:
+			    g_value_init(&params[n].value, G_TYPE_UINT64);
 			    g_value_set_uint64(&params[n].value,
 					       _swapu64 (g_data_input_stream_read_uint64(stream, NULL, NULL)));
 			    break;
@@ -513,7 +545,11 @@ imsettings_object_load_from_stream(GDataInputStream *stream)
 					    g_string_append_c(s, c);
 				    }
 				    _skip_pad4 (stream, s->len + 1);
-				    g_value_set_string(&params[n].value, s->str);
+				    g_value_init(&params[n].value, G_TYPE_STRING);
+				    if (s->len > 0)
+					    g_value_set_string(&params[n].value, s->str);
+				    else
+					    g_value_set_string(&params[n].value, NULL);
 				    g_string_free(s, TRUE);
 			    } G_STMT_END;
 			    break;
@@ -529,11 +565,13 @@ imsettings_object_load_from_stream(GDataInputStream *stream)
 
 				    end = g_buffered_input_stream_get_available(G_BUFFERED_INPUT_STREAM (stream));
 				    _skip_pad4 (stream, end - start);
+				    g_value_init(&params[n].value, G_TYPE_OBJECT);
 				    g_value_set_object(&params[n].value, o);
 			    } G_STMT_END;
 			    break;
 		    default:
 			    if (value_type == G_TYPE_GTYPE) {
+				    g_value_init(&params[n].value, G_TYPE_GTYPE);
 				    g_value_set_gtype(&params[n].value,
 						      g_data_input_stream_read_uint32(stream, NULL, NULL));
 			    } else {

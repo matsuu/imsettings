@@ -252,6 +252,7 @@ AC_CONFIG_FILES([
 	src/Makefile
 	utils/Makefile
 	tests/Makefile
+	tests/testcases/Makefile
 ])
 AC_OUTPUT
 

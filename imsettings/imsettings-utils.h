@@ -47,35 +47,41 @@ G_BEGIN_DECLS
 			g_data_input_stream_read_byte((_s_), NULL, NULL); \
 	} G_STMT_END
 #define imsettings_swap16(_o_,_v_)					\
-	((imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() && \
-	  imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB) ?	\
-	 GINT16_TO_BE (_v_) :						\
-	 GINT16_TO_LE (_v_))
+	(imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() ? \
+	 (imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB ?	\
+	  GINT16_TO_BE (_v_) :						\
+	  GINT16_TO_LE (_v_)) :						\
+	 (_v_))
 #define imsettings_swapu16(_o_,_v_)					\
-	((imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() && \
-	  imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB) ?	\
-	 GUINT16_TO_BE (_v_) :						\
-	 GUINT16_TO_LE (_v_))
+	(imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() ? \
+	 (imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB ?	\
+	  GUINT16_TO_BE (_v_) :						\
+	  GUINT16_TO_LE (_v_)) :					\
+	 (_v_))
 #define imsettings_swap32(_o_,_v_)					\
-	((imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() && \
-	  imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB) ?	\
-	 GINT32_TO_BE (_v_) :						\
-	 GINT32_TO_LE (_v_))
+	(imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() ? \
+	 (imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB ?	\
+	  GINT32_TO_BE (_v_) :						\
+	  GINT32_TO_LE (_v_)) :						\
+	 (_v_))
 #define imsettings_swapu32(_o_,_v_)					\
-	((imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() && \
-	  imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB) ?	\
-	 GUINT32_TO_BE (_v_) :						\
-	 GUINT32_TO_LE (_v_))
+	(imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() ? \
+	 (imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB ?	\
+	  GUINT32_TO_BE (_v_) :						\
+	  GUINT32_TO_LE (_v_)) :					\
+	 (_v_))
 #define imsettings_swap64(_o_,_v_)					\
-	((imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() && \
-	  imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB) ?	\
-	 GINT64_TO_BE (_v_) :						\
-	 GINT64_TO_LE (_v_))
+	(imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() ? \
+	 (imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB ?	\
+	  GINT64_TO_BE (_v_) :						\
+	  GINT64_TO_LE (_v_)) :						\
+	 (_v_))
 #define imsettings_swapu64(_o_,_v_)					\
-	((imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() && \
-	  imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB) ?	\
-	 GUINT64_TO_BE (_v_) :						\
-	 GUINT64_TO_LE (_v_))
+	(imsettings_object_get_byte_order(_o_) != imsettings_get_host_byte_order() ? \
+	 (imsettings_get_host_byte_order() == IMSETTINGS_OBJECT_MSB ?	\
+	  GUINT64_TO_BE (_v_) :						\
+	  GUINT64_TO_LE (_v_)) :					\
+	 (_v_))
 
 #define IMSETTINGS_GERROR	(imsettings_g_error_quark())
 

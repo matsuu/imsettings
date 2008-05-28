@@ -414,6 +414,9 @@ imsettings_info_get_property(GObject    *object,
 	g_value_set_boolean(value, priv->_m_)
 
 	switch (prop_id) {
+	    case PROP_LANGUAGE:
+		    _get_str_prop(language);
+		    break;
 	    case PROP_FILENAME:
 		    _get_str_prop(filename);
 		    break;
@@ -496,21 +499,34 @@ imsettings_info_dump(IMSettingsObject  *object,
 		     GDataOutputStream *stream)
 {
 	IMSettingsInfoPrivate *priv = IMSETTINGS_INFO_GET_PRIVATE (object);
-	gsize len;
+	gsize len = 0;
 
 	if (IMSETTINGS_OBJECT_CLASS (imsettings_info_parent_class)->dump)
 		IMSETTINGS_OBJECT_CLASS (imsettings_info_parent_class)->dump(object, stream);
 
 	/* PROP_LANGUAGE */
-	len = strlen(priv->language);
+	if (priv->language)
+		len = strlen(priv->language);
 	g_data_output_stream_put_uint32(stream, len, NULL, NULL);
-	g_data_output_stream_put_string(stream, priv->language, NULL, NULL);
+	if (priv->language)
+		g_data_output_stream_put_string(stream, priv->language, NULL, NULL);
 	imsettings_pad4 (stream, len);
 	/* PROP_FILENAME */
 	len = strlen(priv->filename);
 	g_data_output_stream_put_uint32(stream, len, NULL, NULL);
 	g_data_output_stream_put_string(stream, priv->filename, NULL, NULL);
 	imsettings_pad4 (stream, len);
+	/* PROP_SHORT_DESC */
+	if (priv->short_desc)
+		len = strlen(priv->short_desc);
+	else
+		len = 0;
+	g_data_output_stream_put_uint32(stream, len, NULL, NULL);
+	if (priv->short_desc)
+		g_data_output_stream_put_string(stream, priv->short_desc, NULL, NULL);
+	imsettings_pad4 (stream, len);
+	/* PROP_IS_XIM */
+	g_data_output_stream_put_uint32(stream, priv->is_xim, NULL, NULL);
 }
 
 static void
@@ -531,7 +547,10 @@ imsettings_info_load(IMSettingsObject *object,
 		g_string_append_c(s, g_data_input_stream_read_byte(stream, NULL, NULL));
 		len--;
 	}
-	priv->language = g_string_free(s, FALSE);
+	if (s->len > 0)
+		priv->language = g_string_free(s, FALSE);
+	else
+		g_string_free(s, TRUE);
 	imsettings_skip_pad4 (stream, len);
 	/* PROP_FILENAME */
 	s = g_string_new(NULL);
@@ -543,6 +562,22 @@ imsettings_info_load(IMSettingsObject *object,
 	}
 	priv->filename = g_string_free(s, FALSE);
 	imsettings_skip_pad4 (stream, len);
+	/* PROP_SHORT_DESC */
+	s = g_string_new(NULL);
+	len = imsettings_swapu32 (object,
+				  g_data_input_stream_read_uint32(stream, NULL, NULL));
+	while (len > 0) {
+		g_string_append_c(s, g_data_input_stream_read_byte(stream, NULL, NULL));
+		len--;
+	}
+	if (s->len > 0)
+		priv->short_desc = g_string_free(s, FALSE);
+	else
+		g_string_free(s, TRUE);
+	imsettings_skip_pad4 (stream, len);
+	/* PROP_IS_XIM */
+	priv->is_xim = imsettings_swapu32 (object,
+					   g_data_input_stream_read_uint32(stream, NULL, NULL));
 }
 
 static void
@@ -577,6 +612,20 @@ imsettings_info_class_init(IMSettingsInfoClass *klass)
 								     _("A filename referring to the IM information."),
 								     NULL,
 								     G_PARAM_READWRITE),
+						 TRUE);
+	imsettings_object_class_install_property(imsettings_class, PROP_SHORT_DESC,
+						 g_param_spec_string("short_desc",
+								     _("Short Description"),
+								     _("Short Description"),
+								     NULL,
+								     G_PARAM_READWRITE),
+						 TRUE);
+	imsettings_object_class_install_property(imsettings_class, PROP_IS_XIM,
+						 g_param_spec_boolean("is_xim",
+								      _("XIM"),
+								      _("Whether or not IM is a XIM server."),
+								      FALSE,
+								      G_PARAM_READABLE),
 						 TRUE);
 	g_object_class_install_property(object_class, PROP_GTK_IMM,
 					g_param_spec_string("gtkimm",
@@ -638,12 +687,6 @@ imsettings_info_class_init(IMSettingsInfoClass *klass)
 							    _("Command line options for auxiliary program"),
 							    NULL,
 							    G_PARAM_READWRITE));
-	g_object_class_install_property(object_class, PROP_SHORT_DESC,
-					g_param_spec_string("short_desc",
-							    _("Short Description"),
-							    _("Short Description"),
-							    NULL,
-							    G_PARAM_READWRITE));
 	g_object_class_install_property(object_class, PROP_LONG_DESC,
 					g_param_spec_string("long_desc",
 							    _("Long Description"),
@@ -662,12 +705,6 @@ imsettings_info_class_init(IMSettingsInfoClass *klass)
 							     _("Whether or not IM is an user default."),
 							     FALSE,
 							     G_PARAM_READWRITE));
-	g_object_class_install_property(object_class, PROP_IS_XIM,
-					g_param_spec_boolean("is_xim",
-							     _("XIM"),
-							     _("Whether or not IM is a XIM server."),
-							     FALSE,
-							     G_PARAM_READABLE));
 }
 
 static void
@@ -801,16 +838,17 @@ imsettings_info_new_with_lang(const gchar *filename,
 		return priv->_m_;					\
 	}
 
-_IMSETTINGS_DEFUNC_PROPERTY (const gchar *,filename, filename, NULL)
-_IMSETTINGS_DEFUNC_PROPERTY (const gchar *,gtkimm, gtkimm, NULL)
-_IMSETTINGS_DEFUNC_PROPERTY (const gchar *,qtimm, qtimm, NULL)
-_IMSETTINGS_DEFUNC_PROPERTY (const gchar *,xim, xim, NULL)
-_IMSETTINGS_DEFUNC_PROPERTY (const gchar *,xim_program, xim_prog, NULL)
-_IMSETTINGS_DEFUNC_PROPERTY (const gchar *,xim_args, xim_args, NULL)
-_IMSETTINGS_DEFUNC_PROPERTY (const gchar *,prefs_program, prefs_prog, NULL)
-_IMSETTINGS_DEFUNC_PROPERTY (const gchar *,prefs_args, prefs_args, NULL)
-_IMSETTINGS_DEFUNC_PROPERTY (const gchar *,aux_program, aux_prog, NULL)
-_IMSETTINGS_DEFUNC_PROPERTY (const gchar *,aux_args, aux_args, NULL)
+_IMSETTINGS_DEFUNC_PROPERTY (const gchar *, language, language, NULL)
+_IMSETTINGS_DEFUNC_PROPERTY (const gchar *, filename, filename, NULL)
+_IMSETTINGS_DEFUNC_PROPERTY (const gchar *, gtkimm, gtkimm, NULL)
+_IMSETTINGS_DEFUNC_PROPERTY (const gchar *, qtimm, qtimm, NULL)
+_IMSETTINGS_DEFUNC_PROPERTY (const gchar *, xim, xim, NULL)
+_IMSETTINGS_DEFUNC_PROPERTY (const gchar *, xim_program, xim_prog, NULL)
+_IMSETTINGS_DEFUNC_PROPERTY (const gchar *, xim_args, xim_args, NULL)
+_IMSETTINGS_DEFUNC_PROPERTY (const gchar *, prefs_program, prefs_prog, NULL)
+_IMSETTINGS_DEFUNC_PROPERTY (const gchar *, prefs_args, prefs_args, NULL)
+_IMSETTINGS_DEFUNC_PROPERTY (const gchar *, aux_program, aux_prog, NULL)
+_IMSETTINGS_DEFUNC_PROPERTY (const gchar *, aux_args, aux_args, NULL)
 
 const gchar *
 imsettings_info_get_short_desc(IMSettingsInfo *info)
@@ -904,18 +942,35 @@ imsettings_info_compare(const IMSettingsInfo *info1,
 	((!priv1->_o_ && !priv2->_o_) ||				\
 	 (priv1->_o_ && priv2->_o_ && strcmp(priv1->_o_, priv2->_o_) == 0))
 
-	return (_cmp(gtkimm) &&
-		_cmp(qtimm) &&
-		_cmp(xim) &&
-		_cmp(xim_prog) &&
-		_cmp(xim_args) &&
-		_cmp(prefs_prog) &&
-		_cmp(prefs_args) &&
-		_cmp(aux_prog) &&
-		_cmp(aux_args) &&
-		_cmp(short_desc) &&
-		_cmp(long_desc) &&
+#if GNOME_ENABLE_DEBUG
+	g_return_val_if_fail (_cmp (gtkimm), FALSE);
+	g_return_val_if_fail (_cmp (qtimm), FALSE);
+	g_return_val_if_fail (_cmp (xim), FALSE);
+	g_return_val_if_fail (_cmp (xim_prog), FALSE);
+	g_return_val_if_fail (_cmp (xim_args), FALSE);
+	g_return_val_if_fail (_cmp (prefs_prog), FALSE);
+	g_return_val_if_fail (_cmp (prefs_args), FALSE);
+	g_return_val_if_fail (_cmp (aux_prog), FALSE);
+	g_return_val_if_fail (_cmp (aux_args), FALSE);
+	g_return_val_if_fail (_cmp (short_desc), FALSE);
+	g_return_val_if_fail (_cmp (long_desc), FALSE);
+	g_return_val_if_fail (priv1->ignore == priv2->ignore, FALSE);
+
+	return TRUE;
+#else
+	return (_cmp (gtkimm) &&
+		_cmp (qtimm) &&
+		_cmp (xim) &&
+		_cmp (xim_prog) &&
+		_cmp (xim_args) &&
+		_cmp (prefs_prog) &&
+		_cmp (prefs_args) &&
+		_cmp (aux_prog) &&
+		_cmp (aux_args) &&
+		_cmp (short_desc) &&
+		_cmp (long_desc) &&
 		(priv1->ignore == priv2->ignore));
+#endif
 
 #undef _cmp
 }

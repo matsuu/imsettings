@@ -51,6 +51,7 @@ GType           imsettings_info_get_type              (void) G_GNUC_CONST;
 IMSettingsInfo *imsettings_info_new                   (const gchar          *filename);
 IMSettingsInfo *imsettings_info_new_with_lang         (const gchar          *filename,
 						       const gchar          *language);
+const gchar    *imsettings_info_get_language          (IMSettingsInfo       *info);
 const gchar    *imsettings_info_get_filename          (IMSettingsInfo       *info);
 const gchar    *imsettings_info_get_gtkimm            (IMSettingsInfo       *info);
 const gchar    *imsettings_info_get_qtimm             (IMSettingsInfo       *info);
