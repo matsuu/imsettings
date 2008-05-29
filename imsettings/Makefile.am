@@ -1,71 +1,71 @@
 ##
 # Global definitions
 NULL =
-INCLUDES =						\
-	-DIMSETTINGS_LOCALEDIR="\"$(datadir)/locale\""	\
-	-DXINIT_PATH="\"$(XINIT_PATH)\""		\
-	-DXINPUT_PATH="\"$(XINPUT_PATH)\""		\
-	-DXINPUT_SUFFIX="\"$(XINPUT_SUFFIX)\""		\
-	-DXINPUTINFO_PATH="\"$(libexecdir)\""		\
-	-I$(top_srcdir)/imsettings/			\
-	$(IMSETTINGS_CFLAGS)				\
+INCLUDES =							\
+	-DIMSETTINGS_LOCALEDIR="\"$(datadir)/locale\""		\
+	-DXINIT_PATH="\"$(XINIT_PATH)\""			\
+	-DXINPUT_PATH="\"$(XINPUT_PATH)\""			\
+	-DXINPUT_SUFFIX="\"$(XINPUT_SUFFIX)\""			\
+	-DXINPUTINFO_PATH="\"$(libexecdir)\""			\
+	-I$(top_srcdir)/imsettings/				\
+	$(IMSETTINGS_CFLAGS)					\
 	$(NULL)
-LIBS =							\
-	@LDFLAGS@					\
-	$(IMSETTINGS_LIBS)				\
+LIBS =								\
+	@LDFLAGS@						\
+	$(IMSETTINGS_LIBS)					\
 	$(NULL)
-EXTRA_DIST =						\
-	imsettings.xml					\
-	marshal.list					\
+EXTRA_DIST =							\
+	imsettings.xml						\
+	marshal.list						\
 	$(NULL)
-MAINTAINERCLEANFILES =					\
-	$(imsettings_built_public_headers)		\
-	$(imsettings_built_private_headers)		\
-	$(imsettings_built_sources)			\
-	$(stamp_files)					\
+MAINTAINERCLEANFILES =						\
+	$(imsettings_built_public_headers)			\
+	$(imsettings_built_private_headers)			\
+	$(imsettings_built_sources)				\
+	$(stamp_files)						\
 	$(NULL)
-CLEANFILES =						\
-	xgen-imh					\
-	xgen-imc					\
+CLEANFILES =							\
+	xgen-imh						\
+	xgen-imc						\
 	$(NULL)
 
 
 ##
 # Local definitions
-imsettings_public_headers =				\
-	imsettings.h					\
-	imsettings-info.h				\
-	imsettings-object.h				\
-	imsettings-observer.h				\
-	imsettings-request.h				\
-	imsettings-utils.h				\
+imsettings_public_headers =					\
+	imsettings.h						\
+	imsettings-info.h					\
+	imsettings-object.h					\
+	imsettings-observer.h					\
+	imsettings-request.h					\
+	imsettings-utils.h					\
+	$(NULL)	
+imsettings_private_headers =					\
+	imsettings-info-private.h				\
 	$(NULL)
-imsettings_private_headers =				\
-	imsettings-info-private.h			\
+imsettings_built_public_headers =				\
+	imsettings-glib-bindings.h				\
 	$(NULL)
-imsettings_built_public_headers =			\
-	imsettings-glib-bindings.h			\
-	$(NULL)
-imsettings_built_private_headers =			\
-	imsettings-glib-glue.h				\
-	imsettings-marshal.h				\
-	$(NULL)
-#
-imsettings_built_sources =				\
-	imsettings-marshal.c				\
-	$(NULL)
-imsettings_sources =					\
-	imsettings-info.c				\
-	imsettings-object.c				\
-	imsettings-observer.c				\
-	imsettings-request.c				\
-	imsettings-utils.c				\
-	$(imsettings_built_sources)			\
+imsettings_built_private_headers =				\
+	imsettings-glib-glue.h					\
+	imsettings-marshal.h					\
 	$(NULL)
 #
-stamp_files =						\
-	stamp-bindings.h				\
-	stamp-marshal.h					\
+imsettings_built_sources =					\
+	imsettings-marshal.c					\
+	$(NULL)
+imsettings_sources =						\
+	imsettings-info.c					\
+	imsettings-object.c					\
+	imsettings-observer.c					\
+	imsettings-request.c					\
+	imsettings-utils.c					\
+	$(imsettings_built_sources)				\
+	$(NULL)
+#
+stamp_files =							\
+	stamp-bindings.h					\
+	stamp-marshal.h						\
 	$(NULL)
 
 
@@ -100,27 +100,28 @@ imsettings-marshal.c: @REBUILD@ imsettings-marshal.h Makefile
 
 ##
 # Target platform
-lib_LTLIBRARIES = 					\
-	libimsettings.la				\
+lib_LTLIBRARIES = 						\
+	libimsettings.la					\
 	$(NULL)
 #
 imsettingsincdir = $(includedir)/imsettings
-imsettingsinc_HEADERS =					\
-	$(imsettings_public_headers)			\
-	$(imsettings_built_public_headers)		\
+imsettingsinc_HEADERS =						\
+	$(imsettings_public_headers)				\
+	$(imsettings_built_public_headers)			\
 	$(NULL)
 #
-noinst_HEADERS =					\
-	$(imsettings_private_headers)			\
-	$(imsettings_built_private_headers)		\
+noinst_HEADERS =						\
+	$(imsettings_private_headers)				\
+	$(imsettings_built_private_headers)			\
 	$(NULL)
 #
-libimsettings_la_SOURCES =				\
-	$(imsettings_sources)				\
+libimsettings_la_SOURCES =					\
+	$(imsettings_sources)					\
 	$(NULL)
-libimsettings_la_CFLAGS =				\
-	-DG_LOG_DOMAIN="\"IMSettings\""			\
+libimsettings_la_CFLAGS =					\
+	-DG_LOG_DOMAIN="\"IMSettings\""				\
 	$(NULL)
-libimsettings_la_LDFLAGS =				\
-	$(LDFLAGS)					\
+libimsettings_la_LDFLAGS =					\
+	$(LDFLAGS)						\
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
 	$(NULL)

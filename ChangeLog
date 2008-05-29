@@ -1,3 +1,8 @@
+2008-05-29  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/Makefile.am (libimsettings_la_LDFLAGS):
+	Add -version-info.
+
 2008-05-28  Akira TAGOH  <tagoh@redhat.com>
 
 	* tests/imsettings-info.c: New testcase for IMSettingsInfo.
