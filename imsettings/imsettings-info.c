@@ -97,9 +97,6 @@ enum {
 };
 
 
-static GPtrArray *_imsettings_filename_list = NULL;
-
-
 G_DEFINE_TYPE (IMSettingsInfo, imsettings_info, IMSETTINGS_TYPE_OBJECT);
 
 /*
@@ -726,80 +723,9 @@ imsettings_info_init(IMSettingsInfo *info)
 	priv->long_desc = NULL;
 }
 
-static GPtrArray *
-imsettings_info_update_filename_list(const gchar *_path)
-{
-	const gchar *path, *name;
-	GDir *dir;
-	GError *error = NULL;
-	gchar *filename;
-	struct stat st;
-	size_t len, suffixlen = strlen(XINPUT_SUFFIX);
-	GPtrArray *retval = NULL;
-
-	if (_path == NULL)
-		path = XINPUT_PATH;
-	else
-		path = _path;
-
-	if ((dir = g_dir_open(path, 0, &error)) == NULL) {
-		g_warning("%s\n", error->message);
-
-		return NULL;
-	}
-	retval = g_ptr_array_new();
-	while ((name = g_dir_read_name(dir)) != NULL) {
-		len = strlen(name);
-		if (len < suffixlen ||
-		    strcmp(&name[len - suffixlen], XINPUT_SUFFIX) != 0)
-			continue;
-		filename = g_build_filename(path, name, NULL);
-		if (lstat(filename, &st) == 0) {
-			if (S_ISREG (st.st_mode) && !S_ISLNK (st.st_mode))
-				g_ptr_array_add(retval, g_strdup(filename));
-		}
-		g_free(filename);
-	}
-	g_dir_close(dir);
-
-	if (retval->len == 0) {
-		g_ptr_array_free(retval, TRUE);
-		retval = NULL;
-	}
-
-	return retval;
-}
-
 /*
  * Public functions
  */
-void
-_imsettings_info_init(void)
-{
-	if (_imsettings_filename_list)
-		_imsettings_info_finalize();
-
-	_imsettings_filename_list = imsettings_info_update_filename_list(NULL);
-}
-
-void
-_imsettings_info_finalize(void)
-{
-	gint i;
-
-	for (i = 0; i < _imsettings_filename_list->len; i++)
-		g_free(g_ptr_array_index(_imsettings_filename_list, i));
-
-	g_ptr_array_free(_imsettings_filename_list, TRUE);
-	_imsettings_filename_list = NULL;
-}
-
-GPtrArray *
-_imsettings_info_get_filename_list(void)
-{
-	return _imsettings_filename_list;
-}
-
 IMSettingsInfo *
 imsettings_info_new(const gchar *filename)
 {

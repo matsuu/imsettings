@@ -1,5 +1,9 @@
 2008-05-30  Akira TAGOH  <tagoh@redhat.com>
 
+	* imsettings/imsettings-info.c (imsettings_info_update_filename_list)
+	(_imsettings_info_init, _imsettings_info_finalize)
+	(_imsettings_info_get_filename_list): Removed. no longer used.
+
 	* src/factory_info.c (imsettings_info_manager_get_fam_target)
 	(imsettings_info_manager_fam_event_loop)
 	(imsettings_info_manager_pending_init): Removed.

@@ -40,10 +40,6 @@ G_BEGIN_DECLS
 #define IMSETTINGS_USER_SPECIFIC_LONG_DESC	N_("xinputrc was modified by the user")
 
 
-void       _imsettings_info_init             (void);
-void       _imsettings_info_finalize         (void);
-GPtrArray *_imsettings_info_get_filename_list(void);
-
 G_END_DECLS
 
 #endif /* __IMSETTINGS_IMSETTINGS_INFO_PRIVATE_H__ */
