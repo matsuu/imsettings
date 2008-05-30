@@ -1,5 +1,17 @@
 2008-05-30  Akira TAGOH  <tagoh@redhat.com>
 
+	* src/factory_info.c (imsettings_info_manager_get_fam_target)
+	(imsettings_info_manager_fam_event_loop)
+	(imsettings_info_manager_pending_init): Removed.
+	(imsettings_info_manager_real_changed_xinputd): New function to take
+	actions for monitoring xinput.d.
+	(imsettings_info_manager_real_changed_dot_xinputrc): likewise for
+	.xinputrc.
+	(imsettings_info_manager_real_changed_xinputrc): likewise for xinputrc.
+	(imsettings_info_manager_init_monitor): renamed from *_init_fam.
+	We use GFileMonitor instead of using FAM directly.
+	(imsettings_info_manager_tini_monitor): likewise.
+
 	* imsettings/imsettings-object.c (imsettings_object_base_class_init):
 	Initialize the hash here to share that in the class properly.
 	(imsettings_object_base_class_finalize): Destroy the hash instead of
