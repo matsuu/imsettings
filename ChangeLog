@@ -1,3 +1,10 @@
+2008-05-30  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-object.c (imsettings_object_base_class_init):
+	Initialize the hash here to share that in the class properly.
+	(imsettings_object_base_class_finalize): Destroy the hash instead of
+	the object finalizer. that caused an error in g_hash_table_destroy.
+
 2008-05-29  Akira TAGOH  <tagoh@redhat.com>
 
 	* imsettings/Makefile.am (libimsettings_la_LDFLAGS):

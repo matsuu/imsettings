@@ -72,8 +72,7 @@
 static const guint8 _imsettings_dump_major_version = 1;
 static const guint8 _imsettings_dump_minor_version = 0;
 static guint8 _imsettings_host_byte_order = 0;
-
-G_DEFINE_ABSTRACT_TYPE (IMSettingsObject, imsettings_object, G_TYPE_OBJECT);
+static gpointer imsettings_object_parent_class = NULL;
 
 /*
  * Private functions
@@ -81,10 +80,6 @@ G_DEFINE_ABSTRACT_TYPE (IMSettingsObject, imsettings_object, G_TYPE_OBJECT);
 static void
 imsettings_object_finalize(GObject *object)
 {
-	IMSettingsObjectClass *imsettings_class = IMSETTINGS_OBJECT_GET_CLASS (object);
-
-	g_hash_table_destroy(imsettings_class->imsettings_properties);
-
 	if (G_OBJECT_CLASS (imsettings_object_parent_class)->finalize)
 		G_OBJECT_CLASS (imsettings_object_parent_class)->finalize(object);
 }
@@ -124,16 +119,28 @@ imsettings_object_real_load(IMSettingsObject *object,
 }
 
 static void
+imsettings_object_base_class_init(IMSettingsObjectClass *klass)
+{
+	klass->imsettings_properties = g_hash_table_new(g_direct_hash, g_direct_equal);
+}
+
+static void
+imsettings_object_base_class_finalize(IMSettingsObjectClass *klass)
+{
+	g_hash_table_destroy(klass->imsettings_properties);
+}
+
+static void
 imsettings_object_class_init(IMSettingsObjectClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	imsettings_object_parent_class = g_type_class_peek_parent(klass);
 
 	object_class->finalize = imsettings_object_finalize;
 
 	klass->dump = imsettings_object_real_dump;
 	klass->load = imsettings_object_real_load;
-
-	klass->imsettings_properties = g_hash_table_new(g_direct_hash, g_direct_equal);
 }
 
 static void
@@ -145,6 +152,35 @@ imsettings_object_init(IMSettingsObject *object)
 /*
  * Public functions
  */
+GType
+imsettings_object_get_type(void)
+{
+	static volatile gsize type_id_volatile = 0;
+
+	if (g_once_init_enter(&type_id_volatile)) {
+		GType type_id;
+		GTypeInfo info = {
+			.class_size     = sizeof (IMSettingsObjectClass),
+			.base_init      = (GBaseInitFunc)imsettings_object_base_class_init,
+			.base_finalize  = (GBaseFinalizeFunc)imsettings_object_base_class_finalize,
+			.class_init     = (GClassInitFunc)imsettings_object_class_init,
+			.class_finalize = NULL,
+			.class_data     = NULL,
+			.instance_size  = sizeof (IMSettingsObject),
+			.n_preallocs    = 0,
+			.instance_init  = (GInstanceInitFunc)imsettings_object_init,
+			.value_table    = NULL
+		};
+
+		type_id = g_type_register_static(G_TYPE_OBJECT, "IMSettingsObject",
+						 &info, G_TYPE_FLAG_ABSTRACT);
+
+		g_once_init_leave(&type_id_volatile, type_id);
+	}
+
+	return type_id_volatile;
+}
+
 guint8
 imsettings_get_host_byte_order(void)
 {
