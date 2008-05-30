@@ -1,5 +1,15 @@
 2008-05-30  Akira TAGOH  <tagoh@redhat.com>
 
+	* tests/gcit_5.c: New testcase for Issue#5.
+
+	* src/factory_info.c (imsettings_info_manager_real_set_property):
+	new function.
+	(imsettings_info_manager_real_get_property): new function.
+	(imsettings_info_manager_init_monitor): check if .xinputrc or xinputrc
+	really exists.
+	(main): Add --xinputrcdir, --xinputdir and --homedir for debugging
+	purpose.
+
 	* imsettings/imsettings-info.c (imsettings_info_update_filename_list)
 	(_imsettings_info_init, _imsettings_info_finalize)
 	(_imsettings_info_get_filename_list): Removed. no longer used.

@@ -5,6 +5,7 @@ SUBDIRS = testcases
 INCLUDES =						\
 	-I$(top_srcdir)/imsettings			\
 	-DIMSETTINGS_SRCDIR="\"$(srcdir)\""		\
+	-DIMSETTINGS_BUILDDIR="\"$(top_builddir)\""	\
 	$(IMSETTINGS_CFLAGS)				\
 	$(CHECK_CFLAGS)					\
 	$(NULL)
@@ -47,6 +48,7 @@ if ENABLE_UNIT_TEST
 noinst_PROGRAMS +=					\
 	test-imsettings-object				\
 	test-imsettings-info				\
+	test-gcit-5					\
 	$(NULL)
 endif
 #
@@ -57,5 +59,10 @@ test_imsettings_object_SOURCES =			\
 #
 test_imsettings_info_SOURCES =				\
 	imsettings-info.c				\
+	$(common_sources)				\
+	$(NULL)
+#
+test_gcit_5_SOURCES =					\
+	gcit_5.c					\
 	$(common_sources)				\
 	$(NULL)

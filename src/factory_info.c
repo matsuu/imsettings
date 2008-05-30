@@ -61,6 +61,13 @@ typedef struct _IMSettingsInfoManagerPrivate	IMSettingsInfoManagerPrivate;
 #define IMSETTINGS_INFO_MANAGER_GET_PRIVATE(_o_)	(G_TYPE_INSTANCE_GET_PRIVATE ((_o_), IMSETTINGS_TYPE_INFO_MANAGER, IMSettingsInfoManagerPrivate))
 
 enum {
+	PROP_0 = 0,
+	PROP_XINPUTRCDIR,
+	PROP_XINPUTDIR,
+	PROP_HOMEDIR,
+	LAST_PROP
+};
+enum {
 	STATUS_CHANGED,
 	LAST_SIGNAL
 };
@@ -83,6 +90,9 @@ struct _IMSettingsInfoManagerPrivate {
 	GFileMonitor   *mon_xinputrc;
 	gchar          *current_user_im;
 	gchar          *current_system_im;
+	gchar          *xinputrcdir;
+	gchar          *xinputdir;
+	gchar          *homedir;
 };
 
 static gboolean imsettings_info_manager_init_monitor(IMSettingsInfoManager *manager);
@@ -203,6 +213,85 @@ imsettings_info_manager_remove_info(IMSettingsInfoManagerPrivate *priv,
 }
 
 static void
+imsettings_info_manager_real_set_property(GObject      *object,
+					  guint         prop_id,
+					  const GValue *value,
+					  GParamSpec   *pspec)
+{
+	IMSettingsInfoManagerPrivate *priv = IMSETTINGS_INFO_MANAGER_GET_PRIVATE (object);
+	const gchar *p;
+
+	switch (prop_id) {
+	    case PROP_XINPUTRCDIR:
+		    p = g_value_get_string(value);
+		    if (p == NULL ||
+			!g_file_test(p, G_FILE_TEST_IS_DIR)) {
+			    g_warning("Given directory through `xinputrcdir' property is invalid: %s",
+				      p);
+		    } else {
+			    d(g_print("*** changing xinputrc dir from %s to %s\n",
+				      priv->xinputrcdir, p));
+			    g_free(priv->xinputrcdir);
+			    priv->xinputrcdir = g_strdup(p);
+		    }
+		    break;
+	    case PROP_XINPUTDIR:
+		    p = g_value_get_string(value);
+		    if (p == NULL ||
+			!g_file_test(p, G_FILE_TEST_IS_DIR)) {
+			    g_warning("Given directory through `xinputdir' property is invalid: %s",
+				      p);
+		    } else {
+			    d(g_print("*** changing xinput dir from %s to %s\n",
+				      priv->xinputdir, p));
+			    g_free(priv->xinputdir);
+			    priv->xinputdir = g_strdup(p);
+		    }
+		    break;
+	    case PROP_HOMEDIR:
+		    p = g_value_get_string(value);
+		    if (p == NULL ||
+			!g_file_test(p, G_FILE_TEST_IS_DIR)) {
+			    g_warning("Given directory through `homedir' property is invalid: %s",
+				      p);
+		    } else {
+			    d(g_print("*** changing home dir from %s to %s\n",
+				      priv->homedir, p));
+			    g_free(priv->homedir);
+			    priv->homedir = g_strdup(p);
+		    }
+		    break;
+	    default:
+		    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+		    break;
+	}
+}
+
+static void
+imsettings_info_manager_real_get_property(GObject    *object,
+					  guint       prop_id,
+					  GValue     *value,
+					  GParamSpec *pspec)
+{
+	IMSettingsInfoManagerPrivate *priv = IMSETTINGS_INFO_MANAGER_GET_PRIVATE (object);
+
+	switch (prop_id) {
+	    case PROP_XINPUTRCDIR:
+		    g_value_set_string(value, priv->xinputrcdir);
+		    break;
+	    case PROP_XINPUTDIR:
+		    g_value_set_string(value, priv->xinputdir);
+		    break;
+	    case PROP_HOMEDIR:
+		    g_value_set_string(value, priv->homedir);
+		    break;
+	    default:
+		    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+		    break;
+	}
+}
+
+static void
 imsettings_info_manager_real_finalize(GObject *object)
 {
 	IMSettingsInfoManagerPrivate *priv = IMSETTINGS_INFO_MANAGER_GET_PRIVATE (object);
@@ -213,6 +302,9 @@ imsettings_info_manager_real_finalize(GObject *object)
 		g_hash_table_destroy(priv->im_info_from_filename);
 	dbus_connection_unref(priv->req_conn);
 	imsettings_info_manager_tini_monitor(IMSETTINGS_INFO_MANAGER (object));
+	g_free(priv->xinputrcdir);
+	g_free(priv->xinputdir);
+	g_free(priv->homedir);
 
 	if (G_OBJECT_CLASS (imsettings_info_manager_parent_class)->finalize)
 		G_OBJECT_CLASS (imsettings_info_manager_parent_class)->finalize(object);
@@ -471,7 +563,6 @@ static gboolean
 imsettings_info_manager_init_monitor(IMSettingsInfoManager *manager)
 {
 	IMSettingsInfoManagerPrivate *priv = IMSETTINGS_INFO_MANAGER_GET_PRIVATE (manager);
-	const gchar *homedir;
 	gchar *file = NULL, *path, *p;
 	const gchar *filename;
 	GError *error = NULL;
@@ -484,7 +575,7 @@ imsettings_info_manager_init_monitor(IMSettingsInfoManager *manager)
 	g_hash_table_remove_all(priv->im_info_from_name);
 
 	/* for all xinput configurations */
-	f = g_file_new_for_path(XINPUT_PATH);
+	f = g_file_new_for_path(priv->xinputdir);
 	path = g_file_get_path(f);
 	e = g_file_enumerate_children(f, "standard::*",
 				      G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
@@ -513,7 +604,7 @@ imsettings_info_manager_init_monitor(IMSettingsInfoManager *manager)
 						     &error);
 	if (error) {
 		g_warning("Unable to monitor %s: %s",
-			  XINPUT_PATH, error->message);
+			  priv->xinputdir, error->message);
 		g_clear_error(&error);
 	} else {
 		g_signal_connect(priv->mon_xinputd, "changed",
@@ -525,30 +616,26 @@ imsettings_info_manager_init_monitor(IMSettingsInfoManager *manager)
 	f = NULL;
 
 	/* for user specific xinputrc */
-	homedir = g_get_home_dir();
-	if (homedir != NULL) {
-		file = g_build_filename(homedir, IMSETTINGS_USER_XINPUT_CONF, NULL);
+	if (priv->homedir != NULL) {
+		file = g_build_filename(priv->homedir, IMSETTINGS_USER_XINPUT_CONF, NULL);
 		f = g_file_new_for_path(file);
-		i = g_file_query_info(f, "standard::*",
-				      G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
-				      NULL, NULL);
-		info = imsettings_info_manager_add_info(priv, file, TRUE);
+		if (g_file_test(file, G_FILE_TEST_EXISTS)) {
+			info = imsettings_info_manager_add_info(priv, file, TRUE);
 
-		G_LOCK (imsettings_info_manager);
+			G_LOCK (imsettings_info_manager);
 
-		if (priv->current_user_im &&
-		    (old_info = g_hash_table_lookup(priv->im_info_from_name,
-						    priv->current_user_im)))
-			g_object_set(G_OBJECT (old_info),
-				     "is_user_default",
-				     FALSE, NULL);
-		g_object_set(G_OBJECT (info), "is_user_default", TRUE, NULL);
-		g_free(priv->current_user_im);
-		priv->current_user_im = g_strdup(imsettings_info_get_short_desc(info));
+			if (priv->current_user_im &&
+			    (old_info = g_hash_table_lookup(priv->im_info_from_name,
+							    priv->current_user_im)))
+				g_object_set(G_OBJECT (old_info),
+					     "is_user_default",
+					     FALSE, NULL);
+			g_object_set(G_OBJECT (info), "is_user_default", TRUE, NULL);
+			g_free(priv->current_user_im);
+			priv->current_user_im = g_strdup(imsettings_info_get_short_desc(info));
 
-		G_UNLOCK (imsettings_info_manager);
-
-		g_object_unref(i);
+			G_UNLOCK (imsettings_info_manager);
+		}
 	}
 	priv->mon_dot_xinputrc = g_file_monitor_file(f,
 						     G_FILE_MONITOR_NONE,
@@ -567,29 +654,25 @@ imsettings_info_manager_init_monitor(IMSettingsInfoManager *manager)
 	g_object_unref(f);
 
 	/* for system-wide xinputrc */
-	file = g_build_filename(XINPUTRC_PATH, IMSETTINGS_GLOBAL_XINPUT_CONF, NULL);
+	file = g_build_filename(priv->xinputrcdir, IMSETTINGS_GLOBAL_XINPUT_CONF, NULL);
 	f = g_file_new_for_path(file);
-	i = g_file_query_info(f, "standard::*",
-			      G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
-			      NULL, NULL);
-	info = imsettings_info_manager_add_info(priv, file, TRUE);
+	if (g_file_test(file, G_FILE_TEST_EXISTS)) {
+		info = imsettings_info_manager_add_info(priv, file, TRUE);
 
-	G_LOCK (imsettings_info_manager);
+		G_LOCK (imsettings_info_manager);
 
-	g_object_unref(i);
+		if (priv->current_system_im &&
+		    (old_info = g_hash_table_lookup(priv->im_info_from_name,
+						    priv->current_system_im)))
+			g_object_set(G_OBJECT (old_info),
+				     "is_system_default",
+				     FALSE, NULL);
+		g_object_set(G_OBJECT (info), "is_system_default", TRUE, NULL);
+		g_free(priv->current_system_im);
+		priv->current_system_im = g_strdup(imsettings_info_get_short_desc(info));
 
-	if (priv->current_system_im &&
-	    (old_info = g_hash_table_lookup(priv->im_info_from_name,
-					    priv->current_system_im)))
-		g_object_set(G_OBJECT (old_info),
-			     "is_system_default",
-			     FALSE, NULL);
-	g_object_set(G_OBJECT (info), "is_system_default", TRUE, NULL);
-	g_free(priv->current_system_im);
-	priv->current_system_im = g_strdup(imsettings_info_get_short_desc(info));
-
-	G_UNLOCK (imsettings_info_manager);
-
+		G_UNLOCK (imsettings_info_manager);
+	}
 	priv->mon_xinputrc = g_file_monitor_file(f,
 						 G_FILE_MONITOR_NONE,
 						 NULL,
@@ -636,13 +719,34 @@ imsettings_info_manager_class_init(IMSettingsInfoManagerClass *klass)
 
 	g_type_class_add_private(klass, sizeof (IMSettingsInfoManagerPrivate));
 
-	object_class->finalize = imsettings_info_manager_real_finalize;
+	object_class->set_property = imsettings_info_manager_real_set_property;
+	object_class->get_property = imsettings_info_manager_real_get_property;
+	object_class->finalize     = imsettings_info_manager_real_finalize;
 
 	observer_class->get_list = imsettings_info_manager_real_get_list;
 	observer_class->get_current_user_im = imsettings_info_manager_real_get_current_user_im;
 	observer_class->get_current_system_im = imsettings_info_manager_real_get_current_system_im;
 	observer_class->get_info = imsettings_info_manager_real_get_info;
 
+	/* properties */
+	g_object_class_install_property(object_class, PROP_XINPUTRCDIR,
+					g_param_spec_string("xinputrcdir",
+							    _("xinputrc directory"),
+							    _("A directory where puts the system wide xinputrc on."),
+							    NULL,
+							    G_PARAM_READWRITE));
+	g_object_class_install_property(object_class, PROP_XINPUTDIR,
+					g_param_spec_string("xinputdir",
+							    _("xinput directory"),
+							    _("A directory where puts the IM configurations on."),
+							    NULL,
+							    G_PARAM_READWRITE));
+	g_object_class_install_property(object_class, PROP_HOMEDIR,
+					g_param_spec_string("homedir",
+							    _("home directory"),
+							    _("home directory"),
+							    NULL,
+							    G_PARAM_READWRITE));
 	/* signals */
 	signals[STATUS_CHANGED] = g_signal_new("status-changed",
 					       G_OBJECT_CLASS_TYPE (klass),
@@ -658,6 +762,7 @@ static void
 imsettings_info_manager_init(IMSettingsInfoManager *manager)
 {
 	IMSettingsInfoManagerPrivate *priv = IMSETTINGS_INFO_MANAGER_GET_PRIVATE (manager);
+	const gchar *p;
 
 	priv->req_conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	priv->im_info_from_name = g_hash_table_new_full(g_str_hash,
@@ -668,6 +773,13 @@ imsettings_info_manager_init(IMSettingsInfoManager *manager)
 							    g_str_equal,
 							    g_free,
 							    g_object_unref);
+	priv->xinputrcdir = g_strdup(XINPUTRC_PATH);
+	priv->xinputdir = g_strdup(XINPUT_PATH);
+	p = g_get_home_dir();
+	if (p)
+		priv->homedir = g_strdup(p);
+	else
+		priv->homedir = NULL;
 
 	imsettings_info_manager_init_monitor(manager);
 }
@@ -695,9 +807,13 @@ main(int    argc,
 	GMainLoop *loop;
 	IMSettingsInfoManager *manager;
 	gboolean arg_replace = FALSE;
+	gchar *arg_xinputrcdir = NULL, *arg_xinputdir = NULL, *arg_homedir;
 	GOptionContext *ctx = g_option_context_new(NULL);
 	GOptionEntry entries[] = {
 		{"replace", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_replace, N_("Replace the running settings daemon with new instance."), NULL},
+		{"xinputrcdir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_xinputrcdir, N_("A directory where puts the system-wide xinputrc puts on (debugging only)"), N_("DIR")},
+		{"xinputdir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_xinputdir, N_("A directory where puts the IM configurations puts on (debugging only)"), N_("DIR")},
+		{"homedir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_homedir, N_("A home directory (debugging only)"), N_("DIR")},
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};
 	DBusGConnection *gconn;
@@ -729,6 +845,19 @@ main(int    argc,
 	manager = imsettings_info_manager_new(gconn, arg_replace);
 	if (manager == NULL)
 		exit(1);
+	/* XXX: ugly hack to reduce loading time */
+	if (arg_xinputrcdir)
+		g_object_set(manager, "xinputrcdir", arg_xinputrcdir, NULL);
+	if (arg_xinputdir)
+		g_object_set(manager, "xinputdir", arg_xinputdir, NULL);
+	if (arg_homedir)
+		g_object_set(manager, "homedir", arg_homedir, NULL);
+	if (arg_xinputrcdir ||
+	    arg_xinputdir ||
+	    arg_homedir) {
+		imsettings_info_manager_tini_monitor(manager);
+		imsettings_info_manager_init_monitor(manager);
+	}
 
 	if (!imsettings_observer_setup(IMSETTINGS_OBSERVER (manager), IMSETTINGS_INFO_SERVICE_DBUS)) {
 		exit(1);
