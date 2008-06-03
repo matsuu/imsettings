@@ -149,6 +149,8 @@ imsettings_what_input_method_is_running(GObject      *object,
 		if (*error == NULL) {
 			*ret = g_strdup(module);
 			retval = TRUE;
+		} else {
+			*ret = NULL;
 		}
 	}
 

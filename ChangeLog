@@ -1,3 +1,8 @@
+2008-06-03  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-observer.c (imsettings_what_input_method_is_running):
+	Intialize the return value even if any errors happens.
+
 2008-05-30  Akira TAGOH  <tagoh@redhat.com>
 
 	* tests/gcit_5.c: New testcase for Issue#5.
