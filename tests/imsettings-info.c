@@ -175,7 +175,7 @@ TDEF (imsettings_info_get_prefs_program) {
 
 	o = imsettings_info_new(t);
 	TNUL (o);
-	fail_unless(strcmp(imsettings_info_get_prefs_program(o), "/usr/bin/scim-setup") == 0, "Object contains the different the preference program name");
+	fail_unless(strcmp(imsettings_info_get_prefs_program(o), "/usr/bin/scim-setup") == 0, "Object contains the different preference program name");
 	g_free(t);
 	g_object_unref(o);
 } TEND
@@ -185,7 +185,7 @@ TDEF (imsettings_info_get_prefs_args) {
 
 	o = imsettings_info_new(t);
 	TNUL (o);
-	fail_unless(strcmp(imsettings_info_get_prefs_args(o), "--display :0") == 0, "Object contains the different the preference args");
+	fail_unless(strcmp(imsettings_info_get_prefs_args(o), "--display :0") == 0, "Object contains the different preference args");
 	g_free(t);
 	g_object_unref(o);
 } TEND
@@ -195,7 +195,7 @@ TDEF (imsettings_info_get_aux_program) {
 
 	o = imsettings_info_new(t);
 	TNUL (o);
-	fail_unless(strcmp(imsettings_info_get_aux_program(o), "/bin/true") == 0, "Object contains the different the auxiliary program name");
+	fail_unless(strcmp(imsettings_info_get_aux_program(o), "/bin/true") == 0, "Object contains the different auxiliary program name");
 	g_free(t);
 	g_object_unref(o);
 } TEND
@@ -205,7 +205,7 @@ TDEF (imsettings_info_get_aux_args) {
 
 	o = imsettings_info_new(t);
 	TNUL (o);
-	fail_unless(strcmp(imsettings_info_get_aux_args(o), "--version") == 0, "Object contains the different the auxiliary args");
+	fail_unless(strcmp(imsettings_info_get_aux_args(o), "--version") == 0, "Object contains the different auxiliary args");
 	g_free(t);
 	g_object_unref(o);
 } TEND
@@ -215,14 +215,14 @@ TDEF (imsettings_info_get_short_desc) {
 
 	o = imsettings_info_new(t);
 	TNUL (o);
-	fail_unless(strcmp(imsettings_info_get_short_desc(o), "SCIM") == 0, "Object contains the different the short description");
+	fail_unless(strcmp(imsettings_info_get_short_desc(o), "SCIM") == 0, "Object contains the different short description");
 	g_free(t);
 	g_object_unref(o);
 
 	t = g_build_filename(IMSETTINGS_SRCDIR, "testcases", "test-scim2.conf", NULL);
 	o = imsettings_info_new(t);
 	TNUL (o);
-	fail_unless(strcmp(imsettings_info_get_short_desc(o), "S C I M") == 0, "Object contains the different the short description");
+	fail_unless(strcmp(imsettings_info_get_short_desc(o), "S C I M") == 0, "Object contains the different short description");
 	g_free(t);
 	g_object_unref(o);
 } TEND
@@ -232,7 +232,17 @@ TDEF (imsettings_info_get_long_desc) {
 
 	o = imsettings_info_new(t);
 	TNUL (o);
-	fail_unless(strcmp(imsettings_info_get_long_desc(o), "Smart Common Input Method platform") == 0, "Object contains the different the long description");
+	fail_unless(strcmp(imsettings_info_get_long_desc(o), "Smart Common Input Method platform") == 0, "Object contains the different long description");
+	g_free(t);
+	g_object_unref(o);
+} TEND
+
+TDEF (imsettings_info_get_icon_file) {
+	gchar *t = g_build_filename(IMSETTINGS_SRCDIR, "testcases", "test-scim.conf", NULL);
+
+	o = imsettings_info_new(t);
+	TNUL (o);
+	fail_unless(strcmp(imsettings_info_get_icon_file(o), "foo.png") == 0, "Object contains the different icon file");
 	g_free(t);
 	g_object_unref(o);
 } TEND
@@ -360,6 +370,7 @@ imsettings_suite(void)
 	T (imsettings_info_get_aux_args);
 	T (imsettings_info_get_short_desc);
 	T (imsettings_info_get_long_desc);
+	T (imsettings_info_get_icon_file);
 	T (imsettings_info_is_visible);
 	T (imsettings_info_is_system_default);
 	T (imsettings_info_is_user_default);

@@ -85,6 +85,10 @@ environment variables like FOO=BAR in the information file.
 
   GTK+ immodule name that want to use.
 
+* ICON=<string>
+
+  An icon file to use in GUI.
+
 * IMSETTINGS_IGNORE_ME=<boolean>
 
   A parameter to hide Input Method from the inventory. you

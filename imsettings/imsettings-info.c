@@ -68,6 +68,7 @@ typedef struct _IMSettingsInfoPrivate {
 	gchar    *aux_args;
 	gchar    *short_desc;
 	gchar    *long_desc;
+	gchar    *icon;
 	gboolean  ignore;
 	gboolean  is_system_default;
 	gboolean  is_user_default;
@@ -90,6 +91,7 @@ enum {
 	PROP_AUX_PROG_ARGS,
 	PROP_SHORT_DESC,
 	PROP_LONG_DESC,
+	PROP_ICON,
 	PROP_IS_SYSTEM_DEFAULT,
 	PROP_IS_USER_DEFAULT,
 	PROP_IS_XIM,
@@ -173,6 +175,7 @@ imsettings_info_notify_properties(GObject     *object,
 		"AUXILIARY_ARGS=",
 		"SHORT_DESC=",
 		"LONG_DESC=",
+		"ICON=",
 		NULL
 	};
 	static const gchar *properties[] = {
@@ -188,6 +191,7 @@ imsettings_info_notify_properties(GObject     *object,
 		"aux_args",
 		"short_desc",
 		"long_desc",
+		"icon",
 		NULL
 	};
 	gint i;
@@ -248,6 +252,7 @@ imsettings_info_notify_properties(GObject     *object,
 					    case PROP_AUX_PROG_ARGS:
 					    case PROP_SHORT_DESC:
 					    case PROP_LONG_DESC:
+					    case PROP_ICON:
 						    d(g_print("  %s: %s\n",
 							      _xinput_tokens[prop - (PROP_GTK_IMM - PROP_0)],
 							      str->str));
@@ -382,6 +387,9 @@ imsettings_info_set_property(GObject      *object,
 	    case PROP_LONG_DESC:
 		    _set_str_prop(long_desc);
 		    break;
+	    case PROP_ICON:
+		    _set_str_prop(icon);
+		    break;
 	    case PROP_IS_SYSTEM_DEFAULT:
 		    _set_bool_prop(is_system_default);
 		    break;
@@ -453,6 +461,9 @@ imsettings_info_get_property(GObject    *object,
 	    case PROP_LONG_DESC:
 		    _get_str_prop(long_desc);
 		    break;
+	    case PROP_ICON:
+		    _get_str_prop(icon_file);
+		    break;
 	    case PROP_IS_SYSTEM_DEFAULT:
 		    _get_bool_prop(is_system_default);
 		    break;
@@ -486,6 +497,7 @@ imsettings_info_finalize(GObject *object)
 	g_free(priv->aux_args);
 	g_free(priv->short_desc);
 	g_free(priv->long_desc);
+	g_free(priv->icon);
 
 	if (G_OBJECT_CLASS (imsettings_info_parent_class)->finalize)
 		G_OBJECT_CLASS (imsettings_info_parent_class)->finalize(object);
@@ -690,6 +702,12 @@ imsettings_info_class_init(IMSettingsInfoClass *klass)
 							    _("Long Description"),
 							    NULL,
 							    G_PARAM_READWRITE));
+	g_object_class_install_property(object_class, PROP_ICON,
+					g_param_spec_string("icon",
+							    _("Icon"),
+							    _("Icon filename to be used on GUI"),
+							    NULL,
+							    G_PARAM_READWRITE));
 	g_object_class_install_property(object_class, PROP_IS_SYSTEM_DEFAULT,
 					g_param_spec_boolean("is_system_default",
 							     _("System Default"),
@@ -721,6 +739,7 @@ imsettings_info_init(IMSettingsInfo *info)
 	priv->aux_args = NULL;
 	priv->short_desc = NULL;
 	priv->long_desc = NULL;
+	priv->icon = NULL;
 }
 
 /*
@@ -775,6 +794,7 @@ _IMSETTINGS_DEFUNC_PROPERTY (const gchar *, prefs_program, prefs_prog, NULL)
 _IMSETTINGS_DEFUNC_PROPERTY (const gchar *, prefs_args, prefs_args, NULL)
 _IMSETTINGS_DEFUNC_PROPERTY (const gchar *, aux_program, aux_prog, NULL)
 _IMSETTINGS_DEFUNC_PROPERTY (const gchar *, aux_args, aux_args, NULL)
+_IMSETTINGS_DEFUNC_PROPERTY (const gchar *, icon_file, icon, NULL)
 
 const gchar *
 imsettings_info_get_short_desc(IMSettingsInfo *info)
@@ -880,6 +900,7 @@ imsettings_info_compare(const IMSettingsInfo *info1,
 	g_return_val_if_fail (_cmp (aux_args), FALSE);
 	g_return_val_if_fail (_cmp (short_desc), FALSE);
 	g_return_val_if_fail (_cmp (long_desc), FALSE);
+	g_return_val_if_fail (_cmp (icon), FALSE);
 	g_return_val_if_fail (priv1->ignore == priv2->ignore, FALSE);
 
 	return TRUE;
@@ -895,6 +916,7 @@ imsettings_info_compare(const IMSettingsInfo *info1,
 		_cmp (aux_args) &&
 		_cmp (short_desc) &&
 		_cmp (long_desc) &&
+		_cmp (icon) &&
 		(priv1->ignore == priv2->ignore));
 #endif
 

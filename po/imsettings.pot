@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-03 17:13+0900\n"
+"POT-Creation-Date: 2008-06-03 21:58+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,7 +101,7 @@ msgstr ""
 msgid "GObject of GObject"
 msgstr ""
 
-#: ../backends/xim/server.c:449 ../imsettings/imsettings-info.c:643
+#: ../backends/xim/server.c:449 ../imsettings/imsettings-info.c:654
 msgid "XIM server name"
 msgstr ""
 
@@ -307,127 +307,135 @@ msgstr ""
 msgid "Force restarting the IM process regradless of any errors."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:602
+#: ../imsettings/imsettings-info.c:613
 msgid "Language"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:603
+#: ../imsettings/imsettings-info.c:614
 msgid "A language to pull the information in."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:609
+#: ../imsettings/imsettings-info.c:620
 msgid "Filename"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:610
+#: ../imsettings/imsettings-info.c:621
 msgid "A filename referring to the IM information."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:616 ../imsettings/imsettings-info.c:617
+#: ../imsettings/imsettings-info.c:627 ../imsettings/imsettings-info.c:628
 msgid "Short Description"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:623
+#: ../imsettings/imsettings-info.c:634
 msgid "XIM"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:624
+#: ../imsettings/imsettings-info.c:635
 msgid "Whether or not IM is a XIM server."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:630
+#: ../imsettings/imsettings-info.c:641
 msgid "GTK+ immodule"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:631
+#: ../imsettings/imsettings-info.c:642
 msgid "A module name used for GTK+"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:636
+#: ../imsettings/imsettings-info.c:647
 msgid "Qt immodule"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:637
+#: ../imsettings/imsettings-info.c:648
 msgid "A module name used for Qt"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:642
+#: ../imsettings/imsettings-info.c:653
 msgid "XIM name"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:648
+#: ../imsettings/imsettings-info.c:659
 msgid "Ignore flag"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:649
+#: ../imsettings/imsettings-info.c:660
 msgid "A flag to not list up."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:654
+#: ../imsettings/imsettings-info.c:665
 msgid "XIM server program name"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:655
+#: ../imsettings/imsettings-info.c:666
 msgid "XIM server program to be run"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:660
+#: ../imsettings/imsettings-info.c:671
 msgid "XIM server program's options"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:661
+#: ../imsettings/imsettings-info.c:672
 msgid "Command line options for XIM server program"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:666
+#: ../imsettings/imsettings-info.c:677
 msgid "Preference program name"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:667
+#: ../imsettings/imsettings-info.c:678
 msgid "Preference program to be run"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:672
+#: ../imsettings/imsettings-info.c:683
 msgid "Preference program's options"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:673
+#: ../imsettings/imsettings-info.c:684
 msgid "Command line options for preference program"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:678
+#: ../imsettings/imsettings-info.c:689
 msgid "Auxiliary program name"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:679
+#: ../imsettings/imsettings-info.c:690
 msgid "Auxiliary program to be run"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:684
+#: ../imsettings/imsettings-info.c:695
 msgid "Auxiliary program's options"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:685
+#: ../imsettings/imsettings-info.c:696
 msgid "Command line options for auxiliary program"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:690 ../imsettings/imsettings-info.c:691
+#: ../imsettings/imsettings-info.c:701 ../imsettings/imsettings-info.c:702
 msgid "Long Description"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:696
+#: ../imsettings/imsettings-info.c:707
+msgid "Icon"
+msgstr ""
+
+#: ../imsettings/imsettings-info.c:708
+msgid "Icon filename to be used on GUI"
+msgstr ""
+
+#: ../imsettings/imsettings-info.c:713
 msgid "System Default"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:697
+#: ../imsettings/imsettings-info.c:714
 msgid "Whether or not IM is a system default."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:702
+#: ../imsettings/imsettings-info.c:719
 msgid "User Default"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:703
+#: ../imsettings/imsettings-info.c:720
 msgid "Whether or not IM is an user default."
 msgstr ""
 

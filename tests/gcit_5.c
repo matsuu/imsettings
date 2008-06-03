@@ -47,7 +47,7 @@ setup(void)
 	gchar *s = g_strdup_printf("%s --replace --xinputrcdir=%s --xinputdir=%s --homedir=%s",
 				   p, d, dd, d);
 	gchar *p2 = g_build_filename(IMSETTINGS_BUILDDIR, "utils", "imsettings-reload", NULL);
-	gchar *s2 = g_strdup_printf("%s -f", p);
+	gchar *s2 = g_strdup_printf("%s -f", p2);
 
 	/* stop all the processes first */
 	if (!g_spawn_command_line_async(s2, NULL))

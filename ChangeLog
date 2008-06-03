@@ -1,5 +1,18 @@
 2008-06-03  Akira TAGOH  <tagoh@redhat.com>
 
+	* data/xinputinfo.sh.in: Add ICON support.
+
+	* tests/gcit_5.c (setup): Fix a typo.
+
+	* tests/imsettings-info.c (test_imsettings_info_get_icon_file):
+	New testcase.
+
+	* README: Add a description for ICON option.
+
+	* imsettings/imsettings-info.c (imsettings_info_notify_properties):
+	Add ICON support.
+	(imsettings_info_get_icon_file): new function.
+
 	* src/factory_info.c (imsettings_info_manager_validate_from_file_info):
 	New function to check if the file got changed is valid to deal with.
 	(imsettings_info_manager_validate_from_file): likewise.

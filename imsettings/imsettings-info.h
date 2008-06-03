@@ -64,6 +64,7 @@ const gchar    *imsettings_info_get_aux_program       (IMSettingsInfo       *inf
 const gchar    *imsettings_info_get_aux_args          (IMSettingsInfo       *info);
 const gchar    *imsettings_info_get_short_desc        (IMSettingsInfo       *info);
 const gchar    *imsettings_info_get_long_desc         (IMSettingsInfo       *info);
+const gchar    *imsettings_info_get_icon_file         (IMSettingsInfo       *info);
 const gchar    *imsettings_info_get_supported_language(IMSettingsInfo       *info);
 gboolean        imsettings_info_is_visible            (IMSettingsInfo       *info);
 gboolean        imsettings_info_is_system_default     (IMSettingsInfo       *info);
