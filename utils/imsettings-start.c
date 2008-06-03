@@ -81,7 +81,7 @@ main(int    argc,
 	connection = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	imsettings = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
 	imsettings_request_set_locale(imsettings, locale);
-	if (imsettings_request_start_im(imsettings, argv[1], !arg_no_update)) {
+	if (imsettings_request_start_im(imsettings, argv[1], !arg_no_update, &error)) {
 		g_print(_("Started %s\n"), argv[1]);
 	} else {
 		g_printerr(_("Failed to start IM process `%s'\n"), argv[1]);

@@ -76,7 +76,7 @@ main(int    argc,
 
 	connection = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	imsettings = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
-	if (imsettings_request_stop_im(imsettings, argv[1], !arg_no_update, arg_force)) {
+	if (imsettings_request_stop_im(imsettings, argv[1], !arg_no_update, arg_force, &error)) {
 		g_print(_("Stopped %s\n"), argv[1]);
 	} else {
 		g_printerr(_("Failed to stop IM process `%s'\n"), argv[1]);

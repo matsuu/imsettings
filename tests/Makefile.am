@@ -4,8 +4,8 @@ NULL =
 SUBDIRS = testcases
 INCLUDES =						\
 	-I$(top_srcdir)/imsettings			\
-	-DIMSETTINGS_SRCDIR="\"$(srcdir)\""		\
-	-DIMSETTINGS_BUILDDIR="\"$(top_builddir)\""	\
+	-DIMSETTINGS_SRCDIR="\"$(abs_srcdir)\""		\
+	-DIMSETTINGS_BUILDDIR="\"$(abs_top_builddir)\""	\
 	$(IMSETTINGS_CFLAGS)				\
 	$(CHECK_CFLAGS)					\
 	$(NULL)

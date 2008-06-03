@@ -22,6 +22,7 @@
  * Boston, MA 02111-1307, USA.
  */
 #include <locale.h>
+#include <stdlib.h>
 #include <string.h>
 #include <glib/gi18n.h>
 #include "imsettings/imsettings.h"
@@ -36,6 +37,7 @@ main(int    argc,
 	gchar **list, *locale;
 	gchar *user_im, *system_im, *running_im;
 	gint i;
+	GError *error = NULL;
 
 	setlocale(LC_ALL, "");
 	locale = setlocale(LC_CTYPE, NULL);
@@ -46,12 +48,16 @@ main(int    argc,
 	imsettings = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
 	imsettings_info = imsettings_request_new(connection, IMSETTINGS_INFO_INTERFACE_DBUS);
 	imsettings_request_set_locale(imsettings_info, locale);
-	if ((list = imsettings_request_get_im_list(imsettings_info)) == NULL) {
+	if ((list = imsettings_request_get_im_list(imsettings_info, &error)) == NULL) {
 		g_printerr("Failed to get an IM list.\n");
 	} else {
-		user_im = imsettings_request_get_current_user_im(imsettings_info);
-		system_im = imsettings_request_get_current_system_im(imsettings_info);
-		running_im = imsettings_request_what_im_is_running(imsettings);
+		user_im = imsettings_request_get_current_user_im(imsettings_info, &error);
+		system_im = imsettings_request_get_current_system_im(imsettings_info, &error);
+		running_im = imsettings_request_what_im_is_running(imsettings, &error);
+		if (error) {
+			g_printerr("%s\n", error->message);
+			exit(1);
+		}
 		for (i = 0; list[i] != NULL; i++) {
 			g_print("%s %d: %s %s\n",
 				(strcmp(running_im, list[i]) == 0 ? "*" : (strcmp(user_im, list[i]) == 0 ? "-" : " ")),

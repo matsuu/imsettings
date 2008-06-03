@@ -26,6 +26,7 @@
 #endif
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <imsettings/imsettings.h>
 #include <imsettings/imsettings-request.h>
 #include "main.h"
@@ -45,15 +46,25 @@ setup(void)
 	gchar *dd = g_build_filename(d, "xinput.d", NULL);
 	gchar *s = g_strdup_printf("%s --replace --xinputrcdir=%s --xinputdir=%s --homedir=%s",
 				   p, d, dd, d);
+	gchar *p2 = g_build_filename(IMSETTINGS_BUILDDIR, "utils", "imsettings-reload", NULL);
+	gchar *s2 = g_strdup_printf("%s -f", p);
+
+	/* stop all the processes first */
+	if (!g_spawn_command_line_async(s2, NULL))
+		abort();
 
 	if (!g_spawn_command_line_async(s, NULL))
 		abort();
+	g_free(s2);
+	g_free(p2);
 	g_free(s);
 	g_free(p);
 	g_free(d);
 	g_free(dd);
 	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	req = imsettings_request_new(conn, IMSETTINGS_INTERFACE_DBUS);
+	/* FIXME! */
+	sleep(1);
 }
 
 void
@@ -75,8 +86,9 @@ teardown(void)
 /************************************************************/
 TDEF (issue) {
 	gchar *p;
+	GError *error = NULL;
 
-	p = imsettings_request_what_im_is_running(req);
+	p = imsettings_request_what_im_is_running(req, &error);
 	fail_unless(p != NULL, "We don't expect null as the result of imsettings_request_what_im_is_running()");
 } TEND
 

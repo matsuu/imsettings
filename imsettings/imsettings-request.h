@@ -56,50 +56,68 @@ IMSettingsRequest *imsettings_request_new                    (DBusConnection    
                                                               const gchar       *interface);
 void               imsettings_request_set_locale             (IMSettingsRequest *imsettings,
 							      const gchar       *locale);
-gchar            **imsettings_request_get_im_list            (IMSettingsRequest *imsettings);
-gchar             *imsettings_request_get_current_user_im    (IMSettingsRequest *imsettings);
-gchar             *imsettings_request_get_current_system_im  (IMSettingsRequest *imsettings);
+gchar            **imsettings_request_get_im_list            (IMSettingsRequest *imsettings,
+							      GError            **error);
+gchar             *imsettings_request_get_current_user_im    (IMSettingsRequest *imsettings,
+							      GError **error);
+gchar             *imsettings_request_get_current_system_im  (IMSettingsRequest *imsettings,
+							      GError **error);
 gchar             *imsettings_request_get_xinput_filename    (IMSettingsRequest *imsettings,
-                                                              const gchar       *module);
+                                                              const gchar       *module,
+							      GError **error);
 gchar             *imsettings_request_get_im_module_name     (IMSettingsRequest *imsettings,
                                                               const gchar       *module,
-                                                              guint32            type);
+                                                              guint32            type,
+							      GError **error);
 gboolean           imsettings_request_get_xim_program        (IMSettingsRequest *imsettings,
                                                               const gchar       *module,
                                                               gchar             **out_prog,
-                                                              gchar             **out_prog_args);
+                                                              gchar             **out_prog_args,
+							      GError            **error);
 gboolean           imsettings_request_get_preferences_program(IMSettingsRequest *imsettings,
                                                               const gchar       *module,
                                                               gchar             **out_prog,
-                                                              gchar             **out_prog_args);
+                                                              gchar             **out_prog_args,
+							      GError **error);
 gboolean           imsettings_request_get_auxiliary_program  (IMSettingsRequest *imsettings,
                                                               const gchar       *module,
                                                               gchar             **out_prog,
-                                                              gchar             **out_prog_args);
+                                                              gchar             **out_prog_args,
+							      GError **error);
 gchar             *imsettings_request_get_short_description  (IMSettingsRequest *imsettings,
-                                                              const gchar       *module);
+                                                              const gchar       *module,
+							      GError **error);
 gchar             *imsettings_request_get_long_description   (IMSettingsRequest *imsettings,
-                                                              const gchar       *module);
+                                                              const gchar       *module,
+							      GError **error);
 gboolean           imsettings_request_is_system_default      (IMSettingsRequest *imsettings,
-							      const gchar       *module);
+							      const gchar       *module,
+							      GError **error);
 gboolean           imsettings_request_is_user_default        (IMSettingsRequest *imsettings,
-							      const gchar       *module);
+							      const gchar       *module,
+							      GError **error);
 gboolean           imsettings_request_is_xim                 (IMSettingsRequest *imsettings,
-							      const gchar       *module);
+							      const gchar       *module,
+							      GError **error);
 gchar             *imsettings_request_get_supported_language (IMSettingsRequest *imsettings,
-							      const gchar       *module);
+							      const gchar       *module,
+							      GError **error);
 gboolean           imsettings_request_start_im               (IMSettingsRequest *imsettings,
                                                               const gchar       *module,
-							      gboolean           update_xinputrc);
+							      gboolean           update_xinputrc,
+							      GError **error);
 gboolean           imsettings_request_stop_im                (IMSettingsRequest *imsettings,
                                                               const gchar       *module,
 							      gboolean           update_xinputrc,
-                                                              gboolean           force);
-gchar             *imsettings_request_what_im_is_running     (IMSettingsRequest *imsettings);
+                                                              gboolean           force,
+							      GError **error);
+gchar             *imsettings_request_what_im_is_running     (IMSettingsRequest *imsettings,
+							      GError **error);
 gboolean           imsettings_request_reload                 (IMSettingsRequest *imsettings,
                                                               gboolean           force);
 gboolean           imsettings_request_change_to              (IMSettingsRequest *imsettings,
-                                                              const gchar       *module);
+                                                              const gchar       *module,
+							      GError **error);
 gboolean           imsettings_request_change_to_with_signal  (IMSettingsRequest *imsettings,
 							      const gchar       *module);
 

@@ -230,12 +230,12 @@ main(int    argc,
 	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
 	imsettings_request_set_locale(req, locale);
-	module = imsettings_request_get_current_user_im(req);
+	module = imsettings_request_get_current_user_im(req, &error);
 	if (module == NULL) {
 		g_print("No default IM is available.\n");
 		exit(1);
 	}
-	xim = imsettings_request_get_im_module_name(req, module, IMSETTINGS_IMM_XIM);
+	xim = imsettings_request_get_im_module_name(req, module, IMSETTINGS_IMM_XIM, &error);
 	g_free(module);
 
 	loop = g_main_loop_new(NULL, FALSE);

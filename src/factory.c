@@ -490,17 +490,22 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
 	imsettings_request_set_locale(req, lang);
-	xinputfile = imsettings_request_get_xinput_filename(req, module);
+	xinputfile = imsettings_request_get_xinput_filename(req, module, error);
 	if (!xinputfile) {
+		gchar *p = g_strdup((*error)->message);
+
+		g_clear_error(error);
 		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_IM_NOT_FOUND,
-			    _("No such input method on your system: %s"),
-			    module);
+			    _("No such input method on your system: %s\n  Details: %s"),
+			    module, p);
+		g_free(p);
 		goto end;
 	}
 	if (imsettings_request_get_auxiliary_program(req,
 						     module,
 						     &aux_prog,
-						     &aux_args)) {
+						     &aux_args,
+						     error)) {
 		pidfile = _build_pidfilename(xinputfile, priv->display_name, "aux");
 
 		/* bring up an auxiliary program */
@@ -509,12 +514,25 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 
 		g_free(pidfile);
 		pidfile = NULL;
+	} else {
+		gchar *p = g_strdup((*error)->message);
+
+		g_clear_error(error);
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_FAILED,
+			    _("Unable to get the informations for auxiliary program: %s"),
+			    p);
+		g_free(p);
+		goto end;
 	}
 
-	if (!imsettings_request_get_xim_program(req, module, &xim_prog, &xim_args)) {
+	if (!imsettings_request_get_xim_program(req, module, &xim_prog, &xim_args, error)) {
+		gchar *p = g_strdup((*error)->message);
+
+		g_clear_error(error);
 		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_INVALID_IMM,
-			    _("No XIM server is available in %s"),
-			    module);
+			    _("No XIM server is available in %s\n  Details: %s"),
+			    module, p);
+		g_free(p);
 		goto end;
 	}
 	pidfile = _build_pidfilename(xinputfile, priv->display_name, "xim");
@@ -525,13 +543,14 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 
 	/* FIXME: We need to take care of imsettings per X screens?
 	 */
-	imm = imsettings_request_get_im_module_name(req, module, IMSETTINGS_IMM_GTK);
-	imsettings_request_change_to(priv->gtk_req, imm);
-	imm = imsettings_request_get_im_module_name(req, module, IMSETTINGS_IMM_XIM);
+	/* FIXME: have to deal with the errors */
+	imm = imsettings_request_get_im_module_name(req, module, IMSETTINGS_IMM_GTK, error);
+	imsettings_request_change_to(priv->gtk_req, imm, error);
+	imm = imsettings_request_get_im_module_name(req, module, IMSETTINGS_IMM_XIM, error);
 	imsettings_request_change_to_with_signal(priv->xim_req, imm);
 #if 0
-	imm = imsettings_request_get_im_module_name(req, module, IMSETTINGS_IMM_QT);
-	imsettings_request_change_to(priv->qt_req, imm);
+	imm = imsettings_request_get_im_module_name(req, module, IMSETTINGS_IMM_QT, error);
+	imsettings_request_change_to(priv->qt_req, imm, error);
 #endif
 
 	/* Finally update a symlink on your home */
@@ -572,15 +591,15 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 	/* Change the settings before killing the IM process(es) */
 	/* FIXME: We need to take care of imsettings per X screens?
 	 */
-	imsettings_request_change_to(priv->gtk_req, "");
+	imsettings_request_change_to(priv->gtk_req, "", error);
 	imsettings_request_change_to_with_signal(priv->xim_req, "none");
 #if 0
-	imsettings_request_change_to(priv->qt_req, NULL);
+	imsettings_request_change_to(priv->qt_req, NULL, error);
 #endif
 
 	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
-	xinputfile = imsettings_request_get_xinput_filename(req, module);
+	xinputfile = imsettings_request_get_xinput_filename(req, module, error);
 	if (!xinputfile)
 		goto end;
 
@@ -618,7 +637,7 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 			    _("Failed to get a place of home directory."));
 		goto end;
 	}
-	if (imsettings_request_is_user_default(req, module)) {
+	if (imsettings_request_is_user_default(req, module, error)) {
 		g_free(xinputfile);
 		xinputfile = g_build_filename(XINPUT_PATH, IMSETTINGS_NONE_CONF XINPUT_SUFFIX, NULL);
 		if (update_xinputrc && !_update_symlink(priv, xinputfile, error))
@@ -655,13 +674,19 @@ imsettings_manager_real_what_im_is_running(IMSettingsObserver  *observer,
 
 	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
-	module = imsettings_request_get_current_user_im(req);
+	module = imsettings_request_get_current_user_im(req, error);
+	if (error)
+		goto end;
 	if (module) {
-		xinputfile = imsettings_request_get_xinput_filename(req, module);
+		xinputfile = imsettings_request_get_xinput_filename(req, module, error);
 		if (!xinputfile) {
+			gchar *p = g_strdup((*error)->message);
+
+			g_clear_error(error);
 			g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_IM_NOT_FOUND,
-				    _("No such input method on your system: %s"),
-				    module);
+				    _("No such input method on your system: %s\n  Details: %s"),
+				    module, p);
+			g_free(p);
 			goto end;
 		}
 		pidfile = _build_pidfilename(xinputfile, priv->display_name, "xim");
@@ -683,6 +708,9 @@ imsettings_manager_real_what_im_is_running(IMSettingsObserver  *observer,
 				module = NULL;
 			}
 		}
+	} else {
+		/* No error means no IM currently running */
+		module = g_strdup("");
 	}
   end:
 	g_free(xinputfile);
