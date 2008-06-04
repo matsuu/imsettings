@@ -3,3 +3,7 @@
 * Soname is bumped from 0 to 1 due to some APIs has been removed.
 * Bug Fixes
   * Issue#5: Segfault if .xinputrc or xinputrc points to the invalid config.
+* Features
+  * Provide an information of icon file for IM.
+* Improvements
+  * export GError to deal with more complex error handling in applications.
