@@ -1,5 +1,7 @@
 2008-06-04  Akira TAGOH  <tagoh@redhat.com>
 
+	* data/xim.in.in: get rid of shebang.
+
 	* imsettings/imsettings-request.c (imsettings_request_get_im_list)
 	(imsettings_request_get_current_user_im)
 	(imsettings_request_get_current_system_im)
