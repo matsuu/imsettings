@@ -1,8 +1,9 @@
 0.99.6 -> 0.100.0
 ====================
-* Soname is bumped from 0 to 1 due to some APIs has been removed.
+* Soname is bumped from 0 to 1 due to some APIs has been removed/changed.
 * Bug Fixes
   * Issue#5: Segfault if .xinputrc or xinputrc points to the invalid config.
+  * RHBZ#444152: Use GFileMonitor instead of FAM API directly.
 * Features
   * Provide an information of icon file for IM.
 * Improvements
