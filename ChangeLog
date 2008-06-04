@@ -1,3 +1,22 @@
+2008-06-04  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-request.c (imsettings_request_get_im_list)
+	(imsettings_request_get_current_user_im)
+	(imsettings_request_get_current_system_im)
+	(imsettings_request_get_xinput_filename)
+	(imsettings_request_get_im_module_name)
+	(imsettings_request_get_xim_program)
+	(imsettings_request_get_preferences_program)
+	(imsettings_request_get_auxiliary_program)
+	(imsettings_request_get_short_description)
+	(imsettings_request_get_long_description)
+	(imsettings_request_is_system_default)
+	(imsettings_request_is_user_default, imsettings_request_is_xim)
+	(imsettings_request_get_supported_language)
+	(imsettings_request_start_im, imsettings_request_stop_im)
+	(imsettings_request_what_im_is_running)
+	(imsettings_request_change_to): Allow invoking without giving GError.
+
 2008-06-03  Akira TAGOH  <tagoh@redhat.com>
 
 	* data/xinputinfo.sh.in: Add ICON support.
