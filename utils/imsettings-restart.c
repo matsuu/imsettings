@@ -40,7 +40,7 @@ main(int    argc,
 	gboolean arg_force = FALSE, arg_no_update = FALSE;
 	GOptionContext *ctx = g_option_context_new(NULL);
 	GOptionEntry entries[] = {
-		{"force", 'f', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_force, N_("Force restarting the IM process regradless of any errors.")},
+		{"force", 'f', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_force, N_("Force restarting the IM process regardless of any errors.")},
 		{"no-update", 'n', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_no_update, N_("Do not update .xinputrc.")},
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};

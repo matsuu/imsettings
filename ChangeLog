@@ -1,3 +1,7 @@
+2008-06-10  Akira TAGOH  <tagoh@redhat.com>
+
+	* utils/imsettings-restart.c (main): Fix a typo. (RHBZ#450574)
+
 2008-06-06  Akira TAGOH  <tagoh@redhat.com>
 
 	* imsettings.pc.in (Requires): Add gio-2.0.
