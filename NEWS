@@ -1,3 +1,12 @@
+0.100.0 -> 0.101.0
+* Soname is bumped again due to API clean up and new APIs.
+* Bug Fixes
+  * Issue#7: Invalid dump for short description.
+  * warning messages on monitoring files
+  * RHBZ#450574: Fix a typo in imsettings-restart.
+* Improvements
+  * faster responses from imsettings services
+
 0.99.6 -> 0.100.0
 ====================
 * Soname is bumped from 0 to 1 due to some APIs has been removed/changed.
