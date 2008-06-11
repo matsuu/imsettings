@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT([imsettings], 0.100.0, [http://code.google.com/p/imsettings/issues/entry])
+AC_INIT([imsettings], 0.101.0, [http://code.google.com/p/imsettings/issues/entry])
 
 . ./requires
 
@@ -39,7 +39,7 @@ dnl    then increment AGE.
 dnl 5. If any interfaces have been removed since the last public release,
 dnl    then set AGE to 0.
 dnl
-LT_CURRENT=1
+LT_CURRENT=2
 LT_REVISION=0
 LT_AGE=0
 
