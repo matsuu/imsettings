@@ -54,8 +54,16 @@ struct _IMSettingsObjectClass {
 	void (* load) (IMSettingsObject  *object,
 		       GDataInputStream  *stream);
 
+	void (* c_reserved1) (void);
+	void (* c_reserved2) (void);
+
 	/*< private >*/
 	GHashTable *imsettings_properties;
+
+	void (* reserved1) (void);
+	void (* reserved2) (void);
+	void (* reserved3) (void);
+	void (* reserved4) (void);
 };
 
 struct _IMSettingsObject {
