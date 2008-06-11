@@ -316,7 +316,6 @@ imsettings_info_manager_validate_from_file_info(GFileInfo *info)
 	GFileType type;
 
 	type = g_file_info_get_file_type(info);
-	g_object_unref(info);
 	if (type != G_FILE_TYPE_REGULAR &&
 	    type != G_FILE_TYPE_SYMBOLIC_LINK &&
 	    type != G_FILE_TYPE_SHORTCUT) {
@@ -331,6 +330,7 @@ static gboolean
 imsettings_info_manager_validate_from_file(GFile *file)
 {
 	GFileInfo *fi;
+	gboolean retval;
 
 	fi = g_file_query_info(file,
 			       G_FILE_ATTRIBUTE_STANDARD_TYPE,
@@ -346,7 +346,10 @@ imsettings_info_manager_validate_from_file(GFile *file)
 		return FALSE;
 	}
 
-	return imsettings_info_manager_validate_from_file_info(fi);
+	retval = imsettings_info_manager_validate_from_file_info(fi);
+	g_object_unref(fi);
+
+	return retval;
 }
 
 static void
@@ -937,7 +940,7 @@ main(int    argc,
 	GMainLoop *loop;
 	IMSettingsInfoManager *manager;
 	gboolean arg_replace = FALSE;
-	gchar *arg_xinputrcdir = NULL, *arg_xinputdir = NULL, *arg_homedir;
+	gchar *arg_xinputrcdir = NULL, *arg_xinputdir = NULL, *arg_homedir = NULL;
 	GOptionContext *ctx = g_option_context_new(NULL);
 	GOptionEntry entries[] = {
 		{"replace", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_replace, N_("Replace the running settings daemon with new instance."), NULL},

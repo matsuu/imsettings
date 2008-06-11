@@ -1,5 +1,11 @@
 2008-06-11  Akira TAGOH  <tagoh@redhat.com>
 
+	* src/factory_info.c (imsettings_info_manager_validate_from_file_info):
+	do not destroy an object.
+	(imsettings_info_manager_validate_from_file): destroy a GFileInfo
+	object.
+	(main): initialize arg_homedir.
+
 	* src/factory.c (imsettings_manager_real_start_im): Get information
 	from IMSettingsInfo instead of asking through IMSettingsRequest
 	every time.
