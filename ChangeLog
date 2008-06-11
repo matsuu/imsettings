@@ -1,5 +1,10 @@
 2008-06-11  Akira TAGOH  <tagoh@redhat.com>
 
+	* imsettings/imsettings-object.c (imsettings_object_dump):
+	output the type name instead of GType directly. this wasn't a portable
+	way for other process.
+	(imsettings_object_load_from_stream): likewise.
+
 	* src/factory_info.c (imsettings_info_manager_validate_from_file_info):
 	do not destroy an object.
 	(imsettings_info_manager_validate_from_file): destroy a GFileInfo

@@ -28,6 +28,7 @@
 #include <string.h>
 #include "imsettings-utils.h"
 #include "imsettings-object.h"
+#include "imsettings-info.h"
 
 #ifdef GNOME_ENABLE_DEBUG
 #define d(e)	e
@@ -69,7 +70,7 @@
 	  GUINT64_TO_BE (_v_) : GUINT64_TO_LE (_v_)) :			\
 	 (_v_))
 
-static const guint8 _imsettings_dump_major_version = 1;
+static const guint8 _imsettings_dump_major_version = 2;
 static const guint8 _imsettings_dump_minor_version = 0;
 static guint8 _imsettings_host_byte_order = 0;
 static gpointer imsettings_object_parent_class = NULL;
@@ -241,7 +242,9 @@ imsettings_object_get_byte_order(IMSettingsObject *object)
  * 1		BYTE	dump major version
  * 1		BYTE	dump minor version
  * 1		PADDING	unused
- * 4		GType	object type
+ * 4		n	length of object type name
+ * n		BYTE	object type name
+ * PAD4(n)	PADDING	unused
  * 4		long	# of properties
  * 4		n	length of property name
  * n		BYTE	property name
@@ -273,6 +276,11 @@ imsettings_object_get_byte_order(IMSettingsObject *object)
  *   1		BYTE	null
  *   PAD4(n+1)	PADDING	unused
  *
+ *  G_TYPE_GTYPE
+ *   4		n	length of type name
+ *   n		BYTE	type name
+ *   PAD4(n)	PADDING	unused
+ *
  *  G_TYPE_OBJECT
  *   n		any	any of the above, including dump header
  *   1		BYTE	0
@@ -286,6 +294,8 @@ imsettings_object_dump(IMSettingsObject *object)
 	GDataOutputStream *stream;
 	GParamSpec **pspecs;
 	guint n_properties, i, n;
+	const gchar *type_name;
+	gsize n_type_name;
 
 	g_return_val_if_fail (IMSETTINGS_IS_OBJECT (object), NULL);
 
@@ -305,7 +315,11 @@ imsettings_object_dump(IMSettingsObject *object)
 	/* padding */
 	_pad4 (stream, 3);
 	/* object type */
-	g_data_output_stream_put_uint32(stream, G_OBJECT_TYPE (object), NULL, NULL);
+	type_name = g_type_name(G_OBJECT_TYPE (object));
+	n_type_name = strlen(type_name);
+	g_data_output_stream_put_uint32(stream, n_type_name, NULL, NULL);
+	g_data_output_stream_put_string(stream, type_name, NULL, NULL);
+	_pad4 (stream, n_type_name);
 	/* # of properties */
 	pspecs = g_object_class_list_properties(G_OBJECT_GET_CLASS (object),
 						&n_properties);
@@ -393,9 +407,15 @@ imsettings_object_dump(IMSettingsObject *object)
 		    default:
 			    if (value_type == G_TYPE_GTYPE) {
 				    GType t;
+				    const gchar *tn;
+				    gsize ntn;
 
 				    g_object_get(object, prop_name, &t, NULL);
-				    g_data_output_stream_put_uint32(stream, t, NULL, NULL);
+				    tn = g_type_name(t);
+				    ntn = strlen(tn);
+				    g_data_output_stream_put_uint32(stream, ntn, NULL, NULL);
+				    g_data_output_stream_put_string(stream, tn, NULL, NULL);
+				    _pad4 (stream, ntn);
 			    } else if (g_type_is_a(value_type, G_TYPE_OBJECT)) {
 				    GObject *o = NULL;
 				    GString *s;
@@ -424,6 +444,7 @@ imsettings_object_dump(IMSettingsObject *object)
 	if (n != n_properties) {
 		gpointer v;
 		guint32 np = n;
+		gsize pos = 8 + n_type_name + _n_pad4 (n_type_name);
 
 		v = g_memory_output_stream_get_data(G_MEMORY_OUTPUT_STREAM (base_stream));
 		if (object->byte_order == IMSETTINGS_OBJECT_MSB)
@@ -431,10 +452,10 @@ imsettings_object_dump(IMSettingsObject *object)
 		else
 			np = GUINT32_TO_LE (np);
 
-		((gchar *)v)[8] = ((gchar *)&np)[0];
-		((gchar *)v)[9] = ((gchar *)&np)[1];
-		((gchar *)v)[10] = ((gchar *)&np)[2];
-		((gchar *)v)[11] = ((gchar *)&np)[3];
+		((gchar *)v)[pos + 0] = ((gchar *)&np)[0];
+		((gchar *)v)[pos + 1] = ((gchar *)&np)[1];
+		((gchar *)v)[pos + 2] = ((gchar *)&np)[2];
+		((gchar *)v)[pos + 3] = ((gchar *)&np)[3];
 	}
 
 	if (IMSETTINGS_OBJECT_GET_CLASS (object)->dump) {
@@ -463,8 +484,9 @@ imsettings_object_load_from_stream(GDataInputStream *stream)
 	IMSettingsObject *object;
 	guint8 byte_order, major_version, minor_version;
 	GType type;
-	guint n_properties, n;
+	guint n_properties, n, len, j;
 	GParameter *params;
+	GString *s;
 
 	g_return_val_if_fail (G_IS_DATA_INPUT_STREAM (stream), NULL);
 
@@ -496,7 +518,24 @@ imsettings_object_load_from_stream(GDataInputStream *stream)
 					   G_DATA_STREAM_BYTE_ORDER_LITTLE_ENDIAN);
 
 	/* object type */
-	type = _swapu32 (g_data_input_stream_read_uint32(stream, NULL, NULL));
+	len = _swapu32 (g_data_input_stream_read_uint32(stream, NULL, NULL));
+	s = g_string_sized_new(len);
+	for (j = 0; j < len; j++)
+		g_string_append_c(s, g_data_input_stream_read_byte(stream, NULL, NULL));
+	_skip_pad4 (stream, len);
+	/* FIXME: We support only IMSettingsInfo to deliver so far.
+	 * assuming it's.
+	 */
+	if (strcmp(s->str, "IMSettingsInfo") != 0) {
+		g_warning("Unsupported GObject-based object is sent. no way of restore it.");
+		return NULL;
+	}
+	G_STMT_START {
+		volatile GType t = imsettings_info_get_type();
+		t;
+	} G_STMT_END;
+	type = g_type_from_name(s->str);
+	g_string_free(s, TRUE);
 	/* # of properties */
 	n_properties = _swapu32 (g_data_input_stream_read_uint32(stream, NULL, NULL));
 
@@ -571,9 +610,9 @@ imsettings_object_load_from_stream(GDataInputStream *stream)
 			    break;
 		    case G_TYPE_STRING:
 			    G_STMT_START {
-				    GString *s = g_string_new(NULL);
 				    gchar c;
 
+				    s = g_string_new(NULL);
 				    while (1) {
 					    c = g_data_input_stream_read_byte(stream, NULL, NULL);
 					    if (c == 0)
@@ -607,9 +646,24 @@ imsettings_object_load_from_stream(GDataInputStream *stream)
 			    break;
 		    default:
 			    if (value_type == G_TYPE_GTYPE) {
+				    guint ntn;
+				    GType t;
+
+				    ntn = g_data_input_stream_read_uint32(stream, NULL, NULL);
+				    s = g_string_sized_new(ntn);
+				    for (i = 0; i < ntn; i++)
+					    g_string_append_c(s, g_data_input_stream_read_byte(stream, NULL, NULL));
+				    _skip_pad4 (stream, ntn);
+
+				    t = g_type_from_name(s->str);
+				    g_string_free(s, TRUE);
+
+				    if (t == 0) {
+					    g_printerr("Unable to recover GType `%s'", s->str);
+					    return NULL;
+				    }
 				    g_value_init(&params[n].value, G_TYPE_GTYPE);
-				    g_value_set_gtype(&params[n].value,
-						      g_data_input_stream_read_uint32(stream, NULL, NULL));
+				    g_value_set_gtype(&params[n].value, t);
 			    } else {
 				    g_printerr("Unable to load the dumpped object due to the unknown/unsupported object type `%s'",
 					       g_type_name(value_type));
