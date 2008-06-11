@@ -1,5 +1,30 @@
 2008-06-11  Akira TAGOH  <tagoh@redhat.com>
 
+	* src/factory.c (imsettings_manager_real_start_im): Get information
+	from IMSettingsInfo instead of asking through IMSettingsRequest
+	every time.
+	(imsettings_manager_real_stop_im): likewise.
+	(imsettings_manager_real_what_im_is_running): likewise.
+
+	* utils/imsettings-info.c (main): likewise.
+
+	* backends/xim/main.c (main): likewise.
+
+	* imsettings/imsettings-request.c (imsettings_request_get_info_objects):
+	new for GetInfoObjects.
+	(imsettings_request_get_info_object): new for GetInfoObject.
+	(imsettings_request_get_xinput_filename)
+	(imsettings_request_get_im_module_name)
+	(imsettings_request_get_xim_program)
+	(imsettings_request_get_preferences_program)
+	(imsettings_request_get_auxiliary_program)
+	(imsettings_request_get_short_description)
+	(imsettings_request_get_long_description)
+	(imsettings_request_is_system_default)
+	(imsettings_request_is_user_default, imsettings_request_is_xim):
+	Removed. these APIs are no longer supported in C API. but D-Bus API
+	still do support.
+
 	* src/factory_info.c (_collect_info_objects): new
 	(imsettings_info_manager_real_get_info_objects): likewise.
 

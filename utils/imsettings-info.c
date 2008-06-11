@@ -30,10 +30,13 @@ main(int    argc,
      char **argv)
 {
 	IMSettingsRequest *imsettings;
+	IMSettingsInfo *info;
 	DBusConnection *connection;
-	gchar *file, *gtkimm, *qtimm, *xim;
-	gchar *xim_prog, *xim_args, *prefs_prog, *prefs_args, *aux_prog, *aux_args;
-	gchar *short_desc, *long_desc;
+	const gchar *file, *gtkimm, *qtimm, *xim;
+	const gchar *xim_prog, *xim_args;
+	const gchar *prefs_prog, *prefs_args;
+	const gchar *aux_prog, *aux_args;
+	const gchar *short_desc, *long_desc;
 	gboolean is_system_default, is_user_default, is_xim;
 	GError *error = NULL;
 
@@ -51,21 +54,26 @@ main(int    argc,
 	connection = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	imsettings = imsettings_request_new(connection, IMSETTINGS_INFO_INTERFACE_DBUS);
 
-	file = imsettings_request_get_xinput_filename(imsettings, argv[1], &error);
-	if (file == NULL) {
-		g_printerr("Failed to get an IM info.\n");
+	info = imsettings_request_get_info_object(imsettings, argv[1], &error);
+	if (error) {
+		g_printerr("Unable to get an IM info.\n");
+		g_clear_error(&error);
 	} else {
-		gtkimm = imsettings_request_get_im_module_name(imsettings, argv[1], IMSETTINGS_IMM_GTK, &error);
-		qtimm = imsettings_request_get_im_module_name(imsettings, argv[1], IMSETTINGS_IMM_QT, &error);
-		xim = imsettings_request_get_im_module_name(imsettings, argv[1], IMSETTINGS_IMM_XIM, &error);
-		imsettings_request_get_xim_program(imsettings, argv[1], &xim_prog, &xim_args, &error);
-		imsettings_request_get_preferences_program(imsettings, argv[1], &prefs_prog, &prefs_args, &error);
-		imsettings_request_get_auxiliary_program(imsettings, argv[1], &aux_prog, &aux_args, &error);
-		short_desc = imsettings_request_get_short_description(imsettings, argv[1], &error);
-		long_desc = imsettings_request_get_long_description(imsettings, argv[1], &error);
-		is_system_default = imsettings_request_is_system_default(imsettings, argv[1], &error);
-		is_user_default = imsettings_request_is_user_default(imsettings, argv[1], &error);
-		is_xim = imsettings_request_is_xim(imsettings, argv[1], &error);
+		file = imsettings_info_get_filename(info);
+		gtkimm = imsettings_info_get_gtkimm(info);
+		qtimm = imsettings_info_get_qtimm(info);
+		xim = imsettings_info_get_xim(info);
+		xim_prog = imsettings_info_get_xim_program(info);
+		xim_args = imsettings_info_get_xim_args(info);
+		prefs_prog = imsettings_info_get_prefs_program(info);
+		prefs_args = imsettings_info_get_prefs_args(info);
+		aux_prog = imsettings_info_get_aux_program(info);
+		aux_args = imsettings_info_get_aux_args(info);
+		short_desc = imsettings_info_get_short_desc(info);
+		long_desc = imsettings_info_get_long_desc(info);
+		is_system_default = imsettings_info_is_system_default(info);
+		is_user_default = imsettings_info_is_user_default(info);
+		is_xim = imsettings_info_is_xim(info);
 
 		g_print("Xinput file: %s\n"
 			"GTK+ immodule: %s\n"
@@ -80,10 +88,12 @@ main(int    argc,
 			"Is user default: %s\n"
 			"Is XIM server: %s\n",
 			file, gtkimm, qtimm, xim,
-			xim_prog, xim_args,
-			prefs_prog, prefs_args,
-			aux_prog, aux_args,
-			short_desc, long_desc,
+			xim_prog, xim_args ? xim_args : "",
+			prefs_prog ? prefs_prog : "",
+			prefs_args ? prefs_args : "",
+			aux_prog ? aux_prog : "",
+			aux_args ? aux_args : "",
+			short_desc, long_desc ? long_desc : "",
 			(is_system_default ? "TRUE" : "FALSE"),
 			(is_user_default ? "TRUE" : "FALSE"),
 			(is_xim ? "TRUE" : "FALSE"));

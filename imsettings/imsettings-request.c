@@ -306,304 +306,6 @@ imsettings_request_get_current_system_im(IMSettingsRequest  *imsettings,
 	return retval;
 }
 
-gchar *
-imsettings_request_get_xinput_filename(IMSettingsRequest  *imsettings,
-				       const gchar        *module,
-				       GError            **error)
-{
-	IMSettingsRequestPrivate *priv;
-	gchar *retval = NULL;
-	GError *err = NULL;
-
-	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), NULL);
-	g_return_val_if_fail (module != NULL && module[0] != 0, NULL);
-
-	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
-	if (!com_redhat_imsettings_IMInfo_get_xinput_filename(priv->proxy, module, &retval, &err))
-		g_warning(_("Failed to invoke a method `%s':\n  %s"), "GetFilename",
-			  err->message);
-	if (error)
-		*error = err;
-	else if (err)
-		g_error_free(err);
-
-	return retval;
-}
-
-gchar *
-imsettings_request_get_im_module_name(IMSettingsRequest  *imsettings,
-				      const gchar        *module,
-				      guint32             type,
-				      GError            **error)
-{
-	IMSettingsRequestPrivate *priv;
-	gchar *retval = NULL;
-	GError *err = NULL;
-
-	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), NULL);
-	g_return_val_if_fail (module != NULL && module[0] != 0, NULL);
-
-	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
-	if (!com_redhat_imsettings_IMInfo_get_im_module_name(priv->proxy, module, type, &retval, &err))
-		g_warning(_("Failed to invoke a method `%s':\n  %s"), "GetIMModuleName",
-			  err->message);
-	if (error)
-		*error = err;
-	else if (err)
-		g_error_free(err);
-
-	return retval;
-}
-
-gboolean
-imsettings_request_get_xim_program(IMSettingsRequest *imsettings,
-				   const gchar       *module,
-				   gchar            **out_prog,
-				   gchar            **out_prog_args,
-				   GError           **error)
-{
-	IMSettingsRequestPrivate *priv;
-	gboolean retval = TRUE;
-	GError *err = NULL;
-
-	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), FALSE);
-	g_return_val_if_fail (module != NULL && module[0] != 0, FALSE);
-	g_return_val_if_fail (out_prog != NULL, FALSE);
-	g_return_val_if_fail (out_prog_args != NULL, FALSE);
-
-	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
-	if (!com_redhat_imsettings_IMInfo_get_xim_program(priv->proxy,
-							  module,
-							  out_prog,
-							  out_prog_args,
-							  &err)) {
-		g_warning(_("Failed to invoke a method `%s':\n  %s"), "GetXimProgram",
-			  err->message);
-		retval = FALSE;
-	}
-	if (error)
-		*error = err;
-	else if (err)
-		g_error_free(err);
-
-	return retval;
-}
-
-gboolean
-imsettings_request_get_preferences_program(IMSettingsRequest *imsettings,
-					   const gchar       *module,
-					   gchar            **out_prog,
-					   gchar            **out_prog_args,
-					   GError           **error)
-{
-	IMSettingsRequestPrivate *priv;
-	gboolean retval = TRUE;
-	GError *err = NULL;
-
-	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), FALSE);
-	g_return_val_if_fail (module != NULL && module[0] != 0, FALSE);
-	g_return_val_if_fail (out_prog != NULL, FALSE);
-	g_return_val_if_fail (out_prog_args != NULL, FALSE);
-
-	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
-	if (!com_redhat_imsettings_IMInfo_get_preferences_program(priv->proxy,
-								  module,
-								  out_prog,
-								  out_prog_args,
-								  &err)) {
-		g_warning(_("Failed to invoke a method `%s':\n  %s"), "GetPreferencesProgram",
-			  err->message);
-		retval = FALSE;
-	}
-	if (error)
-		*error = err;
-	else if (err)
-		g_error_free(err);
-
-	return retval;
-}
-
-gboolean
-imsettings_request_get_auxiliary_program(IMSettingsRequest *imsettings,
-					 const gchar       *module,
-					 gchar            **out_prog,
-					 gchar            **out_prog_args,
-					 GError           **error)
-{
-	IMSettingsRequestPrivate *priv;
-	gboolean retval = TRUE;
-	GError *err = NULL;
-
-	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), FALSE);
-	g_return_val_if_fail (module != NULL && module[0] != 0, FALSE);
-	g_return_val_if_fail (out_prog != NULL, FALSE);
-	g_return_val_if_fail (out_prog_args != NULL, FALSE);
-
-	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
-	if (!com_redhat_imsettings_IMInfo_get_auxiliary_program(priv->proxy,
-								module,
-								out_prog,
-								out_prog_args,
-								&err)) {
-		g_warning(_("Failed to invoke a method `%s':\n  %s"), "GetAuxiliaryProgram",
-			  err->message);
-		retval = FALSE;
-	}
-	if (error)
-		*error = err;
-	else if (err)
-		g_error_free(err);
-
-	return retval;
-}
-
-gchar *
-imsettings_request_get_short_description(IMSettingsRequest  *imsettings,
-					 const gchar        *module,
-					 GError            **error)
-{
-	IMSettingsRequestPrivate *priv;
-	gchar *retval = NULL;
-	GError *err = NULL;
-
-	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), NULL);
-	g_return_val_if_fail (module != NULL && module[0] != 0, NULL);
-
-	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
-	if (!com_redhat_imsettings_IMInfo_get_short_description(priv->proxy,
-								module,
-								&retval,
-								&err))
-		g_warning(_("Failed to invoke a method `%s':\n  %s"), "GetShortDescription",
-			  err->message);
-	if (error)
-		*error = err;
-	else if (err)
-		g_error_free(err);
-
-	return retval;
-}
-
-gchar *
-imsettings_request_get_long_description(IMSettingsRequest  *imsettings,
-					const gchar        *module,
-					GError            **error)
-{
-	IMSettingsRequestPrivate *priv;
-	gchar *retval = NULL;
-	GError *err = NULL;
-
-	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), NULL);
-	g_return_val_if_fail (module != NULL && module[0] != 0, NULL);
-
-	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
-	if (!com_redhat_imsettings_IMInfo_get_long_description(priv->proxy, module, &retval, &err))
-		g_warning(_("Failed to invoke a method `%s':\n  %s"), "GetLongDescription",
-			  err->message);
-	if (error)
-		*error = err;
-	else if (err)
-		g_error_free(err);
-
-	return retval;
-}
-
-gboolean
-imsettings_request_is_system_default(IMSettingsRequest  *imsettings,
-				     const gchar        *module,
-				     GError            **error)
-{
-	IMSettingsRequestPrivate *priv;
-	gboolean retval = FALSE;
-	GError *err = NULL;
-
-	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), FALSE);
-	g_return_val_if_fail (module != NULL && module[0] != 0, FALSE);
-
-	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
-	if (!com_redhat_imsettings_IMInfo_is_system_default(priv->proxy, module, &retval, &err))
-		g_warning(_("Failed to invoke a method `%s':\n  %s"), "IsSystemDefault",
-			  err->message);
-	if (error)
-		*error = err;
-	else if (err)
-		g_error_free(err);
-
-	return retval;
-}
-
-gboolean
-imsettings_request_is_user_default(IMSettingsRequest  *imsettings,
-				   const gchar        *module,
-				   GError            **error)
-{
-	IMSettingsRequestPrivate *priv;
-	gboolean retval = FALSE;
-	GError *err = NULL;
-
-	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), FALSE);
-	g_return_val_if_fail (module != NULL && module[0] != 0, FALSE);
-
-	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
-	if (!com_redhat_imsettings_IMInfo_is_user_default(priv->proxy, module, &retval, &err))
-		g_warning(_("Failed to invoke a method `%s':\n  %s"), "IsUserDefault",
-			  err->message);
-	if (error)
-		*error = err;
-	else if (err)
-		g_error_free(err);
-
-	return retval;
-}
-
-gboolean
-imsettings_request_is_xim(IMSettingsRequest  *imsettings,
-			  const gchar        *module,
-			  GError            **error)
-{
-	IMSettingsRequestPrivate *priv;
-	gboolean retval = FALSE;
-	GError *err = NULL;
-
-	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), FALSE);
-	g_return_val_if_fail (module != NULL && module[0] != 0, FALSE);
-
-	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
-	if (!com_redhat_imsettings_IMInfo_is_xim(priv->proxy, module, &retval, &err))
-		g_warning(_("Failed to invoke a method `%s':\n  %s"), "IsXim",
-			  err->message);
-	if (error)
-		*error = err;
-	else if (err)
-		g_error_free(err);
-
-	return retval;
-}
-
-gchar *
-imsettings_request_get_supported_language(IMSettingsRequest  *imsettings,
-					  const gchar        *module,
-					  GError            **error)
-{
-	IMSettingsRequestPrivate *priv;
-	gchar *retval = NULL;
-	GError *err = NULL;
-
-	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), NULL);
-	g_return_val_if_fail (module != NULL && module[0] != 0, NULL);
-
-	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
-	if (!com_redhat_imsettings_IMInfo_get_supported_language(priv->proxy, module, &retval, &err))
-		g_warning(_("Failed to invoke a method `%s':\n  %s"), "GetSupportedLanguage",
-			  err->message);
-	if (error)
-		*error = err;
-	else if (err)
-		g_error_free(err);
-
-	return retval;
-}
-
 gboolean
 imsettings_request_start_im(IMSettingsRequest  *imsettings,
 			    const gchar        *module,
@@ -809,4 +511,109 @@ imsettings_request_change_to_with_signal(IMSettingsRequest *imsettings,
 	dbus_message_unref(message);
 
 	return TRUE;
+}
+
+GPtrArray *
+imsettings_request_get_info_objects(IMSettingsRequest  *imsettings,
+				    GError            **error)
+{
+	IMSettingsRequestPrivate *priv;
+	GPtrArray *retval = NULL, *ret = NULL;
+	GError *err = NULL;
+
+	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), NULL);
+
+	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
+	if (!com_redhat_imsettings_IMInfo_get_info_objects(priv->proxy,
+							   priv->locale,
+							   &ret,
+							   &err)) {
+		g_warning(_("Failed to invoke a method `%s' on %s:\n  %s"),
+			  "GetInfoObjects",
+			  dbus_g_proxy_get_interface(priv->proxy),
+			  err->message);
+	} else {
+		guint i;
+
+		retval = g_ptr_array_sized_new(ret->len);
+		for (i = 0; i < ret->len; i++) {
+			GValueArray *varray;
+			GValue *val;
+			guint len;
+			GArray *array;
+			IMSettingsObject *o;
+
+			varray = g_ptr_array_index(ret, i);
+			val = g_value_array_get_nth(varray, 0);
+			len = g_value_get_uint(val);
+
+			val = g_value_array_get_nth(varray, 1);
+			array = g_value_get_boxed(val);
+			if (array->len != len) {
+				g_warning("Mismatch the length of Array at %d of %d: expected `%u' but `%u'",
+					  i + 1, ret->len,
+					  len, array->len);
+			}
+			o = imsettings_object_load(array->data, array->len);
+			g_ptr_array_add(retval, o);
+
+			g_value_array_free(varray);
+		}
+		g_ptr_array_free(ret, TRUE);
+	}
+	if (error)
+		*error = err;
+	else if (err)
+		g_error_free(err);
+
+	return retval;
+}
+
+IMSettingsInfo *
+imsettings_request_get_info_object(IMSettingsRequest  *imsettings,
+				   const gchar        *module,
+				   GError            **error)
+{
+	IMSettingsRequestPrivate *priv;
+	IMSettingsInfo *retval = NULL;
+	GValueArray *ret = NULL;
+	GError *err = NULL;
+
+	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), NULL);
+
+	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
+	if (!com_redhat_imsettings_IMInfo_get_info_object(priv->proxy,
+							  module,
+							  &ret,
+							  &err)) {
+		g_warning(_("Failed to invoke a method `%s' on %s:\n  %s"),
+			  "GetInfoObject",
+			  dbus_g_proxy_get_interface(priv->proxy),
+			  err->message);
+	} else {
+		GValue *val;
+		guint len;
+		GArray *array;
+		IMSettingsObject *o;
+
+		val = g_value_array_get_nth(ret, 0);
+		len = g_value_get_uint(val);
+
+		val = g_value_array_get_nth(ret, 1);
+		array = g_value_get_boxed(val);
+		if (array->len != len) {
+			g_warning("Mismatch the length of Array: expected `%u' but `%u'",
+				  len, array->len);
+		}
+		o = imsettings_object_load(array->data, array->len);
+		retval = IMSETTINGS_INFO (o);
+
+		g_value_array_free(ret);
+	}
+	if (error)
+		*error = err;
+	else if (err)
+		g_error_free(err);
+
+	return retval;
 }

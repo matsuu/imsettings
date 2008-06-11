@@ -478,11 +478,13 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 				 GError             **error)
 {
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (imsettings);
-	gchar *imm = NULL, *xinputfile = NULL, *aux_prog = NULL, *aux_args = NULL;
-	gchar *xim_prog = NULL, *xim_args = NULL;
+	const gchar *imm = NULL, *xinputfile = NULL;
+	const gchar *aux_prog = NULL, *aux_args = NULL;
+	const gchar *xim_prog = NULL, *xim_args = NULL;
 	gchar *pidfile = NULL;
 	gboolean retval = FALSE;
 	IMSettingsRequest *req;
+	IMSettingsInfo *info = NULL;
 	DBusConnection *conn;
 
 	g_print("Starting %s...\n", module);
@@ -490,8 +492,8 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
 	imsettings_request_set_locale(req, lang);
-	xinputfile = imsettings_request_get_xinput_filename(req, module, error);
-	if (!xinputfile) {
+	info = imsettings_request_get_info_object(req, module, error);
+	if (*error) {
 		gchar *p = g_strdup((*error)->message);
 
 		g_clear_error(error);
@@ -501,11 +503,10 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 		g_free(p);
 		goto end;
 	}
-	if (imsettings_request_get_auxiliary_program(req,
-						     module,
-						     &aux_prog,
-						     &aux_args,
-						     error)) {
+	xinputfile = imsettings_info_get_filename(info);
+	aux_prog = imsettings_info_get_aux_program(info);
+	aux_args = imsettings_info_get_aux_args(info);
+	if (aux_prog) {
 		pidfile = _build_pidfilename(xinputfile, priv->display_name, "aux");
 
 		/* bring up an auxiliary program */
@@ -514,25 +515,13 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 
 		g_free(pidfile);
 		pidfile = NULL;
-	} else {
-		gchar *p = g_strdup((*error)->message);
-
-		g_clear_error(error);
-		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_FAILED,
-			    _("Unable to get the informations for auxiliary program: %s"),
-			    p);
-		g_free(p);
-		goto end;
 	}
 
-	if (!imsettings_request_get_xim_program(req, module, &xim_prog, &xim_args, error)) {
-		gchar *p = g_strdup((*error)->message);
-
-		g_clear_error(error);
+	xim_prog = imsettings_info_get_xim_program(info);
+	xim_args = imsettings_info_get_xim_args(info);
+	if (xim_prog == NULL) {
 		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_INVALID_IMM,
-			    _("No XIM server is available in %s\n  Details: %s"),
-			    module, p);
-		g_free(p);
+			    _("No XIM server is available in %s"), module);
 		goto end;
 	}
 	pidfile = _build_pidfilename(xinputfile, priv->display_name, "xim");
@@ -544,12 +533,12 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 	/* FIXME: We need to take care of imsettings per X screens?
 	 */
 	/* FIXME: have to deal with the errors */
-	imm = imsettings_request_get_im_module_name(req, module, IMSETTINGS_IMM_GTK, error);
+	imm = imsettings_info_get_gtkimm(info);
 	imsettings_request_change_to(priv->gtk_req, imm, error);
-	imm = imsettings_request_get_im_module_name(req, module, IMSETTINGS_IMM_XIM, error);
+	imm = imsettings_info_get_xim(info);
 	imsettings_request_change_to_with_signal(priv->xim_req, imm);
 #if 0
-	imm = imsettings_request_get_im_module_name(req, module, IMSETTINGS_IMM_QT, error);
+	imm = imsettings_info_get_qtimm(info);
 	imsettings_request_change_to(priv->qt_req, imm, error);
 #endif
 
@@ -560,13 +549,10 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 	retval = TRUE;
   end:
 	g_object_unref(req);
+	if (info)
+		g_object_unref(info);
 	dbus_connection_unref(conn);
 	g_free(pidfile);
-	g_free(xinputfile);
-	g_free(aux_prog);
-	g_free(aux_args);
-	g_free(xim_prog);
-	g_free(xim_args);
 
 	return retval;
 }
@@ -580,8 +566,10 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 {
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (imsettings);
 	IMSettingsRequest *req;
+	IMSettingsInfo *info = NULL;
 	const gchar *homedir;
-	gchar *xinputfile = NULL, *pidfile = NULL;
+	const gchar *xinputfile = NULL;
+	gchar *pidfile = NULL;
 	gboolean retval = FALSE;
 	GString *strerr = g_string_new(NULL);
 	DBusConnection *conn;
@@ -599,10 +587,11 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 
 	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
-	xinputfile = imsettings_request_get_xinput_filename(req, module, error);
-	if (!xinputfile)
+	info = imsettings_request_get_info_object(req, module, error);
+	if (*error)
 		goto end;
 
+	xinputfile = imsettings_info_get_filename(info);
 	pidfile = _build_pidfilename(xinputfile, priv->display_name, "aux");
 	/* kill an auxiliary program */
 	if (!_stop_process(pidfile, "aux", error)) {
@@ -637,10 +626,10 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 			    _("Failed to get a place of home directory."));
 		goto end;
 	}
-	if (imsettings_request_is_user_default(req, module, error)) {
-		g_free(xinputfile);
-		xinputfile = g_build_filename(XINPUT_PATH, IMSETTINGS_NONE_CONF XINPUT_SUFFIX, NULL);
-		if (update_xinputrc && !_update_symlink(priv, xinputfile, error))
+	if (imsettings_info_is_user_default(info)) {
+		gchar *conffile = g_build_filename(XINPUT_PATH, IMSETTINGS_NONE_CONF XINPUT_SUFFIX, NULL);
+
+		if (update_xinputrc && !_update_symlink(priv, conffile, error))
 			goto end;
 	}
 	if (*error == NULL) {
@@ -654,9 +643,10 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 	}
   end:
 	g_free(pidfile);
-	g_free(xinputfile);
 	g_string_free(strerr, TRUE);
 	g_object_unref(req);
+	if (info)
+		g_object_unref(info);
 	dbus_connection_unref(conn);
 
 	return retval;
@@ -668,8 +658,10 @@ imsettings_manager_real_what_im_is_running(IMSettingsObserver  *observer,
 {
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (observer);
 	IMSettingsRequest *req;
+	IMSettingsInfo *info = NULL;
 	DBusConnection *conn;
-	gchar *module, *xinputfile = NULL, *pidfile = NULL;
+	gchar *module, *pidfile = NULL;
+	const gchar *xinputfile;
 	pid_t pid;
 
 	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
@@ -678,8 +670,8 @@ imsettings_manager_real_what_im_is_running(IMSettingsObserver  *observer,
 	if (error)
 		goto end;
 	if (module) {
-		xinputfile = imsettings_request_get_xinput_filename(req, module, error);
-		if (!xinputfile) {
+		info = imsettings_request_get_info_object(req, module, error);
+		if (*error) {
 			gchar *p = g_strdup((*error)->message);
 
 			g_clear_error(error);
@@ -689,6 +681,7 @@ imsettings_manager_real_what_im_is_running(IMSettingsObserver  *observer,
 			g_free(p);
 			goto end;
 		}
+		xinputfile = imsettings_info_get_filename(info);
 		pidfile = _build_pidfilename(xinputfile, priv->display_name, "xim");
 		pid = _get_pid(pidfile, "xim", error);
 		if (pid == 0) {
@@ -713,9 +706,10 @@ imsettings_manager_real_what_im_is_running(IMSettingsObserver  *observer,
 		module = g_strdup("");
 	}
   end:
-	g_free(xinputfile);
 	g_free(pidfile);
 	g_object_unref(req);
+	if (info)
+		g_object_unref(info);
 	dbus_connection_unref(conn);
 
 	return module;

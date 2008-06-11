@@ -182,8 +182,10 @@ main(int    argc,
 	GError *error = NULL;
 	Display *dpy;
 	IMSettingsRequest *req;
+	IMSettingsInfo *info;
 	DBusConnection *conn;
-	gchar *locale, *module, *xim;
+	gchar *locale, *module;
+	const gchar *xim;
 	DBusError derror;
 
 #ifdef ENABLE_NLS
@@ -235,7 +237,9 @@ main(int    argc,
 		g_print("No default IM is available.\n");
 		exit(1);
 	}
-	xim = imsettings_request_get_im_module_name(req, module, IMSETTINGS_IMM_XIM, &error);
+	info = imsettings_request_get_info_object(req, module, &error);
+	xim = imsettings_info_get_xim(info);
+	g_object_unref(info);
 	g_free(module);
 
 	loop = g_main_loop_new(NULL, FALSE);
