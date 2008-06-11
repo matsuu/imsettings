@@ -20,6 +20,14 @@
     </method>
   </interface>
   <interface name="com.redhat.imsettings.IMInfo">
+    <method name="GetInfoObjects">
+      <arg type="s" name="lang" direction="in" />
+      <arg type="a(uay)" name="ret" direction="out" />
+    </method>
+    <method name="GetInfoObject">
+      <arg type="s" name="name" direction="in" />
+      <arg type="(uay)" name="ret" direction="out" />
+    </method>
     <method name="GetList">
       <arg type="s" name="lang" direction="in" />
       <arg type="as" name="ret" direction="out" />

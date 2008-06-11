@@ -187,6 +187,103 @@ imsettings_get_list(GObject     *object,
 }
 
 static gboolean
+imsettings_get_info_objects(GObject      *object,
+			    const gchar  *lang,
+			    GPtrArray   **ret,
+			    GError      **error)
+{
+	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
+	GPtrArray *retval = NULL;
+	gsize i;
+
+	d(g_print("Getting IMInfo Objects...\n"));
+	if (klass->get_info_objects) {
+		retval = klass->get_info_objects(IMSETTINGS_OBSERVER (object), lang, error);
+	} else {
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
+			    "No GetObjects method is supported");
+	}
+	if (*error == NULL) {
+		GValueArray *varray;
+		GValue *val;
+
+		*ret = g_ptr_array_sized_new(retval->len);
+		for (i = 0; i < retval->len; i++) {
+			IMSettingsObject *o;
+			GString *s;
+			GArray *v;
+
+			varray = g_value_array_new(2);
+			g_ptr_array_add(*ret, varray);
+
+			o = IMSETTINGS_OBJECT (g_ptr_array_index(retval, i));
+			s = imsettings_object_dump(o);
+
+			g_value_array_append(varray, NULL);
+			val = g_value_array_get_nth(varray, 0);
+			g_value_init(val, G_TYPE_UINT);
+			g_value_set_uint(val, s->len);
+
+			g_value_array_append(varray, NULL);
+			val = g_value_array_get_nth(varray, 1);
+			g_value_init(val, dbus_g_type_get_collection("GArray", G_TYPE_UCHAR));
+			v = g_array_sized_new(FALSE, TRUE, sizeof (guchar), s->len);
+			g_array_append_vals(v, s->str, s->len);
+			g_value_set_boxed(val, v);
+
+			g_array_free(v, TRUE);
+			g_string_free(s, TRUE);
+		}
+	}
+
+	return *error == NULL;
+}
+
+static gboolean
+imsettings_get_info_object(GObject      *object,
+			   const gchar  *name,
+			   GValueArray **ret,
+			   GError      **error)
+{
+	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
+	IMSettingsInfo *info = NULL;
+
+	d(g_print("Getting IMInfo Object...\n"));
+	if (klass->get_info) {
+		info = klass->get_info(IMSETTINGS_OBSERVER (object), name, error);
+	} else {
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
+			    "No GetInfoObject method is supported");
+	}
+	if (*error == NULL) {
+		GValue *val;
+		GString *s;
+		GArray *v;
+
+		*ret = g_value_array_new(2);
+
+		s = imsettings_object_dump(IMSETTINGS_OBJECT (info));
+
+		g_value_array_append(*ret, NULL);
+		val = g_value_array_get_nth(*ret, 0);
+		g_value_init(val, G_TYPE_UINT);
+		g_value_set_uint(val, s->len);
+
+		g_value_array_append(*ret, NULL);
+		val = g_value_array_get_nth(*ret, 1);
+		g_value_init(val, dbus_g_type_get_collection("GArray", G_TYPE_UCHAR));
+		v = g_array_sized_new(FALSE, TRUE, sizeof (guchar), s->len);
+		g_array_append_vals(v, s->str, s->len);
+		g_value_set_boxed(val, v);
+
+		g_array_free(v, TRUE);
+		g_string_free(s, TRUE);
+	}
+
+	return *error == NULL;
+}
+
+static gboolean
 imsettings_get_current_user_im(GObject      *object,
 			       const gchar **ret,
 			       GError      **error)
@@ -650,7 +747,9 @@ imsettings_observer_real_message_filter(DBusConnection *connection,
 	dbus_error_init(&derror);
 
 	for (i = 0; signal_table[i].interface != NULL; i++) {
-		if (dbus_message_is_signal(message, signal_table[i].interface, signal_table[i].signal_name)) {
+		if (dbus_message_is_signal(message,
+					   signal_table[i].interface,
+					   signal_table[i].signal_name)) {
 			if (signal_table[i].callback(imsettings, message,
 						     signal_table[i].interface,
 						     signal_table[i].signal_name,

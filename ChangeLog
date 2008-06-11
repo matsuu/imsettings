@@ -1,5 +1,15 @@
 2008-06-11  Akira TAGOH  <tagoh@redhat.com>
 
+	* src/factory_info.c (_collect_info_objects): new
+	(imsettings_info_manager_real_get_info_objects): likewise.
+
+	* imsettings/imsettings-observer.c (imsettings_get_info_objects):
+	Implementation of GetInfoObjects.
+	(imsettings_get_info_object): likewise for GetInfoObject.
+
+	* imsettings/imsettings.xml: Add GetInfoObjects and GetInfoObject
+	method.
+
 	* imsettings/imsettings-info.c (imsettings_info_load): do not break
 	the original value for padding.
 

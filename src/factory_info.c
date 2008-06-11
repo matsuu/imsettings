@@ -543,6 +543,38 @@ _collect_im_list(gpointer key,
 	}
 }
 
+typedef struct _IMSettingsManagerCollectObjects {
+	GQueue         *q;
+	const gchar    *lang;
+	IMSettingsInfo *legacy_im;
+} IMSettingsManagerCollectObjects;
+
+static void
+_collect_info_objects(gpointer key,
+		      gpointer val,
+		      gpointer data)
+{
+	IMSettingsManagerCollectObjects *v = data;
+	IMSettingsInfo *info = IMSETTINGS_INFO (val);
+
+	if (!imsettings_info_is_xim(info)) {
+		if (imsettings_info_is_visible(info)) {
+			if (imsettings_info_is_system_default(info))
+				g_queue_push_head(v->q, (gpointer)info);
+			else
+				g_queue_push_tail(v->q, (gpointer)info);
+		}
+	} else {
+		/* need to update the short description with the lang */
+		g_object_set(G_OBJECT (info), "language", v->lang, NULL);
+		if (imsettings_info_is_visible(info)) {
+			if (v->legacy_im)
+				g_return_if_reached();
+			v->legacy_im = info;
+		}
+	}
+}
+
 static GPtrArray *
 imsettings_info_manager_real_get_list(IMSettingsObserver  *observer,
 				      const gchar         *lang,
@@ -574,6 +606,40 @@ imsettings_info_manager_real_get_list(IMSettingsObserver  *observer,
 			    _("No input methods available on your system."));
 	}
 	g_ptr_array_add(array, NULL);
+
+	return array;
+}
+
+static GPtrArray *
+imsettings_info_manager_real_get_info_objects(IMSettingsObserver  *observer,
+					      const gchar         *locale,
+					      GError             **error)
+{
+	IMSettingsInfoManagerPrivate *priv = IMSETTINGS_INFO_MANAGER_GET_PRIVATE (observer);
+	IMSettingsManagerCollectObjects v;
+	GPtrArray *array = g_ptr_array_new();
+	gpointer p;
+
+	v.q = g_queue_new();
+	v.lang = locale;
+	v.legacy_im = NULL;
+	g_queue_init(v.q);
+
+	G_LOCK (imsettings_info_manager);
+
+	g_hash_table_foreach(priv->im_info_from_name, _collect_info_objects, &v);
+
+	G_UNLOCK (imsettings_info_manager);
+
+	while ((p = g_queue_pop_head(v.q)))
+		g_ptr_array_add(array, p);
+	if (v.legacy_im)
+		g_ptr_array_add(array, v.legacy_im);
+	g_queue_free(v.q);
+	if (array->len == 0) {
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
+			    _("No input methods available on your system."));
+	}
 
 	return array;
 }
@@ -787,6 +853,7 @@ imsettings_info_manager_class_init(IMSettingsInfoManagerClass *klass)
 	object_class->finalize     = imsettings_info_manager_real_finalize;
 
 	observer_class->get_list = imsettings_info_manager_real_get_list;
+	observer_class->get_info_objects = imsettings_info_manager_real_get_info_objects;
 	observer_class->get_current_user_im = imsettings_info_manager_real_get_current_user_im;
 	observer_class->get_current_system_im = imsettings_info_manager_real_get_current_system_im;
 	observer_class->get_info = imsettings_info_manager_real_get_info;

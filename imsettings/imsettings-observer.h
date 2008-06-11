@@ -57,8 +57,18 @@ struct _IMSettingsObserverClass {
 						    DBusMessage         *message,
 						    void                *data);
 
+	void              (* dh_reserved1)         (void);
+	void              (* dh_reserved2)         (void);
+	void              (* dh_reserved3)         (void);
+	void              (* dh_reserved4)         (void);
+	void              (* dh_reserved5)         (void);
+
 	/* dbus signals */
 	void              (* disconnected)         (IMSettingsObserver  *imsettings);
+
+	void              (* ds_reserved1)         (void);
+	void              (* ds_reserved2)         (void);
+	void              (* ds_reserved3)         (void);
 
 	/* dbus methods */
 	gboolean          (* reload)               (IMSettingsObserver  *imsettings,
@@ -70,6 +80,9 @@ struct _IMSettingsObserverClass {
 	const gchar     * (* get_current_user_im)  (IMSettingsObserver  *imsettings,
 						    GError             **error);
 	const gchar     * (* get_current_system_im)(IMSettingsObserver  *imsettings,
+						    GError             **error);
+	GPtrArray       * (* get_info_objects)     (IMSettingsObserver  *imsettings,
+						    const gchar         *locale,
 						    GError             **error);
 	IMSettingsInfo  * (* get_info)             (IMSettingsObserver  *imsettings,
 						    const gchar         *module,
@@ -87,6 +100,10 @@ struct _IMSettingsObserverClass {
 	const gchar     * (* what_im_is_running)   (IMSettingsObserver  *imsettings,
 						    GError             **error);
 
+	void              (* dm_reserved1)         (void);
+	void              (* dm_reserved2)         (void);
+	void              (* dm_reserved3)         (void);
+
 	/* signals */
 	void              (* s_start_im)           (IMSettingsObserver  *imsettings,
 						    const gchar         *module,
@@ -95,6 +112,14 @@ struct _IMSettingsObserverClass {
 						    const gchar         *module,
 						    gboolean             update_xinputrc,
 						    gboolean             force);
+
+	void              (* s_reserved1)          (void);
+	void              (* s_reserved2)          (void);
+
+	void              (* reserved1)            (void);
+	void              (* reserved2)            (void);
+	void              (* reserved3)            (void);
+	void              (* reserved4)            (void);
 };
 
 struct _IMSettingsObserver {
