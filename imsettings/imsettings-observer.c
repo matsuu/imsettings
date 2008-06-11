@@ -88,6 +88,25 @@ G_DEFINE_TYPE (IMSettingsObserver, imsettings_observer, G_TYPE_OBJECT);
  * Private functions
  */
 static gboolean
+imsettings_get_version(GObject  *object,
+		       guint    *ret,
+		       GError  **error)
+{
+	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
+	gboolean retval = FALSE;
+
+	d(g_print("Getting version...\n"));
+	if (klass->get_version) {
+		*ret = klass->get_version(IMSETTINGS_OBSERVER (object),
+					  error);
+		if (*error == NULL)
+			retval = TRUE;
+	}
+
+	return retval;
+}
+
+static gboolean
 imsettings_start_im(GObject      *object,
 		    const gchar  *lang,
 		    const gchar  *module,

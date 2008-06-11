@@ -682,6 +682,13 @@ imsettings_info_manager_real_get_info(IMSettingsObserver  *observer,
 	return info;
 }
 
+static guint
+imsettings_info_manager_real_get_version(IMSettingsObserver  *observer,
+					 GError             **error)
+{
+	return IMSETTINGS_IMINFO_DAEMON_VERSION;
+}
+
 static gboolean
 imsettings_info_manager_init_monitor(IMSettingsInfoManager *manager)
 {
@@ -860,6 +867,7 @@ imsettings_info_manager_class_init(IMSettingsInfoManagerClass *klass)
 	observer_class->get_current_user_im = imsettings_info_manager_real_get_current_user_im;
 	observer_class->get_current_system_im = imsettings_info_manager_real_get_current_system_im;
 	observer_class->get_info = imsettings_info_manager_real_get_info;
+	observer_class->get_version = imsettings_info_manager_real_get_version;
 
 	/* properties */
 	g_object_class_install_property(object_class, PROP_XINPUTRCDIR,

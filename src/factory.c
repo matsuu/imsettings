@@ -715,6 +715,13 @@ imsettings_manager_real_what_im_is_running(IMSettingsObserver  *observer,
 	return module;
 }
 
+static guint
+imsettings_manager_real_get_version(IMSettingsObserver  *observer,
+				    GError             **error)
+{
+	return IMSETTINGS_SETTINGS_DAEMON_VERSION;
+}
+
 static void
 imsettings_manager_class_init(IMSettingsManagerClass *klass)
 {
@@ -730,6 +737,7 @@ imsettings_manager_class_init(IMSettingsManagerClass *klass)
 	observer_class->start_im           = imsettings_manager_real_start_im;
 	observer_class->stop_im            = imsettings_manager_real_stop_im;
 	observer_class->what_im_is_running = imsettings_manager_real_what_im_is_running;
+	observer_class->get_version        = imsettings_manager_real_get_version;
 
 	/* properties */
 	g_object_class_install_property(object_class, PROP_DISPLAY_NAME,

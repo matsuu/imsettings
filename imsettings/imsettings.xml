@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <node name="/com/redhat/imsettings">
   <interface name="com.redhat.imsettings">
+    <method name="GetVersion">
+      <arg type="u" name="version" direction="out" />
+    </method>
     <method name="StartIM">
       <arg type="s" name="lang" direction="in" />
       <arg type="s" name="module" direction="in" />
@@ -20,6 +23,9 @@
     </method>
   </interface>
   <interface name="com.redhat.imsettings.IMInfo">
+    <method name="GetVersion">
+      <arg type="u" name="version" direction="out" />
+    </method>
     <method name="GetInfoObjects">
       <arg type="s" name="lang" direction="in" />
       <arg type="a(uay)" name="ret" direction="out" />

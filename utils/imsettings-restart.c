@@ -46,6 +46,7 @@ main(int    argc,
 	};
 	GError *error = NULL;
 	gboolean flag;
+	guint n_retry = 0;
 
 #ifdef ENABLE_NLS
 	bindtextdomain (GETTEXT_PACKAGE, IMSETTINGS_LOCALEDIR);
@@ -78,6 +79,21 @@ main(int    argc,
 
 	connection = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	imsettings = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
+  retry:
+	if (imsettings_request_get_version(imsettings, NULL) != IMSETTINGS_SETTINGS_DAEMON_VERSION) {
+		if (n_retry > 0) {
+			g_printerr("Mismatch the version of im-settings-daemon.");
+			exit(1);
+		}
+		/* version is inconsistent. try to reload the process */
+		imsettings_request_reload(imsettings, TRUE);
+		g_print("Waiting for reloading the process...\n");
+		/* XXX */
+		sleep(1);
+		n_retry++;
+		goto retry;
+	}
+
 	if (!(flag = imsettings_request_stop_im(imsettings, argv[1], FALSE, arg_force, &error))) {
 		if (!arg_force) {
 			g_printerr("Failed to stop IM process `%s'\n", argv[1]);

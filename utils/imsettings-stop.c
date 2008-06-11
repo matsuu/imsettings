@@ -26,6 +26,7 @@
 #endif
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <glib/gi18n.h>
 #include "imsettings/imsettings.h"
 #include "imsettings/imsettings-request.h"
@@ -44,6 +45,7 @@ main(int    argc,
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};
 	GError *error = NULL;
+	guint n_retry = 0;
 
 #ifdef ENABLE_NLS
 	bindtextdomain (GETTEXT_PACKAGE, IMSETTINGS_LOCALEDIR);
@@ -76,6 +78,21 @@ main(int    argc,
 
 	connection = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	imsettings = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
+  retry:
+	if (imsettings_request_get_version(imsettings, NULL) != IMSETTINGS_SETTINGS_DAEMON_VERSION) {
+		if (n_retry > 0) {
+			g_printerr("Mismatch the version of im-settings-daemon.");
+			exit(1);
+		}
+		/* version is inconsistent. try to reload the process */
+		imsettings_request_reload(imsettings, TRUE);
+		g_print("Waiting for reloading the process...\n");
+		/* XXX */
+		sleep(1);
+		n_retry++;
+		goto retry;
+	}
+
 	if (imsettings_request_stop_im(imsettings, argv[1], !arg_no_update, arg_force, &error)) {
 		g_print(_("Stopped %s\n"), argv[1]);
 	} else {

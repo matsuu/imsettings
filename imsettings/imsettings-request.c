@@ -617,3 +617,30 @@ imsettings_request_get_info_object(IMSettingsRequest  *imsettings,
 
 	return retval;
 }
+
+guint
+imsettings_request_get_version(IMSettingsRequest  *imsettings,
+			       GError            **error)
+{
+	IMSettingsRequestPrivate *priv;
+	GError *err = NULL;
+	guint retval = 0;
+
+	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), 0);
+
+	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
+	if (!dbus_g_proxy_call(priv->proxy, "GetVersion", &err,
+			       G_TYPE_INVALID,
+			       G_TYPE_UINT, &retval,
+			       G_TYPE_INVALID))
+		g_warning(_("Failed to invoke a method `%s' on %s:\n  %s"),
+			  "GetVersion",
+			  dbus_g_proxy_get_interface(priv->proxy),
+			  err->message);
+	if (error)
+		*error = err;
+	else if (err)
+		g_error_free(err);
+
+	return retval;
+}

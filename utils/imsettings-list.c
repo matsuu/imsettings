@@ -24,6 +24,7 @@
 #include <locale.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <glib/gi18n.h>
 #include "imsettings/imsettings.h"
 #include "imsettings/imsettings-request.h"
@@ -38,6 +39,7 @@ main(int    argc,
 	gchar *user_im, *system_im, *running_im;
 	gint i;
 	GError *error = NULL;
+	guint n_retry = 0, n_info_retry = 0;
 
 	setlocale(LC_ALL, "");
 	locale = setlocale(LC_CTYPE, NULL);
@@ -48,6 +50,36 @@ main(int    argc,
 	imsettings = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
 	imsettings_info = imsettings_request_new(connection, IMSETTINGS_INFO_INTERFACE_DBUS);
 	imsettings_request_set_locale(imsettings_info, locale);
+
+  retry:
+	if (imsettings_request_get_version(imsettings, NULL) != IMSETTINGS_SETTINGS_DAEMON_VERSION) {
+		if (n_retry > 0) {
+			g_printerr("Mismatch the version of im-settings-daemon.");
+			exit(1);
+		}
+		/* version is inconsistent. try to reload the process */
+		imsettings_request_reload(imsettings, TRUE);
+		g_print("Waiting for reloading the process...\n");
+		/* XXX */
+		sleep(1);
+		n_retry++;
+		goto retry;
+	}
+  info_retry:
+	if (imsettings_request_get_version(imsettings_info, NULL) != IMSETTINGS_IMINFO_DAEMON_VERSION) {
+		if (n_info_retry > 0) {
+			g_printerr("Mismatch the version of im-info-daemon.");
+			exit(1);
+		}
+		/* version is inconsistent. try to reload the process */
+		imsettings_request_reload(imsettings_info, TRUE);
+		g_print("Waiting for reloading the process...\n");
+		/* XXX */
+		sleep(1);
+		n_info_retry++;
+		goto info_retry;
+	}
+
 	if ((list = imsettings_request_get_im_list(imsettings_info, &error)) == NULL) {
 		g_printerr("Failed to get an IM list.\n");
 	} else {

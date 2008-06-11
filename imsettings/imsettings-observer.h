@@ -69,6 +69,10 @@ struct _IMSettingsObserverClass {
 	void              (* ds_reserved1)         (void);
 	void              (* ds_reserved2)         (void);
 	void              (* ds_reserved3)         (void);
+	void              (* ds_reserved4)         (void);
+	void              (* ds_reserved5)         (void);
+	void              (* ds_reserved6)         (void);
+	void              (* ds_reserved7)         (void);
 
 	/* dbus methods */
 	gboolean          (* reload)               (IMSettingsObserver  *imsettings,
@@ -99,10 +103,15 @@ struct _IMSettingsObserverClass {
 						    GError             **error);
 	const gchar     * (* what_im_is_running)   (IMSettingsObserver  *imsettings,
 						    GError             **error);
+	guint             (* get_version)          (IMSettingsObserver  *imsettings,
+						    GError             **error);
 
 	void              (* dm_reserved1)         (void);
 	void              (* dm_reserved2)         (void);
 	void              (* dm_reserved3)         (void);
+	void              (* dm_reserved4)         (void);
+	void              (* dm_reserved5)         (void);
+	void              (* dm_reserved6)         (void);
 
 	/* signals */
 	void              (* s_start_im)           (IMSettingsObserver  *imsettings,

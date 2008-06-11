@@ -22,6 +22,7 @@
  * Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+#include <unistd.h>
 #include "imsettings/imsettings.h"
 #include "imsettings/imsettings-request.h"
 
@@ -39,6 +40,7 @@ main(int    argc,
 	const gchar *short_desc, *long_desc;
 	gboolean is_system_default, is_user_default, is_xim;
 	GError *error = NULL;
+	guint n_retry = 0;
 
 	g_type_init();
 
@@ -53,6 +55,21 @@ main(int    argc,
 	}
 	connection = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	imsettings = imsettings_request_new(connection, IMSETTINGS_INFO_INTERFACE_DBUS);
+
+  retry:
+	if (imsettings_request_get_version(imsettings, NULL) != IMSETTINGS_IMINFO_DAEMON_VERSION) {
+		if (n_retry > 0) {
+			g_printerr("Mismatch the version of im-info-daemon.");
+			exit(1);
+		}
+		/* version is inconsistent. try to reload the process */
+		imsettings_request_reload(imsettings, TRUE);
+		g_print("Waiting for reloading the process...\n");
+		/* XXX */
+		sleep(1);
+		n_retry++;
+		goto retry;
+	}
 
 	info = imsettings_request_get_info_object(imsettings, argv[1], &error);
 	if (error) {

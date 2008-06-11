@@ -1,5 +1,27 @@
 2008-06-11  Akira TAGOH  <tagoh@redhat.com>
 
+	* utils/imsettings-info.c (main): check the version of the service
+	and reload as needed.
+
+	* utils/imsettings-stop.c (main): likewise.
+
+	* utils/imsettings-restart.c (main): likewise.
+
+	* utils/imsettings-start.c (main): likewise.
+
+	* utils/imsettings-list.c (main): likewise.
+
+	* src/factory.c (imsettings_manager_real_get_version): new.
+
+	* src/factory_info.c (imsettings_info_manager_real_get_version): new.
+
+	* imsettings/imsettings-request.c (imsettings_request_get_version):
+	new.
+
+	* imsettings/imsettings-observer.c (imsettings_get_version): new.
+
+	* imsettings/imsettings.xml: Add GetVersion method.
+
 	* imsettings/imsettings-object.c (imsettings_object_dump):
 	output the type name instead of GType directly. this wasn't a portable
 	way for other process.
