@@ -1,3 +1,8 @@
+2008-06-11  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: get rid of gamin check. no longer depend on that
+	directly.
+
 2008-06-10  Akira TAGOH  <tagoh@redhat.com>
 
 	* utils/imsettings-restart.c (main): Fix a typo. (RHBZ#450574)

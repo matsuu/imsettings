@@ -76,7 +76,7 @@ dnl ======================================================================
 PKG_CHECK_MODULES(IMSETTINGS, dbus-1 >= $DBUS_REQUIRED
 			      dbus-glib-1 >= $DBUS_GLIB_REQUIRED
 			      gio-2.0 >= $GIO_REQUIRED)
-PKG_CHECK_MODULES(IMINFO, gthread-2.0 gamin)
+PKG_CHECK_MODULES(IMINFO, gthread-2.0)
 PKG_CHECK_MODULES(X11, x11)
 PKG_CHECK_MODULES(CHECK, check >= $CHECK_REQUIRED,
 	[use_check="yes"],
