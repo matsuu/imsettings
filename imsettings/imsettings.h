@@ -28,7 +28,6 @@
 
 G_BEGIN_DECLS
 
-#define IMSETTINGS_MODULE_VERSION	"0.6"
 #define IMSETTINGS_SERVICE_DBUS		"com.redhat.imsettings"
 #define IMSETTINGS_PATH_DBUS		"/com/redhat/imsettings"
 #define IMSETTINGS_INTERFACE_DBUS	"com.redhat.imsettings"
