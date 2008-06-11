@@ -49,6 +49,7 @@ noinst_PROGRAMS +=					\
 	test-imsettings-object				\
 	test-imsettings-info				\
 	test-gcit-5					\
+	test-gcit-7					\
 	$(NULL)
 endif
 #
@@ -64,5 +65,10 @@ test_imsettings_info_SOURCES =				\
 #
 test_gcit_5_SOURCES =					\
 	gcit_5.c					\
+	$(common_sources)				\
+	$(NULL)
+#
+test_gcit_7_SOURCES =					\
+	gcit_7.c					\
 	$(common_sources)				\
 	$(NULL)

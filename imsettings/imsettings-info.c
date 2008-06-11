@@ -253,9 +253,11 @@ imsettings_info_notify_properties(GObject     *object,
 					    case PROP_SHORT_DESC:
 					    case PROP_LONG_DESC:
 					    case PROP_ICON:
+#if 0
 						    d(g_print("  %s: %s\n",
 							      _xinput_tokens[prop - (PROP_GTK_IMM - PROP_0)],
 							      str->str));
+#endif
 						    g_object_set(object,
 								 properties[prop - (PROP_GTK_IMM - PROP_0)], str->str,
 								 NULL);
@@ -543,7 +545,7 @@ imsettings_info_load(IMSettingsObject *object,
 		     GDataInputStream *stream)
 {
 	IMSettingsInfoPrivate *priv = IMSETTINGS_INFO_GET_PRIVATE (object);
-	gsize len;
+	gsize len, i;
 	GString *s = g_string_new(NULL);
 
 	if (IMSETTINGS_OBJECT_CLASS (imsettings_info_parent_class)->load)
@@ -552,10 +554,8 @@ imsettings_info_load(IMSettingsObject *object,
 	/* PROP_LANGUAGE */
 	len = imsettings_swapu32 (object,
 				  g_data_input_stream_read_uint32(stream, NULL, NULL));
-	while (len > 0) {
+	for (i = 0; i < len; i++)
 		g_string_append_c(s, g_data_input_stream_read_byte(stream, NULL, NULL));
-		len--;
-	}
 	if (s->len > 0)
 		priv->language = g_string_free(s, FALSE);
 	else
@@ -565,20 +565,16 @@ imsettings_info_load(IMSettingsObject *object,
 	s = g_string_new(NULL);
 	len = imsettings_swapu32 (object,
 				  g_data_input_stream_read_uint32(stream, NULL, NULL));
-	while (len > 0) {
+	for (i = 0; i < len; i++)
 		g_string_append_c(s, g_data_input_stream_read_byte(stream, NULL, NULL));
-		len--;
-	}
 	priv->filename = g_string_free(s, FALSE);
 	imsettings_skip_pad4 (stream, len);
 	/* PROP_SHORT_DESC */
 	s = g_string_new(NULL);
 	len = imsettings_swapu32 (object,
 				  g_data_input_stream_read_uint32(stream, NULL, NULL));
-	while (len > 0) {
+	for (i = 0; i < len; i++)
 		g_string_append_c(s, g_data_input_stream_read_byte(stream, NULL, NULL));
-		len--;
-	}
 	if (s->len > 0)
 		priv->short_desc = g_string_free(s, FALSE);
 	else

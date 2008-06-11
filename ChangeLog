@@ -1,5 +1,10 @@
 2008-06-11  Akira TAGOH  <tagoh@redhat.com>
 
+	* imsettings/imsettings-info.c (imsettings_info_load): do not break
+	the original value for padding.
+
+	* tests/gcit_7.c: New testcase for Issue#7.
+
 	* configure.ac: get rid of gamin check. no longer depend on that
 	directly.
 
