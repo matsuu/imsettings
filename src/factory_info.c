@@ -148,6 +148,7 @@ imsettings_info_manager_add_info(IMSettingsInfoManagerPrivate *priv,
 		G_LOCK (imsettings_info_manager);
 
 		if ((ret = g_hash_table_lookup(priv->im_info_from_name, name)) == NULL) {
+			d(g_print("Adding %s(%s)...\n", filename, name));
 			g_hash_table_insert(priv->im_info_from_name,
 					    g_strdup(name),
 					    info);
@@ -160,6 +161,7 @@ imsettings_info_manager_add_info(IMSettingsInfoManagerPrivate *priv,
 				/* We deal with none.conf specially here.
 				 * It has to be registered as is anyway.
 				 */
+				d(g_print("Adding %s(%s)...\n", filename, name));
 				g_hash_table_replace(priv->im_info_from_name,
 						     g_strdup(name),
 						     info);
@@ -200,10 +202,13 @@ imsettings_info_manager_remove_info(IMSettingsInfoManagerPrivate *priv,
 
 	if ((info = g_hash_table_lookup(priv->im_info_from_filename, filename))) {
 		name = imsettings_info_get_short_desc(info);
+		d(g_print("Removing %s(%s)...\n", filename, name));
 		g_hash_table_remove(priv->im_info_from_filename, filename);
 		if (!is_xinputrc ||
-		    strcmp(name, IMSETTINGS_USER_SPECIFIC_SHORT_DESC) == 0)
+		    strcmp(name, IMSETTINGS_USER_SPECIFIC_SHORT_DESC) == 0) {
+			d(g_print("Removing %s...\n", name));
 			g_hash_table_remove(priv->im_info_from_name, name);
+		}
 		retval = TRUE;
 	}
 
@@ -442,7 +447,7 @@ imsettings_info_manager_real_changed_dot_xinputrc(GFileMonitor      *monitor,
 		    proceeded = TRUE;
 		    break;
 	    case G_FILE_MONITOR_EVENT_DELETED:
-		    imsettings_info_manager_remove_info(priv, filename, FALSE);
+		    imsettings_info_manager_remove_info(priv, filename, TRUE);
 		    proceeded = TRUE;
 		    break;
 	    default:

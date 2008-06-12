@@ -1,3 +1,8 @@
+2008-06-12  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory_info.c (imsettings_info_manager_real_changed_dot_xinputrc):
+	do not remove the hash by IM name. (Issue#9)
+
 2008-06-11  Akira TAGOH  <tagoh@redhat.com>
 
 	* utils/imsettings-info.c (main): check the version of the service
