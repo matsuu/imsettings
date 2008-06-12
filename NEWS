@@ -1,3 +1,9 @@
+0.101.0 -> 0.101.1
+=====================
+* Bug Fixes
+  * Issue#9: IM goes away till im-info-daemon restarted.
+  * Issue#10: The sort order isn't correct.
+
 0.100.0 -> 0.101.0
 =====================
 * Soname is bumped again due to API clean up and new APIs.
