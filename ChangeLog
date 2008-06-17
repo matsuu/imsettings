@@ -1,3 +1,9 @@
+2008-06-17  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/main.c (main): do not unref the instance of
+	IMSettingsInfo during referring the information in IMSettingsInfo
+	because those is the constant variable.
+
 2008-06-12  Akira TAGOH  <tagoh@redhat.com>
 
 	* src/factory_info.c (imsettings_info_manager_real_changed_dot_xinputrc):

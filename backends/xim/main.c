@@ -239,7 +239,6 @@ main(int    argc,
 	}
 	info = imsettings_request_get_info_object(req, module, &error);
 	xim = imsettings_info_get_xim(info);
-	g_object_unref(info);
 	g_free(module);
 
 	loop = g_main_loop_new(NULL, FALSE);
@@ -256,6 +255,7 @@ main(int    argc,
 
 	g_main_loop_run(loop);
 
+	g_object_unref(info);
 	g_object_unref(server);
 	xim_destroy(dpy);
 	XCloseDisplay(dpy);
