@@ -38,7 +38,7 @@ main(int    argc,
 	IMSettingsRequest *imsettings;
 	DBusConnection *connection;
 	gboolean arg_force = FALSE, arg_no_update = FALSE;
-	GOptionContext *ctx = g_option_context_new(NULL);
+	GOptionContext *ctx = g_option_context_new(_("<Input Method>"));
 	GOptionEntry entries[] = {
 		{"force", 'f', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_force, N_("Force reloading the configuration, including restarting the process.")},
 		{"no-update", 'n', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_no_update, N_("Do not update .xinputrc.")},

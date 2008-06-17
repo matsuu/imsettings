@@ -40,7 +40,7 @@ main(int    argc,
 	DBusConnection *connection;
 	gchar *locale;
 	gboolean arg_no_update = FALSE;
-	GOptionContext *ctx = g_option_context_new(NULL);
+	GOptionContext *ctx = g_option_context_new(_("<Input Method>"));
 	GOptionEntry entries[] = {
 		{"no-update", 'n', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_no_update, N_("Do not update .xinputrc.")},
 		{NULL, 0, 0, 0, NULL, NULL, NULL}

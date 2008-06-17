@@ -1,5 +1,12 @@
 2008-06-17  Akira TAGOH  <tagoh@redhat.com>
 
+	* utils/imsettings-stop.c (main): Fix a typo in the help
+	message. (rhbz#451739)
+
+	* utils/imsettings-restart.c (main): likewise.
+
+	* utils/imsettings-start.c (main): likewise.
+
 	* backends/xim/main.c (main): do not unref the instance of
 	IMSettingsInfo during referring the information in IMSettingsInfo
 	because those is the constant variable.
