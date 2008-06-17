@@ -1,3 +1,10 @@
+0.101.1 -> 0.101.2
+=====================
+* Bug Fixes
+  * Fix accessing the invalid memory in imsettings-xim.
+  * rhbz#451739: Fix a typo in the help message.
+  * just exit if the session bug can't be got.
+
 0.101.0 -> 0.101.1
 =====================
 * Bug Fixes
