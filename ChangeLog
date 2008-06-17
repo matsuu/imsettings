@@ -1,5 +1,15 @@
 2008-06-17  Akira TAGOH  <tagoh@redhat.com>
 
+	* utils/imsettings-info.c (main): exit if can't get the session bus.
+
+	* utils/imsettings-stop.c (main): likewise.
+
+	* utils/imsettings-restart.c (main): likewise.
+
+	* utils/imsettings-start.c (main): likewise.
+
+	* utils/imsettings-list.c (main): likewise.
+
 	* utils/imsettings-stop.c (main): Fix a typo in the help
 	message. (rhbz#451739)
 

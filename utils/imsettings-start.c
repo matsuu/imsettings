@@ -81,6 +81,10 @@ main(int    argc,
 	g_option_context_free(ctx);
 
 	connection = dbus_bus_get(DBUS_BUS_SESSION, NULL);
+	if (connection == NULL) {
+		g_printerr("Failed to get a session bus.\n");
+		return 1;
+	}
 	imsettings = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
 	imsettings_request_set_locale(imsettings, locale);
   retry:
