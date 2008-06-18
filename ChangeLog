@@ -1,3 +1,8 @@
+2008-06-18  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (imsettings_manager_real_what_im_is_running):
+	Fix a typo. always saying IM is running if no .xinputrc.
+
 2008-06-17  Akira TAGOH  <tagoh@redhat.com>
 
 	* utils/imsettings-info.c (main): exit if can't get the session bus.

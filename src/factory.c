@@ -667,7 +667,7 @@ imsettings_manager_real_what_im_is_running(IMSettingsObserver  *observer,
 	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
 	module = imsettings_request_get_current_user_im(req, error);
-	if (error)
+	if (*error != NULL)
 		goto end;
 	if (module) {
 		info = imsettings_request_get_info_object(req, module, error);
