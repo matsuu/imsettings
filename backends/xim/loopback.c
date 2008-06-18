@@ -710,6 +710,11 @@ xim_loopback_finalize(GObject *object)
 
 	if (priv->selection_window)
 		XDestroyWindow(proto->dpy, priv->selection_window);
+	XSetSelectionOwner(proto->dpy,
+			   priv->atom_selection,
+			   None,
+			   CurrentTime);
+	XSync(proto->dpy, False);
 	g_hash_table_destroy(priv->comm_table);
 	g_source_destroy((GSource *)priv->event_loop);
 

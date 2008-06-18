@@ -432,10 +432,10 @@ xim_server_finalize(GObject *object)
 
 	g_source_destroy((GSource *)priv->event_loop);
 	g_hash_table_destroy(priv->conn_table);
-	XDestroyWindow(xim->dpy, priv->selection_window);
 	g_free(priv->target_xim_name);
 	if (priv->loopback)
 		g_object_unref(priv->loopback);
+	XDestroyWindow(xim->dpy, priv->selection_window);
 
 	if (G_OBJECT_CLASS (xim_server_parent_class)->finalize)
 		G_OBJECT_CLASS (xim_server_parent_class)->finalize(object);

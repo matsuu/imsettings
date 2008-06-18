@@ -1,5 +1,8 @@
 2008-06-18  Akira TAGOH  <tagoh@redhat.com>
 
+	* backends/xim/loopback.c (xim_loopback_finalize): unset the selection
+	owner.
+
 	* backends/xim/utils.c (xim_lookup_atom): deal with the X event in
 	the queue before doing something.
 
