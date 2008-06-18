@@ -126,6 +126,7 @@ xim_lookup_atom(Display     *dpy,
 	if (xim_server_name == NULL)
 		return None;
 
+	XSync(dpy, False);
 	s1 = g_strdup_printf("@server=%s", xim_server_name);
 	a = xim_get_atoms(dpy);
 	XGetWindowProperty(dpy, DefaultRootWindow(dpy), a->atom_xim_servers,

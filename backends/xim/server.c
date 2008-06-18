@@ -27,6 +27,7 @@
 
 #include <stdint.h>
 #include <string.h>
+#include <unistd.h>
 #include <glib/gi18n-lib.h>
 #include <X11/Xatom.h>
 #include "imsettings/imsettings-marshal.h"
@@ -336,39 +337,52 @@ xim_server_set_property(GObject      *object,
 						 "selection_atom", &priv->atom_selection,
 						 NULL);
 			    }
-		    } else if ((a = xim_lookup_atom(xim->dpy, name)) != None) {
-			    Window w = XGetSelectionOwner(xim->dpy, a);
-			    gchar *old_xim;
-
-			    if (w != 0) {
-				    priv->target_xim_window = w;
-				    old_xim = priv->target_xim_name;
-				    priv->target_xim_name = g_strdup(name);
-				    priv->atom_selection = a;
-
-				    g_hash_table_foreach(priv->conn_table,
-							 xim_server_update_xim_server,
-							 priv->target_xim_name);
-
-				    if (strcmp(old_xim, "none") == 0) {
-					    /* destroy the dummy XIM server */
-					    if (priv->verbose)
-						    g_print("D: Destroying an instance of loopback server.\n");
-					    if (priv->loopback) {
-						    g_object_unref(priv->loopback);
-						    priv->loopback = NULL;
-					    }
-				    }
-
-				    g_free(old_xim);
-			    } else {
-				    gchar *s = XGetAtomName(xim->dpy, a);
-
-				    g_warning("No selection owner of %s. XIM server may be not running", s);
-				    XFree(s);
-			    }
 		    } else {
-			    g_warning("No such XIM server is running: %s", name);
+			    guint n_retry = 3;
+
+		      retry:
+			    if ((a = xim_lookup_atom(xim->dpy, name)) != None) {
+				    Window w = XGetSelectionOwner(xim->dpy, a);
+				    gchar *old_xim;
+
+				    if (w != 0) {
+					    priv->target_xim_window = w;
+					    old_xim = priv->target_xim_name;
+					    priv->target_xim_name = g_strdup(name);
+					    priv->atom_selection = a;
+
+					    g_hash_table_foreach(priv->conn_table,
+								 xim_server_update_xim_server,
+								 priv->target_xim_name);
+
+					    if (strcmp(old_xim, "none") == 0) {
+						    /* destroy the dummy XIM server */
+						    if (priv->verbose)
+							    g_print("D: Destroying an instance of loopback server.\n");
+						    if (priv->loopback) {
+							    g_object_unref(priv->loopback);
+							    priv->loopback = NULL;
+						    }
+					    }
+
+					    g_free(old_xim);
+				    } else {
+					    gchar *s = XGetAtomName(xim->dpy, a);
+
+					    g_warning("No selection owner of %s. XIM server may be not running", s);
+					    XFree(s);
+				    }
+			    } else {
+				    if (n_retry > 0) {
+					    g_warning("No XIM server `%s' is running. retrying to find out...",
+						      name);
+					    n_retry--;
+					    sleep(3);
+					    goto retry;
+				    } else {
+					    g_printerr("No such XIM server is running: %s\n", name);
+				    }
+			    }
 		    }
 		    break;
 	    case PROP_VERBOSE:

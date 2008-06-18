@@ -1,5 +1,11 @@
 2008-06-18  Akira TAGOH  <tagoh@redhat.com>
 
+	* backends/xim/utils.c (xim_lookup_atom): deal with the X event in
+	the queue before doing something.
+
+	* backends/xim/server.c (xim_server_set_property): work around for
+	a dalay until IM is ready. (rhbz#451753)
+
 	* src/factory.c (imsettings_manager_real_what_im_is_running):
 	Fix a typo. always saying IM is running if no .xinputrc.
 
