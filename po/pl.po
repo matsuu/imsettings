@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-05-15 20:22+0900\n"
-"PO-Revision-Date: 2008-03-15 14:59+0200\n"
+"PO-Revision-Date: 2008-06-18 20:21+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,9 +27,8 @@ msgstr "Nieznany błąd podczas analizowania wierszy poleceń."
 
 #: ../backends/xim/protocol.c:1356 ../backends/xim/connection.c:197
 #: ../backends/xim/server.c:444
-#, fuzzy
 msgid "X display"
-msgstr "Nazwa ekranu X Window"
+msgstr "Ekran X Window"
 
 #: ../backends/xim/protocol.c:1357 ../backends/xim/connection.c:198
 #: ../backends/xim/server.c:445 ../backends/xim/main.c:177
@@ -39,88 +38,85 @@ msgstr "Użyty ekran X Window"
 
 #: ../backends/xim/protocol.c:1361 ../backends/xim/connection.c:226
 #: ../backends/xim/server.c:455
-#, fuzzy
 msgid "Verbose flag"
-msgstr "Flaga ignorowania"
+msgstr "Flaga zwiększenia ilości informacji na wyjściu"
 
 #: ../backends/xim/protocol.c:1362 ../backends/xim/connection.c:227
 #: ../backends/xim/server.c:456
 msgid "Output a lot of helpful messages to debug"
-msgstr ""
+msgstr "Wyświetla na wyjściu dużo komunikatów pomocnych w debugowaniu"
 
 #: ../backends/xim/protocol.c:1367
 msgid "Connection object"
-msgstr ""
+msgstr "Obiekt połączenia"
 
 #: ../backends/xim/protocol.c:1368
 msgid "XIMConnection Gobject"
-msgstr ""
+msgstr "GObject połączenia XIM"
 
 #: ../backends/xim/connection.c:202
 msgid "Window ID"
-msgstr ""
+msgstr "Identyfikator okna"
 
 #: ../backends/xim/connection.c:203
 msgid "Window ID for the client"
-msgstr ""
+msgstr "Identyfikator okna dla klienta"
 
 #: ../backends/xim/connection.c:210
 msgid "Communication Window ID"
-msgstr ""
+msgstr "Identyfikator okna komunikacji"
 
 #: ../backends/xim/connection.c:211 ../backends/xim/loopback.c:943
 msgid "Window ID to communicate the client"
-msgstr ""
+msgstr "Identyfikator okna do komunikacji z klientem"
 
 #: ../backends/xim/connection.c:218 ../backends/xim/loopback.c:950
 msgid "Selection Atom"
-msgstr ""
+msgstr "Atom wyboru"
 
 #: ../backends/xim/connection.c:219 ../backends/xim/loopback.c:951
 msgid "Atom for selection"
-msgstr ""
+msgstr "Atom do wyboru"
 
 #: ../backends/xim/connection.c:232
 msgid "Protocol"
-msgstr ""
+msgstr "Protokół"
 
 #: ../backends/xim/connection.c:233
 msgid "GType to deal with the XIM protocol"
-msgstr ""
+msgstr "GType do komunikowania się z protokołem XIM"
 
 #: ../backends/xim/connection.c:238
 msgid "XIMProtocol"
-msgstr ""
+msgstr "Protokół XIM"
 
 #: ../backends/xim/connection.c:239
 msgid "GObject of GObject"
-msgstr ""
+msgstr "GObject GObjectu"
 
 #: ../backends/xim/server.c:449 ../imsettings/imsettings-info.c:596
 msgid "XIM server name"
 msgstr "Nazwa serwera XIM"
 
 #: ../backends/xim/server.c:450
-#, fuzzy
 msgid "XIM server name to be connected"
-msgstr "Program serwera XIM do uruchomienia"
+msgstr "Nazwa serwera XIM do połączenia"
 
 #: ../backends/xim/main.c:177 ../src/factory.c:760
 msgid "DISPLAY"
 msgstr "EKRAN"
 
 #: ../backends/xim/main.c:178
-#, fuzzy
 msgid "Replace the running XIM server with new instance."
-msgstr "Zastąp uruchomionego demona ustawień nowym."
+msgstr "Zastąp uruchomionego serwera XIM nowym."
 
 #: ../backends/xim/main.c:179
 msgid "Output the debugging logs"
-msgstr ""
+msgstr "Wyświetla na wyjściu dzienniki debugowania"
 
 #: ../backends/xim/loopback.c:942
 msgid "Selection Window ID"
-msgstr ""
+msgstr "Identyfikator okna wyboru"
 
 #: ../src/factory_info.c:127
 #, c-format
@@ -161,7 +157,7 @@ msgstr "Otwarcie pliku PID nie powiodło się: %s"
 #: ../src/factory.c:268
 #, c-format
 msgid "%s: No such file or directory"
-msgstr ""
+msgstr "%s: brak pliku lub folderu"
 
 #: ../src/factory.c:278
 #, c-format
@@ -231,14 +227,14 @@ msgid "Do not update .xinputrc."
 msgstr "Nie aktualizuj .xinputrc."
 
 #: ../utils/imsettings-start.c:85
-#, fuzzy, c-format
+#, c-format
 msgid "Started %s\n"
-msgstr "Zatrzymano %s\n"
+msgstr "Uruchomiono %s\n"
 
 #: ../utils/imsettings-start.c:87
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to start IM process `%s'\n"
-msgstr "Zatrzymanie procesu IM nie powiodło się: `%s'\n"
+msgstr "Uruchomienie procesu IM nie powiodło się: `%s'\n"
 
 #: ../utils/imsettings-stop.c:42 ../utils/imsettings-reload.c:42
 msgid "Force reloading the configuration, including restarting the process."
@@ -257,7 +253,7 @@ msgstr "Zatrzymanie procesu IM nie powiodło się: `%s'\n"
 
 #: ../utils/imsettings-restart.c:43
 msgid "Force restarting the IM process regradless of any errors."
-msgstr ""
+msgstr "Wymuś ponowne uruchomienie procesu IM, niezależnie od błędów."
 
 #: ../imsettings/imsettings-info.c:569
 msgid "Language"
@@ -459,79 +455,3 @@ msgstr "Nazwa docelowego modułu wejścia do nadzorowania sygnałów"
 #: ../imsettings/imsettings-observer.c:723
 msgid "Replace"
 msgstr "Zastąp"
-
-#~ msgid "User Specific"
-#~ msgstr "Określone przez użytkownika"
-
-#~ msgid "xinputrc was modified by the user"
-#~ msgstr "xinputrc został zmodyfikowany przez użytkownika"
-
-#~ msgid "Updating Input Method list"
-#~ msgstr "Aktualizowanie listy metod wejścia"
-
-#~ msgid "Failed to start Input Method"
-#~ msgstr "Uruchomienie metody wejścia nie powiodło się"
-
-#~ msgid "Starting Input Method - %s"
-#~ msgstr "Uruchomienie metody wejścia - %s"
-
-#~ msgid "Stopping Input Method - %s"
-#~ msgstr "Zatrzymywanie metody wejścia - %s"
-
-#~ msgid "Parent Window"
-#~ msgstr "Okno nadrzędne"
-
-#~ msgid "GtkWindow that points to the parent window"
-#~ msgstr "GtkWindow wskazujące na okno nadrzędne"
-
-#~ msgid "Work in progress..."
-#~ msgstr "Trwa praca..."
-
-#~ msgid "Use %s"
-#~ msgstr "Użyj %s"
-
-#~ msgid " (legacy)"
-#~ msgstr " (przestarzała)"
-
-#~ msgid " (recommended)"
-#~ msgstr " (zalecana)"
-
-#~ msgid "<b>Input Method</b>"
-#~ msgstr "<b>Metoda wejścia</b>"
-
-#~ msgid "_Enable input method feature"
-#~ msgstr "Włącz m_etodę wejścia"
-
-#~ msgid ""
-#~ "<small><i>Note: this change will not take effect until you next log in, "
-#~ "except GTK+ applications.</i></small>"
-#~ msgstr ""
-#~ "<small><i>Uwaga: ta zmiana zostanie uwzględniona po następnym "
-#~ "zalogowaniu, poza aplikacjami GTK+.</i></small>"
-
-#~ msgid "Input Method _Preferences..."
-#~ msgstr "_Preferencje metody wejścia..."
-
-#~ msgid ""
-#~ "<span weight=\"bold\" size=\"larger\">No input method is available</span>"
-#~ msgstr ""
-#~ "<span weight=\"bold\" size=\"larger\">Żadna metoda wejścia nie jest "
-#~ "dostępna</span>"
-
-#~ msgid "Please install any input methods before running if you like."
-#~ msgstr "Zainstaluj metodę wejścia przed uruchomieniem."
-
-#~ msgid "IM Chooser - Input Method configuration tool"
-#~ msgstr "Wybór IM - narzędzie konfiguracji metody wejścia"
-
-#~ msgid "_Log Out"
-#~ msgstr "Wy_loguj się"
-
-#~ msgid ""
-#~ "Choose the input method to be used or disable the input method usage on "
-#~ "the desktop"
-#~ msgstr ""
-#~ "Wybieranie metody wejścia lub wyłączanie jej w środowisku graficznym"
-
-#~ msgid "Input Method"
-#~ msgstr "Metoda wejścia"

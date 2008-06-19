@@ -1,3 +1,7 @@
+2008-06-19  Akira TAGOH  <tagoh@redhat.com>
+
+	* pl.po: Update Polish translation from Piotr Drąg.
+
 2008-05-15  Akira TAGOH  <tagoh@redhat.com>
 
 	* POTFILES.in: Add backends/xfce/imsettings_plugin.c
