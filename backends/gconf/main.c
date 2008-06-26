@@ -254,6 +254,7 @@ main(int    argc,
 	g_object_set_data(G_OBJECT (gconf), "imsettings-gconf-loop-main", loop);
 	g_main_loop_run(loop);
 
+	g_main_loop_unref(loop);
 	dbus_g_connection_unref(gconn);
 	g_object_unref(gconf);
 

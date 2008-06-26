@@ -255,6 +255,7 @@ main(int    argc,
 
 	g_main_loop_run(loop);
 
+	g_main_loop_unref(loop);
 	g_object_unref(info);
 	g_object_unref(server);
 	xim_destroy(dpy);

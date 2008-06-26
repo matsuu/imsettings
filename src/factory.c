@@ -856,6 +856,7 @@ main(int    argc,
 
 	g_print("exiting from the loop\n");
 
+	g_main_loop_unref(loop);
 	g_free(display_name);
 	g_object_unref(manager);
 	dbus_g_connection_unref(gconn);

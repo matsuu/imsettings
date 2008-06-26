@@ -1,3 +1,13 @@
+2008-06-26  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/gconf/main.c (main): unref the main loop.
+
+	* src/factory_info.c (main): unref the main loop.
+
+	* backends/xim/main.c (main): unref the main loop.
+
+	* src/factory.c (main): unref the main loop.
+
 2008-06-18  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/loopback.c (xim_loopback_finalize): unset the selection
