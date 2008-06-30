@@ -50,6 +50,7 @@ noinst_PROGRAMS +=					\
 	test-imsettings-info				\
 	test-gcit-5					\
 	test-gcit-7					\
+	test-gcit-11					\
 	$(NULL)
 endif
 #
@@ -71,4 +72,12 @@ test_gcit_5_SOURCES =					\
 test_gcit_7_SOURCES =					\
 	gcit_7.c					\
 	$(common_sources)				\
+	$(NULL)
+#
+test_gcit_11_SOURCES =					\
+	gcit_11.c					\
+	$(common_sources)				\
+	$(NULL)
+test_gcit_11_CFLAGS =					\
+	-DXINPUT_SUFFIX="\"$(XINPUT_SUFFIX)\""		\
 	$(NULL)

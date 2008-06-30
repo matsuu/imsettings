@@ -319,6 +319,8 @@ static gboolean
 imsettings_info_manager_validate_from_file_info(GFileInfo *info)
 {
 	GFileType type;
+	const char *p;
+	gsize slen = strlen(XINPUT_SUFFIX), len;
 
 	type = g_file_info_get_file_type(info);
 	if (type != G_FILE_TYPE_REGULAR &&
@@ -327,6 +329,13 @@ imsettings_info_manager_validate_from_file_info(GFileInfo *info)
 		/* just ignore them */
 		return FALSE;
 	}
+	p = g_file_info_get_name(info);
+	if (p == NULL)
+		return FALSE;
+	len = strlen(p);
+	if (len <= slen ||
+	    strcmp(&p[len - slen], XINPUT_SUFFIX) != 0)
+		return FALSE;
 
 	return TRUE;
 }
@@ -338,7 +347,8 @@ imsettings_info_manager_validate_from_file(GFile *file)
 	gboolean retval;
 
 	fi = g_file_query_info(file,
-			       G_FILE_ATTRIBUTE_STANDARD_TYPE,
+			       G_FILE_ATTRIBUTE_STANDARD_TYPE ","
+			       G_FILE_ATTRIBUTE_STANDARD_NAME,
 			       G_FILE_QUERY_INFO_NONE,
 			       NULL, NULL);
 	if (!fi) {

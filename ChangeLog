@@ -1,3 +1,10 @@
+2008-06-30  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/gcit_11.c: new testcase for Issue#11.
+
+	* src/factory_info.c (imsettings_info_manager_validate_from_file_info):
+	check the config file's suffix (Issue#11).
+
 2008-06-26  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/gconf/main.c (main): unref the main loop.
