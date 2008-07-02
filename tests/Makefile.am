@@ -48,6 +48,7 @@ if ENABLE_UNIT_TEST
 noinst_PROGRAMS +=					\
 	test-imsettings-object				\
 	test-imsettings-info				\
+	test-imsettings-request				\
 	test-gcit-5					\
 	test-gcit-7					\
 	test-gcit-11					\
@@ -61,6 +62,11 @@ test_imsettings_object_SOURCES =			\
 #
 test_imsettings_info_SOURCES =				\
 	imsettings-info.c				\
+	$(common_sources)				\
+	$(NULL)
+#
+test_imsettings_request_SOURCES =			\
+	imsettings-request.c				\
 	$(common_sources)				\
 	$(NULL)
 #

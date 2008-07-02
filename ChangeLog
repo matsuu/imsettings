@@ -1,5 +1,12 @@
 2008-07-02  Akira TAGOH  <tagoh@redhat.com>
 
+	* tests/imsettings-request.c: New testcase.
+
+	* src/factory_info.c (imsettings_info_manager_validate_from_file_info):
+	Fix a regression - validate xinputrc and .xinputrc as well.
+
+2008-07-02  Akira TAGOH  <tagoh@redhat.com>
+
 	* m4macros/tar.m4: get rid of h option for tar to include a dangling
 	symlink for testcase.
 

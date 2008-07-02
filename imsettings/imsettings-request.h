@@ -61,7 +61,7 @@ IMSettingsRequest *imsettings_request_new                    (DBusConnection    
                                                               const gchar        *interface);
 void               imsettings_request_set_locale             (IMSettingsRequest  *imsettings,
                                                               const gchar        *locale);
-gchar*            *imsettings_request_get_im_list            (IMSettingsRequest  *imsettings,
+gchar            **imsettings_request_get_im_list            (IMSettingsRequest  *imsettings,
                                                               GError            **error);
 gchar             *imsettings_request_get_current_user_im    (IMSettingsRequest  *imsettings,
                                                               GError            **error);

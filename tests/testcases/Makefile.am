@@ -10,14 +10,29 @@ EXTRA_DIST =			\
 
 ##
 # Local definitions
-testcase_dist =				\
-	imsettings-request		\
-	issue_11			\
-	issue_11/xinput.d		\
-	issue_11/xinput.d/scim.conf_	\
-	issue_5				\
-	issue_5/xinputrc		\
-	issue_5/xinput.d		\
+testcase_dist =							\
+	imsettings-request					\
+	imsettings-request/currentim				\
+	imsettings-request/currentim/.xinputrc			\
+	imsettings-request/currentim/xinputrc			\
+	imsettings-request/currentim/xinput.d			\
+	imsettings-request/currentim/xinput.d/test-scim.conf	\
+	imsettings-request/currentim/xinput.d/test-scim2.conf	\
+	imsettings-request/fake					\
+	imsettings-request/fake/xinput.d			\
+	imsettings-request/fake/xinput.d/.xinputrc		\
+	imsettings-request/fake/xinput.d/xinputrc		\
+	imsettings-request/general				\
+	imsettings-request/general/xinput.d			\
+	imsettings-request/general/xinput.d/test-scim.conf	\
+	imsettings-request/noent				\
+	imsettings-request/noent/xinput.d			\
+	issue_11						\
+	issue_11/xinput.d					\
+	issue_11/xinput.d/scim.conf_				\
+	issue_5							\
+	issue_5/xinputrc					\
+	issue_5/xinput.d					\
 	$(NULL)
 ##
 # Local Rules

@@ -316,10 +316,11 @@ imsettings_info_manager_real_finalize(GObject *object)
 }
 
 static gboolean
-imsettings_info_manager_validate_from_file_info(GFileInfo *info)
+imsettings_info_manager_validate_from_file_info(GFileInfo *info,
+						gboolean   check_rc)
 {
 	GFileType type;
-	const char *p;
+	const char *p, *n;
 	gsize slen = strlen(XINPUT_SUFFIX), len;
 
 	type = g_file_info_get_file_type(info);
@@ -332,6 +333,11 @@ imsettings_info_manager_validate_from_file_info(GFileInfo *info)
 	p = g_file_info_get_name(info);
 	if (p == NULL)
 		return FALSE;
+	n = g_path_get_basename(p);
+	if (check_rc &&
+	    (strcmp(n, IMSETTINGS_USER_XINPUT_CONF) == 0 ||
+	     strcmp(n, IMSETTINGS_GLOBAL_XINPUT_CONF) == 0))
+		return TRUE;
 	len = strlen(p);
 	if (len <= slen ||
 	    strcmp(&p[len - slen], XINPUT_SUFFIX) != 0)
@@ -341,7 +347,8 @@ imsettings_info_manager_validate_from_file_info(GFileInfo *info)
 }
 
 static gboolean
-imsettings_info_manager_validate_from_file(GFile *file)
+imsettings_info_manager_validate_from_file(GFile    *file,
+					   gboolean  check_rc)
 {
 	GFileInfo *fi;
 	gboolean retval;
@@ -361,7 +368,7 @@ imsettings_info_manager_validate_from_file(GFile *file)
 		return FALSE;
 	}
 
-	retval = imsettings_info_manager_validate_from_file_info(fi);
+	retval = imsettings_info_manager_validate_from_file_info(fi, check_rc);
 	g_object_unref(fi);
 
 	return retval;
@@ -391,7 +398,7 @@ imsettings_info_manager_real_changed_xinputd(GFileMonitor      *monitor,
 		    }
 		    imsettings_info_manager_remove_info(priv, filename, FALSE);
 	    case G_FILE_MONITOR_EVENT_CREATED:
-		    if (!imsettings_info_manager_validate_from_file(file)) {
+		    if (!imsettings_info_manager_validate_from_file(file, FALSE)) {
 			    /* ignore them */
 			    goto end;
 		    }
@@ -430,7 +437,7 @@ imsettings_info_manager_real_changed_dot_xinputrc(GFileMonitor      *monitor,
 	    case G_FILE_MONITOR_EVENT_CHANGED:
 		    imsettings_info_manager_remove_info(priv, filename, TRUE);
 	    case G_FILE_MONITOR_EVENT_CREATED:
-		    if (!imsettings_info_manager_validate_from_file(file)) {
+		    if (!imsettings_info_manager_validate_from_file(file, TRUE)) {
 			    /* ignore them */
 			    goto end;
 		    }
@@ -488,7 +495,7 @@ imsettings_info_manager_real_changed_xinputrc(GFileMonitor      *monitor,
 	    case G_FILE_MONITOR_EVENT_CHANGED:
 		    imsettings_info_manager_remove_info(priv, filename, TRUE);
 	    case G_FILE_MONITOR_EVENT_CREATED:
-		    if (!imsettings_info_manager_validate_from_file(file)) {
+		    if (!imsettings_info_manager_validate_from_file(file, TRUE)) {
 			    /* ignore them */
 			    goto end;
 		    }
@@ -738,7 +745,7 @@ imsettings_info_manager_init_monitor(IMSettingsInfoManager *manager)
 			} else if (error) {
 				g_warning("Unable to get the file information. ignoring");
 				continue;
-			} else if (!imsettings_info_manager_validate_from_file_info(i)) {
+			} else if (!imsettings_info_manager_validate_from_file_info(i, FALSE)) {
 				/* just ignore them */
 				continue;
 			}
@@ -772,7 +779,7 @@ imsettings_info_manager_init_monitor(IMSettingsInfoManager *manager)
 		file = g_build_filename(priv->homedir, IMSETTINGS_USER_XINPUT_CONF, NULL);
 		f = g_file_new_for_path(file);
 		if (g_file_test(file, G_FILE_TEST_EXISTS) &&
-		    imsettings_info_manager_validate_from_file(f)) {
+		    imsettings_info_manager_validate_from_file(f, TRUE)) {
 			info = imsettings_info_manager_add_info(priv, file, TRUE);
 
 			G_LOCK (imsettings_info_manager);
@@ -810,7 +817,7 @@ imsettings_info_manager_init_monitor(IMSettingsInfoManager *manager)
 	file = g_build_filename(priv->xinputrcdir, IMSETTINGS_GLOBAL_XINPUT_CONF, NULL);
 	f = g_file_new_for_path(file);
 	if (g_file_test(file, G_FILE_TEST_EXISTS) &&
-	    imsettings_info_manager_validate_from_file(f)) {
+	    imsettings_info_manager_validate_from_file(f, TRUE)) {
 		info = imsettings_info_manager_add_info(priv, file, TRUE);
 
 		G_LOCK (imsettings_info_manager);
