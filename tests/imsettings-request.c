@@ -59,6 +59,9 @@ restart_daemons(const gchar *xinputdir)
 	if (!g_spawn_command_line_async(s2, NULL))
 		abort();
 
+	/* FIXME */
+	sleep(1);
+
 	if (!g_spawn_command_line_async(si, NULL))
 		abort();
 	if (!g_spawn_command_line_async(ss, NULL))
@@ -146,8 +149,9 @@ TDEF (imsettings_request_get_im_list)
 
 	listv = imsettings_request_get_im_list(o, &error);
 	/* XXX: Is there any better way of checking the error without comparing the message? */
-	fail_unless(error && strcmp(error->message,
-				    "No input methods available on your system.") == 0,
+	fail_unless(error != NULL, "Exception has to appear");
+	fail_unless(strcmp(error->message,
+			   "No input methods available on your system.") == 0,
 		    "Unexpected IM list got: %s",
 		    error->message);
 	g_clear_error(&error);
