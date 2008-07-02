@@ -18,4 +18,5 @@ which gnome-autogen.sh || {
     echo "You need to install gnome-common from the GNOME CVS"
     exit 1
 }
+ACLOCAL_FLAGS="$ACLOCAL_FLAGS -Im4macros"
 REQUIRED_AUTOMAKE_VERSION=1.9 . gnome-autogen.sh

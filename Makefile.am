@@ -2,6 +2,10 @@ NULL =
 AUTOMAKE_OPTIONS = dist-bzip2
 SUBDIRS = imsettings backends utils src data po tests
 
+ACLOCAL_AMFLAGS =			\
+	-Im4macros			\
+	$(NULL)
+
 CONFIGURE_DEPENDENCIES =		\
 	requires			\
 	$(NULL)

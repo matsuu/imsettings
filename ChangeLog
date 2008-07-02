@@ -1,3 +1,11 @@
+2008-07-02  Akira TAGOH  <tagoh@redhat.com>
+
+	* m4macros/tar.m4: get rid of h option for tar to include a dangling
+	symlink for testcase.
+
+	* tests/testcases/Makefile.am (dist-hook): include all the testcases
+	into the archive.
+
 2008-06-30  Akira TAGOH  <tagoh@redhat.com>
 
 	* tests/gcit_11.c: new testcase for Issue#11.
