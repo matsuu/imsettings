@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser 0.3.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-15 20:22+0900\n"
+"POT-Creation-Date: 2008-07-03 09:54+0900\n"
 "PO-Revision-Date: 2008-04-06 13:23+0300\n"
 "Last-Translator: Ville-Pekka Vainio <vpivaini@cs.helsinki.fi>\n"
 "Language-Team: Finnish <laatu@lokalisointi.org>\n"
@@ -16,38 +16,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../backends/gconf/main.c:184 ../src/factory_info.c:645 ../src/factory.c:759
-#: ../imsettings/imsettings-observer.c:724
+#: ../backends/gconf/main.c:184 ../src/factory_info.c:998 ../src/factory.c:789
+#: ../imsettings/imsettings-observer.c:844
 msgid "Replace the running settings daemon with new instance."
 msgstr "Korvaa suoritettavana oleva asetustaustaprosessi uudella instanssilla."
 
-#: ../backends/gconf/main.c:206 ../backends/xim/main.c:209
-#: ../src/factory_info.c:667 ../src/factory.c:786
-#: ../utils/imsettings-start.c:67 ../utils/imsettings-stop.c:63
-#: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:65
+#: ../backends/gconf/main.c:206 ../backends/xim/main.c:211
+#: ../src/factory_info.c:1023 ../src/factory.c:816
+#: ../utils/imsettings-start.c:69 ../utils/imsettings-stop.c:65
+#: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:66
 msgid "Unknown error in parsing the command lines."
 msgstr "Tuntematon virhe komentorivejä jäsennettäessä."
 
+#: ../backends/xfce/imsettings_plugin.c:88
+#, fuzzy
+msgid "Button Label|Input Method"
+msgstr "Syöttömenetelmä"
+
 #: ../backends/xim/protocol.c:1356 ../backends/xim/connection.c:197
-#: ../backends/xim/server.c:444
+#: ../backends/xim/server.c:458
 #, fuzzy
 msgid "X display"
 msgstr "X-näytön nimi"
 
 #: ../backends/xim/protocol.c:1357 ../backends/xim/connection.c:198
-#: ../backends/xim/server.c:445 ../backends/xim/main.c:177
-#: ../src/factory.c:760
+#: ../backends/xim/server.c:459 ../backends/xim/main.c:177
+#: ../src/factory.c:790
 msgid "X display to use"
 msgstr "Käytettävä X-näyttö"
 
 #: ../backends/xim/protocol.c:1361 ../backends/xim/connection.c:226
-#: ../backends/xim/server.c:455
+#: ../backends/xim/server.c:469
 #, fuzzy
 msgid "Verbose flag"
 msgstr "Ohituslippu"
 
 #: ../backends/xim/protocol.c:1362 ../backends/xim/connection.c:227
-#: ../backends/xim/server.c:456
+#: ../backends/xim/server.c:470
 msgid "Output a lot of helpful messages to debug"
 msgstr ""
 
@@ -71,15 +76,15 @@ msgstr ""
 msgid "Communication Window ID"
 msgstr ""
 
-#: ../backends/xim/connection.c:211 ../backends/xim/loopback.c:943
+#: ../backends/xim/connection.c:211 ../backends/xim/loopback.c:948
 msgid "Window ID to communicate the client"
 msgstr ""
 
-#: ../backends/xim/connection.c:218 ../backends/xim/loopback.c:950
+#: ../backends/xim/connection.c:218 ../backends/xim/loopback.c:955
 msgid "Selection Atom"
 msgstr ""
 
-#: ../backends/xim/connection.c:219 ../backends/xim/loopback.c:951
+#: ../backends/xim/connection.c:219 ../backends/xim/loopback.c:956
 msgid "Atom for selection"
 msgstr ""
 
@@ -99,16 +104,16 @@ msgstr ""
 msgid "GObject of GObject"
 msgstr ""
 
-#: ../backends/xim/server.c:449 ../imsettings/imsettings-info.c:596
+#: ../backends/xim/server.c:463 ../imsettings/imsettings-info.c:650
 msgid "XIM server name"
 msgstr "XIM-palvelimen nimi"
 
-#: ../backends/xim/server.c:450
+#: ../backends/xim/server.c:464
 #, fuzzy
 msgid "XIM server name to be connected"
 msgstr "Suoritettavan XIM-palvelinohjelman nimi"
 
-#: ../backends/xim/main.c:177 ../src/factory.c:760
+#: ../backends/xim/main.c:177 ../src/factory.c:790
 msgid "DISPLAY"
 msgstr "NÄYTTÖ"
 
@@ -121,35 +126,67 @@ msgstr "Korvaa suoritettavana oleva asetustaustaprosessi uudella instanssilla."
 msgid "Output the debugging logs"
 msgstr ""
 
-#: ../backends/xim/loopback.c:942
+#: ../backends/xim/loopback.c:947
 msgid "Selection Window ID"
 msgstr ""
 
-#: ../src/factory_info.c:127
+#: ../src/factory_info.c:132
 #, c-format
 msgid "Reloading...\n"
 msgstr "Ladataan uudelleen...\n"
 
-#: ../src/factory_info.c:188
+#: ../src/factory_info.c:178
 #, c-format
 msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
 msgstr ""
 
-#: ../src/factory_info.c:446 ../src/factory_info.c:484
-#: ../src/factory_info.c:500 ../src/factory_info.c:518
-#, c-format
-msgid "Timed out to initialize %s services."
-msgstr "Aikakatkaisu alustettaessa %s-palveluja."
-
-#: ../src/factory_info.c:469
+#: ../src/factory_info.c:633 ../src/factory_info.c:668
 #, c-format
 msgid "No input methods available on your system."
 msgstr "Järjestelmässä ei ole syöttömenetelmiä."
 
-#: ../src/factory_info.c:526 ../src/factory.c:496 ../src/factory.c:663
+#: ../src/factory_info.c:723
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "Järjestelmässä ei ole syöttömenetelmää: %s"
+
+#: ../src/factory_info.c:919
+msgid "xinputrc directory"
+msgstr ""
+
+#: ../src/factory_info.c:920
+msgid "A directory where puts the system wide xinputrc on."
+msgstr ""
+
+#: ../src/factory_info.c:925
+msgid "xinput directory"
+msgstr ""
+
+#: ../src/factory_info.c:926
+msgid "A directory where puts the IM configurations on."
+msgstr ""
+
+#: ../src/factory_info.c:931 ../src/factory_info.c:932
+msgid "home directory"
+msgstr ""
+
+#: ../src/factory_info.c:999
+msgid ""
+"A directory where puts the system-wide xinputrc puts on (debugging only)"
+msgstr ""
+
+#: ../src/factory_info.c:999 ../src/factory_info.c:1000
+#: ../src/factory_info.c:1001
+msgid "DIR"
+msgstr ""
+
+#: ../src/factory_info.c:1000
+msgid "A directory where puts the IM configurations puts on (debugging only)"
+msgstr ""
+
+#: ../src/factory_info.c:1001
+msgid "A home directory (debugging only)"
+msgstr ""
 
 #: ../src/factory.c:138
 #, c-format
@@ -176,7 +213,7 @@ msgstr "Prosessin %s pidiä ei saatu selville."
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "Signaalia ei voitu lähettää prosessille %s."
 
-#: ../src/factory.c:332 ../src/factory.c:618
+#: ../src/factory.c:332 ../src/factory.c:626
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr "Ei saatu selville kotihakemiston sijaintia."
@@ -201,198 +238,220 @@ msgstr ".xinputrc-tiedoston poisto epäonnistui: %s"
 msgid "Failed to make a symlink: %s"
 msgstr "Symbolisen linkin tekeminen epäonnistui: %s"
 
-#: ../src/factory.c:516
+#: ../src/factory.c:501 ../src/factory.c:679
+#, fuzzy, c-format
+msgid ""
+"No such input method on your system: %s\n"
+"  Details: %s"
+msgstr "Järjestelmässä ei ole syöttömenetelmää: %s"
+
+#: ../src/factory.c:524
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr ""
 
-#: ../src/factory.c:715
+#: ../src/factory.c:745
 msgid "X display name"
 msgstr "X-näytön nimi"
 
-#: ../src/factory.c:716
+#: ../src/factory.c:746
 msgid "X display name to use"
 msgstr "Käytettävän X-näytön nimi"
 
 #. FIXME
-#: ../src/factory.c:763
+#: ../src/factory.c:793
 msgid "X screen to use"
 msgstr "Käytettävä X-ruutu"
 
-#: ../src/factory.c:763
+#: ../src/factory.c:793
 msgid "SCREEN"
 msgstr "RUUTU"
 
-#: ../src/factory.c:794
+#: ../src/factory.c:824
 #, c-format
 msgid "Failed to open a X display."
 msgstr "X-näytön avaaminen epäonnistui."
 
-#: ../utils/imsettings-start.c:44 ../utils/imsettings-stop.c:43
+#: ../utils/imsettings-start.c:43 ../utils/imsettings-stop.c:41
+#: ../utils/imsettings-restart.c:41
+#, fuzzy
+msgid "<Input Method>"
+msgstr "Syöttömenetelmä"
+
+#: ../utils/imsettings-start.c:45 ../utils/imsettings-stop.c:44
 #: ../utils/imsettings-restart.c:44
 msgid "Do not update .xinputrc."
 msgstr "Älä päivitä tiedostoa .xinputrc."
 
-#: ../utils/imsettings-start.c:85
+#: ../utils/imsettings-start.c:106
 #, fuzzy, c-format
 msgid "Started %s\n"
 msgstr "Pysäytettiin %s\n"
 
-#: ../utils/imsettings-start.c:87
+#: ../utils/imsettings-start.c:108
 #, fuzzy, c-format
 msgid "Failed to start IM process `%s'\n"
 msgstr "Syöttömenetelmäprosessin ”%s” pysäyttäminen epäonnistui\n"
 
-#: ../utils/imsettings-stop.c:42 ../utils/imsettings-reload.c:42
+#: ../utils/imsettings-stop.c:43 ../utils/imsettings-reload.c:42
 msgid "Force reloading the configuration, including restarting the process."
 msgstr ""
 "Pakota asetusten uudelleenlatus, käynnistetään myös prosessi uudelleen."
 
-#: ../utils/imsettings-stop.c:80
+#: ../utils/imsettings-stop.c:101
 #, c-format
 msgid "Stopped %s\n"
 msgstr "Pysäytettiin %s\n"
 
-#: ../utils/imsettings-stop.c:82
+#: ../utils/imsettings-stop.c:103
 #, c-format
 msgid "Failed to stop IM process `%s'\n"
 msgstr "Syöttömenetelmäprosessin ”%s” pysäyttäminen epäonnistui\n"
 
 #: ../utils/imsettings-restart.c:43
-msgid "Force restarting the IM process regradless of any errors."
+#, fuzzy
+msgid "Force restarting the IM process regardless of any errors."
 msgstr ""
 "Pakota syöttömenetelmäprosessin käynnistäminen uudelleen virheistä "
 "huolimatta."
 
-#: ../imsettings/imsettings-info.c:569
+#: ../imsettings/imsettings-info.c:609
 msgid "Language"
 msgstr "Kieli"
 
-#: ../imsettings/imsettings-info.c:570
+#: ../imsettings/imsettings-info.c:610
 msgid "A language to pull the information in."
 msgstr "Kieli jonka tiedot haetaan."
 
-#: ../imsettings/imsettings-info.c:576
+#: ../imsettings/imsettings-info.c:616
 msgid "Filename"
 msgstr "Tiedostonimi"
 
-#: ../imsettings/imsettings-info.c:577
+#: ../imsettings/imsettings-info.c:617
 msgid "A filename referring to the IM information."
 msgstr "Syöttömenetelmätietoihin viittaavan tiedoston nimi."
 
-#: ../imsettings/imsettings-info.c:583
+#: ../imsettings/imsettings-info.c:623 ../imsettings/imsettings-info.c:624
+msgid "Short Description"
+msgstr "Lyhyt kuvaus"
+
+#: ../imsettings/imsettings-info.c:630
+msgid "XIM"
+msgstr "XIM"
+
+#: ../imsettings/imsettings-info.c:631
+msgid "Whether or not IM is a XIM server."
+msgstr "Onko syöttömenetelmä XIM-palvelin."
+
+#: ../imsettings/imsettings-info.c:637
 msgid "GTK+ immodule"
 msgstr "GTK+-syöttömenetelmämoduuli"
 
-#: ../imsettings/imsettings-info.c:584
+#: ../imsettings/imsettings-info.c:638
 msgid "A module name used for GTK+"
 msgstr "GTK+:n käyttämän moduulin nimi."
 
-#: ../imsettings/imsettings-info.c:589
+#: ../imsettings/imsettings-info.c:643
 msgid "Qt immodule"
 msgstr "Qt-syöttömenetelmämoduuli"
 
-#: ../imsettings/imsettings-info.c:590
+#: ../imsettings/imsettings-info.c:644
 msgid "A module name used for Qt"
 msgstr "Qt:n käyttämän moduulin nimi"
 
-#: ../imsettings/imsettings-info.c:595
+#: ../imsettings/imsettings-info.c:649
 msgid "XIM name"
 msgstr "XIM-nimi"
 
-#: ../imsettings/imsettings-info.c:601
+#: ../imsettings/imsettings-info.c:655
 msgid "Ignore flag"
 msgstr "Ohituslippu"
 
-#: ../imsettings/imsettings-info.c:602
+#: ../imsettings/imsettings-info.c:656
 msgid "A flag to not list up."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:607
+#: ../imsettings/imsettings-info.c:661
 msgid "XIM server program name"
 msgstr "XIM-palvelinohjelman nimi"
 
-#: ../imsettings/imsettings-info.c:608
+#: ../imsettings/imsettings-info.c:662
 msgid "XIM server program to be run"
 msgstr "Suoritettavan XIM-palvelinohjelman nimi"
 
-#: ../imsettings/imsettings-info.c:613
+#: ../imsettings/imsettings-info.c:667
 msgid "XIM server program's options"
 msgstr "XIM-palvelinohjelman asetukset"
 
-#: ../imsettings/imsettings-info.c:614
+#: ../imsettings/imsettings-info.c:668
 msgid "Command line options for XIM server program"
 msgstr "XIM-palvelinohjelman komentorivivalitsimet"
 
-#: ../imsettings/imsettings-info.c:619
+#: ../imsettings/imsettings-info.c:673
 #, fuzzy
 msgid "Preference program name"
 msgstr "Aseta ohjelman nimi"
 
-#: ../imsettings/imsettings-info.c:620
+#: ../imsettings/imsettings-info.c:674
 #, fuzzy
 msgid "Preference program to be run"
 msgstr "Suoritettavan komennon kuvake."
 
-#: ../imsettings/imsettings-info.c:625
+#: ../imsettings/imsettings-info.c:679
 #, fuzzy
 msgid "Preference program's options"
 msgstr "Muuta ohjelman asetuksia"
 
-#: ../imsettings/imsettings-info.c:626
+#: ../imsettings/imsettings-info.c:680
 msgid "Command line options for preference program"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:631
+#: ../imsettings/imsettings-info.c:685
 #, fuzzy
 msgid "Auxiliary program name"
 msgstr "Aseta ohjelman nimi"
 
-#: ../imsettings/imsettings-info.c:632
+#: ../imsettings/imsettings-info.c:686
 #, fuzzy
 msgid "Auxiliary program to be run"
 msgstr "Suoritettavan komennon kuvake."
 
-#: ../imsettings/imsettings-info.c:637
+#: ../imsettings/imsettings-info.c:691
 #, fuzzy
 msgid "Auxiliary program's options"
 msgstr "Muuta ohjelman asetuksia"
 
-#: ../imsettings/imsettings-info.c:638
+#: ../imsettings/imsettings-info.c:692
 msgid "Command line options for auxiliary program"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:643 ../imsettings/imsettings-info.c:644
-msgid "Short Description"
-msgstr "Lyhyt kuvaus"
-
-#: ../imsettings/imsettings-info.c:649 ../imsettings/imsettings-info.c:650
+#: ../imsettings/imsettings-info.c:697 ../imsettings/imsettings-info.c:698
 msgid "Long Description"
 msgstr "Pitkä kuvaus"
 
-#: ../imsettings/imsettings-info.c:655
+#: ../imsettings/imsettings-info.c:703
+msgid "Icon"
+msgstr ""
+
+#: ../imsettings/imsettings-info.c:704
+msgid "Icon filename to be used on GUI"
+msgstr ""
+
+#: ../imsettings/imsettings-info.c:709
 msgid "System Default"
 msgstr "Järjestelmän oletus"
 
-#: ../imsettings/imsettings-info.c:656
+#: ../imsettings/imsettings-info.c:710
 msgid "Whether or not IM is a system default."
 msgstr "Onko syöttömenetelmä järjestelmän oletus."
 
-#: ../imsettings/imsettings-info.c:661
+#: ../imsettings/imsettings-info.c:715
 msgid "User Default"
 msgstr "Käyttäjän oletus"
 
-#: ../imsettings/imsettings-info.c:662
+#: ../imsettings/imsettings-info.c:716
 msgid "Whether or not IM is an user default."
 msgstr "Onko syöttömenetelmä käyttäjän oletus."
-
-#: ../imsettings/imsettings-info.c:667
-msgid "XIM"
-msgstr "XIM"
-
-#: ../imsettings/imsettings-info.c:668
-msgid "Whether or not IM is a XIM server."
-msgstr "Onko syöttömenetelmä XIM-palvelin."
 
 #: ../imsettings/imsettings-request.c:169
 msgid "DBus Interface"
@@ -403,12 +462,12 @@ msgid "Interface name to connect to DBus"
 msgstr "Rajapinnan nimi DBusiin yhdistämiseksi"
 
 #: ../imsettings/imsettings-request.c:175
-#: ../imsettings/imsettings-observer.c:729
+#: ../imsettings/imsettings-observer.c:849
 msgid "DBus connection"
 msgstr "DBus-yhteys"
 
 #: ../imsettings/imsettings-request.c:176
-#: ../imsettings/imsettings-observer.c:730
+#: ../imsettings/imsettings-observer.c:850
 msgid "An object to be a DBus connection"
 msgstr "Objekti, joka on DBus-yhteys"
 
@@ -420,23 +479,12 @@ msgstr "Maa-asetusto"
 msgid "Locale to get the imsettings information"
 msgstr "Maa-asetusto jonka syöttömenetelmäasetustiedot haetaan"
 
-#: ../imsettings/imsettings-request.c:239
-#: ../imsettings/imsettings-request.c:272
-#: ../imsettings/imsettings-request.c:290
-#: ../imsettings/imsettings-request.c:310
-#: ../imsettings/imsettings-request.c:331
-#: ../imsettings/imsettings-request.c:355
-#: ../imsettings/imsettings-request.c:380
-#: ../imsettings/imsettings-request.c:405
-#: ../imsettings/imsettings-request.c:426
-#: ../imsettings/imsettings-request.c:446
-#: ../imsettings/imsettings-request.c:466
-#: ../imsettings/imsettings-request.c:486
-#: ../imsettings/imsettings-request.c:506
-#: ../imsettings/imsettings-request.c:526
-#: ../imsettings/imsettings-request.c:552
-#: ../imsettings/imsettings-request.c:602
-#: ../imsettings/imsettings-request.c:649
+#: ../imsettings/imsettings-request.c:240
+#: ../imsettings/imsettings-request.c:277
+#: ../imsettings/imsettings-request.c:299
+#: ../imsettings/imsettings-request.c:329
+#: ../imsettings/imsettings-request.c:383
+#: ../imsettings/imsettings-request.c:435
 #, c-format
 msgid ""
 "Failed to invoke a method `%s':\n"
@@ -445,29 +493,35 @@ msgstr ""
 "Metodin ”%s” kutsuminen epäonnistui:\n"
 "  %s"
 
-#: ../imsettings/imsettings-request.c:695
+#: ../imsettings/imsettings-request.c:483
+#: ../imsettings/imsettings-request.c:531
+#: ../imsettings/imsettings-request.c:589
+#: ../imsettings/imsettings-request.c:636
 #, fuzzy, c-format
 msgid ""
 "Failed to invoke a method `%s' on %s:\n"
 "  %s"
 msgstr "Tiedoston \"%s\" oikeuksien asettaminen epäonnistui: %s"
 
-#: ../imsettings/imsettings-observer.c:277
+#: ../imsettings/imsettings-observer.c:395
 #, c-format
 msgid "Invalid IM module type: %d"
 msgstr "Virheellinen syöttömenetelmämoduulityyppi: %d"
 
-#: ../imsettings/imsettings-observer.c:717
+#: ../imsettings/imsettings-observer.c:837
 msgid "IM module name"
 msgstr "Syöttömenetelmämoduulin nimi"
 
-#: ../imsettings/imsettings-observer.c:718
+#: ../imsettings/imsettings-observer.c:838
 msgid "A target IM module name that to observe signals"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:723
+#: ../imsettings/imsettings-observer.c:843
 msgid "Replace"
 msgstr "Korvaa"
+
+#~ msgid "Timed out to initialize %s services."
+#~ msgstr "Aikakatkaisu alustettaessa %s-palveluja."
 
 #~ msgid "User Specific"
 #~ msgstr "Käyttäjäkohtainen"
@@ -534,9 +588,6 @@ msgstr "Korvaa"
 #~ msgstr ""
 #~ "Valitse käytettävä syöttömenetelmä tai kytkemiseen syöttömenetelmien "
 #~ "käyttö pois päältä työpöytäkäytössä."
-
-#~ msgid "Input Method"
-#~ msgstr "Syöttömenetelmä"
 
 #~ msgid ""
 #~ "The appropriate configuration file wasn't found. maybe the installation "

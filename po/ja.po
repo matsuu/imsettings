@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-15 20:22+0900\n"
+"POT-Creation-Date: 2008-07-03 09:54+0900\n"
 "PO-Revision-Date: 2008-04-07 07:53+0900\n"
 "Last-Translator: Makoto Mizukami <mmk9060@aol.com>\n"
 "Language-Team: Japanese <fedora-trasn-ja@redhat.com>\n"
@@ -21,38 +21,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../backends/gconf/main.c:184 ../src/factory_info.c:645 ../src/factory.c:759
-#: ../imsettings/imsettings-observer.c:724
+#: ../backends/gconf/main.c:184 ../src/factory_info.c:998 ../src/factory.c:789
+#: ../imsettings/imsettings-observer.c:844
 msgid "Replace the running settings daemon with new instance."
 msgstr "実行中の設定デーモンを新規のインスタンスで入れ替えます。"
 
-#: ../backends/gconf/main.c:206 ../backends/xim/main.c:209
-#: ../src/factory_info.c:667 ../src/factory.c:786
-#: ../utils/imsettings-start.c:67 ../utils/imsettings-stop.c:63
-#: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:65
+#: ../backends/gconf/main.c:206 ../backends/xim/main.c:211
+#: ../src/factory_info.c:1023 ../src/factory.c:816
+#: ../utils/imsettings-start.c:69 ../utils/imsettings-stop.c:65
+#: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:66
 msgid "Unknown error in parsing the command lines."
 msgstr "コマンドラインの構文解析中に不明なエラー。"
 
+#: ../backends/xfce/imsettings_plugin.c:88
+#, fuzzy
+msgid "Button Label|Input Method"
+msgstr "入力メソッド"
+
 #: ../backends/xim/protocol.c:1356 ../backends/xim/connection.c:197
-#: ../backends/xim/server.c:444
+#: ../backends/xim/server.c:458
 #, fuzzy
 msgid "X display"
 msgstr "X ディスプレイ名"
 
 #: ../backends/xim/protocol.c:1357 ../backends/xim/connection.c:198
-#: ../backends/xim/server.c:445 ../backends/xim/main.c:177
-#: ../src/factory.c:760
+#: ../backends/xim/server.c:459 ../backends/xim/main.c:177
+#: ../src/factory.c:790
 msgid "X display to use"
 msgstr "使用する X ディスプレイ"
 
 #: ../backends/xim/protocol.c:1361 ../backends/xim/connection.c:226
-#: ../backends/xim/server.c:455
+#: ../backends/xim/server.c:469
 #, fuzzy
 msgid "Verbose flag"
 msgstr "無視フラグ"
 
 #: ../backends/xim/protocol.c:1362 ../backends/xim/connection.c:227
-#: ../backends/xim/server.c:456
+#: ../backends/xim/server.c:470
 msgid "Output a lot of helpful messages to debug"
 msgstr ""
 
@@ -76,15 +81,15 @@ msgstr ""
 msgid "Communication Window ID"
 msgstr ""
 
-#: ../backends/xim/connection.c:211 ../backends/xim/loopback.c:943
+#: ../backends/xim/connection.c:211 ../backends/xim/loopback.c:948
 msgid "Window ID to communicate the client"
 msgstr ""
 
-#: ../backends/xim/connection.c:218 ../backends/xim/loopback.c:950
+#: ../backends/xim/connection.c:218 ../backends/xim/loopback.c:955
 msgid "Selection Atom"
 msgstr ""
 
-#: ../backends/xim/connection.c:219 ../backends/xim/loopback.c:951
+#: ../backends/xim/connection.c:219 ../backends/xim/loopback.c:956
 msgid "Atom for selection"
 msgstr ""
 
@@ -104,16 +109,16 @@ msgstr ""
 msgid "GObject of GObject"
 msgstr ""
 
-#: ../backends/xim/server.c:449 ../imsettings/imsettings-info.c:596
+#: ../backends/xim/server.c:463 ../imsettings/imsettings-info.c:650
 msgid "XIM server name"
 msgstr "XIM サーバー名"
 
-#: ../backends/xim/server.c:450
+#: ../backends/xim/server.c:464
 #, fuzzy
 msgid "XIM server name to be connected"
 msgstr "実行する XIM サーバープログラム"
 
-#: ../backends/xim/main.c:177 ../src/factory.c:760
+#: ../backends/xim/main.c:177 ../src/factory.c:790
 msgid "DISPLAY"
 msgstr "DISPLAY"
 
@@ -126,35 +131,67 @@ msgstr "実行中の設定デーモンを新規のインスタンスで入れ替
 msgid "Output the debugging logs"
 msgstr ""
 
-#: ../backends/xim/loopback.c:942
+#: ../backends/xim/loopback.c:947
 msgid "Selection Window ID"
 msgstr ""
 
-#: ../src/factory_info.c:127
+#: ../src/factory_info.c:132
 #, c-format
 msgid "Reloading...\n"
 msgstr "再ロード中... \n"
 
-#: ../src/factory_info.c:188
+#: ../src/factory_info.c:178
 #, c-format
 msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
 msgstr "%s. SHORT_DESC からの複製エントリ `%s' は特有でなければなりません。"
 
-#: ../src/factory_info.c:446 ../src/factory_info.c:484
-#: ../src/factory_info.c:500 ../src/factory_info.c:518
-#, c-format
-msgid "Timed out to initialize %s services."
-msgstr "%s サービスの初期化は時間切れです。"
-
-#: ../src/factory_info.c:469
+#: ../src/factory_info.c:633 ../src/factory_info.c:668
 #, c-format
 msgid "No input methods available on your system."
 msgstr "使用中のシステム上には入力メソッドがありません。"
 
-#: ../src/factory_info.c:526 ../src/factory.c:496 ../src/factory.c:663
+#: ../src/factory_info.c:723
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "使用中のシステム上にそのような入力メソッドはありません: %s"
+
+#: ../src/factory_info.c:919
+msgid "xinputrc directory"
+msgstr ""
+
+#: ../src/factory_info.c:920
+msgid "A directory where puts the system wide xinputrc on."
+msgstr ""
+
+#: ../src/factory_info.c:925
+msgid "xinput directory"
+msgstr ""
+
+#: ../src/factory_info.c:926
+msgid "A directory where puts the IM configurations on."
+msgstr ""
+
+#: ../src/factory_info.c:931 ../src/factory_info.c:932
+msgid "home directory"
+msgstr ""
+
+#: ../src/factory_info.c:999
+msgid ""
+"A directory where puts the system-wide xinputrc puts on (debugging only)"
+msgstr ""
+
+#: ../src/factory_info.c:999 ../src/factory_info.c:1000
+#: ../src/factory_info.c:1001
+msgid "DIR"
+msgstr ""
+
+#: ../src/factory_info.c:1000
+msgid "A directory where puts the IM configurations puts on (debugging only)"
+msgstr ""
+
+#: ../src/factory_info.c:1001
+msgid "A home directory (debugging only)"
+msgstr ""
 
 #: ../src/factory.c:138
 #, c-format
@@ -181,7 +218,7 @@ msgstr "%s プロセス用の pid を決定できませんでした。"
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "%s プロセスに信号を正しく送信出来ませんでした。"
 
-#: ../src/factory.c:332 ../src/factory.c:618
+#: ../src/factory.c:332 ../src/factory.c:626
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr "ホームディレクトリの場所確保に失敗しました。"
@@ -206,189 +243,211 @@ msgstr "xinputrc ファイルの削除に失敗しました: %s"
 msgid "Failed to make a symlink: %s"
 msgstr "symlink するのに失敗しました: %s"
 
-#: ../src/factory.c:516
+#: ../src/factory.c:501 ../src/factory.c:679
+#, fuzzy, c-format
+msgid ""
+"No such input method on your system: %s\n"
+"  Details: %s"
+msgstr "使用中のシステム上にそのような入力メソッドはありません: %s"
+
+#: ../src/factory.c:524
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr "%s では XIM サーバーが使用できません。"
 
-#: ../src/factory.c:715
+#: ../src/factory.c:745
 msgid "X display name"
 msgstr "X ディスプレイ名"
 
-#: ../src/factory.c:716
+#: ../src/factory.c:746
 msgid "X display name to use"
 msgstr "使用する X ディスプレイ名"
 
 #. FIXME
-#: ../src/factory.c:763
+#: ../src/factory.c:793
 msgid "X screen to use"
 msgstr "使用する X 画面"
 
-#: ../src/factory.c:763
+#: ../src/factory.c:793
 msgid "SCREEN"
 msgstr "SCREEN"
 
-#: ../src/factory.c:794
+#: ../src/factory.c:824
 #, c-format
 msgid "Failed to open a X display."
 msgstr "X ディスプレイを開くのに失敗しました"
 
-#: ../utils/imsettings-start.c:44 ../utils/imsettings-stop.c:43
+#: ../utils/imsettings-start.c:43 ../utils/imsettings-stop.c:41
+#: ../utils/imsettings-restart.c:41
+#, fuzzy
+msgid "<Input Method>"
+msgstr "入力メソッド"
+
+#: ../utils/imsettings-start.c:45 ../utils/imsettings-stop.c:44
 #: ../utils/imsettings-restart.c:44
 msgid "Do not update .xinputrc."
 msgstr ".xinputrc は更新しないで下さい。"
 
-#: ../utils/imsettings-start.c:85
+#: ../utils/imsettings-start.c:106
 #, fuzzy, c-format
 msgid "Started %s\n"
 msgstr "%s は停止しました\n"
 
-#: ../utils/imsettings-start.c:87
+#: ../utils/imsettings-start.c:108
 #, fuzzy, c-format
 msgid "Failed to start IM process `%s'\n"
 msgstr "IM プロセス`%s' の停止に失敗しました\n"
 
-#: ../utils/imsettings-stop.c:42 ../utils/imsettings-reload.c:42
+#: ../utils/imsettings-stop.c:43 ../utils/imsettings-reload.c:42
 msgid "Force reloading the configuration, including restarting the process."
 msgstr "プロセスの再スタートを含み、設定の再ロードを強制します。"
 
-#: ../utils/imsettings-stop.c:80
+#: ../utils/imsettings-stop.c:101
 #, c-format
 msgid "Stopped %s\n"
 msgstr "%s は停止しました\n"
 
-#: ../utils/imsettings-stop.c:82
+#: ../utils/imsettings-stop.c:103
 #, c-format
 msgid "Failed to stop IM process `%s'\n"
 msgstr "IM プロセス`%s' の停止に失敗しました\n"
 
 #: ../utils/imsettings-restart.c:43
-msgid "Force restarting the IM process regradless of any errors."
+#, fuzzy
+msgid "Force restarting the IM process regardless of any errors."
 msgstr "エラーに関わらず強制的に IM プロセスを再起動します。"
 
-#: ../imsettings/imsettings-info.c:569
+#: ../imsettings/imsettings-info.c:609
 msgid "Language"
 msgstr "言語"
 
-#: ../imsettings/imsettings-info.c:570
+#: ../imsettings/imsettings-info.c:610
 msgid "A language to pull the information in."
 msgstr "情報を引き出すのに使用する言語。"
 
-#: ../imsettings/imsettings-info.c:576
+#: ../imsettings/imsettings-info.c:616
 msgid "Filename"
 msgstr "ファイル名"
 
-#: ../imsettings/imsettings-info.c:577
+#: ../imsettings/imsettings-info.c:617
 msgid "A filename referring to the IM information."
 msgstr "IM 情報を参照するファイル名。"
 
-#: ../imsettings/imsettings-info.c:583
-msgid "GTK+ immodule"
-msgstr "GTK+ immodule"
-
-#: ../imsettings/imsettings-info.c:584
-msgid "A module name used for GTK+"
-msgstr "GTK+ 用に使用されるモジュール名"
-
-#: ../imsettings/imsettings-info.c:589
-msgid "Qt immodule"
-msgstr "Qt immodule"
-
-#: ../imsettings/imsettings-info.c:590
-msgid "A module name used for Qt"
-msgstr "Qt 用に使用されるモジュール名"
-
-#: ../imsettings/imsettings-info.c:595
-msgid "XIM name"
-msgstr "XIM 名"
-
-#: ../imsettings/imsettings-info.c:601
-msgid "Ignore flag"
-msgstr "無視フラグ"
-
-#: ../imsettings/imsettings-info.c:602
-msgid "A flag to not list up."
-msgstr "一覧表示しないフラグ"
-
-#: ../imsettings/imsettings-info.c:607
-msgid "XIM server program name"
-msgstr "XIM サーバープログラム名"
-
-#: ../imsettings/imsettings-info.c:608
-msgid "XIM server program to be run"
-msgstr "実行する XIM サーバープログラム"
-
-#: ../imsettings/imsettings-info.c:613
-msgid "XIM server program's options"
-msgstr "XIM サーバープログラムのオプション"
-
-#: ../imsettings/imsettings-info.c:614
-msgid "Command line options for XIM server program"
-msgstr "XIM サーバープログラム用のコマンドラインオプション"
-
-#: ../imsettings/imsettings-info.c:619
-msgid "Preference program name"
-msgstr "個人設定プログラム名"
-
-#: ../imsettings/imsettings-info.c:620
-msgid "Preference program to be run"
-msgstr "実行する個人設定プログラム"
-
-#: ../imsettings/imsettings-info.c:625
-msgid "Preference program's options"
-msgstr "個人設定プログラムのオプション"
-
-#: ../imsettings/imsettings-info.c:626
-msgid "Command line options for preference program"
-msgstr "個人設定プログラム用のコマンドラインオプション"
-
-#: ../imsettings/imsettings-info.c:631
-msgid "Auxiliary program name"
-msgstr "補助プログラム名"
-
-#: ../imsettings/imsettings-info.c:632
-msgid "Auxiliary program to be run"
-msgstr "実行する補助プログラム"
-
-#: ../imsettings/imsettings-info.c:637
-msgid "Auxiliary program's options"
-msgstr "補助プログラムのオプション"
-
-#: ../imsettings/imsettings-info.c:638
-msgid "Command line options for auxiliary program"
-msgstr "補助プログラム用のコマンドラインオプション"
-
-#: ../imsettings/imsettings-info.c:643 ../imsettings/imsettings-info.c:644
+#: ../imsettings/imsettings-info.c:623 ../imsettings/imsettings-info.c:624
 msgid "Short Description"
 msgstr "簡単な説明"
 
-#: ../imsettings/imsettings-info.c:649 ../imsettings/imsettings-info.c:650
-msgid "Long Description"
-msgstr "詳しい説明"
-
-#: ../imsettings/imsettings-info.c:655
-msgid "System Default"
-msgstr "システムデフォルト"
-
-#: ../imsettings/imsettings-info.c:656
-msgid "Whether or not IM is a system default."
-msgstr "IM がシステムデフォルトであるかどうか。"
-
-#: ../imsettings/imsettings-info.c:661
-msgid "User Default"
-msgstr "ユーザーデフォルト"
-
-#: ../imsettings/imsettings-info.c:662
-msgid "Whether or not IM is an user default."
-msgstr "IM がユーザーデフォルトであるかどうか"
-
-#: ../imsettings/imsettings-info.c:667
+#: ../imsettings/imsettings-info.c:630
 msgid "XIM"
 msgstr "XIM"
 
-#: ../imsettings/imsettings-info.c:668
+#: ../imsettings/imsettings-info.c:631
 msgid "Whether or not IM is a XIM server."
 msgstr "IM が XIM サーバーであるかどうか"
+
+#: ../imsettings/imsettings-info.c:637
+msgid "GTK+ immodule"
+msgstr "GTK+ immodule"
+
+#: ../imsettings/imsettings-info.c:638
+msgid "A module name used for GTK+"
+msgstr "GTK+ 用に使用されるモジュール名"
+
+#: ../imsettings/imsettings-info.c:643
+msgid "Qt immodule"
+msgstr "Qt immodule"
+
+#: ../imsettings/imsettings-info.c:644
+msgid "A module name used for Qt"
+msgstr "Qt 用に使用されるモジュール名"
+
+#: ../imsettings/imsettings-info.c:649
+msgid "XIM name"
+msgstr "XIM 名"
+
+#: ../imsettings/imsettings-info.c:655
+msgid "Ignore flag"
+msgstr "無視フラグ"
+
+#: ../imsettings/imsettings-info.c:656
+msgid "A flag to not list up."
+msgstr "一覧表示しないフラグ"
+
+#: ../imsettings/imsettings-info.c:661
+msgid "XIM server program name"
+msgstr "XIM サーバープログラム名"
+
+#: ../imsettings/imsettings-info.c:662
+msgid "XIM server program to be run"
+msgstr "実行する XIM サーバープログラム"
+
+#: ../imsettings/imsettings-info.c:667
+msgid "XIM server program's options"
+msgstr "XIM サーバープログラムのオプション"
+
+#: ../imsettings/imsettings-info.c:668
+msgid "Command line options for XIM server program"
+msgstr "XIM サーバープログラム用のコマンドラインオプション"
+
+#: ../imsettings/imsettings-info.c:673
+msgid "Preference program name"
+msgstr "個人設定プログラム名"
+
+#: ../imsettings/imsettings-info.c:674
+msgid "Preference program to be run"
+msgstr "実行する個人設定プログラム"
+
+#: ../imsettings/imsettings-info.c:679
+msgid "Preference program's options"
+msgstr "個人設定プログラムのオプション"
+
+#: ../imsettings/imsettings-info.c:680
+msgid "Command line options for preference program"
+msgstr "個人設定プログラム用のコマンドラインオプション"
+
+#: ../imsettings/imsettings-info.c:685
+msgid "Auxiliary program name"
+msgstr "補助プログラム名"
+
+#: ../imsettings/imsettings-info.c:686
+msgid "Auxiliary program to be run"
+msgstr "実行する補助プログラム"
+
+#: ../imsettings/imsettings-info.c:691
+msgid "Auxiliary program's options"
+msgstr "補助プログラムのオプション"
+
+#: ../imsettings/imsettings-info.c:692
+msgid "Command line options for auxiliary program"
+msgstr "補助プログラム用のコマンドラインオプション"
+
+#: ../imsettings/imsettings-info.c:697 ../imsettings/imsettings-info.c:698
+msgid "Long Description"
+msgstr "詳しい説明"
+
+#: ../imsettings/imsettings-info.c:703
+msgid "Icon"
+msgstr ""
+
+#: ../imsettings/imsettings-info.c:704
+msgid "Icon filename to be used on GUI"
+msgstr ""
+
+#: ../imsettings/imsettings-info.c:709
+msgid "System Default"
+msgstr "システムデフォルト"
+
+#: ../imsettings/imsettings-info.c:710
+msgid "Whether or not IM is a system default."
+msgstr "IM がシステムデフォルトであるかどうか。"
+
+#: ../imsettings/imsettings-info.c:715
+msgid "User Default"
+msgstr "ユーザーデフォルト"
+
+#: ../imsettings/imsettings-info.c:716
+msgid "Whether or not IM is an user default."
+msgstr "IM がユーザーデフォルトであるかどうか"
 
 #: ../imsettings/imsettings-request.c:169
 msgid "DBus Interface"
@@ -399,12 +458,12 @@ msgid "Interface name to connect to DBus"
 msgstr "DBus に接続するインターフェイス名"
 
 #: ../imsettings/imsettings-request.c:175
-#: ../imsettings/imsettings-observer.c:729
+#: ../imsettings/imsettings-observer.c:849
 msgid "DBus connection"
 msgstr "DBus 接続"
 
 #: ../imsettings/imsettings-request.c:176
-#: ../imsettings/imsettings-observer.c:730
+#: ../imsettings/imsettings-observer.c:850
 msgid "An object to be a DBus connection"
 msgstr "DBus 接続となるオブジェクト"
 
@@ -416,23 +475,12 @@ msgstr "言語地域"
 msgid "Locale to get the imsettings information"
 msgstr "im セッティング情報を得る為の言語地域"
 
-#: ../imsettings/imsettings-request.c:239
-#: ../imsettings/imsettings-request.c:272
-#: ../imsettings/imsettings-request.c:290
-#: ../imsettings/imsettings-request.c:310
-#: ../imsettings/imsettings-request.c:331
-#: ../imsettings/imsettings-request.c:355
-#: ../imsettings/imsettings-request.c:380
-#: ../imsettings/imsettings-request.c:405
-#: ../imsettings/imsettings-request.c:426
-#: ../imsettings/imsettings-request.c:446
-#: ../imsettings/imsettings-request.c:466
-#: ../imsettings/imsettings-request.c:486
-#: ../imsettings/imsettings-request.c:506
-#: ../imsettings/imsettings-request.c:526
-#: ../imsettings/imsettings-request.c:552
-#: ../imsettings/imsettings-request.c:602
-#: ../imsettings/imsettings-request.c:649
+#: ../imsettings/imsettings-request.c:240
+#: ../imsettings/imsettings-request.c:277
+#: ../imsettings/imsettings-request.c:299
+#: ../imsettings/imsettings-request.c:329
+#: ../imsettings/imsettings-request.c:383
+#: ../imsettings/imsettings-request.c:435
 #, c-format
 msgid ""
 "Failed to invoke a method `%s':\n"
@@ -441,7 +489,10 @@ msgstr ""
 "メソッド %s' の呼出に失敗しました :\n"
 "  %s"
 
-#: ../imsettings/imsettings-request.c:695
+#: ../imsettings/imsettings-request.c:483
+#: ../imsettings/imsettings-request.c:531
+#: ../imsettings/imsettings-request.c:589
+#: ../imsettings/imsettings-request.c:636
 #, c-format
 msgid ""
 "Failed to invoke a method `%s' on %s:\n"
@@ -450,22 +501,25 @@ msgstr ""
 " %s 上のメソッド %s' の呼出に失敗しました:\n"
 "  %s"
 
-#: ../imsettings/imsettings-observer.c:277
+#: ../imsettings/imsettings-observer.c:395
 #, c-format
 msgid "Invalid IM module type: %d"
 msgstr "無効な IM モジュールタイプです: %d"
 
-#: ../imsettings/imsettings-observer.c:717
+#: ../imsettings/imsettings-observer.c:837
 msgid "IM module name"
 msgstr "IM モジュール名"
 
-#: ../imsettings/imsettings-observer.c:718
+#: ../imsettings/imsettings-observer.c:838
 msgid "A target IM module name that to observe signals"
 msgstr "信号を監視するための目標 IM モジュール名"
 
-#: ../imsettings/imsettings-observer.c:723
+#: ../imsettings/imsettings-observer.c:843
 msgid "Replace"
 msgstr "入れ替え"
+
+#~ msgid "Timed out to initialize %s services."
+#~ msgstr "%s サービスの初期化は時間切れです。"
 
 #~ msgid "User Specific"
 #~ msgstr "ユーザー固有"
@@ -540,6 +594,3 @@ msgstr "入れ替え"
 #~ msgstr ""
 #~ "デスクトップで使用する入力メソッドを選択、 または入力メソッドの使用を無効"
 #~ "に します。"
-
-#~ msgid "Input Method"
-#~ msgstr "入力メソッド"
