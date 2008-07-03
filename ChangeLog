@@ -1,5 +1,8 @@
 2008-07-03  Akira TAGOH  <tagoh@redhat.com>
 
+	* backends/xim/connection.c (xim_connection_forward_client_message_event):
+	ifdef conditioned code.
+
 	* tests/rhbz_453358.c: new testcase.
 
 	* src/factory_info.c (imsettings_info_manager_real_get_current_user_im):

@@ -261,9 +261,11 @@ xim_connection_forward_client_message_event(XIMConnection       *from,
 					    XClientMessageEvent *event)
 {
 	XIMConnectionPrivate *fpriv, *tpriv;
+#ifdef GNOME_ENABLE_DEBUG
 	static const gchar *sdirection[] = {
 		"->", "<-"
 	};
+#endif
 	gint direction, i;
 	Window destination, orig;
 	gsize packlen;
