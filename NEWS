@@ -1,3 +1,12 @@
+0.101.2 -> 0.101.3
+=====================
+* Bug Fixes
+  * Fix appearing warning message that unable to get the selection owner in imsettings-xim.
+  * rhbz#451753: workaround for application freezes.
+  * Fix a issue IM is always running if no .xinputrc.
+  * Issue#11: im-info-daemon picks up the conf file without .conf.
+  * rhbz#453358: uninstalled input method is listed.
+
 0.101.1 -> 0.101.2
 =====================
 * Bug Fixes
