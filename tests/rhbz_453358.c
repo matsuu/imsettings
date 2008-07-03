@@ -116,8 +116,8 @@ TDEF (issue) {
 Suite *
 imsettings_suite(void)
 {
-	Suite *s = suite_create("Google Code Issue Tracker");
-	TCase *tc = tcase_create("Issue #5: http://code.google.com/p/imsettings/issues/detail?id=11");
+	Suite *s = suite_create("Red Hat Bugzilla");
+	TCase *tc = tcase_create("Bug#453358: https://bugzilla.redhat.com/show_bug.cgi?id=453358");
 
 	tcase_add_checked_fixture(tc, setup, teardown);
 	tcase_set_timeout(tc, 10);
