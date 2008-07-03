@@ -27,7 +27,6 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include "imsettings/imsettings.h"
 #include "imsettings/imsettings-info.h"
 #include "imsettings/imsettings-request.h"
@@ -42,44 +41,19 @@ IMSettingsRequest *req;
 void
 setup(void)
 {
-	gchar *p = g_build_filename(IMSETTINGS_BUILDDIR, "src", "im-info-daemon", NULL);
-	gchar *d = g_build_filename(IMSETTINGS_SRCDIR, "testcases", "issue_11", NULL);
-	gchar *dd = g_build_filename(d, "xinput.d", NULL);
-	gchar *s = g_strdup_printf("%s --replace --xinputrcdir=%s --xinputdir=%s --homedir=%s",
-				   p, d, dd, d);
-	gchar *p2 = g_build_filename(IMSETTINGS_BUILDDIR, "utils", "imsettings-reload", NULL);
-	gchar *s2 = g_strdup_printf("%s -f", p2);
+	imsettings_test_restart_daemons("issue_11");
 
-	/* stop all the processes first */
-	if (!g_spawn_command_line_async(s2, NULL))
-		abort();
-
-	if (!g_spawn_command_line_async(s, NULL))
-		abort();
-	g_free(s2);
-	g_free(p2);
-	g_free(s);
-	g_free(p);
-	g_free(d);
-	g_free(dd);
 	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
-	/* FIXME! */
-	sleep(1);
 }
 
 void
 teardown(void)
 {
-	gchar *p = g_build_filename(IMSETTINGS_BUILDDIR, "utils", "imsettings-reload", NULL);
-	gchar *s = g_strdup_printf("%s -f", p);
+	imsettings_test_reload_daemons();
 
 	g_object_unref(req);
 	dbus_connection_unref(conn);
-	if (!g_spawn_command_line_async(s, NULL))
-		abort();
-	g_free(s);
-	g_free(p);
 }
 
 /************************************************************/

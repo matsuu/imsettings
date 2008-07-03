@@ -37,11 +37,16 @@ G_BEGIN_DECLS
 #define TNUL(obj)		fail_unless((obj) != NULL, "Failed to create an object")
 
 
-void    setup                          (void);
-void    teardown                       (void);
-Suite  *imsettings_suite               (void);
-GQuark  imsettings_test_get_error_quark(void);
-gchar  *imsettings_test_pop_error      (void) G_GNUC_MALLOC;
+void    setup                               (void);
+void    teardown                            (void);
+Suite  *imsettings_suite                    (void);
+GQuark  imsettings_test_get_error_quark     (void);
+gchar  *imsettings_test_pop_error           (void) G_GNUC_MALLOC;
+void    imsettings_test_restart_daemons     (const gchar *subdir);
+void    imsettings_test_reload_daemons      (void);
+void    imsettings_test_restart_daemons_full(const gchar *xinputrcdir,
+                                             const gchar *xinputdir,
+                                             const gchar *homedir);
 
 
 G_END_DECLS

@@ -27,6 +27,7 @@
 #endif
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <check.h>
 #include <glib-object.h>
 #include "main.h"
@@ -99,6 +100,73 @@ imsettings_test_pop_error(void)
 	}
 
 	return retval;
+}
+
+void
+imsettings_test_restart_daemons_full(const gchar *xinputrcdir,
+				     const gchar *xinputdir,
+				     const gchar *homedir)
+{
+	gchar *xxinputrcdir, *xxinputdir, *xhomedir;
+	gchar *p = g_build_filename(IMSETTINGS_BUILDDIR, "src", "im-info-daemon", NULL);
+	gchar *s;
+
+	if (xinputrcdir == NULL)
+		abort();
+	if (xinputrcdir[0] == G_DIR_SEPARATOR ||
+	    (((xinputrcdir[0] >= 'a' && xinputrcdir[0] <= 'z') ||
+	      (xinputrcdir[0] >= 'A' && xinputrcdir[0] <= 'Z')) &&
+	     xinputrcdir[1] == ':' &&
+	     xinputrcdir[2] == G_DIR_SEPARATOR)) {
+		/* possibly may be an absolute path */
+		xxinputrcdir = g_strdup(xinputrcdir);
+	} else {
+		xxinputrcdir = g_build_filename(IMSETTINGS_SRCDIR, "testcases", xinputrcdir, NULL);
+	}
+	if (xinputdir == NULL)
+		xxinputdir = g_build_filename(xxinputrcdir, "xinput.d", NULL);
+	else
+		xxinputdir = g_strdup(xinputdir);
+	if (homedir == NULL)
+		xhomedir = g_strdup(xxinputrcdir);
+	else
+		xhomedir = g_strdup(homedir);
+
+	s = g_strdup_printf("%s --replace --xinputrcdir=%s --xinputdir=%s --homedir=%s",
+			    p, xxinputrcdir, xxinputdir, xhomedir);
+
+	/* stop all the processes first */
+	imsettings_test_reload_daemons();
+
+	if (!g_spawn_command_line_async(s, NULL))
+		abort();
+	g_free(s);
+	g_free(p);
+	g_free(xxinputrcdir);
+	g_free(xxinputdir);
+	g_free(xhomedir);
+
+	/* FIXME! */
+	sleep(1);
+}
+
+void
+imsettings_test_restart_daemons(const gchar *subdir)
+{
+	imsettings_test_restart_daemons_full(subdir, NULL, NULL);
+}
+
+void
+imsettings_test_reload_daemons(void)
+{
+	gchar *p = g_build_filename(IMSETTINGS_BUILDDIR, "utils", "imsettings-reload", NULL);
+	gchar *s = g_strdup_printf("%s -f", p);
+
+	if (!g_spawn_command_line_async(s, NULL))
+		abort();
+
+	g_free(s);
+	g_free(p);
 }
 
 int

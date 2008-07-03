@@ -27,7 +27,6 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include "imsettings/imsettings.h"
 #include "imsettings/imsettings-request.h"
 #include "imsettings/imsettings-utils.h"
@@ -40,61 +39,19 @@ DBusConnection *dbus_conn;
 /************************************************************/
 /* common functions                                         */
 /************************************************************/
-static void
-restart_daemons(const gchar *xinputdir)
-{
-	gchar *pi = g_build_filename(IMSETTINGS_BUILDDIR, "src", "im-info-daemon", NULL);
-	gchar *ps = g_build_filename(IMSETTINGS_BUILDDIR, "src", "im-settings-daemon", NULL);
-	gchar *d = g_build_filename(IMSETTINGS_SRCDIR, "testcases", "imsettings-request", xinputdir, NULL);
-	gchar *dd = g_build_filename(d, "xinput.d", NULL);
-	gchar *si = g_strdup_printf("%s --replace --xinputrcdir=%s --xinputdir=%s --homedir=%s",
-				   pi, d, dd, d);
-	gchar *ss = g_strdup_printf("%s --replace", ps);
-	gchar *p2 = g_build_filename(IMSETTINGS_BUILDDIR, "utils", "imsettings-reload", NULL);
-	gchar *s2 = g_strdup_printf("%s -f", p2);
-
-	g_setenv("LANG", "C", TRUE);
-
-	/* stop all the processes first */
-	if (!g_spawn_command_line_async(s2, NULL))
-		abort();
-
-	/* FIXME */
-	sleep(1);
-
-	if (!g_spawn_command_line_async(si, NULL))
-		abort();
-	if (!g_spawn_command_line_async(ss, NULL))
-		abort();
-	g_free(s2);
-	g_free(p2);
-	g_free(si);
-	g_free(ss);
-	g_free(pi);
-	g_free(ps);
-	g_free(d);
-	g_free(dd);
-	/* FIXME! */
-	sleep(1);
-}
-
 void
 setup(void)
 {
+	g_setenv("LANG", "C", TRUE);
 	dbus_conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 }
 
 void
 teardown(void)
 {
-	gchar *p = g_build_filename(IMSETTINGS_BUILDDIR, "utils", "imsettings-reload", NULL);
-	gchar *s = g_strdup_printf("%s -f", p);
+	imsettings_test_reload_daemons();
 
 	dbus_connection_unref(dbus_conn);
-	if (!g_spawn_command_line_async(s, NULL))
-		abort();
-	g_free(s);
-	g_free(p);
 }
 
 /************************************************************/
@@ -132,7 +89,7 @@ TDEF (imsettings_request_get_im_list)
 	gchar **listv = NULL;
 	GError *error = NULL;
 
-	restart_daemons("general");
+	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "general");
 
 	o = imsettings_request_new(dbus_conn, IMSETTINGS_INFO_INTERFACE_DBUS);
 	listv = imsettings_request_get_im_list(o, &error);
@@ -145,7 +102,7 @@ TDEF (imsettings_request_get_im_list)
 
 	g_strfreev(listv);
 
-	restart_daemons("noent");
+	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "noent");
 
 	listv = imsettings_request_get_im_list(o, &error);
 	/* XXX: Is there any better way of checking the error without comparing the message? */
@@ -159,7 +116,7 @@ TDEF (imsettings_request_get_im_list)
 	g_strfreev(listv);
 	g_object_unref(o);
 
-	restart_daemons("general");
+	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "general");
 
 	o = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
 	listv = imsettings_request_get_im_list(o, &error);
@@ -177,7 +134,7 @@ TDEF (imsettings_request_get_im_list)
 	g_strfreev(listv);
 	g_object_unref(o);
 
-	restart_daemons("fake");
+	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "fake");
 
 	o = imsettings_request_new(dbus_conn, IMSETTINGS_INFO_INTERFACE_DBUS);
 	listv = imsettings_request_get_im_list(o, &error);
@@ -198,7 +155,7 @@ TDEF (imsettings_request_get_current_user_im)
 	gchar *im;
 	GError *error = NULL;
 
-	restart_daemons("currentim");
+	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "currentim");
 
 	o = imsettings_request_new(dbus_conn, IMSETTINGS_INFO_INTERFACE_DBUS);
 	im = imsettings_request_get_current_user_im(o, &error);
@@ -209,7 +166,7 @@ TDEF (imsettings_request_get_current_user_im)
 		    "Unexpected current user IM got: expected: %s actual: %s",
 		    "S C I M", im);
 
-	restart_daemons("noent");
+	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "noent");
 
 	im = imsettings_request_get_current_user_im(o, &error);
 	if (error)
@@ -219,7 +176,7 @@ TDEF (imsettings_request_get_current_user_im)
 
 	g_object_unref(o);
 
-	restart_daemons("general");
+	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "general");
 
 	o = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
 	im = imsettings_request_get_current_user_im(o, &error);
@@ -235,7 +192,7 @@ TDEF (imsettings_request_get_current_user_im)
 	}
 	g_object_unref(o);
 
-	restart_daemons("fake");
+	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "fake");
 
 	o = imsettings_request_new(dbus_conn, IMSETTINGS_INFO_INTERFACE_DBUS);
 	im = imsettings_request_get_current_user_im(o, &error);
@@ -251,7 +208,7 @@ TDEF (imsettings_request_get_current_system_im)
 	gchar *im;
 	GError *error = NULL;
 
-	restart_daemons("currentim");
+	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "currentim");
 
 	o = imsettings_request_new(dbus_conn, IMSETTINGS_INFO_INTERFACE_DBUS);
 	im = imsettings_request_get_current_system_im(o, &error);
@@ -262,7 +219,7 @@ TDEF (imsettings_request_get_current_system_im)
 		    "Unexpected current user IM got: expected: %s actual: %s",
 		    "SCIM", im);
 
-	restart_daemons("noent");
+	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "noent");
 
 	im = imsettings_request_get_current_system_im(o, &error);
 	if (error)
@@ -272,7 +229,7 @@ TDEF (imsettings_request_get_current_system_im)
 
 	g_object_unref(o);
 
-	restart_daemons("general");
+	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "general");
 
 	o = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
 	im = imsettings_request_get_current_system_im(o, &error);
@@ -288,7 +245,7 @@ TDEF (imsettings_request_get_current_system_im)
 	}
 	g_object_unref(o);
 
-	restart_daemons("fake");
+	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "fake");
 
 	o = imsettings_request_new(dbus_conn, IMSETTINGS_INFO_INTERFACE_DBUS);
 	im = imsettings_request_get_current_system_im(o, &error);

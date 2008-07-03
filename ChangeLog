@@ -1,3 +1,15 @@
+2008-07-03  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/gcit_11.c: Update to use more common function.
+
+	* tests/gcit_5.c: likewise.
+
+	* tests/imsettings-request.c: likewise.
+
+	* tests/main.c (imsettings_test_restart_daemons_full): new function.
+	(imsettings_test_restart_daemons): likewise.
+	(imsettings_test_reload_daemons): likewise.
+
 2008-07-02  Akira TAGOH  <tagoh@redhat.com>
 
 	* tests/imsettings-request.c: New testcase.
