@@ -95,9 +95,11 @@ struct _IMSettingsInfoManagerPrivate {
 	gchar          *homedir;
 };
 
-static gboolean imsettings_info_manager_init_monitor(IMSettingsInfoManager *manager);
-static void     imsettings_info_manager_tini_monitor(IMSettingsInfoManager *manager);
-GType           imsettings_info_manager_get_type    (void) G_GNUC_CONST;
+static const gchar *imsettings_info_manager_real_get_current_system_im(IMSettingsObserver    *observer,
+                                                                       GError                **error);
+static gboolean     imsettings_info_manager_init_monitor              (IMSettingsInfoManager *manager);
+static void         imsettings_info_manager_tini_monitor              (IMSettingsInfoManager *manager);
+GType               imsettings_info_manager_get_type                  (void) G_GNUC_CONST;
 
 
 guint signals[LAST_SIGNAL] = { 0 };
@@ -675,7 +677,17 @@ imsettings_info_manager_real_get_current_user_im(IMSettingsObserver  *observer,
 {
 	IMSettingsInfoManagerPrivate *priv = IMSETTINGS_INFO_MANAGER_GET_PRIVATE (observer);
 
-	return (priv->current_user_im ? priv->current_user_im : priv->current_system_im);
+	/* priv->current_user_im might be outdated */
+	if (priv->current_user_im &&
+	    g_hash_table_lookup(priv->im_info_from_name,
+				priv->current_user_im) == NULL) {
+		/* IM might be removed */
+		return imsettings_info_manager_real_get_current_system_im(observer, error);
+	}
+
+	return (priv->current_user_im ?
+		priv->current_user_im :
+		imsettings_info_manager_real_get_current_system_im(observer, error));
 }
 
 static const gchar *
@@ -683,6 +695,16 @@ imsettings_info_manager_real_get_current_system_im(IMSettingsObserver  *observer
 						   GError             **error)
 {
 	IMSettingsInfoManagerPrivate *priv = IMSETTINGS_INFO_MANAGER_GET_PRIVATE (observer);
+
+	/* priv->current_system_im might be outdated */
+	if (priv->current_system_im &&
+	    g_hash_table_lookup(priv->im_info_from_name,
+				priv->current_system_im) == NULL) {
+		/* IM might be removed */
+		g_warning("No system default input method.");
+
+		return NULL;
+	}
 
 	return priv->current_system_im;
 }

@@ -52,6 +52,7 @@ noinst_PROGRAMS +=					\
 	test-gcit-5					\
 	test-gcit-7					\
 	test-gcit-11					\
+	test-rhbz-453358				\
 	$(NULL)
 endif
 #
@@ -86,4 +87,9 @@ test_gcit_11_SOURCES =					\
 	$(NULL)
 test_gcit_11_CFLAGS =					\
 	-DXINPUT_SUFFIX="\"$(XINPUT_SUFFIX)\""		\
+	$(NULL)
+#
+test_rhbz_453358_SOURCES =				\
+	rhbz_453358.c					\
+	$(common_sources)				\
 	$(NULL)

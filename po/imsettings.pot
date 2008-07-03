@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-02 20:32+0900\n"
+"POT-Creation-Date: 2008-07-03 09:54+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,13 +16,13 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../backends/gconf/main.c:184 ../src/factory_info.c:976 ../src/factory.c:789
+#: ../backends/gconf/main.c:184 ../src/factory_info.c:998 ../src/factory.c:789
 #: ../imsettings/imsettings-observer.c:844
 msgid "Replace the running settings daemon with new instance."
 msgstr ""
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:211
-#: ../src/factory_info.c:1001 ../src/factory.c:816
+#: ../src/factory_info.c:1023 ../src/factory.c:816
 #: ../utils/imsettings-start.c:69 ../utils/imsettings-stop.c:65
 #: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:66
 msgid "Unknown error in parsing the command lines."
@@ -125,61 +125,61 @@ msgstr ""
 msgid "Selection Window ID"
 msgstr ""
 
-#: ../src/factory_info.c:130
+#: ../src/factory_info.c:132
 #, c-format
 msgid "Reloading...\n"
 msgstr ""
 
-#: ../src/factory_info.c:176
+#: ../src/factory_info.c:178
 #, c-format
 msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
 msgstr ""
 
-#: ../src/factory_info.c:631 ../src/factory_info.c:666
+#: ../src/factory_info.c:633 ../src/factory_info.c:668
 #, c-format
 msgid "No input methods available on your system."
 msgstr ""
 
-#: ../src/factory_info.c:701
+#: ../src/factory_info.c:723
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr ""
 
-#: ../src/factory_info.c:897
+#: ../src/factory_info.c:919
 msgid "xinputrc directory"
 msgstr ""
 
-#: ../src/factory_info.c:898
+#: ../src/factory_info.c:920
 msgid "A directory where puts the system wide xinputrc on."
 msgstr ""
 
-#: ../src/factory_info.c:903
+#: ../src/factory_info.c:925
 msgid "xinput directory"
 msgstr ""
 
-#: ../src/factory_info.c:904
+#: ../src/factory_info.c:926
 msgid "A directory where puts the IM configurations on."
 msgstr ""
 
-#: ../src/factory_info.c:909 ../src/factory_info.c:910
+#: ../src/factory_info.c:931 ../src/factory_info.c:932
 msgid "home directory"
 msgstr ""
 
-#: ../src/factory_info.c:977
+#: ../src/factory_info.c:999
 msgid ""
 "A directory where puts the system-wide xinputrc puts on (debugging only)"
 msgstr ""
 
-#: ../src/factory_info.c:977 ../src/factory_info.c:978
-#: ../src/factory_info.c:979
+#: ../src/factory_info.c:999 ../src/factory_info.c:1000
+#: ../src/factory_info.c:1001
 msgid "DIR"
 msgstr ""
 
-#: ../src/factory_info.c:978
+#: ../src/factory_info.c:1000
 msgid "A directory where puts the IM configurations puts on (debugging only)"
 msgstr ""
 
-#: ../src/factory_info.c:979
+#: ../src/factory_info.c:1001
 msgid "A home directory (debugging only)"
 msgstr ""
 

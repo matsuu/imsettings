@@ -1,5 +1,11 @@
 2008-07-03  Akira TAGOH  <tagoh@redhat.com>
 
+	* tests/rhbz_453358.c: new testcase.
+
+	* src/factory_info.c (imsettings_info_manager_real_get_current_user_im):
+	check if current user IM is still valid. (rhbz#453358)
+	(imsettings_info_manager_real_get_current_system_im): likewise.
+
 	* tests/gcit_11.c: Update to use more common function.
 
 	* tests/gcit_5.c: likewise.
