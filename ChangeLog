@@ -1,3 +1,7 @@
+2008-07-08  Akira TAGOH  <tagoh@redhat.com>
+
+	* utils/imsettings-stop.c (main): Fix a typo.
+
 2008-07-03  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/connection.c (xim_connection_forward_client_message_event):
