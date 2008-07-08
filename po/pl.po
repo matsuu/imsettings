@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-03 09:54+0900\n"
-"PO-Revision-Date: 2008-06-18 20:21+0200\n"
+"PO-Revision-Date: 2008-07-04 16:47+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "Nieznany błąd podczas analizowania wierszy poleceń."
 
 #: ../backends/xfce/imsettings_plugin.c:88
 msgid "Button Label|Input Method"
-msgstr ""
+msgstr "Metoda wejścia"
 
 #: ../backends/xim/protocol.c:1356 ../backends/xim/connection.c:197
 #: ../backends/xim/server.c:458
@@ -144,41 +144,43 @@ msgstr "Brak metody wejścia w systemie: %s"
 
 #: ../src/factory_info.c:919
 msgid "xinputrc directory"
-msgstr ""
+msgstr "folder xinputrc"
 
 #: ../src/factory_info.c:920
 msgid "A directory where puts the system wide xinputrc on."
-msgstr ""
+msgstr "Folder, w którym umieścić systemową konfigurację xinputrc."
 
 #: ../src/factory_info.c:925
 msgid "xinput directory"
-msgstr ""
+msgstr "folder xinput"
 
 #: ../src/factory_info.c:926
 msgid "A directory where puts the IM configurations on."
-msgstr ""
+msgstr "Folder, w którym umieścić konfiguracje metod wejścia."
 
 #: ../src/factory_info.c:931 ../src/factory_info.c:932
 msgid "home directory"
-msgstr ""
+msgstr "folder domowy"
 
 #: ../src/factory_info.c:999
 msgid ""
 "A directory where puts the system-wide xinputrc puts on (debugging only)"
 msgstr ""
+"Folder, w którym umieścić systemowe pliki xinputrc (tylko dla debugowania)"
 
 #: ../src/factory_info.c:999 ../src/factory_info.c:1000
 #: ../src/factory_info.c:1001
 msgid "DIR"
-msgstr ""
+msgstr "FOLDER"
 
 #: ../src/factory_info.c:1000
 msgid "A directory where puts the IM configurations puts on (debugging only)"
 msgstr ""
+"Folder, w którym umieścić konfiguracje metod wejścia (tylko dla debugowania)"
 
 #: ../src/factory_info.c:1001
 msgid "A home directory (debugging only)"
-msgstr ""
+msgstr "Folder domowy (tylko dla debugowania)"
 
 #: ../src/factory.c:138
 #, c-format
@@ -231,11 +233,13 @@ msgid "Failed to make a symlink: %s"
 msgstr "Utworzenie dowiązania symbolicznego nie powiodło się: %s"
 
 #: ../src/factory.c:501 ../src/factory.c:679
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No such input method on your system: %s\n"
 "  Details: %s"
-msgstr "Brak metody wejścia w systemie: %s"
+msgstr ""
+"Brak metody wejścia w systemie: %s\n"
+"  Szczegóły: %s"
 
 #: ../src/factory.c:524
 #, c-format
@@ -267,7 +271,7 @@ msgstr "Otwarcie ekranu X Window nie powiodło się."
 #: ../utils/imsettings-start.c:43 ../utils/imsettings-stop.c:41
 #: ../utils/imsettings-restart.c:41
 msgid "<Input Method>"
-msgstr ""
+msgstr "<Metoda wejścia>"
 
 #: ../utils/imsettings-start.c:45 ../utils/imsettings-stop.c:44
 #: ../utils/imsettings-restart.c:44
@@ -282,7 +286,7 @@ msgstr "Uruchomiono %s\n"
 #: ../utils/imsettings-start.c:108
 #, c-format
 msgid "Failed to start IM process `%s'\n"
-msgstr "Uruchomienie procesu IM nie powiodło się: `%s'\n"
+msgstr "Uruchomienie procesu metody wejścia nie powiodło się: `%s'\n"
 
 #: ../utils/imsettings-stop.c:43 ../utils/imsettings-reload.c:42
 msgid "Force reloading the configuration, including restarting the process."
@@ -297,12 +301,12 @@ msgstr "Zatrzymano %s\n"
 #: ../utils/imsettings-stop.c:103
 #, c-format
 msgid "Failed to stop IM process `%s'\n"
-msgstr "Zatrzymanie procesu IM nie powiodło się: `%s'\n"
+msgstr "Zatrzymanie procesu metody wejścia nie powiodło się: `%s'\n"
 
 #: ../utils/imsettings-restart.c:43
-#, fuzzy
 msgid "Force restarting the IM process regardless of any errors."
-msgstr "Wymuś ponowne uruchomienie procesu IM, niezależnie od błędów."
+msgstr ""
+"Wymuś ponowne uruchomienie procesu metody wejścia, niezależnie od błędów."
 
 #: ../imsettings/imsettings-info.c:609
 msgid "Language"
@@ -414,11 +418,11 @@ msgstr "Długi opis"
 
 #: ../imsettings/imsettings-info.c:703
 msgid "Icon"
-msgstr ""
+msgstr "Ikona"
 
 #: ../imsettings/imsettings-info.c:704
 msgid "Icon filename to be used on GUI"
-msgstr ""
+msgstr "Nazwa pliku ikony używanej w GUI"
 
 #: ../imsettings/imsettings-info.c:709
 msgid "System Default"
@@ -504,6 +508,3 @@ msgstr "Nazwa docelowego modułu wejścia do nadzorowania sygnałów"
 #: ../imsettings/imsettings-observer.c:843
 msgid "Replace"
 msgstr "Zastąp"
-
-#~ msgid "Timed out to initialize %s services."
-#~ msgstr "Przekroczono czas inicjowania usług %s."
