@@ -31,6 +31,10 @@ testcase_dist =							\
 	rhbz_453358/case1/xinput.d/test-scim.conf		\
 	rhbz_453358/case1/xinput.d/test-scim2.conf		\
 	rhbz_453358/case1/xinputrc				\
+	rhbz_455363/case1/xinput.d				\
+	rhbz_455363/case1/xinput.d/test-scim.conf		\
+	rhbz_455363/case1/xinput.d/test-scim2.conf		\
+	rhbz_455363/case1/xinputrc				\
 	$(NULL)
 
 ##

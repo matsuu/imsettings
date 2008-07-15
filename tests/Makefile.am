@@ -53,6 +53,7 @@ noinst_PROGRAMS +=					\
 	test-gcit-7					\
 	test-gcit-11					\
 	test-rhbz-453358				\
+	test-rhbz-455363				\
 	$(NULL)
 endif
 #
@@ -91,5 +92,10 @@ test_gcit_11_CFLAGS =					\
 #
 test_rhbz_453358_SOURCES =				\
 	rhbz_453358.c					\
+	$(common_sources)				\
+	$(NULL)
+#
+test_rhbz_455363_SOURCES =				\
+	rhbz_455363.c					\
 	$(common_sources)				\
 	$(NULL)
