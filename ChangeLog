@@ -1,3 +1,7 @@
+2008-07-15  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/rhbz_455363.c: a testcase for rhbz#455363.
+
 2008-07-08  Akira TAGOH  <tagoh@redhat.com>
 
 	* utils/imsettings-stop.c (main): Fix a typo.
