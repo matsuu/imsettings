@@ -84,14 +84,15 @@ TDEF (issue) {
 
 	imsettings_test_restart_daemons_full(xinputrc, xinputd, tmpl);
 
-	g_usleep(1 * G_USEC_PER_SEC);
+	g_usleep(5 * G_USEC_PER_SEC);
 
 	list = imsettings_request_get_info_objects(req, &error);
 	fail_unless(list != NULL, "Unable to get the IM objects");
 	for (i = 0; i < list->len; i++) {
 		info = g_ptr_array_index(list, i);
 		if (imsettings_info_is_system_default(info)) {
-			fail_unless(sim == NULL, "Duplicate status for the system default");
+			fail_unless(sim == NULL, "Duplicate status for the system default: %s, %s",
+				    sim, imsettings_info_get_short_desc(info));
 			sim = g_strdup(imsettings_info_get_short_desc(info));
 		}
 		g_object_unref(info);
@@ -100,21 +101,24 @@ TDEF (issue) {
 	fail_unless(sim != NULL, "No default system IM");
 	fail_unless(strcmp(sim, "S C I M") == 0, "Unexpected default IM for system");
 	g_free(sim);
+	sim = NULL;
 
 	fp = fopen(conf, "a");
 	fail_unless(fp != NULL, "Unable to open a file.");
 
-	fputs("# foo\n", fp);
+	fputs("\n# foo\n", fp);
+	fflush(fp);
 	fclose(fp);
 
-	g_usleep(1 * G_USEC_PER_SEC);
+	g_usleep(5 * G_USEC_PER_SEC);
 
 	list = imsettings_request_get_info_objects(req, &error);
 	fail_unless(list != NULL, "Unable to get the IM objects");
 	for (i = 0; i < list->len; i++) {
 		info = g_ptr_array_index(list, i);
 		if (imsettings_info_is_system_default(info)) {
-			fail_unless(sim == NULL, "Duplicate status for the system default");
+			fail_unless(sim == NULL, "Duplicate status for the system default: %s, %s",
+				    sim, imsettings_info_get_short_desc(info));
 			sim = g_strdup(imsettings_info_get_short_desc(info));
 		}
 		g_object_unref(info);
@@ -143,7 +147,7 @@ imsettings_suite(void)
 	TCase *tc = tcase_create("Bug#455363: https://bugzilla.redhat.com/show_bug.cgi?id=455363");
 
 	tcase_add_checked_fixture(tc, setup, teardown);
-	tcase_set_timeout(tc, 10);
+	tcase_set_timeout(tc, 20);
 
 	T (issue);
 
