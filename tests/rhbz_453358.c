@@ -109,7 +109,7 @@ TDEF (issue) {
 	g_free(uim);
 	g_free(sim);
 	g_free(p);
-	free(tmpl);
+	g_free(tmpl);
 } TEND
 
 /************************************************************/
