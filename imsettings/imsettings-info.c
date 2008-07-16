@@ -55,6 +55,7 @@
 
 
 typedef struct _IMSettingsInfoPrivate {
+	gchar    *homedir;
 	gchar    *language;
 	gchar    *filename;
 	gchar    *gtkimm;
@@ -77,6 +78,7 @@ typedef struct _IMSettingsInfoPrivate {
 
 enum {
 	PROP_0 = 0,
+	PROP_HOMEDIR,
 	PROP_LANGUAGE,
 	PROP_FILENAME,
 	PROP_GTK_IMM,
@@ -97,6 +99,9 @@ enum {
 	PROP_IS_XIM,
 	LAST_PROP
 };
+
+
+static const gchar *imsettings_info_get_homedir(IMSettingsInfo *info);
 
 
 G_DEFINE_TYPE (IMSettingsInfo, imsettings_info, IMSETTINGS_TYPE_OBJECT);
@@ -312,6 +317,9 @@ imsettings_info_set_property(GObject      *object,
 	} G_STMT_END
 
 	switch (prop_id) {
+	    case PROP_HOMEDIR:
+		    _set_str_prop(homedir);
+		    goto eval;
 	    case PROP_LANGUAGE:
 		    _set_str_prop(language);
 		    if (priv->filename &&
@@ -323,6 +331,7 @@ imsettings_info_set_property(GObject      *object,
 		    break;
 	    case PROP_FILENAME:
 		    _set_str_prop(filename);
+	    eval:
 		    n = g_path_get_basename(priv->filename);
 		    if (strcmp(n, IMSETTINGS_XIM_CONF XINPUT_SUFFIX) == 0) {
 			    priv->is_xim = TRUE;
@@ -335,7 +344,7 @@ imsettings_info_set_property(GObject      *object,
 		    p = g_path_get_dirname(priv->filename);
 		    if ((strcmp(n, IMSETTINGS_USER_XINPUT_CONF) == 0 ||
 			 strcmp(n, IMSETTINGS_USER_XINPUT_CONF ".bak") == 0) &&
-			strcmp(p, g_get_home_dir()) == 0 &&
+			strcmp(p, priv->homedir) == 0 &&
 			lstat(priv->filename, &st) == 0 &&
 			!S_ISLNK (st.st_mode)) {
 			    imsettings_info_notify_properties(object, priv->filename);
@@ -421,6 +430,9 @@ imsettings_info_get_property(GObject    *object,
 	g_value_set_boolean(value, priv->_m_)
 
 	switch (prop_id) {
+	    case PROP_HOMEDIR:
+		    _get_str_prop(homedir);
+		    break;
 	    case PROP_LANGUAGE:
 		    _get_str_prop(language);
 		    break;
@@ -486,6 +498,7 @@ imsettings_info_finalize(GObject *object)
 {
 	IMSettingsInfoPrivate *priv = IMSETTINGS_INFO_GET_PRIVATE (object);
 
+	g_free(priv->homedir);
 	g_free(priv->language);
 	g_free(priv->filename);
 	g_free(priv->gtkimm);
@@ -604,6 +617,13 @@ imsettings_info_class_init(IMSettingsInfoClass *klass)
 	/* those properties has to be dumped/loaded by self dumper/loader
 	 * because we have to avoid overwriting by imsettings_info_notify_properties().
 	 */
+	imsettings_object_class_install_property(imsettings_class, PROP_HOMEDIR,
+						 g_param_spec_string("homedir",
+								     _("Home directory"),
+								     _("Home directory"),
+								     NULL,
+								     G_PARAM_READWRITE),
+						 TRUE);
 	imsettings_object_class_install_property(imsettings_class, PROP_LANGUAGE,
 						 g_param_spec_string("language",
 								     _("Language"),
@@ -723,6 +743,7 @@ imsettings_info_init(IMSettingsInfo *info)
 {
 	IMSettingsInfoPrivate *priv = IMSETTINGS_INFO_GET_PRIVATE (info);
 
+	priv->homedir = g_strdup(g_get_home_dir());
 	priv->filename = NULL;
 	priv->gtkimm = NULL;
 	priv->qtimm = NULL;
@@ -779,6 +800,7 @@ imsettings_info_new_with_lang(const gchar *filename,
 		return priv->_m_;					\
 	}
 
+_IMSETTINGS_DEFUNC_PROPERTY (static const gchar *, homedir, homedir, NULL)
 _IMSETTINGS_DEFUNC_PROPERTY (const gchar *, language, language, NULL)
 _IMSETTINGS_DEFUNC_PROPERTY (const gchar *, filename, filename, NULL)
 _IMSETTINGS_DEFUNC_PROPERTY (const gchar *, gtkimm, gtkimm, NULL)

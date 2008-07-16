@@ -1,5 +1,8 @@
 2008-07-16  Akira TAGOH  <tagoh@redhat.com>
 
+	* imsettings/imsettings-info.c (imsettings_info_set_property):
+	parameterize the homedir instead of hardcoded path.
+
 	* tests/rhbz_431291.c: Add a testcase for the user specific conf.
 
 	* utils/imsettings-info.c (main): show up the icon file.
