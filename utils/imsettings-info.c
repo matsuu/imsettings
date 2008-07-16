@@ -38,6 +38,7 @@ main(int    argc,
 	const gchar *prefs_prog, *prefs_args;
 	const gchar *aux_prog, *aux_args;
 	const gchar *short_desc, *long_desc;
+	const gchar *icon;
 	gboolean is_system_default, is_user_default, is_xim;
 	GError *error = NULL;
 	guint n_retry = 0;
@@ -95,6 +96,7 @@ main(int    argc,
 		is_system_default = imsettings_info_is_system_default(info);
 		is_user_default = imsettings_info_is_user_default(info);
 		is_xim = imsettings_info_is_xim(info);
+		icon = imsettings_info_get_icon_file(info);
 
 		g_print("Xinput file: %s\n"
 			"GTK+ immodule: %s\n"
@@ -105,6 +107,7 @@ main(int    argc,
 			"auxiliary: %s %s\n"
 			"Short Description: %s\n"
 			"Long Description: %s\n"
+			"Icon file: %s\n"
 			"Is system default: %s\n"
 			"Is user default: %s\n"
 			"Is XIM server: %s\n",
@@ -115,6 +118,7 @@ main(int    argc,
 			aux_prog ? aux_prog : "",
 			aux_args ? aux_args : "",
 			short_desc, long_desc ? long_desc : "",
+			icon ? icon : "",
 			(is_system_default ? "TRUE" : "FALSE"),
 			(is_user_default ? "TRUE" : "FALSE"),
 			(is_xim ? "TRUE" : "FALSE"));
