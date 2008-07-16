@@ -1,0 +1,4 @@
+XIM=nabi
+XIM_PROGRAM=/usr/bin/nabi
+GTK_IM_MODULE=hangul39
+SHORT_DESC=nabi

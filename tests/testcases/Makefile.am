@@ -27,6 +27,10 @@ testcase_dist =							\
 	issue_5							\
 	issue_5/xinputrc					\
 	issue_5/xinput.d					\
+	rhbz_431291/case1/xinput.d				\
+	rhbz_431291/case1/xinput.d/test-scim.conf		\
+	rhbz_431291/case1/.xinputrc				\
+	rhbz_431291/case1/xinputrc				\
 	rhbz_453358/case1/xinput.d				\
 	rhbz_453358/case1/xinput.d/test-scim.conf		\
 	rhbz_453358/case1/xinput.d/test-scim2.conf		\
