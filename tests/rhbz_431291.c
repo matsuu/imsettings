@@ -68,7 +68,7 @@ TDEF (issue) {
 
 	p = imsettings_request_get_current_user_im(req, &error);
 	fail_unless(p != NULL, "Unable to get current user IM");
-	fail_unless(error == NULL, "%s", error->message);
+	fail_unless(error == NULL, "error: %s", error ? error->message : "none");
 	fail_unless(strcmp(p, IMSETTINGS_USER_SPECIFIC_SHORT_DESC) == 0, "Unexpected current user IM: %s", p);
 
 	g_free(p);

@@ -134,6 +134,7 @@ imsettings_test_restart_daemons_full(const gchar *xinputrcdir,
 
 	s = g_strdup_printf("%s --replace --xinputrcdir=%s --xinputdir=%s --homedir=%s",
 			    p, xxinputrcdir, xxinputdir, xhomedir);
+	g_print("%s\n", s);
 
 	/* stop all the processes first */
 	imsettings_test_reload_daemons();
