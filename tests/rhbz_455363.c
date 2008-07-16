@@ -126,6 +126,32 @@ TDEF (issue) {
 	g_ptr_array_free(list, TRUE);
 	fail_unless(sim != NULL, "No default system IM");
 	fail_unless(strcmp(sim, "S C I M") == 0, "Unexpected default IM for system");
+	g_free(sim);
+	sim = NULL;
+
+	p = g_strdup_printf("mv %s %s.tmp", conf, conf);
+	if (!g_spawn_command_line_sync(p, NULL, NULL, NULL, &error))
+		abort();
+	g_usleep(1 * G_USEC_PER_SEC);
+	p = g_strdup_printf("mv %s.tmp %s", conf, conf);
+	if (!g_spawn_command_line_sync(p, NULL, NULL, NULL, &error))
+		abort();
+	g_usleep(5 * G_USEC_PER_SEC);
+
+	list = imsettings_request_get_info_objects(req, &error);
+	fail_unless(list != NULL, "Unable to get the IM objects");
+	for (i = 0; i < list->len; i++) {
+		info = g_ptr_array_index(list, i);
+		if (imsettings_info_is_system_default(info)) {
+			fail_unless(sim == NULL, "Duplicate status for the system default: %s, %s",
+				    sim, imsettings_info_get_short_desc(info));
+			sim = g_strdup(imsettings_info_get_short_desc(info));
+		}
+		g_object_unref(info);
+	}
+	g_ptr_array_free(list, TRUE);
+	fail_unless(sim != NULL, "No default system IM");
+	fail_unless(strcmp(sim, "S C I M") == 0, "Unexpected default IM for system");
 
 	p = g_strdup_printf("rm -rf %s", tmpl);
 	if (!g_spawn_command_line_sync(p, NULL, NULL, NULL, &error))
