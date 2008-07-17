@@ -1,3 +1,23 @@
+2008-07-17  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory_info.c (imsettings_info_get_error_quark): new.
+	(imsettings_info_monitor_new): new.
+	(imsettings_info_monitor_free): new.
+	(imsettings_info_monitor_targeted_new): new.
+	(imsettings_info_monitor_targeted_free): new.
+	(imsettings_info_manager_add_info): change the behavior a bit to update
+	the hash anyway.
+	(imsettings_info_manager_remove_info): make a copy of IM name
+	before removing from the hash. that may possibly points out
+	the invalid pointer.
+	(imsettings_info_manager_real_changed_xinputd): sanity check of
+	the filename.
+	(imsettings_info_manager_real_changed_xinputd): at the end, notify
+	the change of the file to the handlers of xinputrc and .xinputrc to
+	not miss the flag for them.
+	this is the kind of the race condition issue.
+	(imsettings_info_manager_setup_monitor_for_xinputrc_target): new.
+
 2008-07-16  Akira TAGOH  <tagoh@redhat.com>
 
 	* imsettings/imsettings-info.c (imsettings_info_set_property):

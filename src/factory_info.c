@@ -46,10 +46,15 @@
 #define d(e)
 #endif
 
+#define MONITOR_DEPTH_MAX	10
+#define IMSETTINGS_INFO_ERROR	(imsettings_info_get_error_quark())
 
 typedef struct _IMSettingsInfoManagerClass	IMSettingsInfoManagerClass;
 typedef struct _IMSettingsInfoManager		IMSettingsInfoManager;
 typedef struct _IMSettingsInfoManagerPrivate	IMSettingsInfoManagerPrivate;
+typedef struct _IMSettingsInfoMonitor		IMSettingsInfoMonitor;
+typedef struct _IMSettingsInfoMonitorTargeted	IMSettingsInfoMonitorTargeted;
+typedef enum _IMSettingsInfoError		IMSettingsInfoError;
 
 
 #define IMSETTINGS_TYPE_INFO_MANAGER			(imsettings_info_manager_get_type())
@@ -84,22 +89,43 @@ struct _IMSettingsInfoManager {
 struct _IMSettingsInfoManagerPrivate {
 	GHashTable     *im_info_from_name;
 	GHashTable     *im_info_from_filename;
+	GHashTable     *file_list_for_xinputrc;
+	GHashTable     *file_list_for_dot_xinputrc;
 	DBusConnection *req_conn;
 	GFileMonitor   *mon_xinputd;
-	GFileMonitor   *mon_dot_xinputrc;
-	GFileMonitor   *mon_xinputrc;
+	GPtrArray      *mon_dot_xinputrc;
+	GPtrArray      *mon_xinputrc;
 	gchar          *current_user_im;
 	gchar          *current_system_im;
 	gchar          *xinputrcdir;
 	gchar          *xinputdir;
 	gchar          *homedir;
 };
+struct _IMSettingsInfoMonitor {
+	GFileMonitor *monitor;
+	gchar        *filename;
+	gboolean      is_symlink;
+};
+struct _IMSettingsInfoMonitorTargeted {
+	GFileMonitor      *monitor;
+	GFile             *file;
+};
 
-static const gchar *imsettings_info_manager_real_get_current_system_im(IMSettingsObserver    *observer,
-                                                                       GError                **error);
-static gboolean     imsettings_info_manager_init_monitor              (IMSettingsInfoManager *manager);
-static void         imsettings_info_manager_tini_monitor              (IMSettingsInfoManager *manager);
-GType               imsettings_info_manager_get_type                  (void) G_GNUC_CONST;
+enum _IMSettingsInfoError {
+	IMSETTINGS_INFO_ERROR_DANGLING_SYMLINK,
+	IMSETTINGS_INFO_ERROR_NO_XINPUTRC_AVAILABLE,
+};
+
+static gboolean     imsettings_info_manager_setup_monitor_for_xinputrc_target(IMSettingsInfoManager  *manager,
+                                                                              GFile                  *file,
+                                                                              guint                   depth,
+									      gboolean                is_system_default,
+                                                                              GError                **error);
+static const gchar *imsettings_info_manager_real_get_current_system_im       (IMSettingsObserver     *observer,
+                                                                              GError                **error);
+static gboolean     imsettings_info_manager_init_monitor                     (IMSettingsInfoManager  *manager);
+static void         imsettings_info_manager_tini_monitor                     (IMSettingsInfoManager  *manager);
+GType               imsettings_info_manager_get_type                         (void) G_GNUC_CONST;
 
 
 guint signals[LAST_SIGNAL] = { 0 };
@@ -111,6 +137,84 @@ G_DEFINE_TYPE (IMSettingsInfoManager, imsettings_info_manager, IMSETTINGS_TYPE_O
 /*
  * Private functions
  */
+static GQuark
+imsettings_info_get_error_quark(void)
+{
+	static GQuark quark = 0;
+
+	if (!quark)
+		quark = g_quark_from_static_string("imsettings-info-manager-error");
+
+	return quark;
+}
+
+static IMSettingsInfoMonitor *
+imsettings_info_monitor_new(GFile         *file,
+			    GCancellable  *cancellable,
+			    GError       **error)
+{
+	IMSettingsInfoMonitor *retval;
+	GFileMonitor *monitor;
+	const gchar *filename;
+	GFileInfo *i;
+
+	g_return_val_if_fail (g_file_query_exists(file, cancellable), NULL);
+	i = g_file_query_info(file,
+			      G_FILE_ATTRIBUTE_STANDARD_NAME "," \
+			      G_FILE_ATTRIBUTE_STANDARD_IS_SYMLINK,
+			      G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
+			      cancellable,
+			      error);
+	filename = g_file_info_get_name(i);
+	g_return_val_if_fail (filename != NULL, NULL);
+	monitor = g_file_monitor_file(file, G_FILE_MONITOR_NONE,
+				      cancellable, error);
+	g_return_val_if_fail (monitor != NULL, NULL);
+
+	retval = g_new0(IMSettingsInfoMonitor, 1);
+	retval->monitor = monitor;
+	retval->filename = g_strdup(filename);
+	retval->is_symlink = g_file_info_get_is_symlink(i);
+
+	return retval;
+}
+
+static void
+imsettings_info_monitor_free(gpointer p)
+{
+	IMSettingsInfoMonitor *mon = p;
+
+	g_object_unref(mon->monitor);
+	g_free(mon->filename);
+	g_free(mon);
+}
+
+static IMSettingsInfoMonitorTargeted *
+imsettings_info_monitor_targeted_new(GFileMonitor      *monitor,
+				     GFile             *file)
+{
+	IMSettingsInfoMonitorTargeted *retval;
+
+	g_return_val_if_fail (G_IS_FILE_MONITOR (monitor), NULL);
+	g_return_val_if_fail (G_IS_FILE (file), NULL);
+
+	retval = g_new0(IMSettingsInfoMonitorTargeted, 1);
+	retval->monitor    = g_object_ref(monitor);
+	retval->file       = g_object_ref(file);
+
+	return retval;
+}
+
+static void
+imsettings_info_monitor_targeted_free(gpointer data)
+{
+	IMSettingsInfoMonitorTargeted *targeted = data;
+
+	g_object_unref(targeted->monitor);
+	g_object_unref(targeted->file);
+	g_free(targeted);
+}
+
 static void
 disconnected_cb(IMSettingsObserver *observer,
 		GMainLoop          *loop)
@@ -138,13 +242,14 @@ reload_cb(IMSettingsObserver *observer,
 static IMSettingsInfo *
 imsettings_info_manager_add_info(IMSettingsInfoManagerPrivate *priv,
 				 const gchar                  *filename,
-				 gboolean                      is_xinputrc)
+				 gboolean                      force)
 {
 	IMSettingsInfo *info, *ret;
 	const gchar *name;
 
 	info = imsettings_info_new(filename);
 	if (info != NULL) {
+		g_object_set(G_OBJECT (info), "homedir", priv->homedir, NULL);
 		name = imsettings_info_get_short_desc(info);
 
 		G_LOCK (imsettings_info_manager);
@@ -158,7 +263,8 @@ imsettings_info_manager_add_info(IMSettingsInfoManagerPrivate *priv,
 					    g_strdup(filename),
 					    g_object_ref(info));
 		} else {
-			if (strcmp(name, IMSETTINGS_NONE_CONF) == 0 ||
+			if (force ||
+			    strcmp(name, IMSETTINGS_NONE_CONF) == 0 ||
 			    strcmp(name, IMSETTINGS_USER_SPECIFIC_SHORT_DESC) == 0) {
 				/* We deal with none.conf specially here.
 				 * It has to be registered as is anyway.
@@ -170,10 +276,6 @@ imsettings_info_manager_add_info(IMSettingsInfoManagerPrivate *priv,
 				g_hash_table_replace(priv->im_info_from_filename,
 						     g_strdup(filename),
 						     g_object_ref(info));
-			} else if (is_xinputrc) {
-				/* just return the object in the hash */
-				g_object_unref(info);
-				info = ret;
 			} else {
 				g_warning(_("Duplicate entry `%s' from %s. SHORT_DESC has to be unique."),
 					  name, filename);
@@ -197,13 +299,13 @@ imsettings_info_manager_remove_info(IMSettingsInfoManagerPrivate *priv,
 				    gboolean                      is_xinputrc)
 {
 	IMSettingsInfo *info;
-	const gchar *name;
+	gchar *name = NULL;
 	gboolean retval = FALSE;
 
 	G_LOCK (imsettings_info_manager);
 
 	if ((info = g_hash_table_lookup(priv->im_info_from_filename, filename))) {
-		name = imsettings_info_get_short_desc(info);
+		name = g_strdup(imsettings_info_get_short_desc(info));
 		d(g_print("Removing %s(%s)...\n", filename, name));
 		g_hash_table_remove(priv->im_info_from_filename, filename);
 		if (!is_xinputrc ||
@@ -213,6 +315,8 @@ imsettings_info_manager_remove_info(IMSettingsInfoManagerPrivate *priv,
 		}
 		retval = TRUE;
 	}
+
+	g_free(name);
 
 	G_UNLOCK (imsettings_info_manager);
 
@@ -307,11 +411,17 @@ imsettings_info_manager_real_finalize(GObject *object)
 		g_hash_table_destroy(priv->im_info_from_name);
 	if (priv->im_info_from_filename)
 		g_hash_table_destroy(priv->im_info_from_filename);
+	if (priv->file_list_for_xinputrc)
+		g_hash_table_destroy(priv->file_list_for_xinputrc);
+	if (priv->file_list_for_dot_xinputrc)
+		g_hash_table_destroy(priv->file_list_for_dot_xinputrc);
 	dbus_connection_unref(priv->req_conn);
 	imsettings_info_manager_tini_monitor(IMSETTINGS_INFO_MANAGER (object));
 	g_free(priv->xinputrcdir);
 	g_free(priv->xinputdir);
 	g_free(priv->homedir);
+	g_ptr_array_free(priv->mon_dot_xinputrc, TRUE);
+	g_ptr_array_free(priv->mon_xinputrc, TRUE);
 
 	if (G_OBJECT_CLASS (imsettings_info_manager_parent_class)->finalize)
 		G_OBJECT_CLASS (imsettings_info_manager_parent_class)->finalize(object);
@@ -389,6 +499,7 @@ imsettings_info_manager_real_changed_xinputd(GFileMonitor      *monitor,
 	gsize len = strlen(filename);
 	gsize suffix_len = strlen(XINPUT_SUFFIX);
 	gboolean proceeded = FALSE;
+	IMSettingsInfoMonitorTargeted *targeted;
 
 	switch (event_type) {
 	    case G_FILE_MONITOR_EVENT_CHANGED:
@@ -398,16 +509,32 @@ imsettings_info_manager_real_changed_xinputd(GFileMonitor      *monitor,
 			    d(g_print("Ignoring the change of `%s'.\n", filename));
 			    break;
 		    }
+		    d(g_print("*** %s changed\n", filename));
 		    imsettings_info_manager_remove_info(priv, filename, FALSE);
 	    case G_FILE_MONITOR_EVENT_CREATED:
+		    if (len <= suffix_len ||
+			strcmp(&filename[len - suffix_len], XINPUT_SUFFIX) != 0) {
+			    /* just ignore this */
+			    d(g_print("Ignoring the change of `%s'.\n", filename));
+			    break;
+		    }
+		    d(g_print("*** %s created/changed\n", filename));
 		    if (!imsettings_info_manager_validate_from_file(file, FALSE)) {
 			    /* ignore them */
 			    goto end;
 		    }
-		    imsettings_info_manager_add_info(priv, filename, FALSE);
+		    if (g_hash_table_lookup(priv->im_info_from_filename, filename) == NULL)
+			    imsettings_info_manager_add_info(priv, filename, FALSE);
 		    proceeded = TRUE;
 		    break;
 	    case G_FILE_MONITOR_EVENT_DELETED:
+		    if (len <= suffix_len ||
+			strcmp(&filename[len - suffix_len], XINPUT_SUFFIX) != 0) {
+			    /* just ignore this */
+			    d(g_print("Ignoring the change of `%s'.\n", filename));
+			    break;
+		    }
+		    d(g_print("*** %s deleted\n", filename));
 		    imsettings_info_manager_remove_info(priv, filename, FALSE);
 		    proceeded = TRUE;
 		    break;
@@ -417,6 +544,18 @@ imsettings_info_manager_real_changed_xinputd(GFileMonitor      *monitor,
 	if (proceeded)
 		g_signal_emit(manager, signals[STATUS_CHANGED], 0,
 			      filename, NULL);
+	if ((targeted = g_hash_table_lookup(priv->file_list_for_xinputrc, filename))) {
+		g_file_monitor_emit_event(targeted->monitor,
+					  targeted->file,
+					  other_file,
+					  event_type);
+	}
+	if ((targeted = g_hash_table_lookup(priv->file_list_for_dot_xinputrc, filename))) {
+		g_file_monitor_emit_event(targeted->monitor,
+					  targeted->file,
+					  other_file,
+					  event_type);
+	}
 
   end:
 	g_free(filename);
@@ -431,42 +570,50 @@ imsettings_info_manager_real_changed_dot_xinputrc(GFileMonitor      *monitor,
 {
 	IMSettingsInfoManager *manager = IMSETTINGS_INFO_MANAGER (user_data);
 	IMSettingsInfoManagerPrivate *priv = IMSETTINGS_INFO_MANAGER_GET_PRIVATE (manager);
-	gchar *filename = g_file_get_path(file);
+	gchar *filename = g_file_get_path(file), *tmp;
 	gboolean proceeded = FALSE;
-	IMSettingsInfo *old_info, *info;
+	IMSettingsInfoMonitor *mon = NULL, *m;
+	gint i, depth;
+	GError *error = NULL;
 
+	for (i = 0; i < priv->mon_dot_xinputrc->len; i++) {
+		m = g_ptr_array_index(priv->mon_dot_xinputrc, i);
+		if (strcmp(m->filename, filename) == 0) {
+			mon = m;
+			break;
+		}
+	}
+	depth = i;
+	g_return_if_fail (mon == NULL);
+
+	tmp = g_build_filename(priv->homedir, IMSETTINGS_USER_XINPUT_CONF, NULL);
 	switch (event_type) {
 	    case G_FILE_MONITOR_EVENT_CHANGED:
-		    imsettings_info_manager_remove_info(priv, filename, TRUE);
+		    d(g_print("*** %s(.xinputrc) changed\n", filename));
+		    if (strcmp(filename, tmp) == 0)
+			    imsettings_info_manager_remove_info(priv, filename, TRUE);
 	    case G_FILE_MONITOR_EVENT_CREATED:
 		    if (!imsettings_info_manager_validate_from_file(file, TRUE)) {
 			    /* ignore them */
 			    goto end;
 		    }
-		    info = imsettings_info_manager_add_info(priv, filename, TRUE);
-
-		    G_LOCK (imsettings_info_manager);
-
-		    if (priv->current_user_im &&
-			(old_info = g_hash_table_lookup(priv->im_info_from_name,
-							priv->current_user_im))) {
-			    g_object_set(G_OBJECT (old_info),
-					 "is_user_default",
-					 FALSE, NULL);
+		    d(g_print("*** %s(.xinputrc) created/changed\n", filename));
+		    for (; i < priv->mon_dot_xinputrc->len; i++) {
+			    imsettings_info_monitor_free(g_ptr_array_index(priv->mon_dot_xinputrc, i));
 		    }
-		    g_object_set(G_OBJECT (info), "is_user_default", TRUE, NULL);
-		    g_free(priv->current_user_im);
-		    priv->current_user_im = g_strdup(imsettings_info_get_short_desc(info));
-		    g_hash_table_replace(priv->im_info_from_filename,
-					 g_strdup(filename),
-					 g_object_ref(info));
-
-		    G_UNLOCK (imsettings_info_manager);
-
+		    g_object_ref(file);
+		    imsettings_info_manager_setup_monitor_for_xinputrc_target(manager, file, depth, FALSE, &error);
+		    if (error) {
+			    g_warning("Unable to update the monitor: %s",
+				      error->message);
+			    break;
+		    }
 		    proceeded = TRUE;
 		    break;
 	    case G_FILE_MONITOR_EVENT_DELETED:
-		    imsettings_info_manager_remove_info(priv, filename, TRUE);
+		    d(g_print("*** %s(.xinputrc) deleted\n", filename));
+		    if (strcmp(filename, tmp) == 0)
+			    imsettings_info_manager_remove_info(priv, filename, TRUE);
 		    proceeded = TRUE;
 		    break;
 	    default:
@@ -477,6 +624,7 @@ imsettings_info_manager_real_changed_dot_xinputrc(GFileMonitor      *monitor,
 			      filename, NULL);
 
   end:
+	g_free(tmp);
 	g_free(filename);
 }
 
@@ -491,40 +639,46 @@ imsettings_info_manager_real_changed_xinputrc(GFileMonitor      *monitor,
 	IMSettingsInfoManagerPrivate *priv = IMSETTINGS_INFO_MANAGER_GET_PRIVATE (manager);
 	gchar *filename = g_file_get_path(file);
 	gboolean proceeded = FALSE;
-	IMSettingsInfo *old_info, *info;
+	IMSettingsInfoMonitor *mon = NULL, *m;
+	gint i, depth;
+	GError *error = NULL;
+
+	for (i = 0; i < priv->mon_xinputrc->len; i++) {
+		m = g_ptr_array_index(priv->mon_xinputrc, i);
+		if (strcmp(m->filename, filename) == 0) {
+			mon = m;
+			break;
+		}
+	}
+	depth = i;
+	g_return_if_fail (mon == NULL);
 
 	switch (event_type) {
 	    case G_FILE_MONITOR_EVENT_CHANGED:
-		    imsettings_info_manager_remove_info(priv, filename, TRUE);
 	    case G_FILE_MONITOR_EVENT_CREATED:
 		    if (!imsettings_info_manager_validate_from_file(file, TRUE)) {
 			    /* ignore them */
 			    goto end;
 		    }
-		    info = imsettings_info_manager_add_info(priv, filename, TRUE);
-
-		    G_LOCK (imsettings_info_manager);
-
-		    if (priv->current_system_im &&
-			(old_info = g_hash_table_lookup(priv->im_info_from_name,
-							priv->current_system_im))) {
-			    g_object_set(G_OBJECT (old_info),
-					 "is_system_default",
-					 FALSE, NULL);
+		    d(g_print("*** %s(xinputrc) created/changed\n", filename));
+		    for (; i < priv->mon_xinputrc->len; i++) {
+			    imsettings_info_monitor_free(g_ptr_array_index(priv->mon_xinputrc, i));
 		    }
-		    g_object_set(G_OBJECT (info), "is_system_default", TRUE, NULL);
-		    g_free(priv->current_system_im);
-		    priv->current_system_im = g_strdup(imsettings_info_get_short_desc(info));
-		    g_hash_table_replace(priv->im_info_from_filename,
-					 g_strdup(filename),
-					 g_object_ref(info));
-
-		    G_UNLOCK (imsettings_info_manager);
-
+		    g_object_ref(file);
+		    imsettings_info_manager_setup_monitor_for_xinputrc_target(manager, file, depth, TRUE, &error);
+		    if (error) {
+			    g_warning("Unable to update the monitor: %s",
+				      error->message);
+			    g_error_free(error);
+			    break;
+		    }
 		    proceeded = TRUE;
 		    break;
 	    case G_FILE_MONITOR_EVENT_DELETED:
-		    imsettings_info_manager_remove_info(priv, filename, FALSE);
+		    /* no changes of monitor. we do deal with that
+		     * when only changed/created event happened.
+		     */
+		    d(g_print("*** %s(xinputrc) deleted\n", filename));
 		    proceeded = TRUE;
 		    break;
 	    default:
@@ -533,9 +687,158 @@ imsettings_info_manager_real_changed_xinputrc(GFileMonitor      *monitor,
 	if (proceeded)
 		g_signal_emit(manager, signals[STATUS_CHANGED], 0,
 			      filename, NULL);
-
   end:
 	g_free(filename);
+}
+
+static gboolean
+imsettings_info_manager_setup_monitor_for_xinputrc_target(IMSettingsInfoManager  *manager,
+							  GFile                  *file,
+							  guint                   depth,
+							  gboolean                is_system_default,
+							  GError                **error)
+{
+	IMSettingsInfoManagerPrivate *priv = IMSETTINGS_INFO_MANAGER_GET_PRIVATE (manager);
+	IMSettingsInfo *info = NULL;
+	GError *err = NULL;
+	GFileInfo *i;
+	const gchar *target;
+	gchar *filename;
+	gboolean retval = TRUE;
+	IMSettingsInfoMonitor *mon;
+	GPtrArray *array;
+	IMSettingsInfoMonitorTargeted *targeted;
+
+	i = g_file_query_info(file, G_FILE_ATTRIBUTE_STANDARD_IS_SYMLINK "," \
+			      G_FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET,
+			      G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
+			      NULL, &err);
+	if (g_file_query_exists(file, NULL)) {
+		if (is_system_default)
+			array = priv->mon_xinputrc;
+		else
+			array = priv->mon_dot_xinputrc;
+
+		filename = g_file_get_path(file);
+
+		if (g_file_info_get_is_symlink(i)) {
+			/* to not lose the changes of the target of symlink for xinputrc,
+			 * Add a special file monitor to keep it on track.
+			 */
+			target = g_file_info_get_symlink_target(i);
+			if (depth > MONITOR_DEPTH_MAX) {
+				g_set_error(&err, IMSETTINGS_INFO_ERROR, IMSETTINGS_INFO_ERROR_DANGLING_SYMLINK,
+					    "xinputrc file might be a dangling symlink.");
+				retval = FALSE;
+			} else {
+				GFile *f, *tmp;
+
+				d(g_print("*** watching the change of %s\n", filename));
+				mon = imsettings_info_monitor_new(file, NULL, &err);
+				if (!err) {
+					if (is_system_default)
+						g_signal_connect(mon->monitor, "changed",
+								 G_CALLBACK (imsettings_info_manager_real_changed_xinputrc),
+								 manager);
+					else
+						g_signal_connect(mon->monitor, "changed",
+								 G_CALLBACK (imsettings_info_manager_real_changed_dot_xinputrc),
+								 manager);
+				}
+				array->len = depth;
+				g_ptr_array_index(array, depth) = mon;
+				targeted = imsettings_info_monitor_targeted_new(mon->monitor,
+										file);
+				if (is_system_default)
+					g_hash_table_insert(priv->file_list_for_xinputrc,
+							    g_strdup(filename),
+							    targeted);
+				else
+					g_hash_table_insert(priv->file_list_for_dot_xinputrc,
+							    g_strdup(filename),
+							    targeted);
+				tmp = g_file_get_parent(file);
+				f = g_file_resolve_relative_path(tmp, target);
+				g_object_unref(tmp);
+				g_object_unref(i);
+				g_object_unref(file);
+
+				return imsettings_info_manager_setup_monitor_for_xinputrc_target(manager, f, depth + 1, is_system_default, error);
+			}
+		} else {
+			G_LOCK (imsettings_info_manager);
+
+			/* do not look up for User Specific config.
+			 * it has to be updated anyway.
+			 */
+			if (depth > 0)
+				info = g_hash_table_lookup(priv->im_info_from_filename, filename);
+
+			G_UNLOCK (imsettings_info_manager);
+
+			if (!info)
+				info = imsettings_info_manager_add_info(priv, filename, TRUE);
+
+			G_LOCK (imsettings_info_manager);
+
+			if (is_system_default) {
+				g_object_set(G_OBJECT (info), "is_system_default", TRUE, NULL);
+				g_free(priv->current_system_im);
+				priv->current_system_im = g_strdup(imsettings_info_get_short_desc(info));
+			} else {
+				g_object_set(G_OBJECT (info), "is_user_default", TRUE, NULL);
+				g_free(priv->current_user_im);
+				priv->current_user_im = g_strdup(imsettings_info_get_short_desc(info));
+			}
+
+			G_UNLOCK (imsettings_info_manager);
+
+			d(g_print("*** watching the change of %s\n", filename));
+			mon = imsettings_info_monitor_new(file, NULL, &err);
+			if (!err) {
+				if (is_system_default)
+					g_signal_connect(mon->monitor, "changed",
+							 G_CALLBACK (imsettings_info_manager_real_changed_xinputrc),
+							 manager);
+				else
+					g_signal_connect(mon->monitor, "changed",
+							 G_CALLBACK (imsettings_info_manager_real_changed_dot_xinputrc),
+							 manager);
+			}
+			array->len = depth;
+			g_ptr_array_index(array, depth) = mon;
+			targeted = imsettings_info_monitor_targeted_new(mon->monitor,
+								       file);
+			if (is_system_default)
+				g_hash_table_insert(priv->file_list_for_xinputrc,
+						    g_strdup(filename),
+						    targeted);
+			else
+				g_hash_table_insert(priv->file_list_for_dot_xinputrc,
+						    g_strdup(filename),
+						    targeted);
+		}
+		g_free(filename);
+	} else {
+		g_set_error(&err, IMSETTINGS_INFO_ERROR, IMSETTINGS_INFO_ERROR_NO_XINPUTRC_AVAILABLE,
+			    "No xinputrc available");
+		retval = FALSE;
+	}
+
+	if (err) {
+		if (error) {
+			*error = g_error_copy(err);
+		} else {
+			g_warning("%s", err->message);
+		}
+		g_error_free(err);
+	}
+
+	if (i)
+		g_object_unref(i);
+	g_object_unref(file);
+
+	return retval;
 }
 
 typedef struct _IMSettingsManagerCollectList {
@@ -743,7 +1046,7 @@ imsettings_info_manager_init_monitor(IMSettingsInfoManager *manager)
 	GFile *f;
 	GFileEnumerator *e;
 	GFileInfo *i;
-	IMSettingsInfo *info, *old_info;
+	IMSettingsInfo *old_info;
 
 	g_hash_table_remove_all(priv->im_info_from_filename);
 	g_hash_table_remove_all(priv->im_info_from_name);
@@ -800,74 +1103,44 @@ imsettings_info_manager_init_monitor(IMSettingsInfoManager *manager)
 	if (priv->homedir != NULL) {
 		file = g_build_filename(priv->homedir, IMSETTINGS_USER_XINPUT_CONF, NULL);
 		f = g_file_new_for_path(file);
-		if (g_file_test(file, G_FILE_TEST_EXISTS) &&
-		    imsettings_info_manager_validate_from_file(f, TRUE)) {
-			info = imsettings_info_manager_add_info(priv, file, TRUE);
 
-			G_LOCK (imsettings_info_manager);
+		G_LOCK (imsettings_info_manager);
 
-			if (priv->current_user_im &&
-			    (old_info = g_hash_table_lookup(priv->im_info_from_name,
-							    priv->current_user_im)))
-				g_object_set(G_OBJECT (old_info),
-					     "is_user_default",
-					     FALSE, NULL);
-			g_object_set(G_OBJECT (info), "is_user_default", TRUE, NULL);
-			g_free(priv->current_user_im);
-			priv->current_user_im = g_strdup(imsettings_info_get_short_desc(info));
+		if (priv->current_user_im &&
+		    (old_info = g_hash_table_lookup(priv->im_info_from_name,
+						    priv->current_user_im)))
+			g_object_set(G_OBJECT (old_info),
+				     "is_user_default",
+				     FALSE, NULL);
 
-			G_UNLOCK (imsettings_info_manager);
+		G_UNLOCK (imsettings_info_manager);
+
+		g_object_ref(f);
+		imsettings_info_manager_setup_monitor_for_xinputrc_target(manager, f, 0, FALSE, &error);
+		if (error) {
+			g_warning("Unable to monitor %s: %s",
+				  file, error->message);
+			g_clear_error(&error);
 		}
+		g_free(file);
+		g_object_unref(f);
 	}
-	priv->mon_dot_xinputrc = g_file_monitor_file(f,
-						     G_FILE_MONITOR_NONE,
-						     NULL,
-						     &error);
-	if (error) {
-		g_warning("Unable to monitor %s: %s",
-			  file, error->message);
-		g_clear_error(&error);
-	} else {
-		g_signal_connect(priv->mon_dot_xinputrc, "changed",
-				 G_CALLBACK (imsettings_info_manager_real_changed_dot_xinputrc),
-				 manager);
-	}
-	g_free(file);
-	g_object_unref(f);
 
 	/* for system-wide xinputrc */
 	file = g_build_filename(priv->xinputrcdir, IMSETTINGS_GLOBAL_XINPUT_CONF, NULL);
 	f = g_file_new_for_path(file);
-	if (g_file_test(file, G_FILE_TEST_EXISTS) &&
-	    imsettings_info_manager_validate_from_file(f, TRUE)) {
-		info = imsettings_info_manager_add_info(priv, file, TRUE);
-
-		G_LOCK (imsettings_info_manager);
-
-		if (priv->current_system_im &&
-		    (old_info = g_hash_table_lookup(priv->im_info_from_name,
-						    priv->current_system_im)))
-			g_object_set(G_OBJECT (old_info),
-				     "is_system_default",
-				     FALSE, NULL);
-		g_object_set(G_OBJECT (info), "is_system_default", TRUE, NULL);
-		g_free(priv->current_system_im);
-		priv->current_system_im = g_strdup(imsettings_info_get_short_desc(info));
-
-		G_UNLOCK (imsettings_info_manager);
-	}
-	priv->mon_xinputrc = g_file_monitor_file(f,
-						 G_FILE_MONITOR_NONE,
-						 NULL,
-						 &error);
+	if (priv->current_system_im &&
+	    (old_info = g_hash_table_lookup(priv->im_info_from_name,
+					    priv->current_system_im)))
+		g_object_set(G_OBJECT (old_info),
+			     "is_system_default",
+			     FALSE, NULL);
+	g_object_ref(f);
+	imsettings_info_manager_setup_monitor_for_xinputrc_target(manager, f, 0, TRUE, &error);
 	if (error) {
 		g_warning("Unable to monitor %s: %s",
 			  file, error->message);
 		g_clear_error(&error);
-	} else {
-		g_signal_connect(priv->mon_xinputrc, "changed",
-				 G_CALLBACK (imsettings_info_manager_real_changed_xinputrc),
-				 manager);
 	}
 	g_free(file);
 	g_object_unref(f);
@@ -879,19 +1152,20 @@ static void
 imsettings_info_manager_tini_monitor(IMSettingsInfoManager *manager)
 {
 	IMSettingsInfoManagerPrivate *priv = IMSETTINGS_INFO_MANAGER_GET_PRIVATE (manager);
+	gint i;
 
 	g_signal_handlers_disconnect_by_func(priv->mon_xinputd,
 					     G_CALLBACK (imsettings_info_manager_real_changed_xinputd),
 					     manager);
-	g_signal_handlers_disconnect_by_func(priv->mon_dot_xinputrc,
-					     G_CALLBACK (imsettings_info_manager_real_changed_dot_xinputrc),
-					     manager);
-	g_signal_handlers_disconnect_by_func(priv->mon_xinputrc,
-					     G_CALLBACK (imsettings_info_manager_real_changed_xinputrc),
-					     manager);
 	g_object_unref(priv->mon_xinputd);
-	g_object_unref(priv->mon_dot_xinputrc);
-	g_object_unref(priv->mon_xinputrc);
+	for (i = 0; i < priv->mon_dot_xinputrc->len; i++) {
+		imsettings_info_monitor_free(g_ptr_array_index(priv->mon_dot_xinputrc, i));
+	}
+	priv->mon_dot_xinputrc->len = 0;
+	for (i = 0; i < priv->mon_xinputrc->len; i++) {
+		imsettings_info_monitor_free(g_ptr_array_index(priv->mon_xinputrc, i));
+	}
+	priv->mon_xinputrc->len = 0;
 }
 
 static void
@@ -906,12 +1180,12 @@ imsettings_info_manager_class_init(IMSettingsInfoManagerClass *klass)
 	object_class->get_property = imsettings_info_manager_real_get_property;
 	object_class->finalize     = imsettings_info_manager_real_finalize;
 
-	observer_class->get_list = imsettings_info_manager_real_get_list;
-	observer_class->get_info_objects = imsettings_info_manager_real_get_info_objects;
-	observer_class->get_current_user_im = imsettings_info_manager_real_get_current_user_im;
+	observer_class->get_list              = imsettings_info_manager_real_get_list;
+	observer_class->get_info_objects      = imsettings_info_manager_real_get_info_objects;
+	observer_class->get_current_user_im   = imsettings_info_manager_real_get_current_user_im;
 	observer_class->get_current_system_im = imsettings_info_manager_real_get_current_system_im;
-	observer_class->get_info = imsettings_info_manager_real_get_info;
-	observer_class->get_version = imsettings_info_manager_real_get_version;
+	observer_class->get_info              = imsettings_info_manager_real_get_info;
+	observer_class->get_version           = imsettings_info_manager_real_get_version;
 
 	/* properties */
 	g_object_class_install_property(object_class, PROP_XINPUTRCDIR,
@@ -947,7 +1221,6 @@ static void
 imsettings_info_manager_init(IMSettingsInfoManager *manager)
 {
 	IMSettingsInfoManagerPrivate *priv = IMSETTINGS_INFO_MANAGER_GET_PRIVATE (manager);
-	const gchar *p;
 
 	priv->req_conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	priv->im_info_from_name = g_hash_table_new_full(g_str_hash,
@@ -958,13 +1231,19 @@ imsettings_info_manager_init(IMSettingsInfoManager *manager)
 							    g_str_equal,
 							    g_free,
 							    g_object_unref);
+	priv->file_list_for_xinputrc = g_hash_table_new_full(g_str_hash,
+							     g_str_equal,
+							     g_free,
+							     imsettings_info_monitor_targeted_free);
+	priv->file_list_for_dot_xinputrc = g_hash_table_new_full(g_str_hash,
+								 g_str_equal,
+								 g_free,
+								 imsettings_info_monitor_targeted_free);
 	priv->xinputrcdir = g_strdup(XINPUTRC_PATH);
 	priv->xinputdir = g_strdup(XINPUT_PATH);
-	p = g_get_home_dir();
-	if (p)
-		priv->homedir = g_strdup(p);
-	else
-		priv->homedir = NULL;
+	priv->homedir = g_strdup(g_get_home_dir());
+	priv->mon_dot_xinputrc = g_ptr_array_sized_new(MONITOR_DEPTH_MAX);
+	priv->mon_xinputrc = g_ptr_array_sized_new(MONITOR_DEPTH_MAX);
 
 	imsettings_info_manager_init_monitor(manager);
 }

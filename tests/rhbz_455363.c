@@ -82,24 +82,24 @@ TDEF (issue) {
 	xinputd = g_build_filename(xinputrc, "xinput.d", NULL);
 	conf = g_build_filename(xinputd, "test-scim2.conf", NULL);
 
-	imsettings_test_restart_daemons_full(xinputrc, xinputd, tmpl);
+	imsettings_test_restart_daemons_full(xinputrc, NULL, NULL);
 
 	g_usleep(5 * G_USEC_PER_SEC);
 
 	list = imsettings_request_get_info_objects(req, &error);
-	fail_unless(list != NULL, "Unable to get the IM objects");
+	fail_unless(list != NULL, "Unable to get the IM objects (take 1)");
 	for (i = 0; i < list->len; i++) {
 		info = g_ptr_array_index(list, i);
 		if (imsettings_info_is_system_default(info)) {
-			fail_unless(sim == NULL, "Duplicate status for the system default: %s, %s",
+			fail_unless(sim == NULL, "Duplicate status for the system default (take 1): %s, %s",
 				    sim, imsettings_info_get_short_desc(info));
 			sim = g_strdup(imsettings_info_get_short_desc(info));
 		}
 		g_object_unref(info);
 	}
 	g_ptr_array_free(list, TRUE);
-	fail_unless(sim != NULL, "No default system IM");
-	fail_unless(strcmp(sim, "S C I M") == 0, "Unexpected default IM for system");
+	fail_unless(sim != NULL, "No default system IM (take 1)");
+	fail_unless(strcmp(sim, "S C I M") == 0, "Unexpected default IM for system (take 1)");
 	g_free(sim);
 	sim = NULL;
 
@@ -113,19 +113,19 @@ TDEF (issue) {
 	g_usleep(5 * G_USEC_PER_SEC);
 
 	list = imsettings_request_get_info_objects(req, &error);
-	fail_unless(list != NULL, "Unable to get the IM objects");
+	fail_unless(list != NULL, "Unable to get the IM objects (take 2)");
 	for (i = 0; i < list->len; i++) {
 		info = g_ptr_array_index(list, i);
 		if (imsettings_info_is_system_default(info)) {
-			fail_unless(sim == NULL, "Duplicate status for the system default: %s, %s",
+			fail_unless(sim == NULL, "Duplicate status for the system defaul (take 2)t: %s, %s",
 				    sim, imsettings_info_get_short_desc(info));
 			sim = g_strdup(imsettings_info_get_short_desc(info));
 		}
 		g_object_unref(info);
 	}
 	g_ptr_array_free(list, TRUE);
-	fail_unless(sim != NULL, "No default system IM");
-	fail_unless(strcmp(sim, "S C I M") == 0, "Unexpected default IM for system");
+	fail_unless(sim != NULL, "No default system IM (take 2)");
+	fail_unless(strcmp(sim, "S C I M") == 0, "Unexpected default IM for system (take 2)");
 	g_free(sim);
 	sim = NULL;
 
@@ -139,19 +139,19 @@ TDEF (issue) {
 	g_usleep(5 * G_USEC_PER_SEC);
 
 	list = imsettings_request_get_info_objects(req, &error);
-	fail_unless(list != NULL, "Unable to get the IM objects");
+	fail_unless(list != NULL, "Unable to get the IM objects (take 3)");
 	for (i = 0; i < list->len; i++) {
 		info = g_ptr_array_index(list, i);
 		if (imsettings_info_is_system_default(info)) {
-			fail_unless(sim == NULL, "Duplicate status for the system default: %s, %s",
+			fail_unless(sim == NULL, "Duplicate status for the system default (take 3): %s, %s",
 				    sim, imsettings_info_get_short_desc(info));
 			sim = g_strdup(imsettings_info_get_short_desc(info));
 		}
 		g_object_unref(info);
 	}
 	g_ptr_array_free(list, TRUE);
-	fail_unless(sim != NULL, "No default system IM");
-	fail_unless(strcmp(sim, "S C I M") == 0, "Unexpected default IM for system");
+	fail_unless(sim != NULL, "No default system IM (take 3)");
+	fail_unless(strcmp(sim, "S C I M") == 0, "Unexpected default IM for system (take 3)");
 
 	p = g_strdup_printf("rm -rf %s", tmpl);
 	if (!g_spawn_command_line_sync(p, NULL, NULL, NULL, &error))
