@@ -1,5 +1,9 @@
 2008-07-22  Akira TAGOH  <tagoh@redhat.com>
 
+	* data/xinput.sh.in.in: run im-xsettings-daemon as needed.
+
+	* src/factory_xsettings.c (_set_value): set correct key to XSETTINGS.
+
 	* src/xsettings-common.[ch]: a copy of reference implementation for
 	XSETTINGS common functions.
 

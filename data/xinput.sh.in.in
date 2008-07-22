@@ -10,7 +10,23 @@
 #
 # X Input method setup script
 
+function check_xsettings_manager() {
+    case "$DESKTOP_SESSION" in
+	gnome|xfce4)
+	    return 1
+	    ;;
+	*)
+	    return 0
+	    ;;
+    esac
+}
+
+function run_xsettings_manager() {
+    check_xsettings_manager && which im-xsettings-daemon > /dev/null 2>&1 && im-xsettings-daemon &
+}
+
 function run_imsettings() {
+    run_xsettings_manager
     which imsettings-start > /dev/null 2>&1 && LANG="$tmplang" imsettings-start -n "$IMSETTINGS_MODULE" || :
     which imsettings-xim > /dev/null 2>&1 && imsettings-xim &
 }

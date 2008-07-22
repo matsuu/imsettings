@@ -42,6 +42,8 @@ DISTCLEANFILES =					\
 libexec_PROGRAMS =					\
 	im-settings-daemon				\
 	im-info-daemon					\
+	$(NULL)
+bin_PROGRAMS =						\
 	im-xsettings-daemon				\
 	$(NULL)
 #

@@ -41,9 +41,11 @@ typedef struct _IMSettingsXSettings {
 	Display           *dpy;
 	XSettingsManager **managers;
 	GMainLoop         *loop;
+	GHashTable        *translation_table;
 } IMSettingsXSettings;
 typedef struct _IMSettingsGConfNotify {
-	gchar                 *key;
+	gchar                 *gconf_key;
+	gchar                 *xsettings_key;
 	GConfClientNotifyFunc  func;
 } IMSettingsGConfNotify;
 typedef struct _IMSettingsSource {
@@ -152,13 +154,13 @@ _set_value(IMSettingsXSettings *settings,
 		    case GCONF_VALUE_STRING:
 			    d(g_print("Set %s = %s\n", key, gconf_value_get_string(value)));
 			    xsettings_manager_set_string(settings->managers[i],
-							 key,
+							 g_hash_table_lookup(settings->translation_table, key),
 							 gconf_value_get_string(value));
 			    break;
 		    case GCONF_VALUE_INT:
 			    d(g_print("Set %s = %d\n", key, gconf_value_get_int(value)));
 			    xsettings_manager_set_int(settings->managers[i],
-						      key,
+						      g_hash_table_lookup(settings->translation_table, key),
 						      gconf_value_get_int(value));
 			    break;
 		    case GCONF_VALUE_FLOAT:
@@ -192,7 +194,7 @@ main(int    argc,
 	Display *dpy;
 	int i;
 	IMSettingsGConfNotify notifications[] = {
-		{"/desktop/gnome/interface/gtk-im-module", _gtk_im_module_cb},
+		{"/desktop/gnome/interface/gtk-im-module", "Gtk/IMModule", _gtk_im_module_cb},
 		{NULL, NULL}
 	};
 	IMSettingsGConfNotify *n;
@@ -209,9 +211,13 @@ main(int    argc,
 		return 1;
 	}
 	settings = g_new0(IMSettingsXSettings, 1);
-	settings->dpy      = dpy;
+	settings->dpy = dpy;
 	settings->managers = g_new0(XSettingsManager *, ScreenCount(dpy));
-	settings->loop     = g_main_loop_new(NULL, FALSE);
+	settings->loop = g_main_loop_new(NULL, FALSE);
+	settings->translation_table = g_hash_table_new_full(g_str_hash,
+							    g_str_equal,
+							    g_free,
+							    g_free);
 	for (i = 0; i < ScreenCount(dpy); i++) {
 		settings->managers[i] = xsettings_manager_new(dpy, i,
 							      terminate_cb,
@@ -228,11 +234,14 @@ main(int    argc,
 			     GCONF_CLIENT_PRELOAD_NONE,
 			     NULL);
 	array = g_ptr_array_new();
-	for (n = notifications; n->key != NULL; n++) {
+	for (n = notifications; n->gconf_key != NULL; n++) {
 		GError *error = NULL;
-		guint id = gconf_client_notify_add(client, n->key, n->func, settings, NULL, &error);
+		guint id = gconf_client_notify_add(client, n->gconf_key, n->func, settings, NULL, &error);
 		GConfEntry *entry;
 
+		g_hash_table_insert(settings->translation_table,
+				    g_strdup(n->gconf_key),
+				    g_strdup(n->xsettings_key));
 		g_ptr_array_add(array, GUINT_TO_POINTER (id));
 		if (error) {
 			g_warning("%s", error->message);
@@ -241,7 +250,7 @@ main(int    argc,
 		}
 
 		entry = gconf_client_get_entry(client,
-					       n->key,
+					       n->gconf_key,
 					       NULL,
 					       TRUE,
 					       &error);
