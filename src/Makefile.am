@@ -39,7 +39,11 @@ DISTCLEANFILES =					\
 
 ##
 # Target platform
-libexec_PROGRAMS = im-settings-daemon im-info-daemon
+libexec_PROGRAMS =					\
+	im-settings-daemon				\
+	im-info-daemon					\
+	im-xsettings-daemon				\
+	$(NULL)
 #
 im_settings_daemon_SOURCES =				\
 	factory.c					\
@@ -62,6 +66,23 @@ im_info_daemon_CFLAGS =					\
 	$(NULL)
 im_info_daemon_LDADD =					\
 	$(IMINFO_LIBS)					\
+	$(NULL)
+#
+im_xsettings_daemon_SOURCES =				\
+	factory_xsettings.c				\
+	xsettings-common.c				\
+	xsettings-common.h				\
+	xsettings-manager.c				\
+	xsettings-manager.h				\
+	$(NULL)
+im_xsettings_daemon_CFLAGS =				\
+	-DG_LOG_DOMAIN="\"IM-XSETTINGS-Daemon\""	\
+	$(X11_CFLAGS)					\
+	$(GCONF_CFLAGS)					\
+	$(NULL)
+im_xsettings_daemon_LDADD =				\
+	$(X11_LIBS)					\
+	$(GCONF_LIBS)					\
 	$(NULL)
 #
 servicedir = $(DBUS_SERVICE_DIR)
