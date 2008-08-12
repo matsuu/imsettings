@@ -1,5 +1,14 @@
 2008-08-12  Akira TAGOH  <tagoh@redhat.com>
 
+	Fix Issue#13.
+
+	* src/factory_info.c (imsettings_info_manager_add_info): 
+	make sure registering the info object for xim.conf separately.
+	(_collect_im_list): reset "ignore" flag.
+	(_collect_info_objects): likewise.
+
+2008-08-12  Akira TAGOH  <tagoh@redhat.com>
+
 	* tests/gcit_13.c: Add a test case for Issue#13.
 
 2008-08-12  Akira TAGOH  <tagoh@redhat.com>

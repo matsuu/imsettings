@@ -254,6 +254,11 @@ imsettings_info_manager_add_info(IMSettingsInfoManagerPrivate *priv,
 
 		G_LOCK (imsettings_info_manager);
 
+		if (strcmp(name, IMSETTINGS_NONE_CONF) == 0 &&
+		    imsettings_info_is_xim(info)) {
+			/* hack to register the info object separately */
+			name = g_strdup_printf("%s(xim)", name);
+		}
 		if ((ret = g_hash_table_lookup(priv->im_info_from_name, name)) == NULL) {
 			d(g_print("Adding %s(%s)...\n", filename, name));
 			g_hash_table_insert(priv->im_info_from_name,
@@ -864,7 +869,10 @@ _collect_im_list(gpointer key,
 		}
 	} else {
 		/* need to update the short description with the lang */
-		g_object_set(G_OBJECT (info), "language", v->lang, NULL);
+		g_object_set(G_OBJECT (info),
+			     "ignore", FALSE,
+			     "language", v->lang,
+			     NULL);
 		if (imsettings_info_is_visible(info)) {
 			if (v->legacy_im)
 				g_return_if_reached();
@@ -896,7 +904,10 @@ _collect_info_objects(gpointer key,
 		}
 	} else {
 		/* need to update the short description with the lang */
-		g_object_set(G_OBJECT (info), "language", v->lang, NULL);
+		g_object_set(G_OBJECT (info),
+			     "ignore", FALSE,
+			     "language", v->lang,
+			     NULL);
 		if (imsettings_info_is_visible(info)) {
 			if (v->legacy_im)
 				g_return_if_reached();
