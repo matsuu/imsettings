@@ -1,5 +1,9 @@
 2008-08-12  Akira TAGOH  <tagoh@redhat.com>
 
+	* tests/gcit_13.c: Add a test case for Issue#13.
+
+2008-08-12  Akira TAGOH  <tagoh@redhat.com>
+
 	* tests/gcit_11.c (imsettings_suite): Fix a typo.
 
 2008-07-23  Akira TAGOH  <tagoh@redhat.com>

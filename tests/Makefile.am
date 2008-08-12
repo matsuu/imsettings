@@ -52,6 +52,7 @@ noinst_PROGRAMS +=					\
 	test-gcit-5					\
 	test-gcit-7					\
 	test-gcit-11					\
+	test-gcit-13					\
 	test-rhbz-431291				\
 	test-rhbz-453358				\
 	test-rhbz-455363				\
@@ -89,6 +90,11 @@ test_gcit_11_SOURCES =					\
 	$(NULL)
 test_gcit_11_CFLAGS =					\
 	-DXINPUT_SUFFIX="\"$(XINPUT_SUFFIX)\""		\
+	$(NULL)
+#
+test_gcit_13_SOURCES =					\
+	gcit_13.c					\
+	$(common_sources)				\
 	$(NULL)
 #
 test_rhbz_431291_SOURCES =				\

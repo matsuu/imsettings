@@ -24,6 +24,25 @@ testcase_dist =							\
 	imsettings-request/noent/xinput.d			\
 	issue_11/xinput.d					\
 	issue_11/xinput.d/scim.conf_				\
+	issue_13/case1/xinput.d					\
+	issue_13/case1/xinput.d/ja_JP				\
+	issue_13/case1/xinput.d/kinput2-canna			\
+	issue_13/case1/xinput.d/none.conf			\
+	issue_13/case1/xinput.d/scim.conf			\
+	issue_13/case1/xinput.d/xim.conf			\
+	issue_13/case1/xinputrc					\
+	issue_13/case2/xinput.d					\
+	issue_13/case2/xinput.d/ja_JP				\
+	issue_13/case2/xinput.d/kinput2-canna			\
+	issue_13/case2/xinput.d/none.conf			\
+	issue_13/case2/xinput.d/scim.conf			\
+	issue_13/case2/xinput.d/xim.conf			\
+	issue_13/case2/xinputrc					\
+	issue_13/case3/xinput.d					\
+	issue_13/case3/xinput.d/none.conf			\
+	issue_13/case3/xinput.d/scim.conf			\
+	issue_13/case3/xinput.d/xim.conf			\
+	issue_13/case3/xinputrc					\
 	issue_5							\
 	issue_5/xinputrc					\
 	issue_5/xinput.d					\
