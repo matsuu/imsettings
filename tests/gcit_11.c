@@ -76,7 +76,7 @@ Suite *
 imsettings_suite(void)
 {
 	Suite *s = suite_create("Google Code Issue Tracker");
-	TCase *tc = tcase_create("Issue #5: http://code.google.com/p/imsettings/issues/detail?id=11");
+	TCase *tc = tcase_create("Issue #11: http://code.google.com/p/imsettings/issues/detail?id=11");
 
 	tcase_add_checked_fixture(tc, setup, teardown);
 
