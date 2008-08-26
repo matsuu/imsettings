@@ -30,7 +30,7 @@ int
 main(int    argc,
      char **argv)
 {
-	IMSettingsRequest *imsettings;
+	IMSettingsRequest *req_settings, *req_info;
 	IMSettingsInfo *info;
 	DBusConnection *connection;
 	const gchar *file, *gtkimm, *qtimm, *xim;
@@ -39,44 +39,69 @@ main(int    argc,
 	const gchar *aux_prog, *aux_args;
 	const gchar *short_desc, *long_desc;
 	const gchar *icon;
+	gchar *module;
 	gboolean is_system_default, is_user_default, is_xim;
 	GError *error = NULL;
 	guint n_retry = 0;
+	int retval = 0;
 
 	g_type_init();
 
-	if (argc < 2) {
-		gchar *progname = g_path_get_basename(argv[0]);
-
-		g_print("Usage: %s <module name>\n", progname);
-
-		g_free(progname);
-
-		exit(1);
-	}
 	connection = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	if (connection == NULL) {
 		g_printerr("Failed to get a session bus.\n");
 		return 1;
 	}
-	imsettings = imsettings_request_new(connection, IMSETTINGS_INFO_INTERFACE_DBUS);
+	req_settings = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
+	req_info = imsettings_request_new(connection, IMSETTINGS_INFO_INTERFACE_DBUS);
 
   retry:
-	if (imsettings_request_get_version(imsettings, NULL) != IMSETTINGS_IMINFO_DAEMON_VERSION) {
+	if (imsettings_request_get_version(req_settings, NULL) != IMSETTINGS_SETTINGS_DAEMON_VERSION) {
 		if (n_retry > 0) {
-			g_printerr("Mismatch the version of im-info-daemon.");
+			g_printerr("Mismatch the version of im-settings-daemon.");
 			exit(1);
 		}
 		/* version is inconsistent. try to reload the process */
-		imsettings_request_reload(imsettings, TRUE);
+		imsettings_request_reload(req_settings, TRUE);
 		g_print("Waiting for reloading the process...\n");
 		/* XXX */
 		sleep(1);
 		n_retry++;
 		goto retry;
 	}
+	n_retry = 0;
+  retry2:
+	if (imsettings_request_get_version(req_info, NULL) != IMSETTINGS_IMINFO_DAEMON_VERSION) {
+		if (n_retry > 0) {
+			g_printerr("Mismatch the version of im-info-daemon.");
+			exit(1);
+		}
+		/* version is inconsistent. try to reload the process */
+		imsettings_request_reload(req_info, TRUE);
+		g_print("Waiting for reloading the process...\n");
+		/* XXX */
+		sleep(1);
+		n_retry++;
+		goto retry2;
+	}
 
-	info = imsettings_request_get_info_object(imsettings, argv[1], &error);
+	if (argc < 2) {
+		module = imsettings_request_what_im_is_running(req_settings, &error);
+		if (error) {
+			g_printerr("%s\n", error->message);
+			g_error_free(error);
+			retval = 1;
+			goto end;
+		}
+		if (module == NULL || module[0] == 0) {
+			g_print("No IM is running. please specify the IM name explicitly.\n");
+			retval = 1;
+			goto end;
+		}
+	} else {
+		module = g_strdup(argv[1]);
+	}
+	info = imsettings_request_get_info_object(req_info, module, &error);
 	if (error) {
 		g_printerr("Unable to get an IM info.\n");
 		g_clear_error(&error);
@@ -103,8 +128,8 @@ main(int    argc,
 			"Qt immodule: %s\n"
 			"XMODIFIERS: @im=%s\n"
 			"XIM server: %s %s\n"
-			"preferences: %s %s\n"
-			"auxiliary: %s %s\n"
+			"Preferences: %s %s\n"
+			"Auxiliary: %s %s\n"
 			"Short Description: %s\n"
 			"Long Description: %s\n"
 			"Icon file: %s\n"
@@ -123,7 +148,10 @@ main(int    argc,
 			(is_user_default ? "TRUE" : "FALSE"),
 			(is_xim ? "TRUE" : "FALSE"));
 	}
-	g_object_unref(imsettings);
+  end:
+	g_free(module);
+	g_object_unref(req_settings);
+	g_object_unref(req_info);
 	dbus_connection_unref(connection);
 
 	return 0;

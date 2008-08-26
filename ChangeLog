@@ -1,5 +1,8 @@
 2008-08-26  Akira TAGOH  <tagoh@redhat.com>
 
+	* utils/imsettings-info.c (main): make default to see the info for IM
+	currently running. (Issue#14)
+
 	* data/xinput.sh.in.in: provide the old way to bring up IM and do that
 	when dbus session isn't running.
 
