@@ -64,9 +64,6 @@ fi
 
 [ -z "$XIM" ] && XIM=none
 
-# Update XSETTINGS for immodule
-[ -x /usr/bin/gconftool-2 ] && /usr/bin/gconftool-2 -t string -s /desktop/gnome/interface/gtk-im-module "$GTK_IM_MODULE" || :
-
 # Ensure GTK_IM_MODULE is empty. otherwise GTK+ doesn't pick up immodule through XSETTINGS
 unset GTK_IM_MODULE
 export GTK_IM_MODULE

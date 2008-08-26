@@ -1,4 +1,6 @@
-2008-08-26  Akira TAGOH  <akira@tagoh.org>
+2008-08-26  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xinput.sh.in.in: Remove the unnecessary invocation of gconftool.
 
 	* backends/xim/proxy.c (_create_client): fallback to the default IM
 	if failed.
