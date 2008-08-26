@@ -1,5 +1,8 @@
 2008-08-26  Akira TAGOH  <tagoh@redhat.com>
 
+	* data/xinput.sh.in.in: provide the old way to bring up IM and do that
+	when dbus session isn't running.
+
 	* data/xinput.sh.in.in: Remove the unnecessary invocation of gconftool.
 
 	* backends/xim/proxy.c (_create_client): fallback to the default IM

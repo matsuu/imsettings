@@ -10,23 +10,7 @@
 #
 # X Input method setup script
 
-function check_xsettings_manager() {
-    case "$DESKTOP_SESSION" in
-	*gnome|openbox|xfce4)
-	    return 1
-	    ;;
-	*)
-	    return 0
-	    ;;
-    esac
-}
-
-function run_xsettings_manager() {
-    check_xsettings_manager && which im-xsettings-daemon > /dev/null 2>&1 && im-xsettings-daemon &
-}
-
 function run_imsettings() {
-    run_xsettings_manager
     which imsettings-start > /dev/null 2>&1 && LANG="$tmplang" imsettings-start -n "$IMSETTINGS_MODULE" || :
     which imsettings-xim > /dev/null 2>&1 && imsettings-xim &
 }
@@ -64,28 +48,46 @@ fi
 
 [ -z "$XIM" ] && XIM=none
 
-# Ensure GTK_IM_MODULE is empty. otherwise GTK+ doesn't pick up immodule through XSETTINGS
-unset GTK_IM_MODULE
-export GTK_IM_MODULE
-
-# FIXME: Qt doesn't support XSETTINGS for immodule yet.
-#        We still need to go with the older way.
-[ -n "$QT_IM_MODULE" ] && export QT_IM_MODULE
-
-# setup XMODIFIERS
-XMODIFIERS="@im=imsettings"
-export XMODIFIERS
-
 # start IM via imsettings
 IMSETTINGS_MODULE=${SHORT_DESC:-${XIM}}
 [ -z "$IMSETTINGS_MODULE" ] && IMSETTINGS_MODULE="none"
 # NOTE: Please make sure the session bus is established before running this script.
-if [ -n "$DBUS_SESSION_BUS_ADDRESS" ]; then
+if [[ -n "$DBUS_SESSION_BUS_ADDRESS" || -z "$DISABLE_IMSETTINGS" ]]; then
     # Yes, we are in the dbus session
+
+    # Ensure GTK_IM_MODULE is empty. otherwise GTK+ doesn't pick up immodule through XSETTINGS
+    unset GTK_IM_MODULE
+    export GTK_IM_MODULE
+
+    # FIXME: Qt doesn't support XSETTINGS for immodule yet.
+    #        We still need to go with the older way.
+    [ -n "$QT_IM_MODULE" ] && export QT_IM_MODULE
+
+    # setup XMODIFIERS
+    XMODIFIERS="@im=imsettings"
+    export XMODIFIERS
+
     run_imsettings
 else
     # We may need a hack to slip into the dbus session.
-    echo "***"
-    echo "*** No DBus session hasn't been established yet. giving up to deal with Input Method with imsettings."
-    echo "***"
+    if [ -n "$DBUS_SESSION_BUS_ADDRESS" ]; then
+	echo "***"
+	echo "*** No DBus session hasn't been established yet. giving up to deal with Input Method with imsettings."
+	echo "***"
+    else
+	echo "***"
+	echo "*** imsettings is explicitly disabled."
+	echo "***"
+    fi
+
+    [ -n "$GTK_IM_MODULE" ] && export GTK_IM_MODULE
+    [ -n "$QT_IM_MODULE" ] && export QT_IM_MODULE
+    [ -z "$XMODIFIERS" -a -n "$XIM" ] && XMODIFIERS="@im=$XIM"
+    [ -n "$XMODIFIERS" ] && export XMODIFIERS
+
+    DISABLE_IMSETTINGS=true
+    export DISABLE_IMSETTINGS
+
+    # execute XIM_PROGRAM
+    [ -n "$XIM_PROGRAM" ] && which "$XIM_PROGRAM" > /dev/null 2>&1 && LANG="$tmplang" "$XIM_PROGRAM" $XIM_ARGS &
 fi
