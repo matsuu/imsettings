@@ -1,3 +1,106 @@
+2008-08-26  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/xim/proxy.c (_create_client): fallback to the default IM
+	if failed.
+	(xim_proxy_client_protocol_real_xim_auth_ng): new.
+	(xim_proxy_client_protocol_real_xim_trigger_notify_reply):
+	fix a deadlock on finalize.
+	(xim_proxy_client_protocol_real_xim_set_im_values_reply): new.
+	(xim_proxy_client_protocol_real_xim_get_im_values_reply): Update
+	the default IM values.
+	(xim_proxy_protocol_real_xim_auth_ng): new.
+	(xim_proxy_protocol_real_xim_set_im_values): new.
+	(xim_proxy_protocol_real_xim_forward_event): send back to the client
+	application if failed.
+
+	* backends/xim/loopback.c (xim_loopback_set_default_im_values): 
+	set default IM values.
+	(xim_loopback_real_xim_open): initialize the default IM values.
+
+2008-08-22  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/xim/proxy.c (_reconnect): send XIM_ENCODING_NEGOTIATION
+	to reconnect.
+	(xim_proxy_client_protocol_real_xim_open_reply): relink the attribute
+	id between the server and clients.
+	(xim_proxy_client_protocol_real_xim_encoding_negotiation_reply): 
+	relink the encoding between the server and clients.
+	(xim_proxy_client_protocol_real_xim_get_im_values_reply): relink
+	the attribute id between the server and clients.
+	(xim_proxy_client_protocol_real_xim_get_ic_values_reply): likewise.
+	(xim_proxy_protocol_real_xim_get_im_values): likewise.
+	(xim_proxy_protocol_real_xim_create_ic): likewise.
+	(xim_proxy_protocol_real_xim_set_ic_values): likewise.
+	(xim_proxy_protocol_real_xim_get_ic_values): likewise.
+
+2008-08-21  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/xim/main.c (imsettings_xim_message_filter): 
+	just change the connect_to instead of recreating the proxy instance.
+
+	* backends/xim/proxy.c (INC_PENDING): new macro.
+	(DEC_PENDING): new macro.
+	(_find_free_imid): new.
+	(_link_imid): new.
+	(_get_server_imid): new.
+	(_get_client_imid): new.
+	(_remove_imid): new.
+	(_reconnect): new.
+	(_create_client): use the default server if the connection is
+	to "none".
+	(_get_client_connection): reconnect to the XIM server if there are
+	no valid client instance.
+	(xim_proxy_client_real_xconnect_cb): do not forward the event to
+	the clients if reconnecting.
+	(xim_proxy_client_protocol_real_xim_connect_reply): likewise.
+	(xim_proxy_client_protocol_real_xim_open_reply): likewise.
+	(xim_proxy_client_protocol_real_xim_sync): new.
+	(xim_proxy_real_constructor): new.
+	(xim_proxy_real_set_property): disconnect the connection to the XIM
+	server if the connection is changed.
+	(xim_proxy_real_dispose): wait for all pending tasks is done before
+	disposing.
+	(xim_proxy_protocol_real_xim_sync): new.
+	(xim_proxy_connection_real_finalize): new.
+	(xim_proxy_is_pending): new.
+	(xim_proxy_disconnect_all): new.
+
+	* backends/xim/loopback.[ch]: new.
+
+2008-08-15  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_reset_ic_reply):
+	new.
+	(xim_proxy_client_protocol_real_xim_error): new.
+	(xim_proxy_protocol_real_xim_reset_ic): new.
+	(xim_proxy_protocol_real_xim_error): new.
+
+	* backends/xim/main.c (imsettings_xim_message_filter): remove the dbus
+	message filter properly.
+	(imsettings_xim_message_filter): Update current XIM server name.
+
+	* backends/xim/proxy.c (xim_proxy_client_real_xconnect_cb): 
+	remove the unnecessary event wathcer.
+	(xim_proxy_real_dispose): destroy the connection if available.
+	(_weak_notify_conn_cb): remove the item from the hash surely.
+
+2008-08-14  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_preedit_draw):
+	new.
+	(xim_proxy_client_protocol_real_xim_commit): new.
+	(xim_proxy_client_protocol_real_xim_status_start): new.
+	(xim_proxy_client_protocol_real_xim_status_done): new.
+	(xim_proxy_client_protocol_real_xim_register_triggerkeys): new.
+	(xim_proxy_client_protocol_real_xim_trigger_notify_reply): new.
+	(xim_proxy_client_protocol_real_xim_status_draw): new.
+	(xim_proxy_client_protocol_real_xim_set_ic_values_reply): new.
+	(xim_proxy_protocol_real_xim_trigger_notify): new.
+	(xim_proxy_protocol_real_xim_set_ic_values): new.
+
+	* backends/xim/client.c (xim_client_real_setup_connection):
+	empty function to shut up a warning.
+
 2008-08-12  Akira TAGOH  <tagoh@redhat.com>
 
 	Fix Issue#13.
@@ -14,6 +117,85 @@
 2008-08-12  Akira TAGOH  <tagoh@redhat.com>
 
 	* tests/gcit_11.c (imsettings_suite): Fix a typo.
+
+2008-08-08  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_create_ic_reply): 
+	new.
+	(xim_proxy_client_protocol_real_xim_set_event_mask): new.
+	(xim_proxy_client_protocol_real_xim_get_ic_values_reply): new.
+	(xim_proxy_client_protocol_real_xim_destroy_ic_reply): new.
+	(xim_proxy_client_protocol_real_xim_close_reply): new.
+	(xim_proxy_client_protocol_real_xim_disconnect_reply): new.
+	(xim_proxy_client_protocol_real_xim_preedit_start): new.
+	(xim_proxy_client_protocol_real_xim_preedit_caret): new.
+	(xim_proxy_client_protocol_real_xim_preedit_done): new.
+	(xim_proxy_client_protocol_real_xim_forward_event): new.
+	(xim_proxy_client_protocol_real_xim_sync_reply): new.
+	(xim_proxy_protocol_real_xim_create_ic): new.
+	(xim_proxy_protocol_real_xim_get_ic_values): new.
+	(xim_proxy_protocol_real_xim_destroy_ic): new.
+	(xim_proxy_protocol_real_xim_close): new.
+	(xim_proxy_protocol_real_xim_disconnect): new.
+	(xim_proxy_protocol_real_xim_set_ic_focus): new.
+	(xim_proxy_protocol_real_xim_unset_ic_focus): new.
+	(xim_proxy_protocol_real_xim_preedit_start_reply): new.
+	(xim_proxy_protocol_real_xim_preedit_caret_reply): new.
+	(xim_proxy_protocol_real_xim_forward_event): new.
+	(xim_proxy_protocol_real_xim_sync_reply): new.
+
+2008-08-05  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/xim/main.c (main): Add a debug option.
+
+	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_query_extension_reply):
+	new.
+	(xim_proxy_client_protocol_real_xim_encoding_negotiation_reply): new.
+	(xim_proxy_client_protocol_real_xim_get_im_values_reply): new.
+	(xim_proxy_protocol_real_xim_query_extension): new.
+	(xim_proxy_protocol_real_xim_encoding_negotiation): new.
+	(xim_proxy_protocol_real_xim_get_im_values): new.
+
+2008-07-31  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/xim/proxy.c (xim_proxy_client_real_notify_locales_cb):
+	update to be comfortable with the signal on the client template class.
+	(xim_proxy_client_real_notify_transport_cb): likewise.
+	(_get_client_connection): new.
+	(xim_proxy_client_real_notify_locales_cb): Prepend @locales= to
+	the joined strings.
+	(xim_proxy_client_protocol_real_xim_connect_reply): new.
+	(_get_server_connection): new.
+	(xim_proxy_protocol_real_xim_connect): new.
+	(xim_proxy_protocol_real_xim_open): new.
+
+	* backends/xim/client.c (xim_client_real_selection_notify_event):
+	removed. use the template callback instead.
+	(xim_client_class_init): removed own signals.
+
+2008-07-30  Akira TAGOH  <akira@tagoh.org>
+
+	* configure.ac: Update the dependencies for XIM backend.
+
+	* backends/xim/main.c: clean up.
+
+	* backends/xim/proxy.[ch]: new. an server/proxy implementation
+	inherited from GXimServerTemplate and GXimServerConnection.
+
+	* backends/xim/client.[ch]: new. an client implementation inherited
+	from GXimClientTemplate and GXimClientConnection.
+
+	* Initial commit for libgxim work.
+	
+	* backends/xim/loopback.[ch]: Remove. it's not used anymore.
+	
+	* backends/xim/connection.[ch]: likewise.
+	
+	* backends/xim/protocol.[ch]: likewise.
+	
+	* backends/xim/server.[ch]: likewise.
+
+	* backends/xim/utils.c: clean up.
 
 2008-07-23  Akira TAGOH  <tagoh@redhat.com>
 

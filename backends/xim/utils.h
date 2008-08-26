@@ -25,45 +25,10 @@
 #define __XIM_UTILS_H__
 
 #include <glib.h>
-#include <X11/Xlib.h>
-#include "protocol.h"
 
 G_BEGIN_DECLS
 
-#define TRANSPORT_MAX			20
-#define TRANSPORT_SIZE			20
-
-typedef struct _XIMAtoms	XIMAtoms;
-
-struct _XIMAtoms {
-	Atom atom_xim_servers;
-	Atom atom_locales;
-	Atom atom_transport;
-	Atom atom_xim_xconnect;
-	Atom atom_xim_protocol;
-	Atom atom_xim_moredata;
-	Atom atom_imsettings_comm;
-};
-enum {
-	XIM_G_FAILED
-};
-
-void         xim_init             (Display      *dpy);
-gboolean     xim_is_initialized   (Display      *dpy);
-void         xim_destroy          (Display      *dpy);
-XIMAtoms    *xim_get_atoms        (Display      *dpy);
-GQuark       xim_g_error_quark    (void);
-Atom         xim_lookup_atom      (Display      *dpy,
-                                   const gchar  *xim_server_name);
-void         xim_ximattr_free     (gpointer      data);
-void         xim_xicattr_free     (gpointer      data);
-void         xim_ext_free         (gpointer      data);
-void         xim_ximattribute_free(gpointer      data);
-void         xim_xicattribute_free(gpointer      data);
-void         xim_strconvtext_free (gpointer      data);
-const gchar *xim_protocol_name    (XIMEventType  major_opcode);
-gchar       *xim_substitute_display_name(const gchar *display_name) G_GNUC_MALLOC;
-
+gchar *xim_substitute_display_name(const gchar *display_name) G_GNUC_MALLOC;
 
 G_END_DECLS
 

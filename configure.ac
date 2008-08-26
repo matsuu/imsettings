@@ -94,7 +94,8 @@ PKG_CHECK_MODULES(XFCE, gconf-2.0
 			xfce-mcs-manager,
 	[use_xfce="yes"],
 	[use_xfce="no"])
-PKG_CHECK_MODULES(XIM, x11,
+PKG_CHECK_MODULES(XIM, libgxim >= $LIBGXIM_REQUIRED
+		       gdk-2.0 >= $GDK_REQUIRED,
 	[use_xim="yes"],
 	[use_xim="no"])
 

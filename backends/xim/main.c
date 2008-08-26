@@ -29,9 +29,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib/gi18n.h>
+#include <libgxim/gximmessage.h>
+#include <libgxim/gximmisc.h>
 #include "imsettings/imsettings.h"
 #include "imsettings/imsettings-request.h"
-#include "server.h"
+#include "client.h"
+#include "proxy.h"
 #include "utils.h"
 
 #ifdef GNOME_ENABLE_DEBUG
@@ -41,124 +44,89 @@
 #endif
 
 
-static XIMServer *_create_server(GMainLoop   *loop,
-                                 Display     *dpy,
-                                 const gchar *xim_server,
-                                 gboolean     replace,
-				 gboolean     verbose);
-static void       _quit_cb      (XIMServer   *server,
-                                 gpointer     data);
+typedef struct _Proxy {
+	GMainLoop  *loop;
+	XimProxy   *server;
+	GHashTable *client_table;
+	GHashTable *window_table;
+	gchar      *server_name;
+} Proxy;
+
+static void     _quit_cb             (XimProxy          *proxy,
+                                      gpointer           data);
 
 
-static GQuark quark_main_loop = 0;
+static GQuark quark_proxy = 0;
+
 
 /*
  * Private functions
  */
-static DBusHandlerResult
-imsettings_xim_message_filter(DBusConnection *connection,
-			      DBusMessage    *message,
-			      void           *data)
-{
-	XIMServer *server = XIM_SERVER (data);
-
-	if (dbus_message_is_signal(message, IMSETTINGS_XIM_INTERFACE_DBUS, "ChangeTo")) {
-		gchar *module;
-		Display *dpy = server->dpy;
-		GMainLoop *loop;
-		gboolean verbose;
-		const gchar *s;
-
-		loop = g_object_get_qdata(G_OBJECT (server), quark_main_loop);
-		dbus_message_get_args(message, NULL,
-				      DBUS_TYPE_STRING, &module,
-				      DBUS_TYPE_INVALID);
-		g_object_get(G_OBJECT (server),
-			     "verbose", &verbose,
-			     "xim", &s,
-			     NULL);
-		if (strcmp(module, s) == 0) {
-			/* No changes */
-			return DBUS_HANDLER_RESULT_HANDLED;
-		}
-		dbus_connection_remove_filter(connection, imsettings_xim_message_filter, server);
-		g_object_unref(G_OBJECT (server));
-		if (verbose) {
-			g_print("Changing XIM server: `%s'->`%s'\n",
-				(s && s[0] == 0 ? "none" : s),
-				(module && module[0] == 0 ? "none" : module));
-		}
-		server = _create_server(loop, dpy, module, TRUE, verbose);
-		dbus_connection_add_filter(connection, imsettings_xim_message_filter, server, NULL);
-
-		return DBUS_HANDLER_RESULT_HANDLED;
-	}
-
-	return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
-}
-
-static int
-_error_cb(Display     *dpy,
-	  XErrorEvent *e)
-{
-	if (e->error_code) {
-		char msg[64];
-
-		XGetErrorText(dpy, e->error_code, msg, 63);
-		g_printerr("Received an X Window System error - %s\n", msg);
-	}
-
-	return 0;
-}
-
-static int
-_io_error_cb(Display *dpy)
-{
-	g_printerr("IO Error from X Window System.\n");
-
-	return 0;
-}
-
-static XIMServer *
-_create_server(GMainLoop   *loop,
-	       Display     *dpy,
-	       const gchar *xim_server,
-	       gboolean     replace,
-	       gboolean     verbose)
-{
-	XIMServer *server;
-
-	server = xim_server_new(dpy, xim_server);
-	if (server == NULL)
-		goto error;
-
-	g_object_set(G_OBJECT (server),
-		     "verbose", verbose,
-		     NULL);
-	if (xim_server_setup(server, replace) == FALSE ||
-	    !xim_server_is_initialized(server))
-		goto error;
-
-	g_signal_connect(server, "destroy",
-			 G_CALLBACK (_quit_cb),
-			 loop);
-
-	return server;
-
-  error:
-	g_printerr("Failed to initialize XIM server.\n");
-	exit(1);
-}
-
 static void
-_quit_cb(XIMServer *server,
-	 gpointer   data)
+_quit_cb(XimProxy *proxy,
+	 gpointer  data)
 {
 	GMainLoop *loop = data;
 
 	g_print("*** Exiting...\n");
 
 	g_main_loop_quit(loop);
+}
+
+static XimProxy *
+_create_proxy(GdkDisplay *dpy,
+	      Proxy      *proxy,
+	      gboolean    replace)
+{
+	XimProxy *retval;
+	GError *error = NULL;
+
+	retval = xim_proxy_new(dpy, "imsettings", proxy->server_name);
+	if (retval == NULL)
+		return NULL;
+	g_signal_connect(retval, "destroy",
+			 G_CALLBACK (_quit_cb),
+			 proxy->loop);
+	if (!xim_proxy_take_ownership(retval, replace, &error)) {
+		g_print("Unable to take an ownership: %s\n",
+			error->message);
+		exit(1);
+	}
+
+	return retval;
+}
+
+static DBusHandlerResult
+imsettings_xim_message_filter(DBusConnection *connection,
+			      DBusMessage    *message,
+			      void           *data)
+{
+	XimProxy *server = XIM_PROXY (data);
+
+	if (dbus_message_is_signal(message, IMSETTINGS_XIM_INTERFACE_DBUS, "ChangeTo")) {
+		gchar *module;
+		Proxy *proxy;
+
+		proxy = g_object_get_qdata(G_OBJECT (server), quark_proxy);
+		dbus_message_get_args(message, NULL,
+				      DBUS_TYPE_STRING, &module,
+				      DBUS_TYPE_INVALID);
+		if (strcmp(module, proxy->server_name) == 0) {
+			/* No changes */
+			return DBUS_HANDLER_RESULT_HANDLED;
+		}
+		g_xim_message_debug(G_XIM_CORE (server)->message, "dbus/event",
+				    "Changing XIM server: `%s'->`%s'\n",
+				    (proxy->server_name && proxy->server_name[0] == 0 ? "none" : proxy->server_name),
+				    (module && module[0] == 0 ? "none" : module));
+		g_free(proxy->server_name);
+		proxy->server_name = g_strdup(module);
+		g_object_set(proxy->server, "connect_to", module, NULL);
+
+		return DBUS_HANDLER_RESULT_HANDLED;
+	}
+
+	return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 }
 
 /*
@@ -168,19 +136,19 @@ int
 main(int    argc,
      char **argv)
 {
-	GMainLoop *loop;
-	XIMServer *server;
-	gchar *arg_display_name = NULL, *dpy_name;
+	Proxy *proxy;
+	gchar *arg_display_name = NULL, *arg_xim = NULL, *dpy_name;
 	gboolean arg_replace = FALSE, arg_verbose = FALSE;
 	GOptionContext *ctx = g_option_context_new(NULL);
 	GOptionEntry entries[] = {
 		{"display", 0, G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_STRING, &arg_display_name, N_("X display to use"), N_("DISPLAY")},
 		{"replace", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_replace, N_("Replace the running XIM server with new instance."), NULL},
 		{"verbose", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_verbose, N_("Output the debugging logs"), NULL},
+		{"xim", 0, G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_STRING, &arg_xim, N_("XIM server connects to, for debugging purpose only"), N_("XIM")},
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};
 	GError *error = NULL;
-	Display *dpy;
+	GdkDisplay *dpy;
 	IMSettingsRequest *req;
 	IMSettingsInfo *info;
 	DBusConnection *conn;
@@ -200,6 +168,8 @@ main(int    argc,
 	locale = setlocale(LC_CTYPE, NULL);
 
 	g_type_init();
+	gdk_init(&argc, &argv);
+	g_xim_init();
 	dbus_error_init(&derror);
 
 	/* deal with the arguments */
@@ -215,19 +185,14 @@ main(int    argc,
 	g_option_context_free(ctx);
 
 	dpy_name = xim_substitute_display_name(arg_display_name);
-	dpy = XOpenDisplay(dpy_name);
+	dpy = gdk_display_open(dpy_name);
 	if (dpy == NULL) {
 		g_print("Can't open a X display: %s\n", dpy_name);
 		exit(1);
 	}
 	g_free(dpy_name);
 
-	xim_init(dpy);
-
-	XSetErrorHandler(_error_cb);
-	XSetIOErrorHandler(_io_error_cb);
-
-	quark_main_loop = g_quark_from_static_string("xim-server-main-loop");
+	quark_proxy = g_quark_from_static_string("imsettings-xim-proxy");
 
 	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
@@ -238,28 +203,44 @@ main(int    argc,
 		exit(1);
 	}
 	info = imsettings_request_get_info_object(req, module, &error);
-	xim = imsettings_info_get_xim(info);
+	if (arg_xim == NULL)
+		xim = imsettings_info_get_xim(info);
+	else
+		xim = arg_xim;
 	g_free(module);
 
-	loop = g_main_loop_new(NULL, FALSE);
-	server = _create_server(loop, dpy, xim, arg_replace, arg_verbose);
-	if (server == NULL)
+	proxy = g_new0(Proxy, 1);
+	proxy->loop = g_main_loop_new(NULL, FALSE);
+	proxy->client_table = g_hash_table_new_full(g_direct_hash,
+						    g_direct_equal,
+						    NULL,
+						    g_object_unref);
+	proxy->window_table = g_hash_table_new(g_direct_hash,
+					       g_direct_equal);
+	proxy->server_name = g_strdup(xim);
+	proxy->server = _create_proxy(dpy, proxy, arg_replace);
+	if (proxy->server == NULL)
 		exit(1);
-	g_object_set_qdata(G_OBJECT (server), quark_main_loop, loop);
+	g_object_set_qdata(G_OBJECT (proxy->server), quark_proxy, proxy);
 
 	dbus_bus_add_match(conn,
 			   "type='signal',"
 			   "interface='" IMSETTINGS_XIM_INTERFACE_DBUS "'",
 			   &derror);
-	dbus_connection_add_filter(conn, imsettings_xim_message_filter, server, NULL);
+	dbus_connection_add_filter(conn, imsettings_xim_message_filter, proxy->server, NULL);
 
-	g_main_loop_run(loop);
+	g_main_loop_run(proxy->loop);
 
-	g_main_loop_unref(loop);
 	g_object_unref(info);
-	g_object_unref(server);
-	xim_destroy(dpy);
-	XCloseDisplay(dpy);
+	g_hash_table_destroy(proxy->client_table);
+	g_hash_table_destroy(proxy->window_table);
+	g_main_loop_unref(proxy->loop);
+	g_object_unref(proxy->server);
+	g_free(proxy->server_name);
+	g_free(proxy);
+	gdk_display_close(dpy);
+
+	g_xim_finalize();
 
 	return 0;
 }
