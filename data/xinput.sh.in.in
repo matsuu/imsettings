@@ -10,9 +10,118 @@
 #
 # X Input method setup script
 
+function is_dbus_enabled() {
+    [ -n "$DBUS_SESSION_BUS_ADDRESS" ]
+}
+
+function is_imsettings_enabled() {
+    [ -z "$DISABLE_IMSETTINGS" ] && is_dbus_enabled
+}
+
+function is_gtk_supported() {
+    [ -n "$IMSETTINGS_DISABLE_DESKTOP_CHECK" ] && return 0
+    case "$DESKTOP_SESSION" in
+	*gnome|openbox|xfce4)
+	    return 0
+	    ;;
+	*)
+	    return 1
+	    ;;
+    esac
+}
+
+function is_qt_supported() {
+    [ -n "$IMSETTINGS_DISABLE_DESKTOP_CHECK" ] && return 0
+    case "$DESKTOP_SESSION" in
+	*)
+	    return 1
+	    ;;
+    esac
+}
+
+function setup_gtk_immodule() {
+    if is_imsettings_enabled && is_gtk_supported; then
+	# Ensure GTK_IM_MODULE is empty. otherwise GTK+ doesn't pick up immodule through XSETTINGS
+	unset GTK_IM_MODULE
+	export GTK_IM_MODULE
+    else
+	[ -n "$GTK_IM_MODULE" ] && export GTK_IM_MODULE
+    fi
+}
+
+function setup_qt_immodule() {
+    if is_imsettings_enabled && is_qt_supported; then
+	# FIXME: Qt doesn't support XSETTINGS for immodule yet.
+	#        We still need to go with the older way.
+	[ -n "$QT_IM_MODULE" ] && export QT_IM_MODULE
+    else
+	[ -n "$QT_IM_MODULE" ] && export QT_IM_MODULE
+    fi
+}
+
+function setup_xim() {
+    if is_imsettings_enabled; then
+	# setup XMODIFIERS
+	XMODIFIERS="@im=imsettings"
+	export XMODIFIERS
+    else
+	[ -z "$XMODIFIERS" -a -n "$XIM" ] && XMODIFIERS="@im=$XIM"
+	[ -n "$XMODIFIERS" ] && export XMODIFIERS
+    fi
+}
+
 function run_imsettings() {
-    which imsettings-start > /dev/null 2>&1 && LANG="$tmplang" imsettings-start -n "$IMSETTINGS_MODULE" || :
-    which imsettings-xim > /dev/null 2>&1 && imsettings-xim &
+    print_info
+    if [ -n "$DRY_RUN" ]; then
+	echo "*** DRY RUN MODE: running IM through imsettings"
+    else
+	which imsettings-start > /dev/null 2>&1 && LANG="$tmplang" imsettings-start -n "$IMSETTINGS_MODULE" || :
+	which imsettings-xim > /dev/null 2>&1 && imsettings-xim &
+    fi
+}
+
+function run_xim() {
+    print_info
+    if [ -n "$DRY_RUN" ]; then
+	echo "*** DRY RUN MODE: running IM without imsettings"
+    else
+	DISABLE_IMSETTINGS=true
+	export DISABLE_IMSETTINGS
+
+	# execute XIM_PROGRAM
+	[ -n "$XIM_PROGRAM" ] && which "$XIM_PROGRAM" > /dev/null 2>&1 && LANG="$tmplang" "$XIM_PROGRAM" $XIM_ARGS &
+    fi
+}
+
+function print_result() {
+    $1
+    if [ $? -eq 0 ]; then
+	echo yes
+    else
+	echo no
+    fi
+}
+
+function print_info() {
+    echo "imsettings information"
+    echo "=========================="
+    echo -n "Is DBus enabled: "
+    print_result is_dbus_enabled
+    echo -n "Is imsettings enabled: "
+    print_result is_imsettings_enabled
+    echo -n "Is GTK+ supported: "
+    print_result is_gtk_supported
+    echo -n "Is Qt supported: "
+    print_result is_qt_supported
+    echo "DESKTOP_SESSION: $DESKTOP_SESSION"
+    echo "DISABLE_IMSETTINGS: $DISABLE_IMSETTINGS"
+    echo "IMSETTINGS_DISABLE_DESKTOP_CHECK: $IMSETTINGS_DISABLE_DESKTOP_CHECK"
+    echo "DBUS_SESSION_BUS_ADDRESS: $DBUS_SESSION_BUS_ADDRESS"
+    echo "GTK_IM_MODULE: $GTK_IM_MODULE"
+    echo "QT_IM_MODULE: $QT_IM_MODULE"
+    echo "XMODIFIERS: $XMODIFIERS"
+    echo "IMSETTINGS_MODULE: $IMSETTINGS_MODULE"
+    echo ""
 }
 
 USER_XINPUTRC="$HOME/.xinputrc"
@@ -51,43 +160,33 @@ fi
 # start IM via imsettings
 IMSETTINGS_MODULE=${SHORT_DESC:-${XIM}}
 [ -z "$IMSETTINGS_MODULE" ] && IMSETTINGS_MODULE="none"
+
 # NOTE: Please make sure the session bus is established before running this script.
-if [[ -n "$DBUS_SESSION_BUS_ADDRESS" || -z "$DISABLE_IMSETTINGS" ]]; then
+if ! is_dbus_enabled; then
+    echo "***"
+    echo "*** No DBus session hasn't been established yet. giving up to deal with Input Method with imsettings."
+    echo "***"
+
+    setup_gtk_immodule
+    setup_qt_immodule
+    setup_xim
+
+    run_xim
+elif ! is_imsettings_enabled; then
+    echo "***"
+    echo "*** imsettings is explicitly disabled."
+    echo "***"
+
+    setup_gtk_immodule
+    setup_qt_immodule
+    setup_xim
+
+    run_xim
+else
     # Yes, we are in the dbus session
-
-    # Ensure GTK_IM_MODULE is empty. otherwise GTK+ doesn't pick up immodule through XSETTINGS
-    unset GTK_IM_MODULE
-    export GTK_IM_MODULE
-
-    # FIXME: Qt doesn't support XSETTINGS for immodule yet.
-    #        We still need to go with the older way.
-    [ -n "$QT_IM_MODULE" ] && export QT_IM_MODULE
-
-    # setup XMODIFIERS
-    XMODIFIERS="@im=imsettings"
-    export XMODIFIERS
+    setup_gtk_immodule
+    setup_qt_immodule
+    setup_xim
 
     run_imsettings
-else
-    # We may need a hack to slip into the dbus session.
-    if [ -n "$DBUS_SESSION_BUS_ADDRESS" ]; then
-	echo "***"
-	echo "*** No DBus session hasn't been established yet. giving up to deal with Input Method with imsettings."
-	echo "***"
-    else
-	echo "***"
-	echo "*** imsettings is explicitly disabled."
-	echo "***"
-    fi
-
-    [ -n "$GTK_IM_MODULE" ] && export GTK_IM_MODULE
-    [ -n "$QT_IM_MODULE" ] && export QT_IM_MODULE
-    [ -z "$XMODIFIERS" -a -n "$XIM" ] && XMODIFIERS="@im=$XIM"
-    [ -n "$XMODIFIERS" ] && export XMODIFIERS
-
-    DISABLE_IMSETTINGS=true
-    export DISABLE_IMSETTINGS
-
-    # execute XIM_PROGRAM
-    [ -n "$XIM_PROGRAM" ] && which "$XIM_PROGRAM" > /dev/null 2>&1 && LANG="$tmplang" "$XIM_PROGRAM" $XIM_ARGS &
 fi
