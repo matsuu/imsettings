@@ -8,6 +8,7 @@ EXTRA_DIST =			\
 	$(xinput_in_in_files)	\
 	$(xinputsh_in_in)	\
 	$(xinputinfosh_in)	\
+	$(icon_DATA)		\
 	$(NULL)
 
 
@@ -49,6 +50,8 @@ xinputsh_DATA = @XINPUTSH@
 #
 xinputinfoshdir = $(libexecdir)
 xinputinfosh_DATA = $(xinputinfosh_in:.in=)
-
+#
+icondir = $(datadir)/pixmaps
+icon_DATA = unknown.png
 
 .PHONY: clean-local
