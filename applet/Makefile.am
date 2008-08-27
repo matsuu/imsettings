@@ -15,6 +15,7 @@ DEPS =							\
 	$(top_builddir)/imsettings/libimsettings.la	\
 	$(NULL)
 EXTRA_DIST =						\
+	$(autostart_in_files)				\
 	$(NULL)
 DISTCLEANFILES =					\
 	$(NULL)
@@ -30,10 +31,16 @@ endif
 
 ##
 # Local Rules
+@INTLTOOL_DESKTOP_RULE@
 
 ##
 # Target platform
 bin_PROGRAMS = imsettings-applet
+#
+autostartdir = $(sysconfdir)/xdg/autostart
+#
+autostart_in_files = imsettings-applet.desktop.in
+autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 #
 imsettings_applet_SOURCES =				\
 	main.c						\

@@ -1,5 +1,7 @@
 2008-08-27  Akira TAGOH  <tagoh@redhat.com>
 
+	* applet/imsettings-applet.desktop.in.in: new.
+
 	* applet/main.c: XIM support.
 
 2008-08-26  Akira TAGOH  <tagoh@redhat.com>
