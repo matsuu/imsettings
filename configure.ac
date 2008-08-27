@@ -260,6 +260,7 @@ AC_CONFIG_FILES([
 	imsettings.pc
 	imsettings-uninstalled.pc
 	applet/Makefile
+	applet/imsettings-applet.desktop.in
 	backends/Makefile
 	backends/gconf/Makefile
 	backends/qt/Makefile
