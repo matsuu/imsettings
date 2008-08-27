@@ -47,8 +47,6 @@
 typedef struct _Proxy {
 	GMainLoop  *loop;
 	XimProxy   *server;
-	GHashTable *client_table;
-	GHashTable *window_table;
 	gchar      *server_name;
 } Proxy;
 
@@ -211,12 +209,6 @@ main(int    argc,
 
 	proxy = g_new0(Proxy, 1);
 	proxy->loop = g_main_loop_new(NULL, FALSE);
-	proxy->client_table = g_hash_table_new_full(g_direct_hash,
-						    g_direct_equal,
-						    NULL,
-						    g_object_unref);
-	proxy->window_table = g_hash_table_new(g_direct_hash,
-					       g_direct_equal);
 	proxy->server_name = g_strdup(xim);
 	proxy->server = _create_proxy(dpy, proxy, arg_replace);
 	if (proxy->server == NULL)
@@ -232,8 +224,6 @@ main(int    argc,
 	g_main_loop_run(proxy->loop);
 
 	g_object_unref(info);
-	g_hash_table_destroy(proxy->client_table);
-	g_hash_table_destroy(proxy->window_table);
 	g_main_loop_unref(proxy->loop);
 	g_object_unref(proxy->server);
 	g_free(proxy->server_name);
