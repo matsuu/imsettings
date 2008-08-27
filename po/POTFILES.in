@@ -1,10 +1,11 @@
+applet/imsettings-applet.desktop.in.in
+applet/main.c
+applet/radiomenuitem.c
 backends/gconf/main.c
 backends/xfce/imsettings_plugin.c
-backends/xim/connection.c
 backends/xim/loopback.c
 backends/xim/main.c
-backends/xim/protocol.c
-backends/xim/server.c
+backends/xim/proxy.c
 imsettings/imsettings-info.c
 imsettings/imsettings-observer.c
 imsettings/imsettings-request.c
