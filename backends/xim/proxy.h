@@ -29,7 +29,6 @@
 #include <gdk/gdk.h>
 #include <libgxim/gximsrvconn.h>
 #include <libgxim/gximsrvtmpl.h>
-#include <libgxim/gximserver.h>
 
 G_BEGIN_DECLS
 

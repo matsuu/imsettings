@@ -18,6 +18,16 @@ DEPS =							\
 	$(NULL)
 EXTRA_DIST =						\
 	$(NULL)
+MAINTAINERCLEANFILES =					\
+	$(xim_built_public_headers)			\
+	$(xim_built_private_headers)			\
+	$(xim_built_sources)				\
+	$(stamp_files)					\
+	$(NULL)
+CLEANFILES =						\
+	xgen-imh					\
+	xgen-imc					\
+	$(NULL)
 
 ##
 # Local definitions
@@ -40,7 +50,6 @@ xim_sources =						\
 	client.c					\
 	loopback.c					\
 	proxy.c						\
-	main.c						\
 	utils.c						\
 	$(xim_built_sources)				\
 	$(NULL)
@@ -57,16 +66,32 @@ stamp_files =						\
 
 bin_PROGRAMS = imsettings-xim
 #
+lib_LTLIBRARIES =					\
+	libimsettings-xim.la				\
+	$(NULL)
+#
 noinst_HEADERS =					\
 	$(xim_private_headers)				\
 	$(xim_built_private_headers)			\
 	$(NULL)
 #
 imsettings_xim_SOURCES =				\
-	$(xim_sources)					\
+	main.c						\
 	$(NULL)
 imsettings_xim_CFLAGS =					\
 	-DG_LOG_DOMAIN="\"IMSettings-XIM\""		\
 	$(NULL)
 imsettings_xim_LDADD =					\
+	libimsettings-xim.la				\
+	$(NULL)
+#
+libimsettings_xim_la_SOURCES =				\
+	$(xim_sources)					\
+	$(NULL)
+libimsettings_xim_la_CFLAGS =				\
+	-DG_LOG_DOMAIN="\"libimsettings-xim\""		\
+	$(NULL)
+libimsettings_xim_la_LDFLAGS =							\
+	$(LDFLAGS)								\
+	-version-info $(LT_XIM_CURRENT):$(LT_XIM_REVISION):$(LT_XIM_AGE)	\
 	$(NULL)

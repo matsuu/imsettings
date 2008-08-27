@@ -35,7 +35,6 @@
 #include <gdk/gdkx.h>
 #include <libgxim/gximattr.h>
 #include <libgxim/gximerror.h>
-#include <libgxim/gximmarshal.h>
 #include <libgxim/gximmessage.h>
 #include <libgxim/gximmisc.h>
 #include <libgxim/gximprotocol.h>

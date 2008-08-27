@@ -43,9 +43,16 @@ LT_CURRENT=2
 LT_REVISION=0
 LT_AGE=0
 
+LT_XIM_CURRENT=0
+LT_XIM_REVISION=0
+LT_XIM_AGE=0
+
 AC_SUBST(LT_CURRENT)
 AC_SUBST(LT_REVISION)
 AC_SUBST(LT_AGE)
+AC_SUBST(LT_XIM_CURRENT)
+AC_SUBST(LT_XIM_REVISION)
+AC_SUBST(LT_XIM_AGE)
 
 dnl ======================================================================
 dnl define variables
