@@ -1,3 +1,7 @@
+2008-08-27  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/main.c: XIM support.
+
 2008-08-26  Akira TAGOH  <tagoh@redhat.com>
 
 	* utils/imsettings-info.c (main): make default to see the info for IM

@@ -40,13 +40,15 @@
 #include "imsettings/imsettings.h"
 #include "imsettings/imsettings-info.h"
 #include "imsettings/imsettings-request.h"
+#ifdef ENABLE_XIM
+#include <libgxim/gximmessage.h>
+#include <libgxim/gximmisc.h>
+#include "client.h"
+#include "proxy.h"
+#include "utils.h"
+#endif
 #include "radiomenuitem.h"
 
-#ifdef GNOME_ENABLE_DEBUG
-#define d(x)	x
-#else
-#define d(x)
-#endif
 
 typedef struct _IMApplet {
 	GtkStatusIcon      *status_icon;
@@ -59,6 +61,10 @@ typedef struct _IMApplet {
 	gboolean            need_notification;
 	gboolean            updated;
 	gboolean            is_enabled;
+#ifdef ENABLE_XIM
+	XimProxy           *server;
+	gchar              *xim_server;
+#endif
 	/* configurable */
 	gboolean            update_xinputrc;
 	KeyCode             keycode;
@@ -67,6 +73,8 @@ typedef struct _IMApplet {
 
 
 static void _update_icon(IMApplet *applet);
+
+static GQuark quark_applet = 0;
 
 
 /*
@@ -100,6 +108,7 @@ _check_version(IMApplet *applet)
 			gchar *body = g_strdup_printf(N_("Mismatch the version of im-settings-daemon.\ndetails: %s"),
 						      error ? error->message : _("None"));
 
+			g_printerr(body);
 			notify_notification(applet, N_("Error"), body, 2);
 			g_free(body);
 			if (error)
@@ -131,6 +140,7 @@ _start_process_cb(DBusGProxy *proxy,
 					      applet->process_im,
 					      error ? error->message : N_("None"));
 
+		g_printerr(body);
 		notify_notification(applet, N_("Error"), body, 2);
 		g_free(body);
 	} else {
@@ -159,6 +169,7 @@ _stop_process_cb(DBusGProxy *proxy,
 					      applet->process_im,
 					      error ? error->message : N_("None"));
 
+		g_printerr(body);
 		notify_notification(applet, N_("Error"), body, 2);
 		g_free(body);
 	} else {
@@ -195,6 +206,7 @@ _start_process(IMApplet *applet)
 		gchar *body = g_strdup_printf(N_("Unable to start %s. maybe DBus related issue."),
 					      applet->process_im);
 
+		g_printerr(body);
 		notify_notification(applet, N_("Error"), body, 2);
 		g_free(body);
 
@@ -220,6 +232,7 @@ _stop_process(IMApplet *applet,
 		gchar *body = g_strdup_printf(N_("Unable to stop %s. maybe DBus related issue."),
 					      applet->process_im);
 
+		g_printerr(body);
 		notify_notification(applet, N_("Error"), body, 2);
 		g_free(body);
 
@@ -394,7 +407,7 @@ filter_func(GdkXEvent *gdk_xevent,
 	switch (xevent->type) {
 	    case KeyPress:
 		    event_mods = xevent->xkey.state & ~LockMask;
-		    g_print("Pressed shortcut key\n");
+		    d(g_print("Pressed shortcut key\n"));
 		    if (xevent->xkey.keycode == applet->keycode &&
 			event_mods == applet->mods) {
 			    _activate(applet->status_icon, applet);
@@ -454,11 +467,90 @@ _delay_notify(gpointer data)
 	return FALSE;
 }
 
+#ifdef ENABLE_XIM
+static void
+_quit_cb(XimProxy *proxy,
+	 gpointer  data)
+{
+	g_print("*** XIM server is exiting...\n");
+
+	gtk_main_quit();
+}
+
+static XimProxy *
+_create_proxy(IMApplet   *applet,
+	      GdkDisplay *dpy,
+	      gboolean    replace)
+{
+	XimProxy *retval;
+	GError *error = NULL;
+
+	retval = xim_proxy_new(dpy, "imsettings", applet->xim_server);
+	if (retval == NULL)
+		return NULL;
+	g_signal_connect(retval, "destroy",
+			 G_CALLBACK (_quit_cb),
+			 NULL);
+	if (!xim_proxy_take_ownership(retval, replace, &error)) {
+		gchar *body;
+
+		body = g_strdup_printf("Unable to take an ownership for XIM server. XIM feature will be turned off.\nDetails: %s",
+				       error->message);
+		g_printerr(body);
+		notify_notification(applet, N_("Error"), body, 2);
+		g_free(body);
+
+		return NULL;
+	}
+
+	return retval;
+}
+
+static DBusHandlerResult
+imsettings_xim_message_filter(DBusConnection *connection,
+			      DBusMessage    *message,
+			      void           *data)
+{
+	XimProxy *server = XIM_PROXY (data);
+
+	if (dbus_message_is_signal(message, IMSETTINGS_XIM_INTERFACE_DBUS, "ChangeTo")) {
+		gchar *module;
+		IMApplet *applet;
+
+		applet = g_object_get_qdata(G_OBJECT (server), quark_applet);
+		dbus_message_get_args(message, NULL,
+				      DBUS_TYPE_STRING, &module,
+				      DBUS_TYPE_INVALID);
+		if (strcmp(module, applet->xim_server) == 0) {
+			/* No changes */
+			return DBUS_HANDLER_RESULT_HANDLED;
+		}
+		g_xim_message_debug(G_XIM_CORE (server)->message, "dbus/event",
+				    "Changing XIM server: `%s'->`%s'\n",
+				    (applet->xim_server && applet->xim_server[0] == 0 ? "none" : applet->xim_server),
+				    (module && module[0] == 0 ? "none" : module));
+		g_free(applet->xim_server);
+		applet->xim_server = g_strdup(module);
+		g_object_set(applet->server, "connect_to", module, NULL);
+
+		return DBUS_HANDLER_RESULT_HANDLED;
+	}
+
+	return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
+}
+#endif /* ENABLE_XIM */
+
 static IMApplet *
 _create_applet(void)
 {
 	IMApplet *applet;
 	gchar *name;
+	const gchar *locale;
+#ifdef ENABLE_XIM
+	DBusError derror;
+	const gchar *xim;
+	IMSettingsInfo *info;
+#endif
 
 	applet = g_new0(IMApplet, 1);
 	applet->is_enabled = FALSE;
@@ -473,6 +565,10 @@ _create_applet(void)
 	}
 	applet->req = imsettings_request_new(applet->conn, IMSETTINGS_INTERFACE_DBUS);
 	applet->req_info = imsettings_request_new(applet->conn, IMSETTINGS_INFO_INTERFACE_DBUS);
+
+	locale = setlocale(LC_CTYPE, "");
+	imsettings_request_set_locale(applet->req, locale);
+	imsettings_request_set_locale(applet->req_info, locale);
 
 	g_signal_connect(applet->status_icon, "popup_menu",
 			 G_CALLBACK (_popup_menu),
@@ -511,6 +607,28 @@ _create_applet(void)
 	applet->notify = notify_notification_new_with_status_icon("foo", "bar", NULL, applet->status_icon);
 	g_timeout_add_seconds(1, _delay_notify, applet);
 
+#ifdef ENABLE_XIM
+	dbus_error_init(&derror);
+
+	quark_applet = g_quark_from_static_string("imsettings-applet-xim");
+
+	info = imsettings_request_get_info_object(applet->req_info, applet->current_im, NULL);
+	xim = imsettings_info_get_xim(info);
+
+	applet->xim_server = g_strdup(xim && xim[0] != 0 ? xim : "none");
+	applet->server = _create_proxy(applet,
+				       gdk_display_get_default(),
+				       TRUE);
+	if (applet->server)
+		g_object_set_qdata(G_OBJECT (applet->server), quark_applet, applet);
+
+	dbus_bus_add_match(applet->conn,
+			   "type='signal',"
+			   "interface='" IMSETTINGS_XIM_INTERFACE_DBUS "'",
+			   &derror);
+	dbus_connection_add_filter(applet->conn, imsettings_xim_message_filter, applet->server, NULL);
+#endif
+
 	return applet;
 }
 
@@ -523,6 +641,10 @@ _destroy_applet(IMApplet *applet)
 	if (applet->conn)
 		dbus_connection_unref(applet->conn);
 	g_object_unref(applet->status_icon);
+#ifdef ENABLE_XIM
+	g_object_unref(applet->server);
+	g_free(applet->xim_server);
+#endif
 	g_free(applet);
 }
 
@@ -544,6 +666,9 @@ main(int    argc,
 #endif /* ENABLE_NLS */
 
 	gtk_init(&argc, &argv);
+#ifdef ENABLE_XIM
+	g_xim_init();
+#endif
 
 	applet = _create_applet();
 	if (applet == NULL)
@@ -553,6 +678,9 @@ main(int    argc,
 
   end:
 	_destroy_applet(applet);
+#ifdef ENABLE_XIM
+	g_xim_finalize();
+#endif
 
 	return 0;
 }
