@@ -44,29 +44,6 @@ G_DEFINE_TYPE (IMSettingsRadioMenuItem, imsettings_radio_menu_item, GTK_TYPE_RAD
 /*
  * Private functions
  */
-static gboolean
-show_image(IMSettingsRadioMenuItem *item)
-{
-	GtkSettings *settings = gtk_widget_get_settings(GTK_WIDGET (item));
-	gboolean show;
-
-	g_object_get(settings, "gtk-menu-images", &show, NULL);
-
-	return show;
-}
-
-static void
-show_image_change_notify(IMSettingsRadioMenuItem *item)
-{
-	if (item->image) {
-		if (show_image(item)) {
-			gtk_widget_show(item->image);
-		} else {
-			gtk_widget_hide(item->image);
-		}
-	}
-}
-
 static void
 imsettings_radio_menu_item_real_draw_indicator(GtkCheckMenuItem *check_menu_item,
 					       GdkRectangle     *area)
@@ -129,55 +106,6 @@ imsettings_radio_menu_item_real_finalize(GObject *object)
 }
 
 static void
-traverse_container(GtkWidget *widget,
-		   gpointer   data)
-{
-	if (IMSETTINGS_IS_RADIO_MENU_ITEM (widget))
-		show_image_change_notify(IMSETTINGS_RADIO_MENU_ITEM (widget));
-	else if (GTK_IS_CONTAINER (widget))
-		gtk_container_forall(GTK_CONTAINER (widget), traverse_container, NULL);
-}
-
-static void
-imsettings_radio_menu_item_real_setting_changed(GtkSettings *settings)
-{
-	GList *list, *l;
-
-	list = gtk_window_list_toplevels();
-
-	for (l = list; l != NULL; l = g_list_next(l)) {
-		gtk_container_forall(GTK_CONTAINER (l->data),
-				     traverse_container, NULL);
-	}
-	g_list_free(list);
-}
-
-static void
-imsettings_radio_menu_item_real_screen_changed(GtkWidget *widget,
-					       GdkScreen *previous_screen)
-{
-	GtkSettings *settings;
-	guint show_image_connection;
-
-	if (!gtk_widget_has_screen(widget))
-		return;
-
-	settings = gtk_widget_get_settings(widget);
-	show_image_connection = GPOINTER_TO_UINT (g_object_get_data(G_OBJECT (settings),
-								    "imsettings-image-menu-item-connection"));
-	if (show_image_connection)
-		return;
-
-	show_image_connection = g_signal_connect(settings, "notify::gtk-menu-images",
-						 G_CALLBACK (imsettings_radio_menu_item_real_setting_changed), NULL);
-	g_object_set_data(G_OBJECT (settings),
-			  "imsettings-image-menu-item-connection",
-			  GUINT_TO_POINTER (show_image_connection));
-
-	show_image_change_notify(IMSETTINGS_RADIO_MENU_ITEM (widget));
-}
-
-static void
 imsettings_radio_menu_item_real_size_request(GtkWidget      *widget,
 					     GtkRequisition *requisition)
 {
@@ -193,8 +121,7 @@ imsettings_radio_menu_item_real_size_request(GtkWidget      *widget,
 	item = IMSETTINGS_RADIO_MENU_ITEM (widget);
 
 	if (item->image &&
-	    GTK_WIDGET_VISIBLE (item->image) &&
-	    show_image(item)) {
+	    GTK_WIDGET_VISIBLE (item->image)) {
 		GtkRequisition child_requisition;
 
 		gtk_widget_size_request(item->image,
@@ -235,7 +162,7 @@ imsettings_radio_menu_item_real_size_allocate(GtkWidget     *widget,
 
 	(* GTK_WIDGET_CLASS (imsettings_radio_menu_item_parent_class)->size_allocate) (widget, allocation);
 
-	if (item->image && show_image(item)) {
+	if (item->image) {
 		gint x, y, offset;
 		GtkRequisition child_requisition;
 		GtkAllocation child_allocation;
@@ -337,7 +264,7 @@ imsettings_radio_menu_item_real_toggle_size_request(GtkMenuItem *menu_item,
 
 	*requisition = 0;
 
-	if (item->image && show_image(item)) {
+	if (item->image) {
 		GtkRequisition image_requisition;
 		guint toggle_spacing;
 
@@ -371,7 +298,6 @@ imsettings_radio_menu_item_class_init(IMSettingsRadioMenuItemClass *klass)
 	object_class->get_property = imsettings_radio_menu_item_real_get_property;
 	object_class->finalize     = imsettings_radio_menu_item_real_finalize;
 
-	widget_class->screen_changed = imsettings_radio_menu_item_real_screen_changed;
 	widget_class->size_request   = imsettings_radio_menu_item_real_size_request;
 	widget_class->size_allocate  = imsettings_radio_menu_item_real_size_allocate;
 
@@ -389,11 +315,6 @@ imsettings_radio_menu_item_class_init(IMSettingsRadioMenuItemClass *klass)
 							    _("Child widget to appear next to the menu text"),
 							    GTK_TYPE_WIDGET,
 							    G_PARAM_READWRITE));
-	gtk_settings_install_property(g_param_spec_boolean("gtk-menu-images",
-							   _("Show menu images"),
-							   _("Whether images should be shown in menus"),
-							   TRUE,
-							   G_PARAM_READWRITE));
 
 	/* signals */
 }
@@ -497,7 +418,7 @@ imsettings_radio_menu_item_set_image(IMSettingsRadioMenuItem *item,
 
 	gtk_widget_set_parent(image, GTK_WIDGET (item));
 	g_object_set(image,
-		     "visible", show_image(item),
+		     "visible", TRUE,
 		     "no-show-all", TRUE,
 		     NULL);
 

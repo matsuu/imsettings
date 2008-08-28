@@ -543,8 +543,16 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 #endif
 
 	/* Finally update a symlink on your home */
-	if (update_xinputrc && !_update_symlink(priv, xinputfile, error))
-		goto end;
+	if (update_xinputrc) {
+		if (!_update_symlink(priv, xinputfile, error))
+			goto end;
+
+		imsettings_request_send_signal_changed(priv->gtk_req, module);
+		imsettings_request_send_signal_changed(priv->xim_req, module);
+#if 0
+		imsettings_request_send_signal_changed(priv->qt_req, module);
+#endif
+	}
 
 	retval = TRUE;
   end:
@@ -640,6 +648,14 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 		} else {
 			retval = TRUE;
 		}
+	}
+
+	if (update_xinputrc) {
+		imsettings_request_send_signal_changed(priv->gtk_req, "none");
+		imsettings_request_send_signal_changed(priv->xim_req, "none");
+#if 0
+		imsettings_request_send_signal_changed(priv->qt_req, "none");
+#endif
 	}
   end:
 	g_free(pidfile);

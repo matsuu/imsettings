@@ -14,5 +14,23 @@
 	</long>
       </locale>
     </schema>
+    <schema>
+      <key>/schemas/apps/imsettings-applet/trigger_key</key>
+      <applyto>/apps/imsettings-applet/trigger_key</applyto>
+      <owner>imsettings-applet</owner>
+      <type>string</type>
+      <default>&lt;Alt&gt;F10</default>
+      <locale name="C">
+	<short>A shortcut key to connect to/disconnect from Input Method</short>
+	<long>
+	  The keybinding which connect to Input Method or disconnect from Input
+	  Method. The format looks like "<Control>a" or "<Shift><Alt>F1".
+	  The parser is fairly liberal and allows lower or upper case, and also
+	  abbreviations such as "<Ctl>" and "<Ctrl>".
+	  If you set the option to the special string "disabled", then there
+	  will be no keybinding for this.
+	</long>
+      </locale>
+    </schema>
   </schemalist>
 </gconfschemafile>

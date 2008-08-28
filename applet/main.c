@@ -59,14 +59,13 @@ typedef struct _IMApplet {
 	gchar              *current_im;
 	gchar              *process_im;
 	gboolean            need_notification;
-	gboolean            updated;
 	gboolean            is_enabled;
+	gboolean            need_update_xinputrc;
 #ifdef ENABLE_XIM
 	XimProxy           *server;
 	gchar              *xim_server;
 #endif
 	/* configurable */
-	gboolean            update_xinputrc;
 	KeyCode             keycode;
 	guint               mods;
 } IMApplet;
@@ -144,14 +143,21 @@ _start_process_cb(DBusGProxy *proxy,
 		notify_notification(applet, N_("Error"), body, 2);
 		g_free(body);
 	} else {
-		gchar *body;
+		gchar *body, *notice;
 
-		body = g_strdup_printf(N_("Connected to %s"), applet->process_im);
+		if (applet->need_update_xinputrc) {
+			notice = g_strdup(N_(" and the default Input Method has been changed. if you need to change that to anything else, please use im-chooser."));
+			applet->need_update_xinputrc = FALSE;
+		} else {
+			notice = g_strdup("");
+		}
+		body = g_strdup_printf(N_("Connected to %s.%s"), applet->process_im, notice);
 		g_free(applet->current_im);
 		applet->current_im = g_strdup(applet->process_im);
 		applet->is_enabled = TRUE;
 		_update_icon(applet);
 		notify_notification(applet, N_("Information"), body, 2);
+		g_free(notice);
 		g_free(body);
 	}
 }
@@ -201,7 +207,7 @@ _start_process(IMApplet *applet)
 
 	if (!imsettings_request_start_im_async(applet->req,
 					       applet->process_im,
-					       applet->update_xinputrc,
+					       applet->need_update_xinputrc,
 					       _start_process_cb, applet)) {
 		gchar *body = g_strdup_printf(N_("Unable to start %s. maybe DBus related issue."),
 					      applet->process_im);
@@ -226,7 +232,7 @@ _stop_process(IMApplet *applet,
 
 	if (!imsettings_request_stop_im_async(applet->req,
 					      applet->process_im,
-					      applet->update_xinputrc,
+					      FALSE,
 					      TRUE,
 					      _stop_process_cb, applet)) {
 		gchar *body = g_strdup_printf(N_("Unable to stop %s. maybe DBus related issue."),
@@ -271,6 +277,15 @@ _toggled(GtkCheckMenuItem *item,
 }
 
 static void
+_preference_activated(GtkMenuItem *item,
+		      gpointer     data)
+{
+	IMApplet *applet = data;
+
+	notify_notification(applet, "whoo", "preference activated.", 2);
+}
+
+static void
 _popup_menu(GtkStatusIcon *status_icon,
 	    guint          button,
 	    guint32        activate_time,
@@ -285,6 +300,9 @@ _popup_menu(GtkStatusIcon *status_icon,
 	menu = gtk_menu_new();
 
 	item = gtk_image_menu_item_new_from_stock(GTK_STOCK_PREFERENCES, NULL);
+	g_signal_connect(item, "activate",
+			 G_CALLBACK (_preference_activated),
+			 applet);
 	gtk_menu_shell_append(GTK_MENU_SHELL (menu), item);
 	item = gtk_separator_menu_item_new();
 	gtk_menu_shell_append(GTK_MENU_SHELL (menu), item);
@@ -299,7 +317,7 @@ _popup_menu(GtkStatusIcon *status_icon,
 								     GTK_STOCK_DISCONNECT,
 								     NULL);
 	gtk_label_set_text(GTK_LABEL (gtk_bin_get_child(GTK_BIN (item))),
-			   _("Disconnected"));
+			   _("Disconnect"));
 	g_object_set_data_full(G_OBJECT (item), "short_desc", g_strdup("none"), g_free);
 	g_signal_connect(item, "toggled",
 			 G_CALLBACK (_toggled),
@@ -353,7 +371,9 @@ _popup_menu(GtkStatusIcon *status_icon,
 static void
 _update_icon(IMApplet *applet)
 {
-	if (strcmp(applet->current_im, "none") == 0) {
+	if (applet->current_im == NULL ||
+	    applet->current_im[0] == 0 ||
+	    strcmp(applet->current_im, "none") == 0) {
 		gtk_status_icon_set_from_stock(applet->status_icon, GTK_STOCK_DISCONNECT);
 		gtk_status_icon_set_tooltip(applet->status_icon,
 					    _("Click to connect to Input Method"));
@@ -372,12 +392,7 @@ _activate(GtkStatusIcon *status_icon,
 	gchar *name;
 
 	name = imsettings_request_what_im_is_running(applet->req, NULL);
-	if (!applet->updated && name && strcmp(name, "none")) {
-		applet->updated = TRUE;
-		applet->current_im = g_strdup(name);
-	}
-	if (applet->updated && applet->is_enabled) {
-		applet->updated = TRUE;
+	if (applet->is_enabled) {
 		g_free(applet->process_im);
 		applet->process_im = g_strdup("none");
 
@@ -385,7 +400,13 @@ _activate(GtkStatusIcon *status_icon,
 	} else {
 		gchar *current_im = imsettings_request_get_current_user_im(applet->req_info, NULL);
 
-		applet->updated = TRUE;
+		if (current_im == NULL || current_im[0] == 0 ||
+		    strcmp(current_im, "none") == 0) {
+			notify_notification(applet, N_("Information"),
+					    N_("The default Input Method isn't yet configured. To get this working, you need to set up that on im-chooser or select one from the menu which appears by the right click first."),
+					    3);
+			return;
+		}
 		g_free(applet->process_im);
 		applet->process_im = current_im;
 
@@ -534,6 +555,30 @@ imsettings_xim_message_filter(DBusConnection *connection,
 		g_object_set(applet->server, "connect_to", module, NULL);
 
 		return DBUS_HANDLER_RESULT_HANDLED;
+	} else if (dbus_message_is_signal(message, IMSETTINGS_XIM_INTERFACE_DBUS, "Changed")) {
+		gchar *module;
+		IMApplet *applet;
+
+		applet = g_object_get_qdata(G_OBJECT (server), quark_applet);
+		dbus_message_get_args(message, NULL,
+				      DBUS_TYPE_STRING, &module,
+				      DBUS_TYPE_INVALID);
+
+		if (strcmp(applet->current_im, module) != 0) {
+			if (strcmp(module, "none") == 0) {
+				applet->is_enabled = FALSE;
+				applet->need_update_xinputrc = TRUE;
+			} else {
+				applet->is_enabled = TRUE;
+				applet->need_update_xinputrc = FALSE;
+			}
+			g_free(applet->current_im);
+			applet->current_im = g_strdup(module);
+
+			_update_icon(applet);
+		}
+
+		return DBUS_HANDLER_RESULT_HANDLED;
 	}
 
 	return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
@@ -554,8 +599,6 @@ _create_applet(void)
 
 	applet = g_new0(IMApplet, 1);
 	applet->is_enabled = FALSE;
-	applet->updated = FALSE;
-	applet->update_xinputrc = FALSE;
 	applet->status_icon = gtk_status_icon_new_from_stock(GTK_STOCK_DISCONNECT);
 	applet->conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	if (applet->conn == NULL) {
@@ -578,6 +621,10 @@ _create_applet(void)
 			 applet);
 
 	name = imsettings_request_what_im_is_running(applet->req, NULL);
+	if (name == NULL || name[0] == 0) {
+		g_free(name);
+		name = g_strdup("none");
+	}
 	if (!applet->current_im)
 		applet->current_im = g_strdup(name);
 	g_free(name);
@@ -612,7 +659,15 @@ _create_applet(void)
 
 	quark_applet = g_quark_from_static_string("imsettings-applet-xim");
 
-	info = imsettings_request_get_info_object(applet->req_info, applet->current_im, NULL);
+	if (strcmp(applet->current_im, "none") == 0) {
+		applet->need_update_xinputrc = TRUE;
+	} else {
+		applet->need_update_xinputrc = FALSE;
+		applet->is_enabled = TRUE;
+	}
+	info = imsettings_request_get_info_object(applet->req_info,
+						  applet->need_update_xinputrc ? "none" : applet->current_im,
+						  NULL);
 	xim = imsettings_info_get_xim(info);
 
 	applet->xim_server = g_strdup(xim && xim[0] != 0 ? xim : "none");

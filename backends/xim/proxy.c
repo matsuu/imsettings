@@ -145,8 +145,8 @@ _get_server_imid(XimProxy *proxy,
 
 	retval = proxy->simid_table[imid];
 	if (retval == 0) {
-		g_xim_message_bug(G_XIM_CORE (proxy)->message,
-				  "No links for imid %d", imid);
+		g_xim_message_warning(G_XIM_CORE (proxy)->message,
+				      "No links for imid %d", imid);
 
 		return 0;
 	}
@@ -162,8 +162,8 @@ _get_client_imid(XimProxy *proxy,
 
 	retval = proxy->cimid_table[imid];
 	if (retval == 0) {
-		g_xim_message_bug(G_XIM_CORE (proxy)->message,
-				  "No links for imid %d", imid);
+		g_xim_message_warning(G_XIM_CORE (proxy)->message,
+				      "No links for imid %d", imid);
 
 		return 0;
 	}
@@ -2238,8 +2238,11 @@ xim_proxy_protocol_real_xim_destroy_ic(GXimProtocol *proto,
 	/* the case when cimid is 0 means new XIM server is being brought up.
 	 * So IC is already invalid for new one. we don't need to send this out.
 	 */
-	if (cimid == 0)
-		return FALSE;
+	if (cimid == 0) {
+		/* to avoid the unnecessary error, send back XIM_DESTROY_IC_REPLY here. */
+		return g_xim_server_connection_destroy_ic_reply(G_XIM_SERVER_CONNECTION (proto),
+								imid, icid);
+	}
 
 	conn = _get_client_connection(proxy, proto);
 	if (!g_xim_client_connection_destroy_ic(conn, cimid, icid, TRUE)) {

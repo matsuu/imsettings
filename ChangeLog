@@ -1,3 +1,22 @@
+2008-08-28  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_destroy_ic): 
+	send XIM_DESTROY_IC instead of relying on the default behavior when
+	unable to get imid.
+
+	* src/factory.c (imsettings_manager_real_start_im): send "Changed"
+	signal.
+	(imsettings_manager_real_stop_im): likewise.
+
+	* imsettings/imsettings-request.c (imsettings_request_send_signal_changed):
+	new.
+
+	* applet/main.c (_activate): show a notice if no default IM is setup.
+	(imsettings_xim_message_filter): Update the icon when any changes made
+	externally.
+
+	* applet/radiomenuitem.c: the code cleanup.
+
 2008-08-27  Akira TAGOH  <tagoh@redhat.com>
 
 	* applet/imsettings-applet.desktop.in.in: new.

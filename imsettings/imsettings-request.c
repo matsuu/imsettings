@@ -644,3 +644,24 @@ imsettings_request_get_version(IMSettingsRequest  *imsettings,
 
 	return retval;
 }
+
+gboolean
+imsettings_request_send_signal_changed(IMSettingsRequest *imsettings,
+				       const gchar       *module)
+{
+	IMSettingsRequestPrivate *priv;
+	DBusMessage *message;
+
+	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), FALSE);
+	g_return_val_if_fail (module != NULL, FALSE);
+
+	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
+	message = dbus_message_new_signal(priv->path, priv->interface, "Changed");
+	dbus_message_append_args(message,
+				 DBUS_TYPE_STRING, &module,
+				 DBUS_TYPE_INVALID);
+	dbus_connection_send(priv->connection, message, NULL);
+	dbus_message_unref(message);
+
+	return TRUE;
+}
