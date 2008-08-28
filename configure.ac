@@ -39,9 +39,9 @@ dnl    then increment AGE.
 dnl 5. If any interfaces have been removed since the last public release,
 dnl    then set AGE to 0.
 dnl
-LT_CURRENT=2
+LT_CURRENT=3
 LT_REVISION=0
-LT_AGE=0
+LT_AGE=1
 
 LT_XIM_CURRENT=0
 LT_XIM_REVISION=0
