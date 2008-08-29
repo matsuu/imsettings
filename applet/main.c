@@ -35,6 +35,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
+#include <gdk/gdkkeysyms.h>
 #include <gconf/gconf.h>
 #include <libnotify/notify.h>
 #include "imsettings/imsettings.h"
@@ -52,6 +53,9 @@
 
 typedef struct _IMApplet {
 	GtkStatusIcon      *status_icon;
+	GtkWidget          *dialog;
+	GtkWidget          *entry_grabkey;
+	GtkWidget          *close_button;
 	DBusConnection     *conn;
 	IMSettingsRequest  *req;
 	IMSettingsRequest  *req_info;
@@ -65,13 +69,18 @@ typedef struct _IMApplet {
 	XimProxy           *server;
 	gchar              *xim_server;
 #endif
-	/* configurable */
 	KeyCode             keycode;
-	guint               mods;
+	gboolean            watch_accel;
+	/* configurable */
+	guint               keyval;
+	guint               modifiers;
 } IMApplet;
 
 
-static void _update_icon(IMApplet *applet);
+static void   _update_icon         (IMApplet *applet);
+#ifdef ENABLE_SHORTCUT_KEY
+static gchar *_get_acceleration_key(IMApplet *applet);
+#endif
 
 static GQuark quark_applet = 0;
 
@@ -276,14 +285,295 @@ _toggled(GtkCheckMenuItem *item,
 	}
 }
 
+#ifdef ENABLE_SHORTCUT_KEY
+static void
+_setup_acceleration_key(IMApplet *applet)
+{
+	GdkWindow *rootwin = gdk_get_default_root_window();
+
+	applet->keycode = XKeysymToKeycode(GDK_WINDOW_XDISPLAY (rootwin),
+					   applet->keyval);
+
+	XSynchronize(GDK_WINDOW_XDISPLAY (rootwin), TRUE);
+	gdk_error_trap_push();
+	XGrabKey(GDK_WINDOW_XDISPLAY (rootwin),
+		 applet->keycode, applet->modifiers,
+		 GDK_WINDOW_XWINDOW (rootwin),
+		 False,
+		 GrabModeAsync,
+		 GrabModeAsync);
+	if (gdk_error_trap_pop()) {
+		gchar *key = _get_acceleration_key(applet);
+		gchar *escaped_key = g_markup_escape_text(key, -1);
+		gchar *body = g_strdup_printf(_("Unable to set up the acceleration key with %s. disabled it temporarily."), escaped_key);
+
+		notify_notification(applet, N_("Error"), body, 3);
+		g_free(body);
+		g_free(escaped_key);
+		g_free(key);
+
+		applet->keyval = GDK_VoidSymbol;
+		applet->modifiers = 0;
+		applet->watch_accel = FALSE;
+	} else {
+		applet->watch_accel = TRUE;
+	}
+	XSynchronize(GDK_WINDOW_XDISPLAY (rootwin), FALSE);
+}
+
+static gchar *
+_get_acceleration_key(IMApplet *applet)
+{
+	const gchar *key = gdk_keyval_name(applet->keyval);
+	GString *s = g_string_new(NULL);
+
+	if (strcmp(key, "VoidSymbol") == 0)
+		g_string_append(s, "disabled");
+	else
+		g_string_append(s, key);
+
+	if (applet->modifiers & GDK_SHIFT_MASK)
+		g_string_prepend(s, "<Shift>");
+	if (applet->modifiers & GDK_CONTROL_MASK)
+		g_string_prepend(s, "<Control>");
+	if (applet->modifiers & GDK_LOCK_MASK)
+		g_string_prepend(s, "<Lock>");
+	if (applet->modifiers & GDK_MOD1_MASK)
+		g_string_prepend(s, "<Alt>");
+	if (applet->modifiers & GDK_SUPER_MASK)
+		g_string_prepend(s, "<Super>");
+	if (applet->modifiers & GDK_HYPER_MASK)
+		g_string_prepend(s, "<Hyper>");
+	if (applet->modifiers & GDK_META_MASK)
+		g_string_prepend(s, "<Meta>");
+
+	return g_string_free(s, FALSE);
+}
+
+static void
+_preference_update_entry(IMApplet *applet)
+{
+	gchar *key = _get_acceleration_key(applet);
+
+	gtk_editable_set_editable(GTK_EDITABLE (applet->entry_grabkey), TRUE);
+	gtk_entry_set_text(GTK_ENTRY (applet->entry_grabkey), key);
+	gtk_editable_set_editable(GTK_EDITABLE (applet->entry_grabkey), FALSE);
+
+	g_free(key);
+}
+
+static gboolean
+_preference_grabbed(GtkWidget   *widget,
+		    GdkEventKey *event,
+		    gpointer     data)
+{
+	IMApplet *applet = data;
+
+	if (!event->is_modifier &&
+	    event->keyval != GDK_Hyper_L &&
+	    event->keyval != GDK_Hyper_R &&
+	    event->keyval != GDK_Super_L &&
+	    event->keyval != GDK_Super_R) {
+		GdkWindow *rootwin = gdk_get_default_root_window();
+
+		gtk_grab_remove(applet->entry_grabkey);
+		gdk_keyboard_ungrab(GDK_CURRENT_TIME);
+		g_signal_handlers_disconnect_by_func(applet->entry_grabkey,
+						     G_CALLBACK (_preference_grabbed),
+						     applet);
+		if (applet->watch_accel)
+			XUngrabKey(GDK_WINDOW_XDISPLAY (rootwin),
+				   applet->keycode, applet->modifiers,
+				   GDK_WINDOW_XWINDOW (rootwin));
+
+		if (event->keyval == GDK_BackSpace) {
+			applet->keyval = GDK_VoidSymbol;
+			applet->modifiers = 0;
+		} else {
+			applet->keyval = event->keyval;
+			applet->modifiers = event->state;
+		}
+
+		_setup_acceleration_key(applet);
+		_preference_update_entry(applet);
+	}
+
+	return TRUE;
+}
+
+static void
+_preference_grabkey(GtkButton *button,
+		    gpointer   data)
+{
+	IMApplet *applet = data;
+
+	gtk_editable_set_editable(GTK_EDITABLE (applet->entry_grabkey), TRUE);
+	gtk_entry_set_text(GTK_ENTRY (applet->entry_grabkey),
+			   _("Please press the acceleration key..."));
+	gtk_editable_set_editable(GTK_EDITABLE (applet->entry_grabkey), FALSE);
+	while (g_main_context_pending(NULL))
+		g_main_context_iteration(NULL, TRUE);
+
+	if (gdk_keyboard_grab(applet->entry_grabkey->window, FALSE,
+				   GDK_CURRENT_TIME) != GDK_GRAB_SUCCESS) {
+		_preference_update_entry(applet);
+		return;
+	}
+	g_signal_connect(applet->entry_grabkey, "key_press_event",
+			 G_CALLBACK (_preference_grabbed), applet);
+	gtk_grab_add(applet->entry_grabkey);
+}
+
+static void
+_preference_closed(GtkButton *button,
+		   gpointer   data)
+{
+	IMApplet *applet = data;
+
+	gtk_widget_hide(applet->dialog);
+}
+
 static void
 _preference_activated(GtkMenuItem *item,
 		      gpointer     data)
 {
 	IMApplet *applet = data;
 
-	notify_notification(applet, "whoo", "preference activated.", 2);
+	if (applet->dialog == NULL) {
+		gchar *iconfile;
+		GtkWidget *button_trigger_grab;
+		GtkWidget *vbox_item_trigger, *vbox_item_trigger_value;
+		GtkWidget *hbox_item_trigger_value_entry, *hbox_item_trigger_value_notice;
+		GtkWidget *align_trigger, *align_trigger_value, *align_trigger_value_notice;
+		GtkWidget *label_trigger, *label_trigger_notice;
+		GtkWidget *table_trigger_modifiers;
+		GtkWidget *checkbox_trigger_shift, *checkbox_trigger_ctrl, *checkbox_trigger_alt;
+		GtkWidget *checkbox_trigger_super, *checkbox_trigger_hyper, *checkbox_trigger_meta;
+		GtkWidget *checkbox_trigger_capslock, *checkbox_trigger_numlock, *checkbox_trigger_scrolllock;
+		GtkWidget *checkbox_trigger_mod5;
+		GtkWidget *image_trigger_notice;
+		guint row, col;
+
+		applet->dialog = gtk_dialog_new();
+		gtk_window_set_title(GTK_WINDOW (applet->dialog), _("IMSettings Applet Preferences"));
+		gtk_window_set_resizable(GTK_WINDOW (applet->dialog), FALSE);
+		iconfile = g_build_filename(ICONDIR, "imsettings-applet.png", NULL);
+		gtk_container_set_border_width(GTK_CONTAINER (applet->dialog), 4);
+		gtk_container_set_border_width(GTK_CONTAINER (GTK_DIALOG (applet->dialog)->vbox), 0);
+
+		applet->close_button = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
+		gtk_dialog_add_action_widget(GTK_DIALOG (applet->dialog), applet->close_button, GTK_RESPONSE_OK);
+		gtk_dialog_set_has_separator(GTK_DIALOG (applet->dialog), FALSE);
+
+		/* trigger key */
+		vbox_item_trigger = gtk_vbox_new(FALSE, 0);
+
+		/* trigger key: label */
+		align_trigger = gtk_alignment_new(0, 0, 0, 0);
+		label_trigger = gtk_label_new(_("<b>Trigger key:</b>"));
+		gtk_label_set_use_markup(GTK_LABEL (label_trigger), TRUE);
+		gtk_container_add(GTK_CONTAINER (align_trigger), label_trigger);
+		gtk_alignment_set_padding(GTK_ALIGNMENT (align_trigger), 9, 6, 6, 6);
+		/* trigger key: value */
+		align_trigger_value = gtk_alignment_new(0.1, 0, 1.0, 1.0);
+		vbox_item_trigger_value = gtk_vbox_new(FALSE, 0);
+		gtk_container_add(GTK_CONTAINER (align_trigger_value), vbox_item_trigger_value);
+		gtk_alignment_set_padding(GTK_ALIGNMENT (align_trigger_value), 0, 6, 18, 6);
+		/* trigger key: value - entry box */
+		hbox_item_trigger_value_entry = gtk_hbox_new(FALSE, 0);
+		applet->entry_grabkey = gtk_entry_new();
+		button_trigger_grab = gtk_button_new_with_label(_("Grab key"));
+
+		GTK_WIDGET_UNSET_FLAGS(applet->entry_grabkey, GTK_CAN_FOCUS);
+		g_signal_connect(button_trigger_grab, "clicked",
+				 G_CALLBACK (_preference_grabkey), applet);
+		gtk_box_pack_start(GTK_BOX (hbox_item_trigger_value_entry), applet->entry_grabkey, TRUE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX (hbox_item_trigger_value_entry), button_trigger_grab, FALSE, TRUE, 0);
+		/* trigger key: value - check boxes */
+		table_trigger_modifiers = gtk_table_new(2, 5, TRUE);
+		gtk_table_set_homogeneous(GTK_TABLE (table_trigger_modifiers), TRUE);
+		checkbox_trigger_shift = gtk_check_button_new_with_label(_("Shift"));
+		checkbox_trigger_ctrl = gtk_check_button_new_with_label(_("Control"));
+		checkbox_trigger_alt = gtk_check_button_new_with_label(_("Alt"));
+		checkbox_trigger_super = gtk_check_button_new_with_label(_("Super"));
+		checkbox_trigger_hyper = gtk_check_button_new_with_label(_("Hyper"));
+		checkbox_trigger_meta = gtk_check_button_new_with_label(_("Meta"));
+		checkbox_trigger_capslock = gtk_check_button_new_with_label(_("Caps Lock"));
+		checkbox_trigger_numlock = gtk_check_button_new_with_label(_("Num Lock"));
+		checkbox_trigger_scrolllock = gtk_check_button_new_with_label(_("Scroll Lock"));
+		checkbox_trigger_mod5 = gtk_check_button_new_with_label(_("Mod5"));
+
+		row = 0;
+		col = 0;
+		gtk_table_attach(GTK_TABLE (table_trigger_modifiers), checkbox_trigger_shift,
+				 row, row + 1, col, col + 1, GTK_FILL, 0, 0, 0);
+		row++;
+		gtk_table_attach(GTK_TABLE (table_trigger_modifiers), checkbox_trigger_ctrl,
+				 row, row + 1, col, col + 1, GTK_FILL, 0, 0, 0);
+		row++;
+		gtk_table_attach(GTK_TABLE (table_trigger_modifiers), checkbox_trigger_alt,
+				 row, row + 1, col, col + 1, GTK_FILL, 0, 0, 0);
+		row++;
+		gtk_table_attach(GTK_TABLE (table_trigger_modifiers), checkbox_trigger_super,
+				 row, row + 1, col, col + 1, GTK_FILL, 0, 0, 0);
+		row++;
+		gtk_table_attach(GTK_TABLE (table_trigger_modifiers), checkbox_trigger_hyper,
+				 row, row + 1, col, col + 1, GTK_FILL, 0, 0, 0);
+		row = 0;
+		col++;
+		gtk_table_attach(GTK_TABLE (table_trigger_modifiers), checkbox_trigger_meta,
+				 row, row + 1, col, col + 1, GTK_FILL, 0, 0, 0);
+		row++;
+		gtk_table_attach(GTK_TABLE (table_trigger_modifiers), checkbox_trigger_capslock,
+				 row, row + 1, col, col + 1, GTK_FILL, 0, 0, 0);
+		row++;
+		gtk_table_attach(GTK_TABLE (table_trigger_modifiers), checkbox_trigger_numlock,
+				 row, row + 1, col, col + 1, GTK_FILL, 0, 0, 0);
+		row++;
+		gtk_table_attach(GTK_TABLE (table_trigger_modifiers), checkbox_trigger_scrolllock,
+				 row, row + 1, col, col + 1, GTK_FILL, 0, 0, 0);
+		row++;
+		gtk_table_attach(GTK_TABLE (table_trigger_modifiers), checkbox_trigger_mod5,
+				 row, row + 1, col, col + 1, GTK_FILL, 0, 0, 0);
+		/* trigger key: value - notice */
+		hbox_item_trigger_value_notice = gtk_hbox_new(FALSE, 0);
+		image_trigger_notice = gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO,
+								GTK_ICON_SIZE_DIALOG);
+		align_trigger_value_notice = gtk_alignment_new(0.05, 0.5, 0, 0);
+		gtk_alignment_set_padding(GTK_ALIGNMENT (align_trigger_value_notice), 0, 0, 0, 0);
+		label_trigger_notice = gtk_label_new(_("Please click Grab key button and press the key combinations you want to assign for the acceleration key. Press Backspace key to disable this feature."));
+		gtk_label_set_line_wrap(GTK_LABEL (label_trigger_notice), TRUE);
+
+		gtk_container_add(GTK_CONTAINER (align_trigger_value_notice), label_trigger_notice);
+		gtk_box_pack_start(GTK_BOX (hbox_item_trigger_value_notice), image_trigger_notice, FALSE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX (hbox_item_trigger_value_notice), align_trigger_value_notice, TRUE, TRUE, 0);
+
+		/* trigger key: value / packing */
+		gtk_box_pack_start(GTK_BOX (vbox_item_trigger_value), hbox_item_trigger_value_entry, FALSE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX (vbox_item_trigger_value), table_trigger_modifiers, FALSE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX (vbox_item_trigger_value), hbox_item_trigger_value_notice, FALSE, TRUE, 0);
+		/* trigger key / packing */
+		gtk_box_pack_start(GTK_BOX (vbox_item_trigger), align_trigger, FALSE, FALSE, 0);
+		gtk_box_pack_start(GTK_BOX (vbox_item_trigger), align_trigger_value, TRUE, TRUE, 0);
+
+		/* items / packing */
+		gtk_box_pack_start(GTK_BOX (GTK_DIALOG (applet->dialog)->vbox), vbox_item_trigger, TRUE, TRUE, 0);
+
+		/* */
+		g_signal_connect(applet->close_button, "clicked",
+				 G_CALLBACK (_preference_closed), applet);
+		g_object_add_weak_pointer(G_OBJECT (applet->dialog), (gpointer *)&applet->dialog);
+
+		_preference_update_entry(applet);
+		gtk_widget_show_all(GTK_DIALOG (applet->dialog)->vbox);
+		gtk_widget_hide(table_trigger_modifiers);
+	}
+
+	gtk_editable_set_editable(GTK_EDITABLE (applet->entry_grabkey), FALSE);
+	gtk_widget_show(applet->dialog);
+	gtk_widget_grab_focus(applet->close_button);
 }
+#endif
 
 static void
 _popup_menu(GtkStatusIcon *status_icon,
@@ -299,6 +589,7 @@ _popup_menu(GtkStatusIcon *status_icon,
 
 	menu = gtk_menu_new();
 
+#ifdef ENABLE_SHORTCUT_KEY
 	item = gtk_image_menu_item_new_from_stock(GTK_STOCK_PREFERENCES, NULL);
 	g_signal_connect(item, "activate",
 			 G_CALLBACK (_preference_activated),
@@ -306,6 +597,7 @@ _popup_menu(GtkStatusIcon *status_icon,
 	gtk_menu_shell_append(GTK_MENU_SHELL (menu), item);
 	item = gtk_separator_menu_item_new();
 	gtk_menu_shell_append(GTK_MENU_SHELL (menu), item);
+#endif
 
 	array = imsettings_request_get_info_objects(applet->req_info, NULL);
 	if (applet->current_im)
@@ -415,6 +707,7 @@ _activate(GtkStatusIcon *status_icon,
 	g_free(name);
 }
 
+#ifdef ENABLE_SHORTCUT_KEY
 static GdkFilterReturn
 filter_func(GdkXEvent *gdk_xevent,
 	    GdkEvent  *event,
@@ -430,7 +723,7 @@ filter_func(GdkXEvent *gdk_xevent,
 		    event_mods = xevent->xkey.state & ~LockMask;
 		    d(g_print("Pressed shortcut key\n"));
 		    if (xevent->xkey.keycode == applet->keycode &&
-			event_mods == applet->mods) {
+			event_mods == applet->modifiers) {
 			    _activate(applet->status_icon, applet);
 		    }
 		    break;
@@ -462,6 +755,7 @@ _delay_notify(gpointer data)
 	IMApplet *applet = data;
 	GConfEngine *engine = gconf_engine_get_default();
 	GConfValue *val;
+	gchar *body, *key, *escaped_key;
 
 	val = gconf_engine_get(engine, "/apps/imsettings-applet/notify_tips", NULL);
 	if (val) {
@@ -470,10 +764,11 @@ _delay_notify(gpointer data)
 			return FALSE;
 		}
 	}
-	notify_notification_update(applet->notify,
-				   _("Tips"),
-				   _("Press Alt+F10 or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu."),
-				   NULL);
+	key = _get_acceleration_key(applet);
+	escaped_key = g_markup_escape_text(key, -1);
+	body = g_strdup_printf(_("Press %s or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu."),
+			       escaped_key);
+	notify_notification_update(applet->notify, _("Tips"), body, NULL);
 	notify_notification_clear_actions(applet->notify);
 	notify_notification_set_timeout(applet->notify, 10*1000);
 	notify_notification_set_category(applet->notify, "x-imsettings-tips-shortcutkey");
@@ -484,9 +779,13 @@ _delay_notify(gpointer data)
 				       applet,
 				       NULL);
 	notify_notification_show(applet->notify, NULL);
+	g_free(body);
+	g_free(key);
+	g_free(escaped_key);
 
 	return FALSE;
 }
+#endif
 
 #ifdef ENABLE_XIM
 static void
@@ -630,29 +929,23 @@ _create_applet(void)
 	g_free(name);
 	_update_icon(applet);
 
+#ifdef ENABLE_ACCEL_KEY
 	/* setup shortcut key */
-	G_STMT_START {
-//		GdkKeymap *keymap = gdk_keymap_get_default();
-		GdkWindow *rootwin = gdk_get_default_root_window();
+	applet->keyval = GDK_F10;
+	applet->modifiers = GDK_CONTROL_MASK;
 
-		applet->keycode = XKeysymToKeycode(GDK_WINDOW_XDISPLAY (rootwin),
-						   XK_F10);
-		applet->mods = Mod1Mask;
-		XGrabKey(GDK_WINDOW_XDISPLAY (rootwin),
-			 applet->keycode, applet->mods,
-			 GDK_WINDOW_XWINDOW (rootwin),
-			 False,
-			 GrabModeAsync,
-			 GrabModeAsync);
-
-		gdk_window_add_filter(rootwin,
-				      filter_func,
-				      applet);
-	} G_STMT_END;
+	_setup_acceleration_key(applet);
+	gdk_window_add_filter(gdk_get_default_root_window(),
+			      filter_func,
+			      applet);
 
 	notify_init("imsettings-applet");
 	applet->notify = notify_notification_new_with_status_icon("foo", "bar", NULL, applet->status_icon);
 	g_timeout_add_seconds(1, _delay_notify, applet);
+#else
+	notify_init("imsettings-applet");
+	applet->notify = notify_notification_new_with_status_icon("foo", "bar", NULL, applet->status_icon);
+#endif
 
 #ifdef ENABLE_XIM
 	dbus_error_init(&derror);
@@ -696,6 +989,8 @@ _destroy_applet(IMApplet *applet)
 	if (applet->conn)
 		dbus_connection_unref(applet->conn);
 	g_object_unref(applet->status_icon);
+	if (applet->dialog)
+		g_object_unref(applet->dialog);
 #ifdef ENABLE_XIM
 	g_object_unref(applet->server);
 	g_free(applet->xim_server);

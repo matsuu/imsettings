@@ -1,3 +1,15 @@
+2008-08-29  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/main.c (_setup_acceleration_key): new.
+	(_get_acceleration_key): new.
+	(_preference_update_entry): new.
+	(_preference_grabbed): new.
+	(_preference_grabkey): new.
+	(_preference_closed): new.
+	(_preference_activated): new.
+	(_create_applet): disable the acceleration key feature temporarily.
+	this isn't well tested.
+
 2008-08-28  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_destroy_ic): 

@@ -3,6 +3,7 @@
 NULL =
 INCLUDES =						\
 	-DIMAPPLET_LOCALEDIR="\"$(datadir)/locale\""	\
+	-DICONDIR="\"$(datadir)/pixmaps\""		\
 	-l$(top_srcdir)/imsettings			\
 	$(IMSETTINGS_CFLAGS)				\
 	$(NULL)
