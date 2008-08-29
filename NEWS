@@ -1,4 +1,4 @@
-0.102.0 ->
+0.102.0 -> 0.103.0
 =====================
 * Bug Fixes:
   * Issue#6: freeze X applications when switching IM
@@ -7,6 +7,8 @@
   * rhbz#459443: xsettings manager detection is broken
 * Enhancement
   * new imsettings-xim with libgxim deps.
+* Features
+  * applet launched.
 
 0.101.3 -> 0.102.0
 =====================
