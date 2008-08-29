@@ -50,7 +50,6 @@ imsettings_applet_SOURCES =				\
 	$(NULL)
 imsettings_applet_CFLAGS =				\
 	-DG_LOG_DOMAIN="\"IMSettings-Applet\""		\
-	-DPIXMAP_PATH="\"$(datadir)/pixmaps/\""		\
 	$(APPLET_CFLAGS)				\
 	$(NULL)
 imsettings_applet_LDADD =				\

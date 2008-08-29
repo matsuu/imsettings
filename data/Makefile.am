@@ -52,6 +52,9 @@ xinputinfoshdir = $(libexecdir)
 xinputinfosh_DATA = $(xinputinfosh_in:.in=)
 #
 icondir = $(datadir)/pixmaps
-icon_DATA = unknown.png
+icon_DATA = 				\
+	imsettings-applet.png		\
+	imsettings-unknown.png		\
+	$(NULL)
 
 .PHONY: clean-local

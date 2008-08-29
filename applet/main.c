@@ -631,7 +631,7 @@ _popup_menu(GtkStatusIcon *status_icon,
 								   18, 18,
 								   TRUE, NULL);
 		} else {
-			gchar *p = g_build_filename(PIXMAP_PATH, "unknown.png", NULL);
+			gchar *p = g_build_filename(ICONDIR, "imsettings-unknown.png", NULL);
 
 			pixbuf = gdk_pixbuf_new_from_file_at_scale(p, 18, 18, TRUE, NULL);
 		}
