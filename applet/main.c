@@ -686,7 +686,7 @@ _activate(GtkStatusIcon *status_icon,
 	name = imsettings_request_what_im_is_running(applet->req, NULL);
 	if (applet->is_enabled) {
 		g_free(applet->process_im);
-		applet->process_im = g_strdup("none");
+		applet->process_im = g_strdup(applet->current_im);
 
 		_stop_process(applet, TRUE);
 	} else {

@@ -1,5 +1,7 @@
 2008-08-29  Akira TAGOH  <tagoh@redhat.com>
 
+	* applet/main.c (_activate): Fix a typo.
+
 	* applet/main.c (_setup_acceleration_key): new.
 	(_get_acceleration_key): new.
 	(_preference_update_entry): new.
