@@ -1,5 +1,21 @@
 2008-09-02  Akira TAGOH  <tagoh@redhat.com>
 
+	* imsettings/imsettings-request.c (imsettings_request_get_info_object):
+	Use current locale if no locale is set.
+
+	* utils/imsettings-info.c (main): set a locale to get the locale.
+
+	* src/factory_info.c (imsettings_info_manager_real_get_info): 
+	try to update the info for XIM if no info is in the hash.
+
+	* imsettings/imsettings.h (IMSETTINGS_IMINFO_DAEMON_VERSION): 
+	bump a version.
+
+	* imsettings/imsettings-observer.c (imsettings_get_info_object): 
+	interface has been changed.
+
+	* imsettings/imsettings.xml (GetInfoObject): Add a langauge.
+
 	* applet/main.c: ifdef'd a value.
 
 	* utils/imsettings-info.c (main): set the language to query

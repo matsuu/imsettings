@@ -578,11 +578,13 @@ imsettings_request_get_info_object(IMSettingsRequest  *imsettings,
 	IMSettingsInfo *retval = NULL;
 	GValueArray *ret = NULL;
 	GError *err = NULL;
+	const gchar *locale = setlocale(LC_CTYPE, NULL);
 
 	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), NULL);
 
 	priv = IMSETTINGS_REQUEST_GET_PRIVATE (imsettings);
 	if (!com_redhat_imsettings_IMInfo_get_info_object(priv->proxy,
+							  priv->locale ? priv->locale : locale,
 							  module,
 							  &ret,
 							  &err)) {

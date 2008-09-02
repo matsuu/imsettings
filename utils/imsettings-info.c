@@ -48,6 +48,7 @@ main(int    argc,
 	int retval = 0;
 
 	g_type_init();
+	setlocale(LC_ALL, "");
 
 	connection = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	if (connection == NULL) {

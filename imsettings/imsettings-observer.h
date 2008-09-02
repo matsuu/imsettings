@@ -89,6 +89,7 @@ struct _IMSettingsObserverClass {
 						    const gchar         *locale,
 						    GError             **error);
 	IMSettingsInfo  * (* get_info)             (IMSettingsObserver  *imsettings,
+						    const gchar         *locale,
 						    const gchar         *module,
 						    GError             **error);
 	gboolean          (* start_im)             (IMSettingsObserver  *imsettings,

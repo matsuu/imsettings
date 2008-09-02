@@ -1025,6 +1025,7 @@ imsettings_info_manager_real_get_current_system_im(IMSettingsObserver  *observer
 
 static IMSettingsInfo *
 imsettings_info_manager_real_get_info(IMSettingsObserver  *observer,
+				      const gchar         *language,
 				      const gchar         *module,
 				      GError             **error)
 {
@@ -1033,8 +1034,30 @@ imsettings_info_manager_real_get_info(IMSettingsObserver  *observer,
 
 	info = g_hash_table_lookup(priv->im_info_from_name, module);
 	if (info == NULL) {
-		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_IM_NOT_FOUND,
-			    _("No such input method on your system: %s"), module);
+		GHashTableIter iter;
+		gpointer key, val;
+		const gchar *name;
+
+		g_hash_table_iter_init(&iter, priv->im_info_from_name);
+		while (g_hash_table_iter_next(&iter, &key, &val)) {
+			info = IMSETTINGS_INFO (val);
+
+			if (imsettings_info_is_xim(info)) {
+				/* need to update the short description with the lang */
+				g_object_set(G_OBJECT (info),
+					     "ignore", FALSE,
+					     "language", language,
+					     NULL);
+				name = imsettings_info_get_short_desc(info);
+				if (strcmp(name, module) != 0) {
+					/* module may be a XIM server and running on the different locale */
+					g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_IM_NOT_FOUND,
+						    _("No such input method on your system: %s"), module);
+				}
+				break;
+			}
+			info = NULL;
+		}
 	}
 
 	return info;

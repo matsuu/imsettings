@@ -31,6 +31,7 @@
       <arg type="a(uay)" name="ret" direction="out" />
     </method>
     <method name="GetInfoObject">
+      <arg type="s" name="lang" direction="in" />
       <arg type="s" name="name" direction="in" />
       <arg type="(uay)" name="ret" direction="out" />
     </method>
@@ -48,6 +49,7 @@
 	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
       </arg>
     </method>
+    <!-- deprecated APIs -->
     <method name="GetXinputFilename">
       <arg type="s" name="imname" direction="in" />
       <arg type="s" name="ret" direction="out">
@@ -100,6 +102,13 @@
 	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
       </arg>
     </method>
+    <method name="GetSupportedLanguage">
+      <arg type="s" name="imname" direction="in" />
+      <arg type="s" name="ret" direction="out">
+	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
+      </arg>
+    </method>
+    <!-- deprecated APIs: END -->
     <method name="IsSystemDefault">
       <arg type="s" name="imname" direction="in" />
       <arg type="b" name="ret" direction="out" />
@@ -111,12 +120,6 @@
     <method name="IsXim">
       <arg type="s" name="imname" direction="in" />
       <arg type="b" name="ret" direction="out" />
-    </method>
-    <method name="GetSupportedLanguage">
-      <arg type="s" name="imname" direction="in" />
-      <arg type="s" name="ret" direction="out">
-	<annotation name="org.freedesktop.DBus.GLib.Const" value="" />
-      </arg>
     </method>
   </interface>
 </node>

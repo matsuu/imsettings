@@ -260,6 +260,7 @@ imsettings_get_info_objects(GObject      *object,
 
 static gboolean
 imsettings_get_info_object(GObject      *object,
+			   const gchar  *locale,
 			   const gchar  *name,
 			   GValueArray **ret,
 			   GError      **error)
@@ -269,7 +270,7 @@ imsettings_get_info_object(GObject      *object,
 
 	d(g_print("Getting IMInfo Object...\n"));
 	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), name, error);
+		info = klass->get_info(IMSETTINGS_OBSERVER (object), locale, name, error);
 	} else {
 		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
 			    "No GetInfoObject method is supported");
@@ -355,7 +356,7 @@ imsettings_get_xinput_filename(GObject      *object,
 	gboolean retval = FALSE;
 
 	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), module, error);
+		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
 		if (*error == NULL) {
 			*ret = imsettings_info_get_filename(info);
 			retval = TRUE;
@@ -377,7 +378,7 @@ imsettings_get_im_module_name(GObject      *object,
 	gboolean retval = FALSE;
 
 	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), imname, error);
+		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, imname, error);
 		if (*error == NULL) {
 			retval = TRUE;
 			switch (type) {
@@ -414,7 +415,7 @@ imsettings_get_xim_program(GObject      *object,
 	gboolean retval = FALSE;
 
 	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), module, error);
+		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
 		if (*error == NULL) {
 			*progname = imsettings_info_get_xim_program(info);
 			*progargs = imsettings_info_get_xim_args(info);
@@ -437,7 +438,7 @@ imsettings_get_preferences_program(GObject      *object,
 	gboolean retval = FALSE;
 
 	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), module, error);
+		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
 		if (*error == NULL) {
 			*progname = imsettings_info_get_prefs_program(info);
 			*progargs = imsettings_info_get_prefs_args(info);
@@ -460,7 +461,7 @@ imsettings_get_auxiliary_program(GObject      *object,
 	gboolean retval = FALSE;
 
 	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), module, error);
+		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
 		if (*error == NULL) {
 			*progname = imsettings_info_get_aux_program(info);
 			*progargs = imsettings_info_get_aux_args(info);
@@ -482,7 +483,7 @@ imsettings_get_short_description(GObject      *object,
 	gboolean retval = FALSE;
 
 	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), module, error);
+		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
 		if (*error == NULL) {
 			*ret = imsettings_info_get_short_desc(info);
 			retval = TRUE;
@@ -503,7 +504,7 @@ imsettings_get_long_description(GObject      *object,
 	gboolean retval = FALSE;
 
 	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), module, error);
+		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
 		if (*error == NULL) {
 			*ret = imsettings_info_get_long_desc(info);
 			retval = TRUE;
@@ -524,7 +525,7 @@ imsettings_is_system_default(GObject      *object,
 	gboolean retval = FALSE;
 
 	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), module, error);
+		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
 		if (*error == NULL) {
 			*ret = imsettings_info_is_system_default(info);
 			retval = TRUE;
@@ -545,7 +546,7 @@ imsettings_is_user_default(GObject      *object,
 	gboolean retval = FALSE;
 
 	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), module, error);
+		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
 		if (*error == NULL) {
 			*ret = imsettings_info_is_user_default(info);
 			retval = TRUE;
@@ -566,7 +567,7 @@ imsettings_is_xim(GObject      *object,
 	gboolean retval = FALSE;
 
 	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), module, error);
+		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
 		if (*error == NULL) {
 			*ret = imsettings_info_is_xim(info);
 			retval = TRUE;
@@ -587,7 +588,7 @@ imsettings_get_supported_language(GObject      *object,
 	gboolean retval = FALSE;
 
 	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), module, error);
+		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
 		if (*error == NULL) {
 			*ret = imsettings_info_get_supported_language(info);
 			retval = TRUE;
