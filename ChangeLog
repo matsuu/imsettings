@@ -1,3 +1,8 @@
+2008-09-02  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/Makefile.am (INCLUDES): Fix a build stop due to the lack of
+	the proper options.
+
 2008-09-01  Akira TAGOH  <tagoh@redhat.com>
 
 	* applet/imsettings-applet.desktop.in.in (Icon): Get rid of

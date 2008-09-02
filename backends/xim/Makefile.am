@@ -6,7 +6,7 @@ INCLUDES =						\
 	-I$(top_srcdir)/imsettings			\
 	$(IMSETTINGS_CFLAGS)				\
 	$(XIM_CFLAGS)					\
-	$(null)
+	$(NULL)
 LIBS =							\
 	@LDFLAGS@					\
 	$(IMSETTINGS_LIBS)				\

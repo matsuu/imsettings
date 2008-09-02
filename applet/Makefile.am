@@ -22,7 +22,11 @@ DISTCLEANFILES =					\
 	$(NULL)
 
 if ENABLE_XIM
-INCLUDES += -I$(top_srcdir)/backends/xim -DENABLE_XIM
+INCLUDES += 						\
+	-I$(top_srcdir)/backends/xim			\
+	-DENABLE_XIM					\
+	$(XIM_CFLAGS)					\
+	$(NULL)
 LIBS += $(top_builddir)/backends/xim/libimsettings-xim.la
 DEPS += $(top_builddir)/backends/xim/libimsettings-xim.la
 endif
