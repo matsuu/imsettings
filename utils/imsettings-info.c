@@ -23,6 +23,7 @@
  */
 #include <stdlib.h>
 #include <unistd.h>
+#include <locale.h>
 #include "imsettings/imsettings.h"
 #include "imsettings/imsettings-request.h"
 
@@ -39,6 +40,7 @@ main(int    argc,
 	const gchar *aux_prog, *aux_args;
 	const gchar *short_desc, *long_desc;
 	const gchar *icon;
+	const gchar *locale;
 	gchar *module;
 	gboolean is_system_default, is_user_default, is_xim;
 	GError *error = NULL;
@@ -85,6 +87,9 @@ main(int    argc,
 		goto retry2;
 	}
 
+	locale = setlocale(LC_CTYPE, NULL);
+	imsettings_request_set_locale(req_settings, locale);
+	imsettings_request_set_locale(req_info, locale);
 	if (argc < 2) {
 		module = imsettings_request_what_im_is_running(req_settings, &error);
 		if (error) {

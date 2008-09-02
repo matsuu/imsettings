@@ -101,6 +101,7 @@ TDEF (issue) {
 	imsettings_test_restart_daemons("issue_13" G_DIR_SEPARATOR_S "case2");
 	g_usleep(2 * G_USEC_PER_SEC);
 
+	flag = FALSE;
 	imsettings_request_set_locale(req, "ja_JP.UTF-8");
 	list = imsettings_request_get_im_list(req, &error);
 	fail_unless(list != NULL, "Unable to get the IM list (take 3)");
@@ -160,6 +161,7 @@ TDEF (issue) {
 
 	g_usleep(5 * G_USEC_PER_SEC);
 
+	flag = FALSE;
 	imsettings_request_set_locale(req, "ja_JP.UTF-8");
 	list = imsettings_request_get_im_list(req, &error);
 	fail_unless(list != NULL, "Unable to get the IM list (take 5)");

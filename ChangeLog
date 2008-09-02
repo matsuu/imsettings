@@ -1,5 +1,8 @@
 2008-09-02  Akira TAGOH  <tagoh@redhat.com>
 
+	* utils/imsettings-info.c (main): set the language to query
+	the info. (Issue#16)
+
 	* applet/Makefile.am (INCLUDES): Fix a build stop due to the lack of
 	the proper options.
 
