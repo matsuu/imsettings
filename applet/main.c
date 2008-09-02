@@ -82,8 +82,9 @@ static void   _update_icon         (IMApplet *applet);
 static gchar *_get_acceleration_key(IMApplet *applet);
 #endif
 
+#ifdef ENABLE_XIM
 static GQuark quark_applet = 0;
-
+#endif
 
 /*
  * Private functions

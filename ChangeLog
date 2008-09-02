@@ -1,5 +1,7 @@
 2008-09-02  Akira TAGOH  <tagoh@redhat.com>
 
+	* applet/main.c: ifdef'd a value.
+
 	* utils/imsettings-info.c (main): set the language to query
 	the info. (Issue#16)
 
