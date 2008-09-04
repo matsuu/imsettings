@@ -1,3 +1,9 @@
+2008-09-04  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_set_ic_focus): 
+	ignore the event if it's brought up on reconnecting.
+	(xim_proxy_protocol_real_xim_unset_ic_focus): likewise.
+
 2008-09-02  Akira TAGOH  <tagoh@redhat.com>
 
 	* imsettings/imsettings-request.c (imsettings_request_get_info_object):

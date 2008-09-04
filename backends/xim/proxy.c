@@ -2359,13 +2359,17 @@ xim_proxy_protocol_real_xim_set_ic_focus(GXimProtocol *proto,
 					 gpointer      data)
 {
 	XimProxy *proxy = XIM_PROXY (data);
-	GXimClientConnection *conn = _get_client_connection(proxy, proto);
+	GXimClientConnection *conn;
 	GdkNativeWindow	client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 	guint16 cimid = _get_client_imid(proxy, imid);
 
+	/* the case when cimid is 0 means new XIM server is being brought up.
+	 * So IC is already invalid for new one. we don't need to send this out.
+	 */
 	if (cimid == 0)
-		return FALSE;
+		return TRUE;
 
+	conn = _get_client_connection(proxy, proto);
 	if (!g_xim_client_connection_set_ic_focus(conn, cimid, icid)) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
 				      "Unable to deliver XIM_SET_IC_FOCUS for %p",
@@ -2383,13 +2387,17 @@ xim_proxy_protocol_real_xim_unset_ic_focus(GXimProtocol *proto,
 					   gpointer      data)
 {
 	XimProxy *proxy = XIM_PROXY (data);
-	GXimClientConnection *conn = _get_client_connection(proxy, proto);
+	GXimClientConnection *conn;
 	GdkNativeWindow	client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 	guint16 cimid = _get_client_imid(proxy, imid);
 
+	/* the case when cimid is 0 means new XIM server is being brought up.
+	 * So IC is already invalid for new one. we don't need to send this out.
+	 */
 	if (cimid == 0)
-		return FALSE;
+		return TRUE;
 
+	conn = _get_client_connection(proxy, proto);
 	if (!g_xim_client_connection_unset_ic_focus(conn, cimid, icid)) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
 				      "Unable to deliver XIM_UNSET_IC_FOCUS for %p",
