@@ -306,7 +306,7 @@ imsettings_info_set_property(GObject      *object,
 		g_free(priv->_m_);					\
 		v = g_value_get_string(value);				\
 		if (v && v[0] != 0) {					\
-			priv->_m_ = g_strdup(g_value_get_string(value)); \
+			priv->_m_ = g_strdup(v);			\
 		} else {						\
 			priv->_m_ = NULL;				\
 		}							\
@@ -399,7 +399,17 @@ imsettings_info_set_property(GObject      *object,
 		    _set_str_prop(long_desc);
 		    break;
 	    case PROP_ICON:
-		    _set_str_prop(icon);
+		    G_STMT_START {
+			    const gchar *v;
+
+			    v = g_value_get_string(value);
+			    g_free(priv->icon);
+			    if (v && v[0] != 0) {
+				    priv->icon = g_strdup(v);
+			    } else {
+				    priv->icon = g_strdup(ICONDIR G_DIR_SEPARATOR_S "imsettings-unknown.png");
+			    }
+		    } G_STMT_END;
 		    break;
 	    case PROP_IS_SYSTEM_DEFAULT:
 		    _set_bool_prop(is_system_default);
@@ -722,7 +732,7 @@ imsettings_info_class_init(IMSettingsInfoClass *klass)
 					g_param_spec_string("icon",
 							    _("Icon"),
 							    _("Icon filename to be used on GUI"),
-							    NULL,
+							    ICONDIR G_DIR_SEPARATOR_S "imsettings-unknown.png",
 							    G_PARAM_READWRITE));
 	g_object_class_install_property(object_class, PROP_IS_SYSTEM_DEFAULT,
 					g_param_spec_boolean("is_system_default",

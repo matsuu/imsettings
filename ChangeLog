@@ -1,5 +1,8 @@
 2008-09-05  Akira TAGOH  <tagoh@redhat.com>
 
+	* imsettings/imsettings-info.c (imsettings_info_set_property): set
+	a default value for icon.
+
 	* imsettings-uninstalled.pc.in (Requires): Add missing deps.
 
 2008-09-04  Akira TAGOH  <tagoh@redhat.com>

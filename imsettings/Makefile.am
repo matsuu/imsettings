@@ -7,6 +7,7 @@ INCLUDES =							\
 	-DXINPUT_PATH="\"$(XINPUT_PATH)\""			\
 	-DXINPUT_SUFFIX="\"$(XINPUT_SUFFIX)\""			\
 	-DXINPUTINFO_PATH="\"$(libexecdir)\""			\
+	-DICONDIR="\"$(datadir)/pixmaps\""			\
 	-I$(top_srcdir)/imsettings/				\
 	$(IMSETTINGS_CFLAGS)					\
 	$(NULL)
