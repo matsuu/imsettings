@@ -1,3 +1,17 @@
+2008-09-08  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory_xsettings.c (main): Use libimsettings-xsettings.so
+	instead of using xsettings API directly.
+
+	* imsettings/imsettings-xsettings.[ch]: new for xsettings support.
+
+	* applet/imsettings-applet.schema: Add a key for xsettings support.
+
+	* applet/main.c (_xsettings_terminated): new for xsettings support.
+	(_xsettings_update): likewise.
+	(_preference_xsettings_toggled): likewise.
+	(_preference_activated): Add a preference for xsettings support.
+
 2008-09-05  Akira TAGOH  <tagoh@redhat.com>
 
 	* imsettings/imsettings-info.c (imsettings_info_set_property): set

@@ -2,6 +2,9 @@
 =====================
 * Bug Fixes:
   * rhbz#460695: malformed desktop file
+* Enhancements:
+  * Set a default icon for IM.
+  * XSETTINGS manager support in applet
 
 0.102.0 -> 0.103.0
 =====================

@@ -37,6 +37,7 @@
 #include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
 #include <gconf/gconf.h>
+#include <gconf/gconf-client.h>
 #include <libnotify/notify.h>
 #include "imsettings/imsettings.h"
 #include "imsettings/imsettings-info.h"
@@ -48,37 +49,46 @@
 #include "proxy.h"
 #include "utils.h"
 #endif
+#ifdef ENABLE_XSETTINGS
+#include "imsettings/imsettings-xsettings.h"
+#endif
 #include "radiomenuitem.h"
 
 
 typedef struct _IMApplet {
-	GtkStatusIcon      *status_icon;
-	GtkWidget          *dialog;
-	GtkWidget          *entry_grabkey;
-	GtkWidget          *close_button;
-	DBusConnection     *conn;
-	IMSettingsRequest  *req;
-	IMSettingsRequest  *req_info;
-	NotifyNotification *notify;
-	gchar              *current_im;
-	gchar              *process_im;
-	gboolean            need_notification;
-	gboolean            is_enabled;
-	gboolean            need_update_xinputrc;
+	GtkStatusIcon       *status_icon;
+	GtkWidget           *dialog;
+	GtkWidget           *entry_grabkey;
+	GtkWidget           *close_button;
+	DBusConnection      *conn;
+	IMSettingsRequest   *req;
+	IMSettingsRequest   *req_info;
+	NotifyNotification  *notify;
+	gchar               *current_im;
+	gchar               *process_im;
+	gboolean             need_notification;
+	gboolean             is_enabled;
+	gboolean             need_update_xinputrc;
 #ifdef ENABLE_XIM
-	XimProxy           *server;
-	gchar              *xim_server;
+	XimProxy            *server;
+	gchar               *xim_server;
 #endif
-	KeyCode             keycode;
-	gboolean            watch_accel;
+#ifdef ENABLE_XSETTINGS
+	IMSettingsXSettings *xsettings;
+	GtkWidget           *checkbox_xsettings;
+	gboolean             is_xsettings_manager_enabled;
+	gboolean             is_another_xsettings_manager_running;
+#endif
+	KeyCode              keycode;
+	gboolean             watch_accel;
 	/* configurable */
-	guint               keyval;
-	guint               modifiers;
+	guint                keyval;
+	guint                modifiers;
 } IMApplet;
 
 
 static void   _update_icon         (IMApplet *applet);
-#ifdef ENABLE_SHORTCUT_KEY
+#ifdef ENABLE_ACCEL_KEY
 static gchar *_get_acceleration_key(IMApplet *applet);
 #endif
 
@@ -286,7 +296,85 @@ _toggled(GtkCheckMenuItem *item,
 	}
 }
 
-#ifdef ENABLE_SHORTCUT_KEY
+#ifdef ENABLE_XSETTINGS
+static void
+_xsettings_terminated(gpointer data)
+{
+	IMApplet *applet = data;
+
+	imsettings_xsettings_free(applet->xsettings);
+	applet->xsettings = NULL;
+	applet->is_xsettings_manager_enabled = FALSE;
+}
+
+static void
+_xsettings_update(IMApplet *applet)
+{
+	GConfClient *client = gconf_client_get_default();
+	GConfValue *val;
+	GError *error = NULL;
+
+	val = gconf_client_get(client, "/apps/imsettings-applet/xsettings_manager", &error);
+	if (error) {
+		notify_notification(applet, N_("Error"), error->message, 2);
+		g_error_free(error);
+
+		return;
+	}
+	if (g_ascii_strcasecmp(gconf_value_get_string(val), "auto") == 0) {
+		applet->is_xsettings_manager_enabled = TRUE;
+		if (applet->xsettings == NULL) {
+			if (imsettings_xsettings_is_available(gdk_display_get_default())) {
+				applet->is_another_xsettings_manager_running = TRUE;
+			} else {
+				applet->is_another_xsettings_manager_running = FALSE;
+				applet->xsettings = imsettings_xsettings_new(gdk_display_get_default(),
+									     _xsettings_terminated,
+									     applet);
+			}
+		}
+	} else {
+		applet->is_xsettings_manager_enabled = FALSE;
+		if (applet->xsettings) {
+			imsettings_xsettings_free(applet->xsettings);
+			applet->xsettings = NULL;
+			applet->is_another_xsettings_manager_running = FALSE;
+		}
+			
+	}
+	gconf_value_free(val);
+	g_object_unref(G_OBJECT (client));
+}
+
+static void
+_preference_xsettings_toggled(GtkToggleButton *button,
+			      gpointer         data)
+{
+	IMApplet *applet = data;
+	GConfClient *client = gconf_client_get_default();
+	GConfValue *val;
+	GError *error = NULL;
+
+	val = gconf_value_new(GCONF_VALUE_STRING);
+	if (gtk_toggle_button_get_active(button)) {
+		gconf_value_set_string(val, "auto");
+	} else {
+		gconf_value_set_string(val, "disabled");
+	}
+	gconf_client_set(client, "/apps/imsettings-applet/xsettings_manager",
+			 val, &error);
+	if (error) {
+		notify_notification(applet, N_("Error"), error->message, 2);
+		g_error_free(error);
+	}
+	gconf_value_free(val);
+	g_object_unref(G_OBJECT (client));
+
+	_xsettings_update(applet);
+}
+#endif
+
+#ifdef ENABLE_ACCEL_KEY
 static void
 _setup_acceleration_key(IMApplet *applet)
 {
@@ -424,6 +512,7 @@ _preference_grabkey(GtkButton *button,
 			 G_CALLBACK (_preference_grabbed), applet);
 	gtk_grab_add(applet->entry_grabkey);
 }
+#endif
 
 static void
 _preference_closed(GtkButton *button,
@@ -442,6 +531,10 @@ _preference_activated(GtkMenuItem *item,
 
 	if (applet->dialog == NULL) {
 		gchar *iconfile;
+#ifdef ENABLE_XSETTINGS
+		GtkWidget *align_xsettings;
+#endif
+#ifdef ENABLE_ACCEL_KEY
 		GtkWidget *button_trigger_grab;
 		GtkWidget *vbox_item_trigger, *vbox_item_trigger_value;
 		GtkWidget *hbox_item_trigger_value_entry, *hbox_item_trigger_value_notice;
@@ -454,6 +547,7 @@ _preference_activated(GtkMenuItem *item,
 		GtkWidget *checkbox_trigger_mod5;
 		GtkWidget *image_trigger_notice;
 		guint row, col;
+#endif
 
 		applet->dialog = gtk_dialog_new();
 		gtk_window_set_title(GTK_WINDOW (applet->dialog), _("IMSettings Applet Preferences"));
@@ -466,6 +560,17 @@ _preference_activated(GtkMenuItem *item,
 		gtk_dialog_add_action_widget(GTK_DIALOG (applet->dialog), applet->close_button, GTK_RESPONSE_OK);
 		gtk_dialog_set_has_separator(GTK_DIALOG (applet->dialog), FALSE);
 
+#ifdef ENABLE_XSETTINGS
+		/* xsettings manager */
+		align_xsettings = gtk_alignment_new(0, 0, 0, 0);
+		applet->checkbox_xsettings = gtk_check_button_new_with_mnemonic(_("Run XSETTINGS manager as needed"));
+		gtk_container_add(GTK_CONTAINER (align_xsettings), applet->checkbox_xsettings);
+		gtk_alignment_set_padding(GTK_ALIGNMENT (align_xsettings), 9, 6, 6, 6);
+		g_signal_connect(applet->checkbox_xsettings, "toggled",
+				 G_CALLBACK (_preference_xsettings_toggled), applet);
+#endif /* ENABLE_XSETTINGS */
+
+#ifdef ENABLE_ACCEL_KEY		
 		/* trigger key */
 		vbox_item_trigger = gtk_vbox_new(FALSE, 0);
 
@@ -556,25 +661,40 @@ _preference_activated(GtkMenuItem *item,
 		/* trigger key / packing */
 		gtk_box_pack_start(GTK_BOX (vbox_item_trigger), align_trigger, FALSE, FALSE, 0);
 		gtk_box_pack_start(GTK_BOX (vbox_item_trigger), align_trigger_value, TRUE, TRUE, 0);
+#endif
 
 		/* items / packing */
+#ifdef ENABLE_XSETTINGS
+		gtk_box_pack_start(GTK_BOX (GTK_DIALOG (applet->dialog)->vbox), align_xsettings, TRUE, TRUE, 0);
+#endif
+#ifdef ENABLE_ACCEL_KEY
 		gtk_box_pack_start(GTK_BOX (GTK_DIALOG (applet->dialog)->vbox), vbox_item_trigger, TRUE, TRUE, 0);
+#endif
 
 		/* */
 		g_signal_connect(applet->close_button, "clicked",
 				 G_CALLBACK (_preference_closed), applet);
 		g_object_add_weak_pointer(G_OBJECT (applet->dialog), (gpointer *)&applet->dialog);
 
-		_preference_update_entry(applet);
 		gtk_widget_show_all(GTK_DIALOG (applet->dialog)->vbox);
+#ifdef ENABLE_ACCEL_KEY
+		_preference_update_entry(applet);
 		gtk_widget_hide(table_trigger_modifiers);
+#endif
 	}
 
+#ifdef ENABLE_XSETTINGS
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (applet->checkbox_xsettings),
+				     applet->is_xsettings_manager_enabled);
+	gtk_widget_set_sensitive(applet->checkbox_xsettings,
+				 !applet->is_another_xsettings_manager_running);
+#endif
+#ifdef ENABLE_ACCEL_KEY
 	gtk_editable_set_editable(GTK_EDITABLE (applet->entry_grabkey), FALSE);
+#endif
 	gtk_widget_show(applet->dialog);
 	gtk_widget_grab_focus(applet->close_button);
 }
-#endif
 
 static void
 _popup_menu(GtkStatusIcon *status_icon,
@@ -590,7 +710,6 @@ _popup_menu(GtkStatusIcon *status_icon,
 
 	menu = gtk_menu_new();
 
-#ifdef ENABLE_SHORTCUT_KEY
 	item = gtk_image_menu_item_new_from_stock(GTK_STOCK_PREFERENCES, NULL);
 	g_signal_connect(item, "activate",
 			 G_CALLBACK (_preference_activated),
@@ -598,7 +717,6 @@ _popup_menu(GtkStatusIcon *status_icon,
 	gtk_menu_shell_append(GTK_MENU_SHELL (menu), item);
 	item = gtk_separator_menu_item_new();
 	gtk_menu_shell_append(GTK_MENU_SHELL (menu), item);
-#endif
 
 	array = imsettings_request_get_info_objects(applet->req_info, NULL);
 	if (applet->current_im)
@@ -708,7 +826,7 @@ _activate(GtkStatusIcon *status_icon,
 	g_free(name);
 }
 
-#ifdef ENABLE_SHORTCUT_KEY
+#ifdef ENABLE_ACCEL_KEY
 static GdkFilterReturn
 filter_func(GdkXEvent *gdk_xevent,
 	    GdkEvent  *event,
@@ -977,6 +1095,10 @@ _create_applet(void)
 			   &derror);
 	dbus_connection_add_filter(applet->conn, imsettings_xim_message_filter, applet->server, NULL);
 #endif
+
+#ifdef ENABLE_XSETTINGS
+	_xsettings_update(applet);
+#endif /* ENABLE_XSETTINGS */
 
 	return applet;
 }

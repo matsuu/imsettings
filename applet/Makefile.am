@@ -30,6 +30,11 @@ INCLUDES += 						\
 LIBS += $(top_builddir)/backends/xim/libimsettings-xim.la
 DEPS += $(top_builddir)/backends/xim/libimsettings-xim.la
 endif
+if ENABLE_XSETTINGS
+INCLUDES += -DENABLE_XSETTINGS
+LIBS += $(top_builddir)/imsettings/libimsettings-xsettings.la
+DEPS += $(top_builddir)/imsettings/libimsettings-xsettings.la
+endif
 
 ##
 # Local definitions

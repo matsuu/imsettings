@@ -47,12 +47,19 @@ LT_XIM_CURRENT=0
 LT_XIM_REVISION=0
 LT_XIM_AGE=0
 
+LT_XS_CURRENT=0
+LT_XS_REVISION=0
+LT_XS_AGE=0
+
 AC_SUBST(LT_CURRENT)
 AC_SUBST(LT_REVISION)
 AC_SUBST(LT_AGE)
 AC_SUBST(LT_XIM_CURRENT)
 AC_SUBST(LT_XIM_REVISION)
 AC_SUBST(LT_XIM_AGE)
+AC_SUBST(LT_XS_CURRENT)
+AC_SUBST(LT_XS_REVISION)
+AC_SUBST(LT_XS_AGE)
 
 dnl ======================================================================
 dnl define variables
@@ -105,15 +112,16 @@ PKG_CHECK_MODULES(XIM, libgxim >= $LIBGXIM_REQUIRED
 		       gdk-2.0 >= $GDK_REQUIRED,
 	[use_xim="yes"],
 	[use_xim="no"])
+PKG_CHECK_MODULES(XSETTINGS, x11
+			     gconf-2.0
+			     gdk-2.0,
+	[use_xsettings="yes"],
+	[use_xsettings="no"])
 PKG_CHECK_MODULES(APPLET, gtk+-2.0
 			  libnotify
 			  gconf-2.0,
 	[use_applet="yes"],
 	[use_applet="no"])
-dnl disable applet support so far.
-if [ "x$enable_debug" != "xyes" ]; then
-	use_applet="no"
-fi
 
 AC_SUBST(IMSETTINGS_CFLAGS)
 AC_SUBST(IMSETTINGS_LIBS)
@@ -129,6 +137,8 @@ AC_SUBST(XFCE_CFLAGS)
 AC_SUBST(XFCE_LIBS)
 AC_SUBST(XIM_CFLAGS)
 AC_SUBST(XIM_LIBS)
+AC_SUBST(XSETTINGS_CFLAGS)
+AC_SUBST(XSETTINGS_LIBS)
 AC_SUBST(APPLET_CFLAGS)
 AC_SUBST(APPLET_LIBS)
 AC_SUBST(CHECK_CFLAGS)
@@ -139,6 +149,7 @@ AM_CONDITIONAL(ENABLE_GCONF, test x$use_gconf != xno)
 AM_CONDITIONAL(ENABLE_QT, test x$use_qt != xno)
 AM_CONDITIONAL(ENABLE_XFCE, test x$use_xfce != xno)
 AM_CONDITIONAL(ENABLE_XIM, test x$use_xim != xno)
+AM_CONDITIONAL(ENABLE_XSETTINGS, test x$use_xsettings != xno)
 AM_CONDITIONAL(ENABLE_APPLET, test x$use_applet != xno)
 
 dnl ======================================================================
@@ -306,6 +317,11 @@ echo " XIM support:            $use_xim"
 if test "x$use_xim" = "xyes"; then
    echo "   CFLAGS:               $XIM_CFLAGS"
    echo "   LDFLAGS:              $XIM_LIBS"
+fi
+echo " XSETTINGS support:      $use_xsettings"
+if test "x$use_xsettings" = "xyes"; then
+   echo "   CFLAGS:               $XSETTINGS_CFLAGS"
+   echo "   LDFLAGS:              $XSETTINGS_LIBS"
 fi
 echo " Applet support:         $use_applet"
 if test "x$use_applet" = "xyes"; then

@@ -64,6 +64,15 @@ imsettings_sources =						\
 	$(imsettings_built_sources)				\
 	$(NULL)
 #
+xsettings_sources =						\
+	imsettings-xsettings.c					\
+	imsettings-xsettings.h					\
+	xsettings-common.c					\
+	xsettings-common.h					\
+	xsettings-manager.c					\
+	xsettings-manager.h					\
+	$(NULL)
+#
 stamp_files =							\
 	stamp-bindings.h					\
 	stamp-marshal.h						\
@@ -126,3 +135,20 @@ libimsettings_la_LDFLAGS =					\
 	$(LDFLAGS)						\
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
 	$(NULL)
+#
+if ENABLE_XSETTINGS
+lib_LTLIBRARIES += libimsettings-xsettings.la
+#
+libimsettings_xsettings_la_SOURCES =				\
+	$(xsettings_sources)					\
+	$(NULL)
+libimsettings_xsettings_la_CFLAGS =				\
+	-DG_LOG_DOMAIN="\"IMSettings-XSettings\""		\
+	$(XSETTINGS_CFLAGS)					\
+	$(NULL)
+libimsettings_xsettings_la_LDFLAGS =				\
+	$(LDFLAGS)						\
+	$(XSETTINGS_LIBS)					\
+	-version-info $(LT_XS_CURRENT):$(LT_XS_REVISION):$(LT_XS_AGE)	\
+	$(NULL)
+endif
