@@ -47,6 +47,9 @@
 	G_STMT_START {							\
 		if ((_p_)->pending_tasks < G_MAXULONG) {		\
 			(_p_)->pending_tasks++;				\
+			g_xim_message_debug(G_XIM_CORE (_p_)->message, "proxy/task", \
+					    "%s: pending tasks: %ld\n",	\
+					    __FUNCTION__, (_p_)->pending_tasks); \
 		} else {						\
 			g_xim_message_error(G_XIM_CORE (_p_)->message,	\
 					    "%s: Pending tasks counter is overflowed", \
@@ -57,6 +60,9 @@
 	G_STMT_START {							\
 		if ((_p_)->pending_tasks > 0) {				\
 			(_p_)->pending_tasks--;				\
+			g_xim_message_debug(G_XIM_CORE (_p_)->message, "proxy/task", \
+					    "%s: pending tasks: %ld\n", \
+					    __FUNCTION__, (_p_)->pending_tasks); \
 		} else {						\
 			g_xim_message_error(G_XIM_CORE (_p_)->message,	\
 					    "%s: Pending tasks counter is screwed up", \
