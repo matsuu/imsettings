@@ -135,7 +135,7 @@ _check_version(IMApplet *applet)
 			gchar *body = g_strdup_printf("%s",
 						      error ? error->message : N_("No detailed information"));
 
-			g_printerr(body);
+			g_printerr("%s\n", body);
 			notify_notification(applet, N_("Mismatch the version of im-settings-daemon"), body, 5);
 			g_free(body);
 			if (error)
@@ -168,7 +168,7 @@ _start_process_cb(DBusGProxy *proxy,
 		gchar *body = g_strdup_printf("%s",
 					      error ? error->message : N_("No detailed information"));
 
-		g_printerr("%s: %s", header, body);
+		g_printerr("%s: %s\n", header, body);
 		notify_notification(applet, header, body, 5);
 		g_free(header);
 		g_free(body);
@@ -206,7 +206,7 @@ _stop_process_cb(DBusGProxy *proxy,
 		gchar *body = g_strdup_printf("%s",
 					      error ? error->message : N_("No detailed information"));
 
-		g_printerr("%s: %s", header, body);
+		g_printerr("%s: %s\n", header, body);
 		notify_notification(applet, header, body, 5);
 		g_free(header);
 		g_free(body);
@@ -973,7 +973,7 @@ _create_proxy(IMApplet   *applet,
 
 		body = g_strdup_printf("XIM feature will be turned off.\nDetails: %s",
 				       error->message);
-		g_printerr(body);
+		g_printerr("%s\n", body);
 		notify_notification(applet, N_("Unable to take an ownership for XIM server"), body, 5);
 		g_free(body);
 
