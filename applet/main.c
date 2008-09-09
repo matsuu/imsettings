@@ -400,41 +400,50 @@ _gconf_xsettings_cb(GConfClient *client,
 static void
 _setup_acceleration_key(IMApplet *applet)
 {
+	GdkDisplay *dpy = gdk_display_get_default();
+	GdkScreen *screen;
 	GdkWindow *rootwin = gdk_get_default_root_window();
 	gchar *key;
+	gint i, n_screens = gdk_display_get_n_screens(dpy);
 
 	applet->keycode = XKeysymToKeycode(GDK_WINDOW_XDISPLAY (rootwin),
 					   applet->keyval);
 
-	/* XXX: no way to know if currently running with --sync? */
-	XSynchronize(GDK_WINDOW_XDISPLAY (rootwin), TRUE);
-	gdk_error_trap_push();
-	XGrabKey(GDK_WINDOW_XDISPLAY (rootwin),
-		 applet->keycode, applet->modifiers,
-		 GDK_WINDOW_XWINDOW (rootwin),
-		 False,
-		 GrabModeAsync,
-		 GrabModeAsync);
 	key = _get_acceleration_key(applet);
-	if (gdk_error_trap_pop()) {
-		gchar *escaped_key = g_markup_escape_text(key, -1);
-		gchar *body = g_strdup_printf(_("The acceleration key %s may be invalid. disabled it temporarily."), escaped_key);
+	for (i = 0; i < n_screens; i++) {
+		gdk_error_trap_push();
 
-		notify_notification(applet, N_("Unable to set up the acceleration key"), body, 5);
-		g_free(body);
-		g_free(escaped_key);
+		screen = gdk_display_get_screen(dpy, i);
+		rootwin = gdk_screen_get_root_window(screen);
 
-		applet->keyval = GDK_VoidSymbol;
-		applet->modifiers = 0;
-		applet->watch_accel = FALSE;
-		g_print("Acceleration key: disabled\n");
-	} else {
-		applet->watch_accel = TRUE;
-		g_print("Acceleration key: %s\n", key);
+		/* XXX: no way to know if currently running with --sync? */
+		XSynchronize(GDK_WINDOW_XDISPLAY (rootwin), TRUE);
+		XGrabKey(GDK_WINDOW_XDISPLAY (rootwin),
+			 applet->keycode, applet->modifiers,
+			 GDK_WINDOW_XWINDOW (rootwin),
+			 False,
+			 GrabModeAsync,
+			 GrabModeAsync);
+		if (gdk_error_trap_pop()) {
+			gchar *escaped_key = g_markup_escape_text(key, -1);
+			gchar *body = g_strdup_printf(_("The acceleration key %s may be invalid. disabled it temporarily."), escaped_key);
+
+			notify_notification(applet, N_("Unable to set up the acceleration key"), body, 5);
+			g_free(body);
+			g_free(escaped_key);
+
+			applet->keyval = GDK_VoidSymbol;
+			applet->modifiers = 0;
+			applet->watch_accel = FALSE;
+			g_print("Acceleration key: disabled for Screen %d\n", i);
+		} else {
+			applet->watch_accel = TRUE;
+			g_print("Acceleration key: %s for Screen %d\n", key, i);
+		}
+
+		XSynchronize(GDK_WINDOW_XDISPLAY (rootwin), FALSE);
 	}
 	g_free(key);
-
-	XSynchronize(GDK_WINDOW_XDISPLAY (rootwin), FALSE);
 }
 
 static void
@@ -444,14 +453,21 @@ _gconf_trigger_key_cb(GConfClient *conf,
 		      gpointer     user_data)
 {
 	IMApplet *applet = user_data;
-	GdkWindow *rootwin = gdk_get_default_root_window();
+	GdkDisplay *dpy = gdk_display_get_default();
+	GdkScreen *screen;
+	GdkWindow *rootwin;
 	GConfValue *val;
 	const gchar *key;
+	gint i, n_screens = gdk_display_get_n_screens(dpy);
 
 	if (applet->watch_accel) {
-		XUngrabKey(GDK_WINDOW_XDISPLAY (rootwin),
-			   applet->keycode, applet->modifiers,
-			   GDK_WINDOW_XWINDOW (rootwin));
+		for (i = 0; i < n_screens; i++) {
+			screen = gdk_display_get_screen(dpy, i);
+			rootwin = gdk_screen_get_root_window(screen);
+			XUngrabKey(GDK_WINDOW_XDISPLAY (rootwin),
+				   applet->keycode, applet->modifiers,
+				   GDK_WINDOW_XWINDOW (rootwin));
+		}
 		applet->watch_accel = FALSE;
 	}
 	val = gconf_entry_get_value(entry);
@@ -516,17 +532,26 @@ _preference_grabbed(GtkWidget   *widget,
 	    event->keyval != GDK_Hyper_R &&
 	    event->keyval != GDK_Super_L &&
 	    event->keyval != GDK_Super_R) {
-		GdkWindow *rootwin = gdk_get_default_root_window();
+		GdkDisplay *dpy = gdk_display_get_default();
+		GdkScreen *screen;
+		GdkWindow *rootwin;
+		gint i, n_screens = gdk_display_get_n_screens(dpy);
 
 		gtk_grab_remove(applet->entry_grabkey);
 		gdk_keyboard_ungrab(GDK_CURRENT_TIME);
 		g_signal_handlers_disconnect_by_func(applet->entry_grabkey,
 						     G_CALLBACK (_preference_grabbed),
 						     applet);
-		if (applet->watch_accel)
-			XUngrabKey(GDK_WINDOW_XDISPLAY (rootwin),
-				   applet->keycode, applet->modifiers,
-				   GDK_WINDOW_XWINDOW (rootwin));
+		if (applet->watch_accel) {
+			for (i = 0; i < n_screens; i++) {
+				screen = gdk_display_get_screen(dpy, i);
+				rootwin = gdk_screen_get_root_window(screen);
+				XUngrabKey(GDK_WINDOW_XDISPLAY (rootwin),
+					   applet->keycode, applet->modifiers,
+					   GDK_WINDOW_XWINDOW (rootwin));
+			}
+			applet->watch_accel = FALSE;
+		}
 
 		if (event->keyval == GDK_BackSpace) {
 			applet->keyval = GDK_VoidSymbol;
@@ -1025,6 +1050,8 @@ _create_applet(void)
 	GConfClient *client;
 	GConfValue *val;
 	GError *error = NULL;
+	GdkDisplay *dpy = gdk_display_get_default();
+	gint i, n_screens;
 #ifdef ENABLE_XIM
 	DBusError derror;
 	const gchar *xim;
@@ -1085,9 +1112,14 @@ _create_applet(void)
 		gtk_accelerator_parse(key, &applet->keyval, &applet->modifiers);
 
 	_setup_acceleration_key(applet);
-	gdk_window_add_filter(gdk_get_default_root_window(),
-			      filter_func,
-			      applet);
+
+	n_screens = gdk_display_get_n_screens(dpy);
+	for (i = 0; i < n_screens; i++) {
+		GdkScreen *screen = gdk_display_get_screen(dpy, i);
+		GdkWindow *rootwin = gdk_screen_get_root_window(screen);
+
+		gdk_window_add_filter(rootwin, filter_func, applet);
+	}
 
 	g_timeout_add_seconds(1, _delay_notify, applet);
 
@@ -1108,9 +1140,7 @@ _create_applet(void)
 	xim = imsettings_info_get_xim(info);
 
 	applet->xim_server = g_strdup(xim && xim[0] != 0 ? xim : "none");
-	applet->server = _create_proxy(applet,
-				       gdk_display_get_default(),
-				       TRUE);
+	applet->server = _create_proxy(applet, dpy, TRUE);
 	if (applet->server)
 		g_object_set_qdata(G_OBJECT (applet->server), quark_applet, applet);
 
