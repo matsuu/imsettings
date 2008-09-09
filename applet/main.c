@@ -55,11 +55,13 @@
 #include "radiomenuitem.h"
 
 
+#ifndef d
 #ifdef GNOME_ENABLE_DEBUG
 #define d(x)	x
 #else
 #define d(x)
 #endif /* GNOME_ENABLE_DEBUG */
+#endif
 
 
 typedef struct _IMApplet {
