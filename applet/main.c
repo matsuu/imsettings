@@ -55,6 +55,13 @@
 #include "radiomenuitem.h"
 
 
+#ifdef GNOME_ENABLE_DEBUG
+#define d(x)	x
+#else
+#define d(x)
+#endif /* GNOME_ENABLE_DEBUG */
+
+
 typedef struct _IMApplet {
 	GtkStatusIcon       *status_icon;
 	GtkWidget           *dialog;
