@@ -310,8 +310,8 @@ xim_loopback_real_xim_open(GXimProtocol  *proto,
 		}
 		g_slist_free(list);
 
-		if (g_xim_server_connection_open_reply(G_XIM_SERVER_CONNECTION (proto),
-						       imid, imlist, iclist)) {
+		if (g_xim_server_connection_cmd_open_reply(G_XIM_SERVER_CONNECTION (proto),
+							   imid, imlist, iclist)) {
 			g_hash_table_insert(loopback->conn_table,
 					    GUINT_TO_POINTER (imid),
 					    conn);
@@ -351,8 +351,8 @@ xim_loopback_real_xim_close(GXimProtocol  *proto,
 			    imid,
 			    G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 
-	g_xim_server_connection_close_reply(G_XIM_SERVER_CONNECTION (proto),
-					    imid);
+	g_xim_server_connection_cmd_close_reply(G_XIM_SERVER_CONNECTION (proto),
+						imid);
 	g_hash_table_remove(loopback->conn_table, GUINT_TO_POINTER (imid));
 
 	return TRUE;
@@ -382,10 +382,10 @@ xim_loopback_real_xim_encoding_negotiation(GXimProtocol  *proto,
 	if (l == NULL)
 		return FALSE;
 
-	return g_xim_server_connection_encoding_negotiation_reply(G_XIM_SERVER_CONNECTION (proto),
-								  imid,
-								  0,
-								  g_slist_position((GSList *)encodings, l));
+	return g_xim_server_connection_cmd_encoding_negotiation_reply(G_XIM_SERVER_CONNECTION (proto),
+								      imid,
+								      0,
+								      g_slist_position((GSList *)encodings, l));
 }
 
 static gboolean
@@ -433,7 +433,7 @@ xim_loopback_real_xim_get_im_values(GXimProtocol  *proto,
 
 		list = g_slist_append(list, a);
 	}
-	retval = g_xim_server_connection_get_im_values_reply(G_XIM_SERVER_CONNECTION (conn), imid, list);
+	retval = g_xim_server_connection_cmd_get_im_values_reply(G_XIM_SERVER_CONNECTION (conn), imid, list);
 
 	g_slist_foreach(list, (GFunc)g_xim_attribute_free, NULL);
 	g_slist_free(list);
@@ -452,15 +452,15 @@ xim_loopback_real_xim_create_ic(GXimProtocol *proto,
 
 	conn = g_hash_table_lookup(loopback->conn_table, GUINT_TO_POINTER (imid));
 	if (!conn) {
-		g_xim_connection_error(G_XIM_CONNECTION (proto),
-				       imid, 0, G_XIM_EMASK_VALID_IMID,
-				       G_XIM_ERR_BadProtocol,
-				       0, "Invalid connection");
+		g_xim_connection_cmd_error(G_XIM_CONNECTION (proto),
+					   imid, 0, G_XIM_EMASK_VALID_IMID,
+					   G_XIM_ERR_BadProtocol,
+					   0, "Invalid connection");
 	} else {
-		g_xim_connection_error(G_XIM_CONNECTION (proto),
-				       imid, 0, G_XIM_EMASK_VALID_IMID,
-				       G_XIM_ERR_BadSomething,
-				       0, "Not supported.");
+		g_xim_connection_cmd_error(G_XIM_CONNECTION (proto),
+					   imid, 0, G_XIM_EMASK_VALID_IMID,
+					   G_XIM_ERR_BadSomething,
+					   0, "Not supported.");
 	}
 
 	return TRUE;
@@ -472,7 +472,7 @@ xim_loopback_real_xim_disconnect(GXimProtocol *proto,
 {
 	GXimProtocolPrivate *priv;
 
-	g_xim_server_connection_disconnect_reply(G_XIM_SERVER_CONNECTION (proto));
+	g_xim_server_connection_cmd_disconnect_reply(G_XIM_SERVER_CONNECTION (proto));
 
 	priv = g_xim_protocol_get_private(proto);
 	/* We have to set a flag explicitly, because the loopback class
