@@ -54,6 +54,8 @@ autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 #
 imsettings_applet_SOURCES =				\
 	main.c						\
+	eggaccelerators.c				\
+	eggaccelerators.h				\
 	radiomenuitem.c					\
 	radiomenuitem.h					\
 	$(NULL)

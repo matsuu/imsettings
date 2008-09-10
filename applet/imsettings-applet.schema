@@ -19,7 +19,7 @@
       <applyto>/apps/imsettings-applet/trigger_key</applyto>
       <owner>imsettings-applet</owner>
       <type>string</type>
-      <default>&lt;Alt&gt;F10</default>
+      <default>disabled</default>
       <locale name="C">
 	<short>A shortcut key to connect to/disconnect from Input Method</short>
 	<long>

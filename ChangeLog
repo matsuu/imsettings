@@ -1,3 +1,10 @@
+2008-09-10  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/main.c (_lookup_ignorable_modifiers): new.
+	(_grab_ungrab_with_ignorable_modifiers): new.
+	(_keymap_changed): new.
+	(filter_func): ignore certain modifiers.
+
 2008-09-09  Akira TAGOH  <tagoh@redhat.com>
 
 	* applet/main.c (_gconf_xsettings_cb): new
