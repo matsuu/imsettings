@@ -1,5 +1,8 @@
 2008-09-11  Akira TAGOH  <tagoh@redhat.com>
 
+	* backends/xim/proxy.c (_weak_notify_conn_cb): remove the communication
+	window from hash when disconnecting. (rhbz#452849)
+
 	* imsettings/imsettings-request.c (imsettings_request_what_im_is_running):
 	Fix accessing an invalid pointer.
 

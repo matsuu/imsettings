@@ -2,9 +2,11 @@
 =====================
 * Bug Fixes:
   * rhbz#460695: malformed desktop file
+  * rhbz#452849: [xim] successively speedy Input -> freeze
 * Enhancements:
   * Set a default icon for IM.
   * XSETTINGS manager support in applet
+  * Acceleration key support in applet
 
 0.102.0 -> 0.103.0
 =====================

@@ -1717,8 +1717,9 @@ _weak_notify_conn_cb(gpointer  data,
 	GXimServerTemplate *server = data;
 	GXimCore *core = G_XIM_CORE (server);
 	GdkDisplay *dpy = g_xim_core_get_display(core);
-	GdkNativeWindow nw;
+	GdkNativeWindow nw, comm_window;
 	GdkWindow *w;
+	GXimClientTemplate *client;
 
 	nw = g_xim_transport_get_native_channel(G_XIM_TRANSPORT (object));
 	if (nw) {
@@ -1744,15 +1745,22 @@ _weak_notify_conn_cb(gpointer  data,
 		g_xim_message_debug(core->message, "client/conn",
 				    "Removing a client connection from the table for %p",
 				    G_XIM_NATIVE_WINDOW_TO_POINTER (nw));
+		client = g_hash_table_lookup(XIM_PROXY (server)->client_table,
+					     G_XIM_NATIVE_WINDOW_TO_POINTER (nw));
+		comm_window = g_xim_transport_get_native_channel(G_XIM_TRANSPORT (client->connection));
 		g_hash_table_remove(XIM_PROXY (server)->client_table,
 				    G_XIM_NATIVE_WINDOW_TO_POINTER (nw));
+		g_hash_table_remove(XIM_PROXY (server)->comm_table,
+				    G_XIM_NATIVE_WINDOW_TO_POINTER (comm_window));
 	}
-#ifdef GNOME_ENABLE_DEBUG
-	g_print("live server connection: %d [%d]\n",
-		g_hash_table_size(server->conn_table),
-		g_hash_table_size(XIM_PROXY (server)->sconn_table));
-	g_print("live client connection: %d\n", g_hash_table_size(XIM_PROXY (server)->client_table));
-#endif
+	g_xim_message_debug(core->message, "proxy/conn",
+			    "live server connection: %d [%d][%d]\n",
+			    g_hash_table_size(server->conn_table),
+			    g_hash_table_size(XIM_PROXY (server)->sconn_table),
+			    g_hash_table_size(XIM_PROXY (server)->comm_table));
+	g_xim_message_debug(core->message, "proxy/conn",
+			    "live client connection: %d\n",
+			    g_hash_table_size(XIM_PROXY (server)->client_table));
 }
 
 static GXimConnection *
