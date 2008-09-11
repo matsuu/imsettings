@@ -1,5 +1,14 @@
 2008-09-11  Akira TAGOH  <tagoh@redhat.com>
 
+	Fix rhbz#460703.
+
+	* applet/imsettings-applet.schema: Add a key.
+
+	* applet/main.c (_preference_showicon_toggled): new.
+	(_gconf_show_icon_cb): new.
+	(_preference_activated): Add a check button to determine if the status
+	icon is displayed.
+
 	* backends/xim/proxy.c (_weak_notify_conn_cb): remove the communication
 	window from hash when disconnecting. (rhbz#452849)
 

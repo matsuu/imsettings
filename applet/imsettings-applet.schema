@@ -45,5 +45,18 @@
 	</long>
       </locale>
     </schema>
+    <schema>
+      <key>/schemas/apps/imsettings-applet/show_icon</key>
+      <applyto>/apps/imsettings-applet/show_icon</applyto>
+      <owner>imsettings-applet</owner>
+      <type>bool</type>
+      <default>TRUE</default>
+      <locale name="C">
+	<short>Show the status icon</short>
+	<long>
+	  If true, the icon will be displayed at the systray.
+	</long>
+      </locale>
+    </schema>
   </schemalist>
 </gconfschemafile>

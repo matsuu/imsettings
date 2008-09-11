@@ -79,6 +79,7 @@ typedef struct _IMApplet {
 	gboolean             need_notification;
 	gboolean             is_enabled;
 	gboolean             need_update_xinputrc;
+	GtkWidget           *checkbox_showicon;
 #ifdef ENABLE_XIM
 	XimProxy            *server;
 	gchar               *xim_server;
@@ -308,6 +309,43 @@ _toggled(GtkCheckMenuItem *item,
 			_stop_process(applet, TRUE);
 		}
 	}
+}
+
+static void
+_preference_showicon_toggled(GtkToggleButton *button,
+			     gpointer         data)
+{
+	IMApplet *applet = data;
+	GConfClient *client = gconf_client_get_default();
+	GConfValue *val;
+	GError *error = NULL;
+
+	val = gconf_value_new(GCONF_VALUE_BOOL);
+	if (gtk_toggle_button_get_active(button)) {
+		gconf_value_set_bool(val, TRUE);
+	} else {
+		gconf_value_set_bool(val, FALSE);
+	}
+	gconf_client_set(client, "/apps/imsettings-applet/show_icon",
+			 val, &error);
+	if (error) {
+		notify_notification(applet, N_("Unable to store a value to GConf"), error->message, 5);
+		g_error_free(error);
+	}
+	gconf_value_free(val);
+	g_object_unref(client);
+}
+
+static void
+_gconf_show_icon_cb(GConfClient *conf,
+		    guint        cnxn_id,
+		    GConfEntry  *entry,
+		    gpointer     user_data)
+{
+	IMApplet *applet = user_data;
+	GConfValue *val = gconf_entry_get_value(entry);
+
+	gtk_status_icon_set_visible(applet->status_icon, gconf_value_get_bool(val));
 }
 
 #ifdef ENABLE_XSETTINGS
@@ -663,6 +701,7 @@ _preference_activated(GtkMenuItem *item,
 #ifdef ENABLE_XSETTINGS
 		GtkWidget *align_xsettings;
 #endif
+		GtkWidget *align_showicon;
 		GtkWidget *button_trigger_grab;
 		GtkWidget *vbox_item_trigger, *vbox_item_trigger_value;
 		GtkWidget *hbox_item_trigger_value_entry, *hbox_item_trigger_value_notice;
@@ -681,10 +720,18 @@ _preference_activated(GtkMenuItem *item,
 		gtk_dialog_add_action_widget(GTK_DIALOG (applet->dialog), applet->close_button, GTK_RESPONSE_OK);
 		gtk_dialog_set_has_separator(GTK_DIALOG (applet->dialog), FALSE);
 
+		/* show icon */
+		align_showicon = gtk_alignment_new(0, 0, 0, 0);
+		applet->checkbox_showicon = gtk_check_button_new_with_mnemonic(_("_Show the status icon"));
+		gtk_container_add(GTK_CONTAINER (align_showicon), applet->checkbox_showicon);
+		gtk_alignment_set_padding(GTK_ALIGNMENT (align_showicon), 9, 6, 6, 6);
+		g_signal_connect(applet->checkbox_showicon, "toggled",
+				 G_CALLBACK (_preference_showicon_toggled), applet);
+
 #ifdef ENABLE_XSETTINGS
 		/* xsettings manager */
 		align_xsettings = gtk_alignment_new(0, 0, 0, 0);
-		applet->checkbox_xsettings = gtk_check_button_new_with_mnemonic(_("Run XSETTINGS manager as needed"));
+		applet->checkbox_xsettings = gtk_check_button_new_with_mnemonic(_("_Run XSETTINGS manager as needed"));
 		gtk_container_add(GTK_CONTAINER (align_xsettings), applet->checkbox_xsettings);
 		gtk_alignment_set_padding(GTK_ALIGNMENT (align_xsettings), 9, 6, 6, 6);
 		g_signal_connect(applet->checkbox_xsettings, "toggled",
@@ -708,7 +755,7 @@ _preference_activated(GtkMenuItem *item,
 		/* trigger key: value - entry box */
 		hbox_item_trigger_value_entry = gtk_hbox_new(FALSE, 0);
 		applet->entry_grabkey = gtk_entry_new();
-		button_trigger_grab = gtk_button_new_with_label(_("Grab key"));
+		button_trigger_grab = gtk_button_new_with_mnemonic(_("_Grab key"));
 
 		GTK_WIDGET_UNSET_FLAGS(applet->entry_grabkey, GTK_CAN_FOCUS);
 		g_signal_connect(button_trigger_grab, "clicked",
@@ -737,6 +784,7 @@ _preference_activated(GtkMenuItem *item,
 		gtk_box_pack_start(GTK_BOX (vbox_item_trigger), align_trigger_value, TRUE, TRUE, 0);
 
 		/* items / packing */
+		gtk_box_pack_start(GTK_BOX (GTK_DIALOG (applet->dialog)->vbox), align_showicon, TRUE, TRUE, 0);
 #ifdef ENABLE_XSETTINGS
 		gtk_box_pack_start(GTK_BOX (GTK_DIALOG (applet->dialog)->vbox), align_xsettings, TRUE, TRUE, 0);
 #endif
@@ -751,6 +799,8 @@ _preference_activated(GtkMenuItem *item,
 		_preference_update_entry(applet);
 	}
 
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (applet->checkbox_showicon),
+				     gtk_status_icon_get_visible(applet->status_icon));
 #ifdef ENABLE_XSETTINGS
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (applet->checkbox_xsettings),
 				     applet->is_xsettings_manager_enabled);
@@ -973,6 +1023,7 @@ _delay_notify(gpointer data)
 	g_free(body);
 	g_free(key);
 	g_free(escaped_key);
+	gconf_value_free(val);
 	g_object_unref(G_OBJECT (client));
 
 	return FALSE;
@@ -1128,12 +1179,14 @@ _create_applet(void)
 	notify_init("imsettings-applet");
 	applet->notify = notify_notification_new_with_status_icon("foo", "bar", NULL, applet->status_icon);
 
+	client = gconf_client_get_default();
+
 	/* setup shortcut key */
 	_lookup_ignorable_modifiers(keymap);
 	g_signal_connect(keymap, "keys_changed",
 			 G_CALLBACK (_keymap_changed), applet);
 
-	client = gconf_client_get_default();
+	/* setup gconf */
 	gconf_client_add_dir(client, "/apps/imsettings-applet",
 			     GCONF_CLIENT_PRELOAD_NONE,
 			     NULL);
@@ -1143,16 +1196,27 @@ _create_applet(void)
 	gconf_client_notify_add(client, "/apps/imsettings-applet/xsettings_manager",
 				_gconf_xsettings_cb, applet, NULL, &error);
 #endif
+	gconf_client_notify_add(client, "/apps/imsettings-applet/show_icon",
+				_gconf_show_icon_cb, applet, NULL, &error);
 
 	val = gconf_client_get(client, "/apps/imsettings-applet/trigger_key", NULL);
 	key = gconf_value_get_string(val);
 	if (key)
 		gtk_accelerator_parse(key, &applet->keyval, &applet->modifiers);
+	gconf_value_free(val);
 
 	_setup_acceleration_key(applet);
 	gdk_window_add_filter(rootwin, filter_func, applet);
 
-	g_timeout_add_seconds(1, _delay_notify, applet);
+	val = gconf_client_get(client, "/apps/imsettings-applet/show_icon", NULL);
+	if (val == NULL || gconf_value_get_bool(val)) {
+		g_timeout_add_seconds(1, _delay_notify, applet);
+	} else {
+		gtk_status_icon_set_visible(applet->status_icon, FALSE);
+	}
+	gconf_value_free(val);
+
+	g_object_unref(client);
 
 #ifdef ENABLE_XIM
 	dbus_error_init(&derror);
