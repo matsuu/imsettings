@@ -1,3 +1,8 @@
+2008-09-11  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c: Fix freeze issues might happens when changing
+	IM and reconnecting.
+
 2008-09-10  Akira TAGOH  <tagoh@redhat.com>
 
 	* applet/main.c (_lookup_ignorable_modifiers): new.

@@ -870,15 +870,16 @@ xim_proxy_client_protocol_real_xim_close_reply(GXimProtocol *proto,
 {
 	XimProxy *proxy = XIM_PROXY (data);
 	GXimServerConnection *conn;
-	gboolean retval;
+	gboolean retval = FALSE;
 	guint16 simid = _get_server_imid(proxy, imid);
 
 	if (simid == 0)
-		return FALSE;
+		goto end;
 
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_close_reply(conn, simid);
+  end:
 	DEC_PENDING (proxy);
 
 	_remove_imid(proxy, imid);
@@ -914,14 +915,15 @@ xim_proxy_client_protocol_real_xim_trigger_notify_reply(GXimProtocol *proto,
 	XimProxy *proxy = XIM_PROXY (data);
 	GXimServerConnection *conn;
 	guint16 simid = _get_server_imid(proxy, imid);
-	gboolean retval;
+	gboolean retval = FALSE;
 
 	if (simid == 0)
-		return FALSE;
+		goto end;
 
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_trigger_notify_reply(conn, simid, icid);
+  end:
 	DEC_PENDING (proxy);
 
 	return retval;
@@ -956,11 +958,11 @@ xim_proxy_client_protocol_real_xim_encoding_negotiation_reply(GXimProtocol *prot
 {
 	XimProxy *proxy = XIM_PROXY (data);
 	GXimServerConnection *conn;
-	gboolean retval;
+	gboolean retval = FALSE;
 	guint16 simid = _get_server_imid(proxy, imid);
 
 	if (simid == 0)
-		return FALSE;
+		goto end;
 
 	conn = _get_server_connection(proxy, proto);
 	if (XIM_CLIENT_CONNECTION (proto)->is_reconnecting) {
@@ -997,6 +999,7 @@ xim_proxy_client_protocol_real_xim_encoding_negotiation_reply(GXimProtocol *prot
 	}
 
 	retval = g_xim_server_connection_cmd_encoding_negotiation_reply(conn, simid, category, index_);
+  end:
 	DEC_PENDING (proxy);
 
 	return retval;
@@ -1010,15 +1013,16 @@ xim_proxy_client_protocol_real_xim_query_extension_reply(GXimProtocol *proto,
 {
 	XimProxy *proxy = XIM_PROXY (data);
 	GXimServerConnection *conn;
-	gboolean retval;
+	gboolean retval = FALSE;
 	guint16 simid = _get_server_imid(proxy, imid);
 
 	if (simid == 0)
-		return FALSE;
+		goto end;
 
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_query_extension_reply(conn, simid, extensions);
+  end:
 	DEC_PENDING (proxy);
 
 	return retval;
@@ -1031,11 +1035,11 @@ xim_proxy_client_protocol_real_xim_set_im_values_reply(GXimProtocol *proto,
 {
 	XimProxy *proxy = XIM_PROXY (data);
 	GXimServerConnection *conn;
-	gboolean retval;
+	gboolean retval = FALSE;
 	guint16 simid = _get_server_imid(proxy, imid);
 
 	if (simid == 0)
-		return FALSE;
+		goto end;
 
 	if (XIM_CLIENT_CONNECTION (proto)->is_reconnecting) {
 		_reconnect(proxy, G_XIM_CLIENT_CONNECTION (proto));
@@ -1044,6 +1048,7 @@ xim_proxy_client_protocol_real_xim_set_im_values_reply(GXimProtocol *proto,
 		conn = _get_server_connection(proxy, proto);
 
 		retval = g_xim_server_connection_cmd_set_im_values_reply(conn, simid);
+	  end:
 		DEC_PENDING (proxy);
 	}
 
@@ -1058,13 +1063,13 @@ xim_proxy_client_protocol_real_xim_get_im_values_reply(GXimProtocol *proto,
 {
 	XimProxy *proxy = XIM_PROXY (data);
 	GXimServerConnection *conn;
-	gboolean retval;
+	gboolean retval = FALSE;
 	guint16 simid = _get_server_imid(proxy, imid);
 	GSList *alt = NULL, *l;
 	GXimAttr *attr;
 
 	if (simid == 0)
-		return FALSE;
+		goto end;
 
 	conn = _get_server_connection(proxy, proto);
 	attr = G_XIM_ATTR (G_XIM_CONNECTION (proto)->imattr);
@@ -1089,6 +1094,7 @@ xim_proxy_client_protocol_real_xim_get_im_values_reply(GXimProtocol *proto,
 	}
 
 	retval = g_xim_server_connection_cmd_get_im_values_reply(conn, simid, alt);
+  end:
 	DEC_PENDING (proxy);
 
 	g_slist_foreach(alt,
@@ -1107,15 +1113,16 @@ xim_proxy_client_protocol_real_xim_create_ic_reply(GXimProtocol *proto,
 {
 	XimProxy *proxy = XIM_PROXY (data);
 	GXimServerConnection *conn;
-	gboolean retval;
+	gboolean retval = FALSE;
 	guint16 simid = _get_server_imid(proxy, imid);
 
 	if (simid == 0)
-		return FALSE;
+		goto end;
 
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_create_ic_reply(conn, simid, icid);
+  end:
 	DEC_PENDING (proxy);
 
 	return retval;
@@ -1129,15 +1136,16 @@ xim_proxy_client_protocol_real_xim_destroy_ic_reply(GXimProtocol *proto,
 {
 	XimProxy *proxy = XIM_PROXY (data);
 	GXimServerConnection *conn;
-	gboolean retval;
+	gboolean retval = FALSE;
 	guint16 simid = _get_server_imid(proxy, imid);
 
 	if (simid == 0)
-		return FALSE;
+		goto end;
 
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_destroy_ic_reply(conn, simid, icid);
+  end:
 	DEC_PENDING (proxy);
 
 	return retval;
@@ -1151,15 +1159,16 @@ xim_proxy_client_protocol_real_xim_set_ic_values_reply(GXimProtocol *proto,
 {
 	XimProxy *proxy = XIM_PROXY (data);
 	GXimServerConnection *conn;
-	gboolean retval;
+	gboolean retval = FALSE;
 	guint16 simid = _get_server_imid(proxy, imid);
 
 	if (simid == 0)
-		return FALSE;
+		goto end;
 
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_set_ic_values_reply(conn, simid, icid);
+  end:
 	DEC_PENDING (proxy);
 
 	return retval;
@@ -1174,12 +1183,12 @@ xim_proxy_client_protocol_real_xim_get_ic_values_reply(GXimProtocol *proto,
 {
 	XimProxy *proxy = XIM_PROXY (data);
 	GXimServerConnection *conn;
-	gboolean retval;
+	gboolean retval = FALSE;
 	guint16 simid = _get_server_imid(proxy, imid);
 	GSList *alt = NULL, *l;
 
 	if (simid == 0)
-		return FALSE;
+		goto end;
 
 	conn = _get_server_connection(proxy, proto);
 	for (l = (GSList *)attributes; l != NULL; l = g_slist_next(l)) {
@@ -1203,6 +1212,7 @@ xim_proxy_client_protocol_real_xim_get_ic_values_reply(GXimProtocol *proto,
 	}
 
 	retval = g_xim_server_connection_cmd_get_ic_values_reply(conn, simid, icid, alt);
+  end:
 	DEC_PENDING (proxy);
 
 	g_slist_foreach(alt,
@@ -1262,15 +1272,16 @@ xim_proxy_client_protocol_real_xim_sync_reply(GXimProtocol *proto,
 {
 	XimProxy *proxy = XIM_PROXY (data);
 	GXimConnection *conn;
-	gboolean retval;
+	gboolean retval = FALSE;
 	guint16 simid = _get_server_imid(proxy, imid);
 
 	if (simid == 0)
-		return FALSE;
+		goto end;
 
 	conn = G_XIM_CONNECTION (_get_server_connection(proxy, proto));
 
 	retval = g_xim_connection_cmd_sync_reply(conn, simid, icid);
+  end:
 	DEC_PENDING (proxy);
 
 	return retval;
@@ -1311,15 +1322,16 @@ xim_proxy_client_protocol_real_xim_reset_ic_reply(GXimProtocol  *proto,
 {
 	XimProxy *proxy = XIM_PROXY (data);
 	GXimServerConnection *conn;
-	gboolean retval;
+	gboolean retval = FALSE;
 	guint16 simid = _get_server_imid(proxy, imid);
 
 	if (simid == 0)
-		return FALSE;
+		goto end;
 
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_reset_ic_reply(conn, simid, icid, preedit_string);
+  end:
 	DEC_PENDING (proxy);
 
 	return retval;
@@ -1987,12 +1999,19 @@ xim_proxy_protocol_real_xim_trigger_notify(GXimProtocol *proto,
 					   gpointer      data)
 {
 	XimProxy *proxy = XIM_PROXY (data);
-	GXimClientConnection *conn = _get_client_connection(proxy, proto);
+	GXimClientConnection *conn;
 	GdkNativeWindow	client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 	guint16 cimid = _get_client_imid(proxy, imid);
 
-	if (cimid == 0)
-		return FALSE;
+	/* the case when cimid is 0 means new XIM server is being brought up.
+	 * So IC is already invalid for new one. we don't need to send this out.
+	 */
+	if (cimid == 0) {
+		return g_xim_connection_cmd_error(G_XIM_CONNECTION (proto), imid, icid, G_XIM_EMASK_VALID_IMID | G_XIM_EMASK_VALID_ICID,
+						  G_XIM_ERR_BadProtocol, 0, "input-context id is inavlid due to reconnecting");
+	}
+
+	conn = _get_client_connection(proxy, proto);
 
 	if (!g_xim_client_connection_cmd_trigger_notify(conn, cimid, icid, flag, index_, event_mask, TRUE)) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
@@ -2270,13 +2289,20 @@ xim_proxy_protocol_real_xim_set_ic_values(GXimProtocol *proto,
 					  gpointer      data)
 {
 	XimProxy *proxy = XIM_PROXY (data);
-	GXimClientConnection *conn = _get_client_connection(proxy, proto);
+	GXimClientConnection *conn;
 	GdkNativeWindow	client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 	guint16 cimid = _get_client_imid(proxy, imid);
 	GSList *alt = NULL, *l;
 
-	if (cimid == 0)
-		return FALSE;
+	/* the case when cimid is 0 means new XIM server is being brought up.
+	 * So IC is already invalid for new one. we don't need to send this out.
+	 */
+	if (cimid == 0) {
+		return g_xim_connection_cmd_error(G_XIM_CONNECTION (proto), imid, icid, G_XIM_EMASK_VALID_IMID | G_XIM_EMASK_VALID_ICID,
+						  G_XIM_ERR_BadProtocol, 0, "input-context id is inavlid due to reconnecting");
+	}
+
+	conn = _get_client_connection(proxy, proto);
 
 	for (l = (GSList *)attributes; l != NULL; l = g_slist_next(l)) {
 		GXimAttribute *a, *orig = l->data;
@@ -2316,13 +2342,20 @@ xim_proxy_protocol_real_xim_get_ic_values(GXimProtocol *proto,
 					  gpointer      data)
 {
 	XimProxy *proxy = XIM_PROXY (data);
-	GXimClientConnection *conn = _get_client_connection(proxy, proto);
+	GXimClientConnection *conn;
 	GdkNativeWindow	client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 	guint16 cimid = _get_client_imid(proxy, imid);
 	GSList *alt = NULL, *l;
 
-	if (cimid == 0)
-		return FALSE;
+	/* the case when cimid is 0 means new XIM server is being brought up.
+	 * So IC is already invalid for new one. we don't need to send this out.
+	 */
+	if (cimid == 0) {
+		return g_xim_connection_cmd_error(G_XIM_CONNECTION (proto), imid, icid, G_XIM_EMASK_VALID_IMID | G_XIM_EMASK_VALID_ICID,
+						  G_XIM_ERR_BadProtocol, 0, "input-context id is inavlid due to reconnecting");
+	}
+
+	conn = _get_client_connection(proxy, proto);
 
 	for (l = (GSList *)attr_id; l != NULL; l = g_slist_next(l)) {
 		guint16 id = GPOINTER_TO_UINT (l->data);
@@ -2427,6 +2460,7 @@ xim_proxy_protocol_real_xim_forward_event(GXimProtocol *proto,
 	GdkNativeWindow	client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 	guint16 cimid = _get_client_imid(proxy, imid);
 
+	/* XXX: should we take care of reconnection issue here? */
 	if (cimid == 0)
 		return FALSE;
 
@@ -2455,12 +2489,18 @@ xim_proxy_protocol_real_xim_sync(GXimProtocol *proto,
 				 gpointer      data)
 {
 	XimProxy *proxy = XIM_PROXY (data);
-	GXimClientConnection *conn = _get_client_connection(proxy, proto);
+	GXimClientConnection *conn;
 	GdkNativeWindow	client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 	guint16 cimid = _get_client_imid(proxy, imid);
 
-	if (cimid == 0)
-		return FALSE;
+	/* the case when cimid is 0 means new XIM server is being brought up.
+	 * So IC is already invalid for new one. we don't need to send this out.
+	 */
+	if (cimid == 0) {
+		return g_xim_connection_cmd_sync_reply(G_XIM_CONNECTION (proto), imid, icid);
+	}
+
+	conn = _get_client_connection(proxy, proto);
 
 	if (!g_xim_client_connection_cmd_sync(conn, cimid, icid, TRUE)) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
@@ -2483,19 +2523,20 @@ xim_proxy_protocol_real_xim_sync_reply(GXimProtocol *proto,
 	GXimConnection *conn = G_XIM_CONNECTION (_get_client_connection(proxy, proto));
 	GdkNativeWindow	client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 	guint16 cimid = _get_client_imid(proxy, imid);
+	gboolean retval = FALSE;
 
 	if (cimid == 0)
-		return FALSE;
+		goto end;
 
-	if (!g_xim_connection_cmd_sync_reply(conn, cimid, icid)) {
+	if (!(retval = g_xim_connection_cmd_sync_reply(conn, cimid, icid))) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
 				      "Unable to deliver XIM_SYNC_REPLY for %p",
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
-		return FALSE;
 	}
+  end:
 	DEC_PENDING (proxy);
 
-	return TRUE;
+	return retval;
 }
 
 static gboolean
@@ -2505,12 +2546,19 @@ xim_proxy_protocol_real_xim_reset_ic(GXimProtocol *proto,
 				     gpointer      data)
 {
 	XimProxy *proxy = XIM_PROXY (data);
-	GXimClientConnection *conn = _get_client_connection(proxy, proto);
+	GXimClientConnection *conn;
 	GdkNativeWindow	client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 	guint16 cimid = _get_client_imid(proxy, imid);
 
-	if (cimid == 0)
-		return FALSE;
+	/* the case when cimid is 0 means new XIM server is being brought up.
+	 * So IC is already invalid for new one. we don't need to send this out.
+	 */
+	if (cimid == 0) {
+		return g_xim_connection_cmd_error(G_XIM_CONNECTION (proto), imid, icid, G_XIM_EMASK_VALID_IMID | G_XIM_EMASK_VALID_ICID,
+						  G_XIM_ERR_BadProtocol, 0, "input-context id is inavlid due to reconnecting");
+	}
+
+	conn = _get_client_connection(proxy, proto);
 
 	if (!g_xim_client_connection_cmd_reset_ic(conn, cimid, icid, TRUE)) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
@@ -2534,19 +2582,20 @@ xim_proxy_protocol_real_xim_preedit_start_reply(GXimProtocol *proto,
 	GXimClientConnection *conn = _get_client_connection(proxy, proto);
 	GdkNativeWindow	client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 	guint16 cimid = _get_client_imid(proxy, imid);
+	gboolean retval = FALSE;
 
 	if (cimid == 0)
-		return FALSE;
+		goto end;
 
-	if (!g_xim_client_connection_cmd_preedit_start_reply(conn, cimid, icid, return_value)) {
+	if (!(retval = g_xim_client_connection_cmd_preedit_start_reply(conn, cimid, icid, return_value))) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
 				      "Unable to deliver XIM_PREEDIT_START_REPLY for %p",
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
-		return FALSE;
 	}
+  end:
 	DEC_PENDING (proxy);
 
-	return TRUE;
+	return retval;
 }
 
 static gboolean
@@ -2560,19 +2609,20 @@ xim_proxy_protocol_real_xim_preedit_caret_reply(GXimProtocol *proto,
 	GXimClientConnection *conn = _get_client_connection(proxy, proto);
 	GdkNativeWindow	client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 	guint16 cimid = _get_client_imid(proxy, imid);
+	gboolean retval = FALSE;
 
 	if (cimid == 0)
-		return FALSE;
+		goto end;
 
-	if (!g_xim_client_connection_cmd_preedit_caret_reply(conn, cimid, icid, position)) {
+	if (!(retval = g_xim_client_connection_cmd_preedit_caret_reply(conn, cimid, icid, position))) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
 				      "Unable to deliver XIM_PREEDIT_CARET_REPLY for %p",
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
-		return FALSE;
 	}
+  end:
 	DEC_PENDING (proxy);
 
-	return TRUE;
+	return retval;
 }
 
 static void
