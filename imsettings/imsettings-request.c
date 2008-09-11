@@ -423,7 +423,7 @@ imsettings_request_what_im_is_running(IMSettingsRequest  *imsettings,
 				      GError            **error)
 {
 	IMSettingsRequestPrivate *priv;
-	gchar *retval;
+	gchar *retval = NULL;
 	GError *err = NULL;
 
 	g_return_val_if_fail (IMSETTINGS_IS_REQUEST (imsettings), FALSE);

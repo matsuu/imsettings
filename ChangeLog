@@ -1,5 +1,8 @@
 2008-09-11  Akira TAGOH  <tagoh@redhat.com>
 
+	* imsettings/imsettings-request.c (imsettings_request_what_im_is_running):
+	Fix accessing an invalid pointer.
+
 	* backends/xim/proxy.c: Fix freeze issues might happens when changing
 	IM and reconnecting.
 
