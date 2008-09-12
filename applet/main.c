@@ -614,6 +614,10 @@ _preference_grabbed(GtkWidget   *widget,
 	    event->keyval != GDK_Super_L &&
 	    event->keyval != GDK_Super_R) {
 		GdkWindow *rootwin = gdk_get_default_root_window();
+		GConfClient *client = gconf_client_get_default();
+		GConfValue *val;
+		GError *error = NULL;
+		gchar *key;
 
 		gtk_grab_remove(applet->entry_grabkey);
 		gdk_keyboard_ungrab(GDK_CURRENT_TIME);
@@ -630,27 +634,21 @@ _preference_grabbed(GtkWidget   *widget,
 			applet->modifiers = 0;
 			applet->watch_accel = FALSE;
 		} else {
-			GConfClient *client = gconf_client_get_default();
-			GConfValue *val;
-			GError *error = NULL;
-			gchar *key;
-
 			applet->keyval = event->keyval;
 			applet->modifiers = event->state;
-
-			key = _get_acceleration_key(applet);
-			val = gconf_value_new(GCONF_VALUE_STRING);
-			gconf_value_set_string(val, key);
-			gconf_client_set(client, "/apps/imsettings-applet/trigger_key",
-					 val, &error);
-			if (error) {
-				notify_notification(applet, N_("Unable to store the acceleration key into GConf"), error->message, 5);
-				g_error_free(error);
-			}
-			g_free(key);
-			gconf_value_free(val);
-			g_object_unref(G_OBJECT (client));
 		}
+		key = _get_acceleration_key(applet);
+		val = gconf_value_new(GCONF_VALUE_STRING);
+		gconf_value_set_string(val, key);
+		gconf_client_set(client, "/apps/imsettings-applet/trigger_key",
+				 val, &error);
+		if (error) {
+			notify_notification(applet, N_("Unable to store the acceleration key into GConf"), error->message, 5);
+			g_error_free(error);
+		}
+		g_free(key);
+		gconf_value_free(val);
+		g_object_unref(G_OBJECT (client));
 
 		_preference_update_entry(applet);
 	}
