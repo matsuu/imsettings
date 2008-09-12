@@ -1,3 +1,24 @@
+2008-09-13  Akira TAGOH  <tagoh@redhat.com>
+
+	X11's compose data support. (Issue#15)
+	
+	* backends/xim/loopback.c (xim_loopback_ic_new): new.
+	(xim_loopback_ic_free): new.
+	(xim_loopback_connection_real_finalize): new.
+	(xim_loopback_connection_class_init): new.
+	(xim_loopback_connection_init): new.
+	(xim_loopback_connection_find_icid): new.
+	(xim_loopback_real_xim_open): read compose data.
+	(xim_loopback_real_xim_create_ic): create input-context.
+	(xim_loopback_real_xim_set_ic_values): new.
+	(xim_loopback_real_xim_get_ic_values): new.
+	(xim_loopback_real_xim_set_ic_focus): new.
+	(xim_loopback_real_xim_unset_ic_focus): new.
+	(xim_loopback_real_xim_forward_event): new.
+	(xim_loopback_real_xim_sync_reply): new.
+
+	* backends/xim/compose.[ch]: new.
+
 2008-09-12  Akira TAGOH  <tagoh@redhat.com>
 
 	* applet/main.c (_preference_grabbed): Store the value to gconf even

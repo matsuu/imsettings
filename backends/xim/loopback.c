@@ -28,7 +28,10 @@
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
+#include <X11/Xlib.h>
 #include <glib/gi18n-lib.h>
+#include <gdk/gdkkeysyms.h>
+#include <gdk/gdkx.h>
 #include <libgxim/gximattr.h>
 #include <libgxim/gximmessage.h>
 #include <libgxim/gximmisc.h>
@@ -45,6 +48,8 @@ enum {
 	LAST_SIGNAL
 };
 
+static gboolean xim_loopback_real_xim_disconnect          (GXimProtocol  *proto,
+                                                           gpointer       data);
 static gboolean xim_loopback_real_xim_open                (GXimProtocol  *proto,
                                                            const GXimStr *locale,
                                                            gpointer       data);
@@ -62,19 +67,60 @@ static gboolean xim_loopback_real_xim_get_im_values       (GXimProtocol  *proto,
                                                            gpointer       data);
 static gboolean xim_loopback_real_xim_create_ic           (GXimProtocol  *proto,
                                                            guint16        imid,
+                                                           GSList        *attributes,
+                                                           gpointer       data);
+static gboolean xim_loopback_real_xim_set_ic_values       (GXimProtocol  *proto,
+                                                           guint16        imid,
+                                                           guint16        icid,
                                                            const GSList  *attributes,
                                                            gpointer       data);
-static gboolean xim_loopback_real_xim_disconnect          (GXimProtocol  *proto,
+static gboolean xim_loopback_real_xim_get_ic_values       (GXimProtocol  *proto,
+							   guint16        imid,
+							   guint16        icid,
+							   const GSList  *attr_id,
+							   gpointer       data);
+static gboolean xim_loopback_real_xim_set_ic_focus        (GXimProtocol  *proto,
+                                                           guint16        imid,
+                                                           guint16        icid,
+                                                           gpointer       data);
+static gboolean xim_loopback_real_xim_unset_ic_focus      (GXimProtocol  *proto,
+                                                           guint16        imid,
+                                                           guint16        icid,
+                                                           gpointer       data);
+static gboolean xim_loopback_real_xim_forward_event       (GXimProtocol  *proto,
+                                                           guint16        imid,
+                                                           guint16        icid,
+                                                           guint16        flag,
+                                                           GdkEvent      *event,
+                                                           gpointer       data);
+static gboolean xim_loopback_real_xim_sync_reply          (GXimProtocol  *proto,
+							   guint16        imid,
+							   guint16        icid,
 							   gpointer       data);
 
 //static guint signals[LAST_SIGNAL] = { 0 };
 
 
 G_DEFINE_TYPE (XimLoopback, xim_loopback, G_TYPE_XIM_SRV_TMPL);
+G_DEFINE_TYPE (XimLoopbackConnection, xim_loopback_connection, G_TYPE_XIM_SERVER_CONNECTION);
 
 /*
  * Private functions
  */
+static XimLoopbackIC *
+xim_loopback_ic_new(void)
+{
+	return g_new0(XimLoopbackIC, 1);
+}
+
+static void
+xim_loopback_ic_free(gpointer data)
+{
+	XimLoopbackIC *ic = data;
+
+	g_free(ic);
+}
+
 static void
 xim_loopback_real_finalize(GObject *object)
 {
@@ -111,12 +157,18 @@ static void
 xim_loopback_init(XimLoopback *loopback)
 {
 	GXimLazySignalConnector sigs[] = {
+		{"XIM_DISCONNECT", G_CALLBACK (xim_loopback_real_xim_disconnect), loopback},
 		{"XIM_OPEN", G_CALLBACK (xim_loopback_real_xim_open), loopback},
 		{"XIM_CLOSE", G_CALLBACK (xim_loopback_real_xim_close), loopback},
 		{"XIM_ENCODING_NEGOTIATION", G_CALLBACK (xim_loopback_real_xim_encoding_negotiation), loopback},
 		{"XIM_GET_IM_VALUES", G_CALLBACK (xim_loopback_real_xim_get_im_values), loopback},
 		{"XIM_CREATE_IC", G_CALLBACK (xim_loopback_real_xim_create_ic), loopback},
-		{"XIM_DISCONNECT", G_CALLBACK (xim_loopback_real_xim_disconnect), loopback},
+		{"XIM_SET_IC_VALUES", G_CALLBACK (xim_loopback_real_xim_set_ic_values), loopback},
+		{"XIM_GET_IC_VALUES", G_CALLBACK (xim_loopback_real_xim_get_ic_values), loopback},
+		{"XIM_SET_IC_FOCUS", G_CALLBACK (xim_loopback_real_xim_set_ic_focus), loopback},
+		{"XIM_UNSET_IC_FOCUS", G_CALLBACK (xim_loopback_real_xim_unset_ic_focus), loopback},
+		{"XIM_FORWARD_EVENT", G_CALLBACK (xim_loopback_real_xim_forward_event), loopback},
+		{"XIM_SYNC_REPLY", G_CALLBACK (xim_loopback_real_xim_sync_reply), loopback},
 		{NULL, NULL, NULL}
 	};
 
@@ -124,6 +176,31 @@ xim_loopback_init(XimLoopback *loopback)
 
 	loopback->conn_table = g_hash_table_new(g_direct_hash, g_direct_equal);
 	loopback->latest_imid = 1;
+}
+
+static void
+xim_loopback_connection_real_finalize(GObject *object)
+{
+	XimLoopbackConnection *conn = XIM_LOOPBACK_CONNECTION (object);
+
+	compose_free(conn->composer);
+	g_hash_table_destroy(conn->ic_table);
+}
+
+static void
+xim_loopback_connection_class_init(XimLoopbackConnectionClass *klass)
+{
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	object_class->finalize = xim_loopback_connection_real_finalize;
+}
+
+static void
+xim_loopback_connection_init(XimLoopbackConnection *conn)
+{
+	conn->composer = compose_new();
+	conn->ic_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, xim_loopback_ic_free);
+	conn->latest_icid = 1;
 }
 
 static guint
@@ -145,6 +222,27 @@ xim_loopback_find_imid(XimLoopback *loopback)
 	}
 
 	return loopback->latest_imid;
+}
+
+static guint
+xim_loopback_connection_find_icid(XimLoopbackConnection *conn)
+{
+	gboolean overflowed = FALSE;
+	guint begin_id = conn->latest_icid;
+
+	while (1) {
+		if (g_hash_table_lookup(conn->ic_table, GUINT_TO_POINTER (conn->latest_icid)) == NULL)
+			break;
+		if (overflowed && conn->latest_icid >= begin_id)
+			return 0;
+		conn->latest_icid++;
+		if (conn->latest_icid == 0) {
+			overflowed = TRUE;
+			conn->latest_icid = 1;
+		}
+	}
+
+	return conn->latest_icid;
 }
 
 static void
@@ -201,6 +299,25 @@ xim_loopback_set_default_ic_values(XimLoopback *loopback,
 
 /* protocol callbacks */
 static gboolean
+xim_loopback_real_xim_disconnect(GXimProtocol *proto,
+				 gpointer      data)
+{
+	GXimProtocolPrivate *priv;
+
+	g_xim_server_connection_cmd_disconnect_reply(G_XIM_SERVER_CONNECTION (proto));
+
+	priv = g_xim_protocol_get_private(proto);
+	/* We have to set a flag explicitly, because the loopback class
+	 * is working together with the proxy class in the same process.
+	 * Which means the refcount of GdkWindow is kept. thus, DestroyNotify
+	 * won't be raised.
+	 */
+	priv->is_disconnected = TRUE;
+
+	return TRUE;
+}
+
+static gboolean
 xim_loopback_real_xim_open(GXimProtocol  *proto,
 			   const GXimStr *locale,
 			   gpointer       data)
@@ -210,6 +327,7 @@ xim_loopback_real_xim_open(GXimProtocol  *proto,
 	GXimICAttr *icattr = NULL;
 	guint imid = 0;
 	XimLoopback *loopback = XIM_LOOPBACK (data);
+	XimLoopbackConnection *lconn = XIM_LOOPBACK_CONNECTION (proto);
 	GXimConnection *conn = G_XIM_CONNECTION (proto);
 	GdkNativeWindow client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 	GSList *l, *imlist = NULL, *iclist = NULL, *list;
@@ -224,6 +342,18 @@ xim_loopback_real_xim_open(GXimProtocol  *proto,
 				    g_xim_str_get_string(locale),
 				    G_XIM_NATIVE_WINDOW_TO_POINTER (client_window),
 				    imid);
+		if (compose_open(lconn->composer, g_xim_str_get_string(locale))) {
+			if (!compose_parse(lconn->composer)) {
+				g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
+						      "Unable to parse a compose file for %s. disabling.",
+						      g_xim_str_get_string(locale));
+			}
+			compose_close(lconn->composer);
+		} else {
+			g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
+					      "Unable to open a compose file for %s. disabling.",
+					      g_xim_str_get_string(locale));
+		}
 		imattr = g_xim_im_attr_new(XNQueryInputStyle);
 		icattr = g_xim_ic_attr_new(XNInputStyle ","		\
 					   XNClientWindow ","		\
@@ -444,11 +574,14 @@ xim_loopback_real_xim_get_im_values(GXimProtocol  *proto,
 static gboolean
 xim_loopback_real_xim_create_ic(GXimProtocol *proto,
 				guint16       imid,
-				const GSList *attributes,
+				GSList       *attributes,
 				gpointer      data)
 {
 	XimLoopback *loopback = XIM_LOOPBACK (data);
+	XimLoopbackConnection *lconn = XIM_LOOPBACK_CONNECTION (proto);
+	XimLoopbackIC *ic;
 	GXimConnection *conn;
+	guint icid;
 
 	conn = g_hash_table_lookup(loopback->conn_table, GUINT_TO_POINTER (imid));
 	if (!conn) {
@@ -457,31 +590,276 @@ xim_loopback_real_xim_create_ic(GXimProtocol *proto,
 					   G_XIM_ERR_BadProtocol,
 					   0, "Invalid connection");
 	} else {
-		g_xim_connection_cmd_error(G_XIM_CONNECTION (proto),
-					   imid, 0, G_XIM_EMASK_VALID_IMID,
-					   G_XIM_ERR_BadSomething,
-					   0, "Not supported.");
+		icid = xim_loopback_connection_find_icid(lconn);
+		if (icid > 0) {
+			if (g_xim_server_connection_cmd_create_ic_reply(G_XIM_SERVER_CONNECTION (proto),
+									imid, icid)) {
+				GSList *list, *l;
+				GXimAttr *attr = G_XIM_ATTR (G_XIM_CONNECTION (proto)->default_icattr);
+
+				ic = xim_loopback_ic_new();
+				G_XIM_CHECK_ALLOC (ic, FALSE);
+
+				ic->icattr = g_xim_ic_attr_new(XNInputStyle "," \
+							       XNClientWindow "," \
+							       XNFocusWindow "," \
+							       XNPreeditAttributes "," \
+							       XNForeground ","	\
+							       XNBackground ","	\
+							       XNSpotLocation "," \
+							       XNFontSet "," \
+							       XNArea "," \
+							       XNLineSpace "," \
+							       XNStatusAttributes "," \
+							       XNAreaNeeded ","	\
+							       XNColormap "," \
+							       XNStdColormap "," \
+							       XNBackgroundPixmap "," \
+							       XNCursor "," \
+							       XNFilterEvents "," \
+							       XNSeparatorofNestedList);
+
+				list = g_xim_attr_get_supported_attributes(attr);
+				for (l = list; l != NULL; l = g_slist_next(l)) {
+					if (l->data && g_xim_attr_attribute_is_enabled(attr, l->data)) {
+						guint id;
+						GType gtype;
+						GXimValueType vtype;
+						GString *s;
+						GXimRawAttr *raw;
+
+						id = g_xim_attr_get_attribute_id(attr, l->data);
+						gtype = g_xim_attr_get_gtype_by_name(attr, l->data);
+						vtype = g_xim_gtype_to_value_type(gtype);
+						if (vtype == G_XIM_TYPE_INVALID) {
+							g_xim_message_bug(G_XIM_CORE (loopback)->message,
+									  "Unable to compose a XICATTR for %s",
+									  (gchar *)l->data);
+							continue;
+						}
+						s = g_string_new(l->data);
+						G_XIM_CHECK_ALLOC (s, FALSE);
+
+						raw = g_xim_raw_attr_new_with_value(id, s, vtype);
+						G_XIM_CHECK_ALLOC (raw, FALSE);
+
+						g_xim_attr_set_raw_attr(G_XIM_ATTR (ic->icattr), raw);
+
+						g_xim_raw_attr_free(raw);
+					}
+					g_free(l->data);
+				}
+				g_slist_free(list);
+
+				for (l = attributes; l != NULL; l = g_slist_next(l)) {
+					GXimAttribute *a = l->data;
+					gchar *name;
+
+					name = g_xim_attr_get_attribute_name(G_XIM_ATTR (ic->icattr), a->id);
+					g_object_set(ic->icattr, name, a->v.pointer, NULL);
+				}
+				g_hash_table_insert(lconn->ic_table,
+						    GUINT_TO_POINTER (icid),
+						    ic);
+				/* XXX: need to get rid of X specific event mask? */
+				g_xim_server_connection_cmd_set_event_mask(G_XIM_SERVER_CONNECTION (proto),
+									   imid, icid,
+									   KeyPress | KeyRelease,
+									   ~(KeyPress | KeyRelease));
+			} else {
+				g_xim_connection_cmd_error(G_XIM_CONNECTION (proto),
+							   imid, 0, G_XIM_EMASK_VALID_IMID,
+							   G_XIM_ERR_BadSomething,
+							   0, "Unable to deliver XIM_CREATE_IC_REPLY");
+			}
+		} else {
+			g_xim_connection_cmd_error(G_XIM_CONNECTION (proto),
+						   imid, 0, G_XIM_EMASK_VALID_IMID,
+						   G_XIM_ERR_BadSomething,
+						   0, "Unable to assign input-context ID");
+		}
 	}
 
 	return TRUE;
 }
 
 static gboolean
-xim_loopback_real_xim_disconnect(GXimProtocol *proto,
+xim_loopback_real_xim_set_ic_values(GXimProtocol *proto,
+				    guint16       imid,
+				    guint16       icid,
+				    const GSList *attributes,
+				    gpointer      data)
+{
+	XimLoopbackConnection *lconn = XIM_LOOPBACK_CONNECTION (proto);
+	XimLoopbackIC *ic = g_hash_table_lookup(lconn->ic_table, GUINT_TO_POINTER (icid));
+	const GSList *l;
+
+	if (ic == NULL) {
+		gchar *msg = g_strdup_printf("Invalid input-context ID: [%d,%d]", imid, icid);
+		gboolean retval;
+
+		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
+				      msg);
+		retval = g_xim_connection_cmd_error(G_XIM_CONNECTION (proto),
+						    imid, icid, G_XIM_EMASK_VALID_IMID | G_XIM_EMASK_VALID_ICID,
+						    G_XIM_ERR_BadProtocol,
+						    0, msg);
+		g_free(msg);
+
+		return retval;
+	}
+	for (l = attributes; l != NULL; l = g_slist_next(l)) {
+		GXimAttribute *a = l->data;
+		gchar *name;
+
+		name = g_xim_attr_get_attribute_name(G_XIM_ATTR (ic->icattr), a->id);
+		g_object_set(ic->icattr, name, a->v.pointer, NULL);
+	}
+
+	return g_xim_server_connection_cmd_set_ic_values_reply(G_XIM_SERVER_CONNECTION (proto), imid, icid);
+}
+
+static gboolean
+xim_loopback_real_xim_get_ic_values(GXimProtocol *proto,
+				    guint16       imid,
+				    guint16       icid,
+				    const GSList *attr_id,
+				    gpointer      data)
+{
+	XimLoopbackConnection *lconn = XIM_LOOPBACK_CONNECTION (proto);
+	XimLoopbackIC *ic = g_hash_table_lookup(lconn->ic_table, GUINT_TO_POINTER (icid));
+	const GSList *l;
+	GSList *list = NULL;
+	gboolean retval = FALSE;
+
+	if (ic == NULL) {
+		gchar *msg = g_strdup_printf("Invalid input-context ID: [%d,%d]", imid, icid);
+		gboolean retval;
+
+		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
+				      msg);
+		retval = g_xim_connection_cmd_error(G_XIM_CONNECTION (proto),
+						    imid, icid, G_XIM_EMASK_VALID_IMID | G_XIM_EMASK_VALID_ICID,
+						    G_XIM_ERR_BadProtocol,
+						    0, msg);
+		g_free(msg);
+
+		return retval;
+	}
+	for (l = attr_id; l != NULL; l = g_slist_next(l)) {
+		guint16 id = GPOINTER_TO_UINT (l->data);
+		GXimAttribute *a;
+		GType gtype;
+		GXimValueType vtype;
+		gpointer data;
+
+		gtype = g_xim_attr_get_gtype_by_id(G_XIM_ATTR (ic->icattr), id);
+		vtype = g_xim_gtype_to_value_type(gtype);
+		data = g_xim_attr_get_value_by_id(G_XIM_ATTR (ic->icattr), id);
+		a = g_xim_attribute_new_with_value(id, vtype, data);
+		list = g_slist_append(list, a);
+	}
+	retval = g_xim_server_connection_cmd_get_ic_values_reply(G_XIM_SERVER_CONNECTION (proto),
+								 imid, icid, list);
+
+	g_slist_foreach(list, (GFunc)g_xim_attribute_free, NULL);
+	g_slist_free(list);
+
+	return retval;
+}
+
+static gboolean
+xim_loopback_real_xim_set_ic_focus(GXimProtocol *proto,
+				   guint16       imid,
+				   guint16       icid,
+				   gpointer      data)
+{
+	/* Nothing to do */
+	return TRUE;
+}
+
+static gboolean
+xim_loopback_real_xim_unset_ic_focus(GXimProtocol *proto,
+				     guint16       imid,
+				     guint16       icid,
+				     gpointer      data)
+{
+	/* Nothing to do */
+	return TRUE;
+}
+
+static gboolean
+xim_loopback_real_xim_forward_event(GXimProtocol *proto,
+				    guint16       imid,
+				    guint16       icid,
+				    guint16       flag,
+				    GdkEvent     *event,
+				    gpointer      data)
+{
+	XimLoopbackConnection *lconn = XIM_LOOPBACK_CONNECTION (proto);
+	XimLoopbackIC *ic = g_hash_table_lookup(lconn->ic_table, GUINT_TO_POINTER (icid));
+	gchar *string = NULL;
+	gulong keysym = 0;
+	guint16 sflag = 0;
+	gboolean retval = FALSE;
+
+	if (ic == NULL) {
+		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
+				      "Invalid input-context ID: %d",
+				      icid);
+	}
+	if (event->type == GDK_KEY_RELEASE)
+		goto end;
+
+	if ((flag & G_XIM_Event_Synchronous) == 0)
+		sflag = G_XIM_Event_Synchronous;
+		
+	g_print("\n**** %s: %d\n\n", gdk_keyval_name(event->key.keyval), event->key.state);
+	if (compose_lookup(lconn->composer, &ic->sequence_state,
+			   event->key.keyval, event->key.state,
+			   &string, &keysym)) {
+		g_xim_message_debug(G_XIM_PROTOCOL_GET_IFACE (proto)->message, "loopback/proto/event",
+				    "Entering the compose sequence: %s",
+				    gdk_keyval_name(event->key.keyval));
+		if (ic->sequence_state->candidates == NULL) {
+			GString *s = g_string_new(string);
+
+			/* XXX: need to look at the keymap? */
+			retval = g_xim_server_connection_cmd_commit(G_XIM_SERVER_CONNECTION (proto),
+								    imid, icid,
+								    G_XIM_XLookupSynchronous | G_XIM_XLookupChars,
+								    keysym, s);
+
+			g_print("result: %s [%s]: 0x%x\n", gdk_keyval_name(keysym), string, event->key.hardware_keycode);
+
+			g_string_free(s, TRUE);
+		} else {
+			event->key.keyval = GDK_VoidSymbol;
+		}
+		g_free(string);
+	} else {
+		ic->sequence_state = NULL;
+	}
+	
+
+  end:
+	if (!retval)
+		retval = g_xim_connection_cmd_forward_event(G_XIM_CONNECTION (proto),
+							    imid, icid, sflag, event);
+
+	if (flag & G_XIM_Event_Synchronous)
+		g_xim_connection_cmd_sync_reply(G_XIM_CONNECTION (proto), imid, icid);
+
+	return retval;
+}
+
+static gboolean
+xim_loopback_real_xim_sync_reply(GXimProtocol *proto,
+				 guint16       imid,
+				 guint16       icid,
 				 gpointer      data)
 {
-	GXimProtocolPrivate *priv;
-
-	g_xim_server_connection_cmd_disconnect_reply(G_XIM_SERVER_CONNECTION (proto));
-
-	priv = g_xim_protocol_get_private(proto);
-	/* We have to set a flag explicitly, because the loopback class
-	 * is working together with the proxy class in the same process.
-	 * Which means the refcount of GdkWindow is kept. thus, DestroyNotify
-	 * won't be raised.
-	 */
-	priv->is_disconnected = TRUE;
-
+	/* Nothing to do */
 	return TRUE;
 }
 
@@ -498,7 +876,7 @@ xim_loopback_new(GdkDisplay  *dpy)
 	retval = XIM_LOOPBACK (g_object_new(XIM_TYPE_LOOPBACK,
 					    "display", dpy,
 					    "server_name", "loopback",
-					    "connection_gtype", G_TYPE_XIM_SERVER_CONNECTION,
+					    "connection_gtype", XIM_TYPE_LOOPBACK_CONNECTION,
 					    NULL));
 
 	return retval;

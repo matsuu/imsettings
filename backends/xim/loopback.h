@@ -28,6 +28,7 @@
 #include <glib-object.h>
 #include <libgxim/gximsrvconn.h>
 #include <libgxim/gximsrvtmpl.h>
+#include "compose.h"
 
 G_BEGIN_DECLS
 
@@ -38,7 +39,12 @@ G_BEGIN_DECLS
 #define XIM_IS_LOOPBACK_CLASS(_o_)	(G_TYPE_CHECK_CLASS_TYPE ((_o_), XIM_TYPE_LOOPBACK))
 #define XIM_LOOPBACK_GET_CLASS(_o_)	(G_TYPE_INSTANCE_GET_CLASS ((_o_), XIM_TYPE_LOOPBACK, XimLoopbackClass))
 
-#define XIM_TYPE_LOOPBACK_CONNECTION	(xim_loopback_connection_get_type())
+#define XIM_TYPE_LOOPBACK_CONNECTION		(xim_loopback_connection_get_type())
+#define XIM_LOOPBACK_CONNECTION(_o_)		(G_TYPE_CHECK_INSTANCE_CAST ((_o_), XIM_TYPE_LOOPBACK_CONNECTION, XimLoopbackConnection))
+#define XIM_LOOPBACK_CONNECTION_CLASS(_c_)	(G_TYPE_CHECK_CLASS_CAST ((_o_), XIM_TYPE_LOOPBACK_CONNECTION, XimLoopbackConnectionClass))
+#define XIM_IS_LOOPBACK_CONNECTION(_o_)		(G_TYPE_CHECK_INSTANCE_TYPE ((_o_), XIM_TYPE_LOOPBACK_CONNECTION))
+#define XIM_IS_LOOPBACK_CONNECTION_CLASS(_o_)	(G_TYPE_CHECK_CLASS_TYPE ((_o_), XIM_TYPE_LOOPBACK_CONNECTION))
+#define XIM_LOOPBACK_CONNECTION_GET_CLASS(_o_)	(G_TYPE_INSTANCE_GET_CLASS ((_o_), XIM_TYPE_LOOPBACK_CONNECTION, XimLoopbackConnectionClass))
 
 
 typedef struct _XimLoopbackClass	XimLoopbackClass;
@@ -46,6 +52,7 @@ typedef struct _XimLoopback		XimLoopback;
 
 typedef struct _XimLoopbackConnectionClass	XimLoopbackConnectionClass;
 typedef struct _XimLoopbackConnection		XimLoopbackConnection;
+typedef struct _XimLoopbackIC			XimLoopbackIC;
 
 struct _XimLoopbackClass {
 	GXimServerTemplateClass  parent_class;
@@ -64,8 +71,15 @@ struct _XimLoopbackConnectionClass {
 
 struct _XimLoopbackConnection {
 	GXimServerConnection  parent_instance;
+	Compose              *composer;
+	GHashTable           *ic_table;
+	guint                 latest_icid;
 };
 
+struct _XimLoopbackIC {
+	Sequence   *sequence_state;
+	GXimICAttr *icattr;
+};
 
 GType        xim_loopback_get_type(void) G_GNUC_CONST;
 XimLoopback *xim_loopback_new     (GdkDisplay *dpy);

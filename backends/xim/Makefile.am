@@ -35,6 +35,7 @@ xim_public_headers =					\
 	$(NULL)
 xim_private_headers =					\
 	client.h					\
+	compose.h					\
 	loopback.h					\
 	proxy.h						\
 	utils.h						\
@@ -48,6 +49,7 @@ xim_built_sources =					\
 	$(NULL)
 xim_sources =						\
 	client.c					\
+	compose.c					\
 	loopback.c					\
 	proxy.c						\
 	utils.c						\
@@ -90,6 +92,7 @@ libimsettings_xim_la_SOURCES =				\
 	$(NULL)
 libimsettings_xim_la_CFLAGS =				\
 	-DG_LOG_DOMAIN="\"libimsettings-xim\""		\
+	-DXLOCALEDIR="\"$(datadir)/X11/locale\""	\
 	$(NULL)
 libimsettings_xim_la_LDFLAGS =							\
 	$(LDFLAGS)								\

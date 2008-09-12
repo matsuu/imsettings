@@ -3,6 +3,8 @@
 * Bug Fixes:
   * rhbz#460695: malformed desktop file
   * rhbz#452849: [xim] successively speedy Input -> freeze
+  * rhbz#460703: multiple status icons for Input Method displayed
+  * Issue#16: XKB support in imsettings-xim?
 * Enhancements:
   * Set a default icon for IM.
   * XSETTINGS manager support in applet
