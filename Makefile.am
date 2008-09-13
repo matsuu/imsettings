@@ -6,7 +6,7 @@ SUBDIRS += applet
 endif
 
 ACLOCAL_AMFLAGS =			\
-	-Im4macros			\
+	-I m4macros			\
 	$(NULL)
 
 CONFIGURE_DEPENDENCIES =		\
