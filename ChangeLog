@@ -1,5 +1,10 @@
 2008-09-13  Akira TAGOH  <tagoh@redhat.com>
 
+	* backends/xim/loopback.c (xim_loopback_real_xim_get_ic_values):
+	deal with NESTEDLIST properly.
+	(xim_loopback_real_xim_forward_event): reset modifiers state and
+	keycode if the sequence is on the way.
+
 	* backends/xim/loopback.c (xim_loopback_real_xim_close): Fix a build
 	error on 32bit arch with gcc-4.1.3.
 	(xim_loopback_real_xim_get_im_values): likewise.

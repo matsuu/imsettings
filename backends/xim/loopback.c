@@ -732,6 +732,9 @@ xim_loopback_real_xim_get_ic_values(GXimProtocol *proto,
 	const GSList *l;
 	GSList *list = NULL;
 	gboolean retval = FALSE;
+	GXimNestedList *nested = NULL;
+	guint16 nid = 0;
+	GXimAttribute *a;
 
 	if (ic == NULL) {
 		gchar *msg = g_strdup_printf("Invalid input-context ID: [%d,%d]", imid, icid);
@@ -749,16 +752,40 @@ xim_loopback_real_xim_get_ic_values(GXimProtocol *proto,
 	}
 	for (l = attr_id; l != NULL; l = g_slist_next(l)) {
 		guint16 id = GPOINTER_TO_UINT (l->data);
-		GXimAttribute *a;
 		GType gtype;
 		GXimValueType vtype;
 		gpointer data;
 
 		gtype = g_xim_attr_get_gtype_by_id(G_XIM_ATTR (ic->icattr), id);
 		vtype = g_xim_gtype_to_value_type(gtype);
-		data = g_xim_attr_get_value_by_id(G_XIM_ATTR (ic->icattr), id);
-		a = g_xim_attribute_new_with_value(id, vtype, data);
+		if (vtype == G_XIM_TYPE_NESTEDLIST) {
+			nid = id;
+			nested = g_xim_nested_list_new(G_XIM_ATTR (ic->icattr), 0);
+			continue;
+		} else if (nested && vtype == G_XIM_TYPE_SEPARATOR) {
+			g_xim_nested_list_append(nested, XNSeparatorofNestedList, NULL);
+			a = g_xim_attribute_new_with_value(nid, G_XIM_TYPE_NESTEDLIST, nested);
+			nested = NULL;
+			nid = 0;
+		} else if (nested) {
+			gchar *name = g_xim_attr_get_attribute_name(G_XIM_ATTR (ic->icattr),
+								    id);
+
+			data = g_xim_attr_get_value_by_name(G_XIM_ATTR (ic->icattr), name);
+			g_xim_nested_list_append(nested, name, data);
+			g_free(name);
+			continue;
+		} else {
+			data = g_xim_attr_get_value_by_id(G_XIM_ATTR (ic->icattr), id);
+			a = g_xim_attribute_new_with_value(id, vtype, data);
+		}
 		list = g_slist_append(list, a);
+	}
+	if (nested) {
+		a = g_xim_attribute_new_with_value(nid, G_XIM_TYPE_NESTEDLIST, nested);
+		list = g_slist_append(list, a);
+		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
+				      "No separator found in NESTEDLIST. is might be highly likely a bug in the client application.");
 	}
 	retval = g_xim_server_connection_cmd_get_ic_values_reply(G_XIM_SERVER_CONNECTION (proto),
 								 imid, icid, list);
@@ -817,7 +844,7 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 	if ((flag & G_XIM_Event_Synchronous) == 0)
 		sflag = G_XIM_Event_Synchronous;
 		
-	g_print("\n**** %s: %d\n\n", gdk_keyval_name(event->key.keyval), event->key.state);
+	d(g_print("\n**** %s: %d\n\n", gdk_keyval_name(event->key.keyval), event->key.state));
 	if (compose_lookup(lconn->composer, &ic->sequence_state,
 			   event->key.keyval, event->key.state,
 			   &string, &keysym)) {
@@ -839,11 +866,13 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 								    G_XIM_XLookupSynchronous | G_XIM_XLookupChars,
 								    keysym, s);
 
-			g_print("result: %s [%s]: 0x%x\n", gdk_keyval_name(keysym), string, event->key.hardware_keycode);
+			d(g_print("result: %s [%s]: 0x%x\n", gdk_keyval_name(keysym), string, event->key.hardware_keycode));
 
 			g_string_free(s, TRUE);
 		} else {
+			event->key.state = 0;
 			event->key.keyval = GDK_VoidSymbol;
+			event->key.hardware_keycode = 0;
 		}
 		g_free(string);
 	} else {
