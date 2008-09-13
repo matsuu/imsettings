@@ -63,18 +63,22 @@ testcase_dist =							\
 ##
 # Local Rules
 dist-hook:
-	for file in $(testcase_dist); do					\
-		if test -d $(srcdir)/$$file; then				\
-			echo "Creating $(srcdir)/$$file on $(distdir)";		\
-			$(MKDIR_P) $(distdir)/$(srcdir)/$$file || exit -1;	\
-		elif test -f $(srcdir)/$$file; then				\
-			echo "Copying $(srcdir)/$$file to $(distdir)";		\
+	for file in $(testcase_dist); do						\
+		if test -d $(srcdir)/$$file; then					\
+			echo "Creating $(srcdir)/$$file on $(distdir)";			\
+			if [ -z "$(MKDIR_P)" ]; then					\
+				$(mkdir_p) $(distdir)/$(srcdir)/$$file || exit -1;	\
+			else								\
+				$(MKDIR_P) $(distdir)/$(srcdir)/$$file || exit -1;	\
+			fi								\
+		elif test -f $(srcdir)/$$file; then					\
+			echo "Copying $(srcdir)/$$file to $(distdir)";			\
 			cp -dp $(srcdir)/$$file $(distdir)/$(srcdir)/$$file || exit -1;	\
-		elif test -L $(srcdir)/$$file; then				\
-			echo "Copying $(srcdir)/$$file to $(distdir)";		\
+		elif test -L $(srcdir)/$$file; then					\
+			echo "Copying $(srcdir)/$$file to $(distdir)";			\
 			cp -d $(srcdir)/$$file $(distdir)/$(srcdir)/$$file || exit -1;	\
-		else								\
-			echo "Unable to archive $$file";			\
-			exit -1;						\
-		fi								\
+		else									\
+			echo "Unable to archive $$file";				\
+			exit -1;							\
+		fi									\
 	done

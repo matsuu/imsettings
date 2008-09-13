@@ -1,5 +1,7 @@
 2008-09-13  Akira TAGOH  <tagoh@redhat.com>
 
+	* tests/testcases/Makefile.am (dist-hook): support older automake.
+
 	* Makefile.am (ACLOCAL_AMFLAGS): Fix an error on aclocal.
 
 	* backends/xim/loopback.c (xim_loopback_real_xim_get_ic_values):
