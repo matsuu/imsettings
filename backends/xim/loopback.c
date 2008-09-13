@@ -469,7 +469,7 @@ xim_loopback_real_xim_close(GXimProtocol  *proto,
 	GXimConnection *conn;
 	GdkNativeWindow client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 
-	if ((conn = g_hash_table_lookup(loopback->conn_table, GUINT_TO_POINTER (imid))) == NULL) {
+	if ((conn = g_hash_table_lookup(loopback->conn_table, GUINT_TO_POINTER ((guint)imid))) == NULL) {
 		g_xim_message_warning(G_XIM_CORE (loopback)->message,
 				      "Invalid imid `%d' from %p to close the connection.",
 				      imid,
@@ -483,7 +483,7 @@ xim_loopback_real_xim_close(GXimProtocol  *proto,
 
 	g_xim_server_connection_cmd_close_reply(G_XIM_SERVER_CONNECTION (proto),
 						imid);
-	g_hash_table_remove(loopback->conn_table, GUINT_TO_POINTER (imid));
+	g_hash_table_remove(loopback->conn_table, GUINT_TO_POINTER ((guint)imid));
 
 	return TRUE;
 }
@@ -507,8 +507,9 @@ xim_loopback_real_xim_encoding_negotiation(GXimProtocol  *proto,
 {
 	GSList *l;
 
+	/* We only support COMPOUND_TEXT */
 	/* XXX: need to get rid of hard-coded encoding support */
-	l = g_slist_find_custom((GSList *)encodings, "UTF-8", _cmp_str);
+	l = g_slist_find_custom((GSList *)encodings, "COMPOUND_TEXT", _cmp_str);
 	if (l == NULL)
 		return FALSE;
 
@@ -536,7 +537,7 @@ xim_loopback_real_xim_get_im_values(GXimProtocol  *proto,
 	GdkNativeWindow client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 	gboolean retval;
 
-	conn = g_hash_table_lookup(loopback->conn_table, GUINT_TO_POINTER (imid));
+	conn = g_hash_table_lookup(loopback->conn_table, GUINT_TO_POINTER ((guint)imid));
 	if (!conn)
 		return FALSE;
 
@@ -583,7 +584,7 @@ xim_loopback_real_xim_create_ic(GXimProtocol *proto,
 	GXimConnection *conn;
 	guint icid;
 
-	conn = g_hash_table_lookup(loopback->conn_table, GUINT_TO_POINTER (imid));
+	conn = g_hash_table_lookup(loopback->conn_table, GUINT_TO_POINTER ((guint)imid));
 	if (!conn) {
 		g_xim_connection_cmd_error(G_XIM_CONNECTION (proto),
 					   imid, 0, G_XIM_EMASK_VALID_IMID,
@@ -664,8 +665,8 @@ xim_loopback_real_xim_create_ic(GXimProtocol *proto,
 				/* XXX: need to get rid of X specific event mask? */
 				g_xim_server_connection_cmd_set_event_mask(G_XIM_SERVER_CONNECTION (proto),
 									   imid, icid,
-									   KeyPress | KeyRelease,
-									   ~(KeyPress | KeyRelease));
+									   KeyPressMask | KeyReleaseMask,
+									   ~(KeyPressMask | KeyReleaseMask));
 			} else {
 				g_xim_connection_cmd_error(G_XIM_CONNECTION (proto),
 							   imid, 0, G_XIM_EMASK_VALID_IMID,
@@ -691,7 +692,7 @@ xim_loopback_real_xim_set_ic_values(GXimProtocol *proto,
 				    gpointer      data)
 {
 	XimLoopbackConnection *lconn = XIM_LOOPBACK_CONNECTION (proto);
-	XimLoopbackIC *ic = g_hash_table_lookup(lconn->ic_table, GUINT_TO_POINTER (icid));
+	XimLoopbackIC *ic = g_hash_table_lookup(lconn->ic_table, GUINT_TO_POINTER ((guint)icid));
 	const GSList *l;
 
 	if (ic == NULL) {
@@ -727,7 +728,7 @@ xim_loopback_real_xim_get_ic_values(GXimProtocol *proto,
 				    gpointer      data)
 {
 	XimLoopbackConnection *lconn = XIM_LOOPBACK_CONNECTION (proto);
-	XimLoopbackIC *ic = g_hash_table_lookup(lconn->ic_table, GUINT_TO_POINTER (icid));
+	XimLoopbackIC *ic = g_hash_table_lookup(lconn->ic_table, GUINT_TO_POINTER ((guint)icid));
 	const GSList *l;
 	GSList *list = NULL;
 	gboolean retval = FALSE;
@@ -797,7 +798,9 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 				    gpointer      data)
 {
 	XimLoopbackConnection *lconn = XIM_LOOPBACK_CONNECTION (proto);
-	XimLoopbackIC *ic = g_hash_table_lookup(lconn->ic_table, GUINT_TO_POINTER (icid));
+	XimLoopbackIC *ic = g_hash_table_lookup(lconn->ic_table, GUINT_TO_POINTER ((guint)icid));
+	XimLoopback *loopback = XIM_LOOPBACK (data);
+	GdkDisplay *dpy = g_xim_core_get_display(G_XIM_CORE (loopback));
 	gchar *string = NULL;
 	gulong keysym = 0;
 	guint16 sflag = 0;
@@ -822,7 +825,13 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 				    "Entering the compose sequence: %s",
 				    gdk_keyval_name(event->key.keyval));
 		if (ic->sequence_state->candidates == NULL) {
-			GString *s = g_string_new(string);
+			GString *s = g_string_new(NULL);
+			guchar *ctext = NULL;
+			gint len = 0;
+
+			gdk_string_to_compound_text_for_display(dpy, string, NULL, NULL, &ctext, &len);
+			g_string_append_len(s, (gchar *)ctext, len);
+			g_free(ctext);
 
 			/* XXX: need to look at the keymap? */
 			retval = g_xim_server_connection_cmd_commit(G_XIM_SERVER_CONNECTION (proto),

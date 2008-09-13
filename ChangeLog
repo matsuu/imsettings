@@ -1,5 +1,20 @@
 2008-09-13  Akira TAGOH  <tagoh@redhat.com>
 
+	* backends/xim/loopback.c (xim_loopback_real_xim_close): Fix a build
+	error on 32bit arch with gcc-4.1.3.
+	(xim_loopback_real_xim_get_im_values): likewise.
+	(xim_loopback_real_xim_create_ic): likewise.
+	(xim_loopback_real_xim_set_ic_values): likewise.
+	(xim_loopback_real_xim_get_ic_values): likewise.
+	(xim_loopback_real_xim_forward_event): likewise.
+	(xim_loopback_real_xim_encoding_negotiation): Use COMPOUND_TEXT anyway.
+	(xim_loopback_real_xim_create_ic): Fix a typo for event mask.
+	(xim_loopback_real_xim_forward_event): convert the string to
+	COMPOUND_TEXT.
+
+	* backends/xim/compose.c (compose_parse): convert data to UTF-8.
+	(compose_parse): Fix a build error on 32bit arch with gcc-4.1.3.
+
 	* autogen.sh: Fix an error on aclocal.
 
 	X11's compose data support. (Issue#15)

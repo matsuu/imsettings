@@ -34,6 +34,7 @@ typedef struct _Sequence	Sequence;
 
 struct _Compose {
 	FILE     *fp;
+	gchar    *locale;
 	Sequence *seq_tree;
 };
 

@@ -25,6 +25,7 @@
 #include "config.h"
 #endif
 
+#include <locale.h>
 #include <langinfo.h>
 #include <string.h>
 #include <X11/Xlib.h>
@@ -222,7 +223,8 @@ sequence_match(Sequence *seq,
 }
 
 static gchar *
-compose_get_compose_filename(const gchar *locale)
+compose_get_compose_filename(const gchar  *locale,
+			     gchar       **registered_locale)
 {
 	gchar *dirfile = g_build_filename(XLOCALEDIR, "compose.dir", NULL);
 	gchar *charset = nl_langinfo(CODESET);
@@ -298,10 +300,12 @@ compose_get_compose_filename(const gchar *locale)
 
 		if (strcmp(localename, locale) == 0) {
 			retval = g_strdup(filename);
+			*registered_locale = g_strdup(localename);
 			break;
 		} else if (canonical_locale &&
 			   strcmp(localename, canonical_locale) == 0) {
 			retval = g_strdup(filename);
+			*registered_locale = g_strdup(localename);
 			break;
 		}
 	}
@@ -309,7 +313,7 @@ compose_get_compose_filename(const gchar *locale)
 	fclose(fp);
 
 	if (retval == NULL && strcmp(locale, default_locale) != 0) {
-		retval = compose_get_compose_filename(default_locale);
+		retval = compose_get_compose_filename(default_locale, registered_locale);
 	}
 	g_free(dirfile);
 	g_free(default_locale);
@@ -337,6 +341,7 @@ compose_free(Compose *compose)
 
 	if (compose->fp)
 		compose_close(compose);
+	g_free(compose->locale);
 	sequence_free(compose->seq_tree);
 
 	g_free(compose);
@@ -348,6 +353,7 @@ compose_open(Compose     *compose,
 {
 	gchar *composefile;
 	gchar *fullname = NULL;
+	gchar *localename = NULL;
 	gboolean retry = FALSE;
 	gboolean retval = FALSE;
 
@@ -357,7 +363,7 @@ compose_open(Compose     *compose,
 		retry = TRUE;
 
   retry:
-	composefile = compose_get_compose_filename(locale);
+	composefile = compose_get_compose_filename(locale, &localename);
 	if (composefile == NULL) {
 		if (!retry) {
 			locale = NULL;
@@ -384,8 +390,10 @@ compose_open(Compose     *compose,
 		g_warning("Unable to open %s", fullname);
 		goto end;
 	}
+	compose->locale = g_strdup(localename);
 	retval = TRUE;
   end:
+	g_free(localename);
 	g_free(composefile);
 	g_free(fullname);
 
@@ -407,6 +415,8 @@ compose_parse(Compose *compose)
 	gchar buf[1024], *tmp, *p, *sep;
 	gchar *seq, *data;
 	gchar seqbuf[1025], string[1025], symbol[1025];
+	gchar *utf8_string;
+	gchar *old_locale, *charset;
 	gint i;
 	guint modifiers, mod_mask;
 	GPtrArray *seqarray;
@@ -417,6 +427,13 @@ compose_parse(Compose *compose)
 
 	g_return_val_if_fail (compose != NULL, FALSE);
 	g_return_val_if_fail (compose->fp != NULL, FALSE);
+
+	old_locale = setlocale(LC_CTYPE, NULL);
+	setlocale(LC_CTYPE, compose->locale);
+	charset = g_strdup(nl_langinfo(CODESET));
+	setlocale(LC_CTYPE, old_locale);
+
+	d(g_print("compose data charset: %s", charset));
 
 	while (!feof(compose->fp)) {
 		fgets(buf, 1024, compose->fp);
@@ -445,7 +462,7 @@ compose_parse(Compose *compose)
 		sequence = NULL;
 		while (*p) {
 			if (*p != '<') {
-				g_warning("Invalid sequence [<:%c]: %ld of %s", *p, p - seq, seq);
+				g_warning("Invalid sequence [<:%c]: %ld of %s", *p, (long)(p - seq), seq);
 				goto fail;
 			}
 			p++;
@@ -457,7 +474,7 @@ compose_parse(Compose *compose)
 				seqbuf[i] = *p;
 			seqbuf[i] = 0;
 			if (*p != '>') {
-				g_warning("Invalid sequence [>:%c]: %ld of %s", *p, p - seq, seq);
+				g_warning("Invalid sequence [>:%c]: %ld of %s", *p, (long)(p - seq), seq);
 				goto fail;
 			}
 			p++;
@@ -548,7 +565,14 @@ compose_parse(Compose *compose)
 		if (result_keysym == NoSymbol) {
 			g_warning("Invalid symbol for result: %s", symbol);
 		}
-		sequence_terminate(sequence, string, result_keysym, &error);
+		utf8_string = g_convert(string, -1, "UTF-8", charset, NULL, NULL, &error);
+		if (error) {
+			g_warning("%s: %s", error->message, buf);
+			g_error_free(error);
+			goto fail;
+		}
+		sequence_terminate(sequence, utf8_string, result_keysym, &error);
+		g_free(utf8_string);
 		if (error) {
 			/* unlikely to happen usually */
 			g_warning("%s", error->message);
