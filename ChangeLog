@@ -1,5 +1,7 @@
 2008-09-13  Akira TAGOH  <tagoh@redhat.com>
 
+	* autogen.sh: Fix an error on aclocal.
+
 	X11's compose data support. (Issue#15)
 	
 	* backends/xim/loopback.c (xim_loopback_ic_new): new.
