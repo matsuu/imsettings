@@ -50,7 +50,7 @@
       <applyto>/apps/imsettings-applet/show_icon</applyto>
       <owner>imsettings-applet</owner>
       <type>bool</type>
-      <default>TRUE</default>
+      <default>FALSE</default>
       <locale name="C">
 	<short>Show the status icon</short>
 	<long>
