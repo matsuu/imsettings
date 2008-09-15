@@ -49,7 +49,7 @@ Supported Toolkits
 ======================
 * GTK+ (with GConf backend)
 * Xfce (with GConf backend and a plugin for xfce-mcs-manager)
-* X (with IMSettings XIM server)
+* X (with IMSettings XIM server; require libgxim)
 
 Information files for Input Method
 ======================================
