@@ -577,6 +577,7 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 	IMSettingsInfo *info = NULL;
 	const gchar *homedir;
 	const gchar *xinputfile = NULL;
+	const gchar *gtkimm, *xim;
 	gchar *pidfile = NULL;
 	gboolean retval = FALSE;
 	GString *strerr = g_string_new(NULL);
@@ -584,17 +585,26 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 
 	g_print("Stopping %s...\n", module);
 
+	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
+	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
+	info = imsettings_request_get_info_object(req, "none", error);
+	if (*error)
+		goto end;
+
+	gtkimm = imsettings_info_get_gtkimm(info);
+	xim = imsettings_info_get_xim(info);
+
 	/* Change the settings before killing the IM process(es) */
 	/* FIXME: We need to take care of imsettings per X screens?
 	 */
-	imsettings_request_change_to(priv->gtk_req, "", error);
-	imsettings_request_change_to_with_signal(priv->xim_req, "none");
+	imsettings_request_change_to(priv->gtk_req, gtkimm ? gtkimm : "", error);
+	imsettings_request_change_to_with_signal(priv->xim_req, xim ? xim : "none");
 #if 0
 	imsettings_request_change_to(priv->qt_req, NULL, error);
 #endif
 
-	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
+	g_object_unref(info);
+
 	info = imsettings_request_get_info_object(req, module, error);
 	if (*error)
 		goto end;

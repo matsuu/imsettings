@@ -1,3 +1,10 @@
+2008-09-15  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/none.in.in (GTK_IM_MODULE): set gtk-im-context-simple for default.
+
+	* src/factory.c (imsettings_manager_real_stop_im): follow up the value
+	in none.conf to set. then it could be customized.
+
 2008-09-14  Akira TAGOH  <tagoh@redhat.com>
 
 	* applet/imsettings-applet.schema: disable show_icon by default.
