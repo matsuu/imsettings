@@ -67,7 +67,7 @@ configuration files properly for appropriate languages
 according to current locale.
 
 Available parameters
-========================
+=======================
 
 The following parameters can be described as the shell
 environment variables like FOO=BAR in the information file.
@@ -135,3 +135,43 @@ environment variables like FOO=BAR in the information file.
 * XIM_ARGS=<string>
 
   A list of command line options for XIM_PROGRAM.
+
+Other variables used in xinput.sh
+====================================
+
+* DISABLE_IMSETTINGS=<bool>
+
+  If you want to disable imsettings feature entirely, set true. you'll
+  miss the feature able to change IM on demand but just need to reboot
+  or restart the desktop after changing something.
+
+* IMSETTINGS_DISABLE_DESKTOP_CHECK=<bool>
+
+  If your desktop has XSETTINGS manager support and you're sure it also
+  supports imsettings, please file a bug to imsettings. and set true
+  temporarily to ignore checking the desktop.
+
+Processes
+============
+
+* im-settings-daemon
+
+  A DBus service that provide a facility to start/stop IM processes.
+
+* im-info-daemon
+
+  A DBus service that provide Input Method information.
+
+* gconf-im-settings-daemon
+
+  A DBus service that provide a bridge to communicate GTK+ through GConf.
+
+* imsettings-xim
+
+  A XIM bridge between client applications and real XIM server.
+
+* imsettings-applet
+
+  An applet that provides a facility of changing IM temporarily. this also
+  supports XIM bridge. if imsettings-xim is running, this applet will sends
+  a signal to be terminated.

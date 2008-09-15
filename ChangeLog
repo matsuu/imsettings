@@ -1,5 +1,7 @@
 2008-09-15  Akira TAGOH  <tagoh@redhat.com>
 
+	* README: Update.
+
 	* data/none.in.in (GTK_IM_MODULE): set gtk-im-context-simple for default.
 
 	* src/factory.c (imsettings_manager_real_stop_im): follow up the value
