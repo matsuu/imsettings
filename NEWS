@@ -1,8 +1,8 @@
-0.103.0 ->
+0.103.0 -> 0.104.0
 =====================
 * Bug Fixes:
+  * rhbz#457901: accent deadkeys not working under XIM
   * rhbz#460695: malformed desktop file
-  * rhbz#452849: [xim] successively speedy Input -> freeze
   * rhbz#460703: multiple status icons for Input Method displayed
   * Issue#16: XKB support in imsettings-xim?
 * Enhancements:

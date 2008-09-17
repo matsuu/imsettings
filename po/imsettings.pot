@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-29 12:15+0900\n"
+"POT-Creation-Date: 2008-09-17 23:05+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,166 +20,139 @@ msgstr ""
 msgid "IMSettings Applet"
 msgstr ""
 
-#: ../applet/main.c:116
+#: ../applet/main.c:139 ../applet/main.c:172 ../applet/main.c:210
+msgid "No detailed information"
+msgstr ""
+
+#: ../applet/main.c:142
+msgid "Mismatch the version of im-settings-daemon"
+msgstr ""
+
+#: ../applet/main.c:169 ../applet/main.c:247
 #, c-format
-msgid ""
-"Mismatch the version of im-settings-daemon.\n"
-"details: %s"
+msgid "Unable to start %s"
 msgstr ""
 
-#: ../applet/main.c:117 ../applet/main.c:149 ../applet/main.c:185
-msgid "None"
-msgstr ""
-
-#: ../applet/main.c:120 ../applet/main.c:152 ../applet/main.c:188
-#: ../applet/main.c:225 ../applet/main.c:251 ../applet/main.c:310
-#: ../applet/main.c:820
-msgid "Error"
-msgstr ""
-
-#: ../applet/main.c:147
-#, c-format
-msgid ""
-"Unable to start %s.\n"
-"Details: %s"
-msgstr ""
-
-#: ../applet/main.c:158
+#: ../applet/main.c:182
 msgid ""
 " and the default Input Method has been changed. if you need to change that "
 "to anything else, please use im-chooser."
 msgstr ""
 
-#: ../applet/main.c:163
+#: ../applet/main.c:187
 #, c-format
 msgid "Connected to %s.%s"
 msgstr ""
 
-#: ../applet/main.c:168 ../applet/main.c:201 ../applet/main.c:697
+#: ../applet/main.c:192 ../applet/main.c:227 ../applet/main.c:930
 msgid "Information"
 msgstr ""
 
-#: ../applet/main.c:183
+#: ../applet/main.c:207 ../applet/main.c:273
 #, c-format
-msgid ""
-"Unable to stop %s.\n"
-"Details: %s"
+msgid "Unable to stop %s"
 msgstr ""
 
-#: ../applet/main.c:198
+#: ../applet/main.c:224
 msgid "Disconnected from Input Method"
 msgstr ""
 
-#: ../applet/main.c:221
-#, c-format
-msgid "Unable to start %s. maybe DBus related issue."
+#: ../applet/main.c:251 ../applet/main.c:277
+msgid "maybe DBus related issue."
 msgstr ""
 
-#: ../applet/main.c:247
-#, c-format
-msgid "Unable to stop %s. maybe DBus related issue."
+#: ../applet/main.c:332 ../applet/main.c:419
+msgid "Unable to store a value to GConf"
 msgstr ""
 
-#: ../applet/main.c:308
-#, c-format
-msgid "Unable to set up the acceleration key with %s. disabled it temporarily."
-msgstr ""
-
-#: ../applet/main.c:412
-msgid "Please press the acceleration key..."
-msgstr ""
-
-#: ../applet/main.c:458
-msgid "IMSettings Applet Preferences"
-msgstr ""
-
-#: ../applet/main.c:473
-msgid "<b>Trigger key:</b>"
-msgstr ""
-
-#: ../applet/main.c:485
-msgid "Grab key"
-msgstr ""
-
-#: ../applet/main.c:495
-msgid "Shift"
-msgstr ""
-
-#: ../applet/main.c:496
-msgid "Control"
-msgstr ""
-
-#: ../applet/main.c:497
-msgid "Alt"
-msgstr ""
-
-#: ../applet/main.c:498
-msgid "Super"
-msgstr ""
-
-#: ../applet/main.c:499
-msgid "Hyper"
-msgstr ""
-
-#: ../applet/main.c:500
-msgid "Meta"
-msgstr ""
-
-#: ../applet/main.c:501
-msgid "Caps Lock"
-msgstr ""
-
-#: ../applet/main.c:502
-msgid "Num Lock"
-msgstr ""
-
-#: ../applet/main.c:503
-msgid "Scroll Lock"
+#: ../applet/main.c:371
+msgid "Unable to get a value from GConf"
 msgstr ""
 
 #: ../applet/main.c:504
-msgid "Mod5"
+#, c-format
+msgid "The acceleration key %s may be invalid. disabled it temporarily."
 msgstr ""
 
-#: ../applet/main.c:544
+#: ../applet/main.c:506
+msgid "Unable to set up the acceleration key"
+msgstr ""
+
+#: ../applet/main.c:646
+msgid "Unable to store the acceleration key into GConf"
+msgstr ""
+
+#: ../applet/main.c:667
+msgid "Please press the acceleration key..."
+msgstr ""
+
+#: ../applet/main.c:711
+msgid "IMSettings Applet Preferences"
+msgstr ""
+
+#: ../applet/main.c:723
+msgid "_Show the status icon"
+msgstr ""
+
+#: ../applet/main.c:732
+msgid "_Run XSETTINGS manager as needed"
+msgstr ""
+
+#: ../applet/main.c:744
+msgid "<b>Trigger key:</b>"
+msgstr ""
+
+#: ../applet/main.c:756
+msgid "_Grab key"
+msgstr ""
+
+#: ../applet/main.c:770
 msgid ""
 "Please click Grab key button and press the key combinations you want to "
 "assign for the acceleration key. Press Backspace key to disable this feature."
 msgstr ""
 
-#: ../applet/main.c:612
+#: ../applet/main.c:845
 msgid "Disconnect"
 msgstr ""
 
-#: ../applet/main.c:671
+#: ../applet/main.c:904
 msgid "Click to connect to Input Method"
 msgstr ""
 
-#: ../applet/main.c:675
+#: ../applet/main.c:908
 msgid "Click to disconnect from Input Method"
 msgstr ""
 
-#: ../applet/main.c:698
+#: ../applet/main.c:931
 msgid ""
 "The default Input Method isn't yet configured. To get this working, you need "
 "to set up that on im-chooser or select one from the menu which appears by "
 "the right click first."
 msgstr ""
 
-#: ../applet/main.c:769
+#: ../applet/main.c:1005
+#, c-format
+msgid "Press %s or "
+msgstr ""
+
+#: ../applet/main.c:1008
 #, c-format
 msgid ""
-"Press %s or Left-click on the icon to connect to/disconnect from Input "
-"Method.\n"
+"%sLeft-click on the icon to connect to/disconnect from Input Method.\n"
 "Right-click to show up the Input Method menu."
 msgstr ""
 
-#: ../applet/main.c:771
+#: ../applet/main.c:1010
 msgid "Tips"
 msgstr ""
 
-#: ../applet/main.c:777
+#: ../applet/main.c:1016
 msgid "Do not show this again"
+msgstr ""
+
+#: ../applet/main.c:1060
+msgid "Unable to take an ownership for XIM server"
 msgstr ""
 
 #: ../applet/radiomenuitem.c:314
@@ -190,13 +163,13 @@ msgstr ""
 msgid "Child widget to appear next to the menu text"
 msgstr ""
 
-#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:844
-#: ../src/factory.c:805 ../src/factory_info.c:1288
+#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:845
+#: ../src/factory.c:815 ../src/factory_info.c:1311
 msgid "Replace the running settings daemon with new instance."
 msgstr ""
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:832 ../src/factory_info.c:1313
+#: ../src/factory.c:842 ../src/factory_info.c:1336
 #: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:66
 #: ../utils/imsettings-start.c:69 ../utils/imsettings-stop.c:65
 msgid "Unknown error in parsing the command lines."
@@ -206,11 +179,11 @@ msgstr ""
 msgid "Button Label|Input Method"
 msgstr ""
 
-#: ../backends/xim/main.c:142 ../src/factory.c:806
+#: ../backends/xim/main.c:142 ../src/factory.c:816
 msgid "X display to use"
 msgstr ""
 
-#: ../backends/xim/main.c:142 ../src/factory.c:806
+#: ../backends/xim/main.c:142 ../src/factory.c:816
 msgid "DISPLAY"
 msgstr ""
 
@@ -226,185 +199,185 @@ msgstr ""
 msgid "XIM server connects to, for debugging purpose only"
 msgstr ""
 
-#: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:650
+#: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:660
 msgid "XIM"
 msgstr ""
 
-#: ../backends/xim/proxy.c:2587
+#: ../backends/xim/proxy.c:2659
 msgid "A XIM server name"
 msgstr ""
 
-#: ../backends/xim/proxy.c:2588
+#: ../backends/xim/proxy.c:2660
 msgid "A XIM server name would connects to"
 msgstr ""
 
-#: ../backends/xim/proxy.c:2593
+#: ../backends/xim/proxy.c:2665
 msgid "Signals for Protocol class"
 msgstr ""
 
-#: ../backends/xim/proxy.c:2594
+#: ../backends/xim/proxy.c:2666
 msgid "A structure of signals for Protocol class"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:622 ../imsettings/imsettings-info.c:623
+#: ../imsettings/imsettings-info.c:632 ../imsettings/imsettings-info.c:633
 msgid "Home directory"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:629
+#: ../imsettings/imsettings-info.c:639
 msgid "Language"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:630
+#: ../imsettings/imsettings-info.c:640
 msgid "A language to pull the information in."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:636
+#: ../imsettings/imsettings-info.c:646
 msgid "Filename"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:637
+#: ../imsettings/imsettings-info.c:647
 msgid "A filename referring to the IM information."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:643 ../imsettings/imsettings-info.c:644
+#: ../imsettings/imsettings-info.c:653 ../imsettings/imsettings-info.c:654
 msgid "Short Description"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:651
+#: ../imsettings/imsettings-info.c:661
 msgid "Whether or not IM is a XIM server."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:657
+#: ../imsettings/imsettings-info.c:667
 msgid "GTK+ immodule"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:658
+#: ../imsettings/imsettings-info.c:668
 msgid "A module name used for GTK+"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:663
+#: ../imsettings/imsettings-info.c:673
 msgid "Qt immodule"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:664
+#: ../imsettings/imsettings-info.c:674
 msgid "A module name used for Qt"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:669
+#: ../imsettings/imsettings-info.c:679
 msgid "XIM name"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:670
+#: ../imsettings/imsettings-info.c:680
 msgid "XIM server name"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:675
+#: ../imsettings/imsettings-info.c:685
 msgid "Ignore flag"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:676
+#: ../imsettings/imsettings-info.c:686
 msgid "A flag to not list up."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:681
+#: ../imsettings/imsettings-info.c:691
 msgid "XIM server program name"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:682
+#: ../imsettings/imsettings-info.c:692
 msgid "XIM server program to be run"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:687
+#: ../imsettings/imsettings-info.c:697
 msgid "XIM server program's options"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:688
+#: ../imsettings/imsettings-info.c:698
 msgid "Command line options for XIM server program"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:693
+#: ../imsettings/imsettings-info.c:703
 msgid "Preference program name"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:694
+#: ../imsettings/imsettings-info.c:704
 msgid "Preference program to be run"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:699
+#: ../imsettings/imsettings-info.c:709
 msgid "Preference program's options"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:700
+#: ../imsettings/imsettings-info.c:710
 msgid "Command line options for preference program"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:705
+#: ../imsettings/imsettings-info.c:715
 msgid "Auxiliary program name"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:706
+#: ../imsettings/imsettings-info.c:716
 msgid "Auxiliary program to be run"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:711
+#: ../imsettings/imsettings-info.c:721
 msgid "Auxiliary program's options"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:712
+#: ../imsettings/imsettings-info.c:722
 msgid "Command line options for auxiliary program"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:717 ../imsettings/imsettings-info.c:718
+#: ../imsettings/imsettings-info.c:727 ../imsettings/imsettings-info.c:728
 msgid "Long Description"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:723
+#: ../imsettings/imsettings-info.c:733
 msgid "Icon"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:724
+#: ../imsettings/imsettings-info.c:734
 msgid "Icon filename to be used on GUI"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:729
+#: ../imsettings/imsettings-info.c:739
 msgid "System Default"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:730
+#: ../imsettings/imsettings-info.c:740
 msgid "Whether or not IM is a system default."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:735
+#: ../imsettings/imsettings-info.c:745
 msgid "User Default"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:736
+#: ../imsettings/imsettings-info.c:746
 msgid "Whether or not IM is an user default."
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:395
+#: ../imsettings/imsettings-observer.c:396
 #, c-format
 msgid "Invalid IM module type: %d"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:837
+#: ../imsettings/imsettings-observer.c:838
 msgid "IM module name"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:838
+#: ../imsettings/imsettings-observer.c:839
 msgid "A target IM module name that to observe signals"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:843
+#: ../imsettings/imsettings-observer.c:844
 msgid "Replace"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:849
+#: ../imsettings/imsettings-observer.c:850
 #: ../imsettings/imsettings-request.c:175
 msgid "DBus connection"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:850
+#: ../imsettings/imsettings-observer.c:851
 #: ../imsettings/imsettings-request.c:176
 msgid "An object to be a DBus connection"
 msgstr ""
@@ -439,8 +412,8 @@ msgstr ""
 
 #: ../imsettings/imsettings-request.c:483
 #: ../imsettings/imsettings-request.c:531
-#: ../imsettings/imsettings-request.c:589
-#: ../imsettings/imsettings-request.c:636
+#: ../imsettings/imsettings-request.c:591
+#: ../imsettings/imsettings-request.c:638
 #, c-format
 msgid ""
 "Failed to invoke a method `%s' on %s:\n"
@@ -472,7 +445,7 @@ msgstr ""
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr ""
 
-#: ../src/factory.c:332 ../src/factory.c:634
+#: ../src/factory.c:332 ../src/factory.c:644
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr ""
@@ -497,7 +470,7 @@ msgstr ""
 msgid "Failed to make a symlink: %s"
 msgstr ""
 
-#: ../src/factory.c:501 ../src/factory.c:695
+#: ../src/factory.c:501 ../src/factory.c:705
 #, c-format
 msgid ""
 "No such input method on your system: %s\n"
@@ -509,24 +482,24 @@ msgstr ""
 msgid "No XIM server is available in %s"
 msgstr ""
 
-#: ../src/factory.c:761
+#: ../src/factory.c:771
 msgid "X display name"
 msgstr ""
 
-#: ../src/factory.c:762
+#: ../src/factory.c:772
 msgid "X display name to use"
 msgstr ""
 
 #. FIXME
-#: ../src/factory.c:809
+#: ../src/factory.c:819
 msgid "X screen to use"
 msgstr ""
 
-#: ../src/factory.c:809
+#: ../src/factory.c:819
 msgid "SCREEN"
 msgstr ""
 
-#: ../src/factory.c:840
+#: ../src/factory.c:850
 #, c-format
 msgid "Failed to open a X display."
 msgstr ""
@@ -546,46 +519,46 @@ msgstr ""
 msgid "No input methods available on your system."
 msgstr ""
 
-#: ../src/factory_info.c:1037
+#: ../src/factory_info.c:1055
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr ""
 
-#: ../src/factory_info.c:1204
+#: ../src/factory_info.c:1227
 msgid "xinputrc directory"
 msgstr ""
 
-#: ../src/factory_info.c:1205
+#: ../src/factory_info.c:1228
 msgid "A directory where puts the system wide xinputrc on."
 msgstr ""
 
-#: ../src/factory_info.c:1210
+#: ../src/factory_info.c:1233
 msgid "xinput directory"
 msgstr ""
 
-#: ../src/factory_info.c:1211
+#: ../src/factory_info.c:1234
 msgid "A directory where puts the IM configurations on."
 msgstr ""
 
-#: ../src/factory_info.c:1216 ../src/factory_info.c:1217
+#: ../src/factory_info.c:1239 ../src/factory_info.c:1240
 msgid "home directory"
 msgstr ""
 
-#: ../src/factory_info.c:1289
+#: ../src/factory_info.c:1312
 msgid ""
 "A directory where puts the system-wide xinputrc puts on (debugging only)"
 msgstr ""
 
-#: ../src/factory_info.c:1289 ../src/factory_info.c:1290
-#: ../src/factory_info.c:1291
+#: ../src/factory_info.c:1312 ../src/factory_info.c:1313
+#: ../src/factory_info.c:1314
 msgid "DIR"
 msgstr ""
 
-#: ../src/factory_info.c:1290
+#: ../src/factory_info.c:1313
 msgid "A directory where puts the IM configurations puts on (debugging only)"
 msgstr ""
 
-#: ../src/factory_info.c:1291
+#: ../src/factory_info.c:1314
 msgid "A home directory (debugging only)"
 msgstr ""
 
