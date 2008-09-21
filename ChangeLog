@@ -1,3 +1,8 @@
+2008-09-21  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event): 
+	just send back a key event if input-context is invalid. (rhbz#462899)
+
 2008-09-15  Akira TAGOH  <tagoh@redhat.com>
 
 	* README: Update.

@@ -837,6 +837,7 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
 				      "Invalid input-context ID: %d",
 				      icid);
+		goto end;
 	}
 	if (event->type == GDK_KEY_RELEASE)
 		goto end;
