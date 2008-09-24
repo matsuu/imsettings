@@ -160,6 +160,15 @@ AM_PATH_GLIB_2_0($GLIB_REQUIRED, :,
 *** GLIB $GLIB_REQUIRED_VERSION or better is required. The latest version of
 *** GLIB is always available from ftp://ftp.gtk.org/.]),
     glib)
+if test "x$use_gconf" = "xyes"; then
+   	AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
+	if test x"$GCONFTOOL" = "xno"; then
+		AC_MSG_ERROR([gconftool-2 executable not found in your path - should be installed with GConf])
+	fi
+	AM_GCONF_SOURCE_2
+else
+	AM_CONDITIONAL(GCONF_SCHEMAS_INSTALL, 0)
+fi
 
 dnl ======================================================================
 dnl options

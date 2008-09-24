@@ -1,4 +1,5 @@
 applet/imsettings-applet.desktop.in.in
+applet/imsettings-applet.schemas.in
 applet/main.c
 applet/radiomenuitem.c
 backends/gconf/main.c

@@ -607,8 +607,12 @@ imsettings_request_get_info_object(IMSettingsRequest  *imsettings,
 			g_warning("Mismatch the length of Array: expected `%u' but `%u'",
 				  len, array->len);
 		}
-		o = imsettings_object_load(array->data, array->len);
-		retval = IMSETTINGS_INFO (o);
+		if (array->len > 0) {
+			o = imsettings_object_load(array->data, array->len);
+			retval = IMSETTINGS_INFO (o);
+		} else {
+			/* otherwise no such info object for module */
+		}
 
 		g_value_array_free(ret);
 	}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-17 23:05+0900\n"
+"POT-Creation-Date: 2008-09-24 15:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,45 @@ msgstr ""
 
 #: ../applet/imsettings-applet.desktop.in.in.h:1
 msgid "IMSettings Applet"
+msgstr ""
+
+#: ../applet/imsettings-applet.schemas.in.h:1
+msgid "A shortcut key to connect to/disconnect from Input Method"
+msgstr ""
+
+#: ../applet/imsettings-applet.schemas.in.h:2
+msgid ""
+"If \"auto\" is set, imsettings-applet has a facility of XSETTINGS manager as "
+"needed. if you want to disable it explicitly, set \"disable\"."
+msgstr ""
+
+#: ../applet/imsettings-applet.schemas.in.h:3
+msgid "If true, operating instructions will be notified at the start up time."
+msgstr ""
+
+#: ../applet/imsettings-applet.schemas.in.h:4
+msgid "If true, the icon will be displayed at the systray."
+msgstr ""
+
+#: ../applet/imsettings-applet.schemas.in.h:5
+msgid "Run a facility of XSETTINGS manager"
+msgstr ""
+
+#: ../applet/imsettings-applet.schemas.in.h:6
+msgid "Show the status icon"
+msgstr ""
+
+#: ../applet/imsettings-applet.schemas.in.h:7
+msgid ""
+"The keybinding which connect to Input Method or disconnect from Input "
+"Method. The format looks like \"<Control>a\" or \"<Shift><Alt>F1\". The "
+"parser is fairly liberal and allows lower or upper case, and also "
+"abbreviations such as \"<Ctl>\" and \"<Ctrl>\". If you set the option to the "
+"special string \"disabled\", then there will be no keybinding for this."
+msgstr ""
+
+#: ../applet/imsettings-applet.schemas.in.h:8
+msgid "Whether to notify tips"
 msgstr ""
 
 #: ../applet/main.c:139 ../applet/main.c:172 ../applet/main.c:210
@@ -163,13 +202,13 @@ msgstr ""
 msgid "Child widget to appear next to the menu text"
 msgstr ""
 
-#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:845
-#: ../src/factory.c:815 ../src/factory_info.c:1311
+#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:848
+#: ../src/factory.c:819 ../src/factory_info.c:1311
 msgid "Replace the running settings daemon with new instance."
 msgstr ""
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:842 ../src/factory_info.c:1336
+#: ../src/factory.c:846 ../src/factory_info.c:1336
 #: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:66
 #: ../utils/imsettings-start.c:69 ../utils/imsettings-stop.c:65
 msgid "Unknown error in parsing the command lines."
@@ -179,11 +218,11 @@ msgstr ""
 msgid "Button Label|Input Method"
 msgstr ""
 
-#: ../backends/xim/main.c:142 ../src/factory.c:816
+#: ../backends/xim/main.c:142 ../src/factory.c:820
 msgid "X display to use"
 msgstr ""
 
-#: ../backends/xim/main.c:142 ../src/factory.c:816
+#: ../backends/xim/main.c:142 ../src/factory.c:820
 msgid "DISPLAY"
 msgstr ""
 
@@ -355,29 +394,29 @@ msgstr ""
 msgid "Whether or not IM is an user default."
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:396
+#: ../imsettings/imsettings-observer.c:399
 #, c-format
 msgid "Invalid IM module type: %d"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:838
+#: ../imsettings/imsettings-observer.c:841
 msgid "IM module name"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:839
+#: ../imsettings/imsettings-observer.c:842
 msgid "A target IM module name that to observe signals"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:844
+#: ../imsettings/imsettings-observer.c:847
 msgid "Replace"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:850
+#: ../imsettings/imsettings-observer.c:853
 #: ../imsettings/imsettings-request.c:175
 msgid "DBus connection"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:851
+#: ../imsettings/imsettings-observer.c:854
 #: ../imsettings/imsettings-request.c:176
 msgid "An object to be a DBus connection"
 msgstr ""
@@ -413,7 +452,7 @@ msgstr ""
 #: ../imsettings/imsettings-request.c:483
 #: ../imsettings/imsettings-request.c:531
 #: ../imsettings/imsettings-request.c:591
-#: ../imsettings/imsettings-request.c:638
+#: ../imsettings/imsettings-request.c:642
 #, c-format
 msgid ""
 "Failed to invoke a method `%s' on %s:\n"
@@ -482,24 +521,24 @@ msgstr ""
 msgid "No XIM server is available in %s"
 msgstr ""
 
-#: ../src/factory.c:771
+#: ../src/factory.c:775
 msgid "X display name"
 msgstr ""
 
-#: ../src/factory.c:772
+#: ../src/factory.c:776
 msgid "X display name to use"
 msgstr ""
 
 #. FIXME
-#: ../src/factory.c:819
+#: ../src/factory.c:823
 msgid "X screen to use"
 msgstr ""
 
-#: ../src/factory.c:819
+#: ../src/factory.c:823
 msgid "SCREEN"
 msgstr ""
 
-#: ../src/factory.c:850
+#: ../src/factory.c:854
 #, c-format
 msgid "Failed to open a X display."
 msgstr ""

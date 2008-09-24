@@ -282,7 +282,10 @@ imsettings_get_info_object(GObject      *object,
 
 		*ret = g_value_array_new(2);
 
-		s = imsettings_object_dump(IMSETTINGS_OBJECT (info));
+		if (info)
+			s = imsettings_object_dump(IMSETTINGS_OBJECT (info));
+		else
+			s = g_string_new(NULL);
 
 		g_value_array_append(*ret, NULL);
 		val = g_value_array_get_nth(*ret, 0);

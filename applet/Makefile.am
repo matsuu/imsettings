@@ -17,8 +17,11 @@ DEPS =							\
 	$(NULL)
 EXTRA_DIST =						\
 	$(autostart_in_files)				\
+	$(schema_in_files)				\
 	$(NULL)
 DISTCLEANFILES =					\
+	$(autostart_DATA)				\
+	$(schema_DATA)					\
 	$(NULL)
 
 if ENABLE_XIM
@@ -42,6 +45,7 @@ endif
 ##
 # Local Rules
 @INTLTOOL_DESKTOP_RULE@
+@INTLTOOL_SCHEMAS_RULE@
 
 ##
 # Target platform
@@ -51,6 +55,10 @@ autostartdir = $(sysconfdir)/xdg/autostart
 #
 autostart_in_files = imsettings-applet.desktop.in
 autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
+#
+schemadir = @GCONF_SCHEMA_FILE_DIR@
+schema_in_files = imsettings-applet.schemas.in
+schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 #
 imsettings_applet_SOURCES =				\
 	main.c						\
@@ -66,3 +74,10 @@ imsettings_applet_CFLAGS =				\
 imsettings_applet_LDADD =				\
 	$(APPLET_LIBS)					\
 	$(NULL)
+#
+if GCONF_SCHEMAS_INSTALL
+install-data-local:
+	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(schema_DATA)
+else
+install-data-local:
+endif

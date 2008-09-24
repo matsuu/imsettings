@@ -63,7 +63,8 @@ TDEF (issue) {
 	GError *error = NULL;
 
 	p = imsettings_request_what_im_is_running(req, &error);
-	fail_unless(p != NULL, "We don't expect null as the result of imsettings_request_what_im_is_running()");
+	fail_unless(p != NULL, "We don't expect null as the result of imsettings_request_what_im_is_running(): %s",
+		    error ? error->message : "no details");
 } TEND
 
 /************************************************************/

@@ -149,6 +149,18 @@ imsettings_test_restart_daemons_full(const gchar *xinputrcdir,
 
 	/* FIXME! */
 	sleep(1);
+
+	p = g_build_filename(IMSETTINGS_BUILDDIR, "src", "im-settings-daemon", NULL);
+	s = g_strdup_printf("%s --replace", p);
+	g_print("%s\n", s);
+
+	if (!g_spawn_command_line_async(s, NULL))
+		abort();
+	g_free(s);
+	g_free(p);
+
+	/* FIXME! */
+	sleep(1);
 }
 
 void

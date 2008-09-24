@@ -707,6 +707,10 @@ imsettings_manager_real_what_im_is_running(IMSettingsObserver  *observer,
 			g_free(p);
 			goto end;
 		}
+		if (info == NULL) {
+			/* no info object for current IM */
+			goto end;
+		}
 		xinputfile = imsettings_info_get_filename(info);
 		pidfile = _build_pidfilename(xinputfile, priv->display_name, "xim");
 		pid = _get_pid(pidfile, "xim", error);

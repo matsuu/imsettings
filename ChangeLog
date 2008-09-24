@@ -1,3 +1,21 @@
+2008-09-24  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: check whether or not gconftool-2 is available.
+
+	* tests/main.c (imsettings_test_restart_daemons_full): bring up
+	im-settings-daemon in the tree as well.
+
+	* src/factory.c (imsettings_manager_real_what_im_is_running): 
+	return NULL if no info object available.
+
+	* imsettings/imsettings-request.c (imsettings_request_get_info_object):
+	return NULL if no info object available.
+
+	* imsettings/imsettings-observer.c (imsettings_get_info_object): send
+	an empty GString if no info object available.
+
+	* applet/Makefile.am: ship and install imsettings-applet.schemas.
+
 2008-09-21  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event): 
