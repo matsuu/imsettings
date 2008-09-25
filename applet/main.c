@@ -111,11 +111,24 @@ static guint num_lock_mask, caps_lock_mask, scroll_lock_mask;
  * Private functions
  */
 static void
-notify_notification(IMApplet    *applet,
-		    const gchar *summary,
-		    const gchar *body,
-		    gint         timeout)
+notify_notification(IMApplet      *applet,
+		    NotifyUrgency  urgency,
+		    const gchar   *summary,
+		    const gchar   *body,
+		    gint           timeout)
 {
+	GConfClient *client = gconf_client_get_default();
+	GConfValue *val;
+
+	val = gconf_client_get(client, "/apps/imsettings-applet/notify_on_bubble", NULL);
+	if (val) {
+		if (!gconf_value_get_bool(val) && urgency < NOTIFY_URGENCY_NORMAL) {
+			d(g_print("No notification: %s: %s",
+				  summary, body));
+			goto end;
+		}
+	}
+	notify_notification_set_urgency(applet->notify, urgency);
 	notify_notification_update(applet->notify,
 				   _(summary),
 				   _(body),
@@ -124,6 +137,10 @@ notify_notification(IMApplet    *applet,
 	notify_notification_set_timeout(applet->notify, timeout * 1000);
 	notify_notification_set_category(applet->notify, "x-imsettings-notice");
 	notify_notification_show(applet->notify, NULL);
+
+  end:
+	gconf_value_free(val);
+	g_object_unref(client);
 }
 
 static gboolean
@@ -139,7 +156,7 @@ _check_version(IMApplet *applet)
 						      error ? error->message : N_("No detailed information"));
 
 			g_printerr("%s\n", body);
-			notify_notification(applet, N_("Mismatch the version of im-settings-daemon"), body, 5);
+			notify_notification(applet, NOTIFY_URGENCY_CRITICAL, N_("Mismatch the version of im-settings-daemon"), body, 5);
 			g_free(body);
 			if (error)
 				g_error_free(error);
@@ -172,15 +189,17 @@ _start_process_cb(DBusGProxy *proxy,
 					      error ? error->message : N_("No detailed information"));
 
 		g_printerr("%s: %s\n", header, body);
-		notify_notification(applet, header, body, 5);
+		notify_notification(applet, NOTIFY_URGENCY_CRITICAL, header, body, 5);
 		g_free(header);
 		g_free(body);
 	} else {
 		gchar *body, *notice;
+		NotifyUrgency urgency = NOTIFY_URGENCY_LOW;
 
 		if (applet->need_update_xinputrc) {
 			notice = g_strdup(N_(" and the default Input Method has been changed. if you need to change that to anything else, please use im-chooser."));
 			applet->need_update_xinputrc = FALSE;
+			urgency = NOTIFY_URGENCY_NORMAL;
 		} else {
 			notice = g_strdup("");
 		}
@@ -189,7 +208,7 @@ _start_process_cb(DBusGProxy *proxy,
 		applet->current_im = g_strdup(applet->process_im);
 		applet->is_enabled = TRUE;
 		_update_icon(applet);
-		notify_notification(applet, N_("Information"), body, 5);
+		notify_notification(applet, urgency, N_("Information"), body, 5);
 		g_free(notice);
 		g_free(body);
 	}
@@ -210,7 +229,7 @@ _stop_process_cb(DBusGProxy *proxy,
 					      error ? error->message : N_("No detailed information"));
 
 		g_printerr("%s: %s\n", header, body);
-		notify_notification(applet, header, body, 5);
+		notify_notification(applet, NOTIFY_URGENCY_CRITICAL, header, body, 5);
 		g_free(header);
 		g_free(body);
 	} else {
@@ -224,7 +243,7 @@ _stop_process_cb(DBusGProxy *proxy,
 			body = g_strdup(N_("Disconnected from Input Method"));
 			applet->current_im = g_strdup("none");
 			_update_icon(applet);
-			notify_notification(applet, N_("Information"), body, 5);
+			notify_notification(applet, NOTIFY_URGENCY_LOW, N_("Information"), body, 5);
 			g_free(body);
 		}
 	}
@@ -248,7 +267,7 @@ _start_process(IMApplet *applet)
 						applet->process_im);
 
 		g_printerr("%s: maybe DBus related issue.\n", header);
-		notify_notification(applet, header, N_("maybe DBus related issue."), 5);
+		notify_notification(applet, NOTIFY_URGENCY_CRITICAL, header, N_("maybe DBus related issue."), 5);
 		g_free(header);
 
 		return FALSE;
@@ -274,7 +293,7 @@ _stop_process(IMApplet *applet,
 						applet->process_im);
 
 		g_printerr("%s: maybe DBus related issue.\n", header);
-		notify_notification(applet, header, N_("maybe DBus related issue."), 5);
+		notify_notification(applet, NOTIFY_URGENCY_CRITICAL, header, N_("maybe DBus related issue."), 5);
 		g_free(header);
 
 		return FALSE;
@@ -329,7 +348,7 @@ _preference_showicon_toggled(GtkToggleButton *button,
 	gconf_client_set(client, "/apps/imsettings-applet/show_icon",
 			 val, &error);
 	if (error) {
-		notify_notification(applet, N_("Unable to store a value to GConf"), error->message, 5);
+		notify_notification(applet, NOTIFY_URGENCY_CRITICAL, N_("Unable to store a value to GConf"), error->message, 5);
 		g_error_free(error);
 	}
 	gconf_value_free(val);
@@ -368,7 +387,7 @@ _xsettings_update(IMApplet *applet)
 
 	val = gconf_client_get(client, "/apps/imsettings-applet/xsettings_manager", &error);
 	if (error) {
-		notify_notification(applet, N_("Unable to get a value from GConf"), error->message, 5);
+		notify_notification(applet, NOTIFY_URGENCY_CRITICAL, N_("Unable to get a value from GConf"), error->message, 5);
 		g_error_free(error);
 
 		return;
@@ -416,7 +435,7 @@ _preference_xsettings_toggled(GtkToggleButton *button,
 	gconf_client_set(client, "/apps/imsettings-applet/xsettings_manager",
 			 val, &error);
 	if (error) {
-		notify_notification(applet, N_("Unable to store a value to GConf"), error->message, 5);
+		notify_notification(applet, NOTIFY_URGENCY_CRITICAL, N_("Unable to store a value to GConf"), error->message, 5);
 		g_error_free(error);
 	}
 	gconf_value_free(val);
@@ -494,6 +513,9 @@ _setup_acceleration_key(IMApplet *applet)
 					   applet->keyval);
 
 	key = _get_acceleration_key(applet);
+	if (strcmp(key, "disabled") == 0)
+		goto no_accel;
+
 	gdk_error_trap_push();
 
 	_grab_ungrab_with_ignorable_modifiers(applet, rootwin, TRUE);
@@ -503,7 +525,7 @@ _setup_acceleration_key(IMApplet *applet)
 		gchar *escaped_key = g_markup_escape_text(key, -1);
 		gchar *body = g_strdup_printf(_("The acceleration key %s may be invalid. disabled it temporarily."), escaped_key);
 
-		notify_notification(applet, N_("Unable to set up the acceleration key"), body, 5);
+		notify_notification(applet, NOTIFY_URGENCY_CRITICAL, N_("Unable to set up the acceleration key"), body, 5);
 		g_free(body);
 		g_free(escaped_key);
 
@@ -512,6 +534,7 @@ _setup_acceleration_key(IMApplet *applet)
 		applet->watch_accel = FALSE;
 		g_print("Acceleration key: disabled\n");
 	} else {
+	  no_accel:
 		applet->watch_accel = TRUE;
 		g_print("Acceleration key: %s\n", key);
 	}
@@ -643,7 +666,7 @@ _preference_grabbed(GtkWidget   *widget,
 		gconf_client_set(client, "/apps/imsettings-applet/trigger_key",
 				 val, &error);
 		if (error) {
-			notify_notification(applet, N_("Unable to store the acceleration key into GConf"), error->message, 5);
+			notify_notification(applet, NOTIFY_URGENCY_CRITICAL, N_("Unable to store the acceleration key into GConf"), error->message, 5);
 			g_error_free(error);
 		}
 		g_free(key);
@@ -927,7 +950,7 @@ _activate(GtkStatusIcon *status_icon,
 
 		if (current_im == NULL || current_im[0] == 0 ||
 		    strcmp(current_im, "none") == 0) {
-			notify_notification(applet, N_("Information"),
+			notify_notification(applet, NOTIFY_URGENCY_NORMAL, N_("Information"),
 					    N_("The default Input Method isn't yet configured. To get this working, you need to set up that on im-chooser or select one from the menu which appears by the right click first."),
 					    3);
 			return;
@@ -965,9 +988,9 @@ filter_func(GdkXEvent *gdk_xevent,
 }
 
 static void
-_do_not_show_tips_again_cb(NotifyNotification *notify,
-			   gchar              *action,
-			   gpointer            user_data)
+_do_not_show_notification_again_cb(NotifyNotification *notify,
+				   gchar              *action,
+				   gpointer            user_data)
 {
 	GConfClient *client;
 	GConfValue *val;
@@ -975,7 +998,7 @@ _do_not_show_tips_again_cb(NotifyNotification *notify,
 	client = gconf_client_get_default();
 	val = gconf_value_new(GCONF_VALUE_BOOL);
 	gconf_value_set_bool(val, FALSE);
-	gconf_client_set(client, "/apps/imsettings-applet/notify_tips", val, NULL);
+	gconf_client_set(client, "/apps/imsettings-applet/notify_on_bubble", val, NULL);
 	gconf_value_free(val);
 
 	g_object_unref(G_OBJECT (client));
@@ -990,7 +1013,7 @@ _delay_notify(gpointer data)
 	GConfValue *val;
 	gchar *notice_key, *body, *key, *escaped_key;
 
-	val = gconf_client_get(client, "/apps/imsettings-applet/notify_tips", NULL);
+	val = gconf_client_get(client, "/apps/imsettings-applet/notify_on_bubble", NULL);
 	if (val) {
 		if (!gconf_value_get_bool(val)) {
 			d(g_print("No notification\n"));
@@ -1007,14 +1030,15 @@ _delay_notify(gpointer data)
 	}
 	body = g_strdup_printf(_("%sLeft-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu."),
 			       notice_key);
+	notify_notification_set_urgency(applet->notify, NOTIFY_URGENCY_LOW);
 	notify_notification_update(applet->notify, _("Tips"), body, NULL);
 	notify_notification_clear_actions(applet->notify);
 	notify_notification_set_timeout(applet->notify, 10*1000);
 	notify_notification_set_category(applet->notify, "x-imsettings-tips-shortcutkey");
 	notify_notification_add_action(applet->notify,
 				       "notips",
-				       _("Do not show this again"),
-				       _do_not_show_tips_again_cb,
+				       _("Do not show notifications again"),
+				       _do_not_show_notification_again_cb,
 				       applet,
 				       NULL);
 	notify_notification_show(applet->notify, NULL);
@@ -1057,7 +1081,7 @@ _create_proxy(IMApplet   *applet,
 		body = g_strdup_printf("XIM feature will be turned off.\nDetails: %s",
 				       error->message);
 		g_printerr("%s\n", body);
-		notify_notification(applet, N_("Unable to take an ownership for XIM server"), body, 5);
+		notify_notification(applet, NOTIFY_URGENCY_CRITICAL, N_("Unable to take an ownership for XIM server"), body, 5);
 		g_free(body);
 
 		return NULL;
@@ -1208,6 +1232,7 @@ _create_applet(void)
 
 	val = gconf_client_get(client, "/apps/imsettings-applet/show_icon", NULL);
 	if (val == NULL || gconf_value_get_bool(val)) {
+		gtk_status_icon_set_visible(applet->status_icon, TRUE);
 		g_timeout_add_seconds(1, _delay_notify, applet);
 	} else {
 		gtk_status_icon_set_visible(applet->status_icon, FALSE);

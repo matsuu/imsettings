@@ -1,3 +1,11 @@
+2008-09-25  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/main.c (notify_notification): set urgency.
+	(_setup_acceleration_key): don't process if accel key is "disabled".
+
+	* applet/imsettings-applet.schemas.in: Escape characters reserved for
+	markup language.
+
 2008-09-24  Akira TAGOH  <tagoh@redhat.com>
 
 	* configure.ac: check whether or not gconftool-2 is available.

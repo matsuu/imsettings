@@ -2,15 +2,15 @@
 <gconfschemafile>
   <schemalist>
     <schema>
-      <key>/schemas/apps/imsettings-applet/notify_tips</key>
-      <applyto>/apps/imsettings-applet/notify_tips</applyto>
+      <key>/schemas/apps/imsettings-applet/notify_on_bubble</key>
+      <applyto>/apps/imsettings-applet/notify_on_bubble</applyto>
       <owner>imsettings-applet</owner>
       <type>bool</type>
       <default>TRUE</default>
       <locale name="C">
-	<short>Whether to notify tips</short>
+	<short>Whether to notify informations with libnotify</short>
 	<long>
-	  If true, operating instructions will be notified at the start up time.
+	  If false, all of informations will not delivered through libnotify, except error and warning messages.
 	</long>
       </locale>
     </schema>
@@ -24,9 +24,9 @@
 	<short>A shortcut key to connect to/disconnect from Input Method</short>
 	<long>
 	  The keybinding which connect to Input Method or disconnect from Input
-	  Method. The format looks like "<Control>a" or "<Shift><Alt>F1".
+	  Method. The format looks like "&lt;Control&gt;a" or "&lt;Shift&gt;&lt;Alt&gt;F1".
 	  The parser is fairly liberal and allows lower or upper case, and also
-	  abbreviations such as "<Ctl>" and "<Ctrl>".
+	  abbreviations such as "&lt;Ctl&gt;" and "&lt;Ctrl&gt;".
 	  If you set the option to the special string "disabled", then there
 	  will be no keybinding for this.
 	</long>
@@ -41,7 +41,7 @@
       <locale name="C">
 	<short>Run a facility of XSETTINGS manager</short>
 	<long>
-	  If "auto" is set, imsettings-applet has a facility of XSETTINGS manager as needed. if you want to disable it explicitly, set "disable".
+	  If "auto" is set, imsettings-applet has a facility of XSETTINGS manager as needed. if you want to disable it explicitly, set "disabled".
 	</long>
       </locale>
     </schema>
