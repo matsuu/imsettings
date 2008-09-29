@@ -1,3 +1,8 @@
+2008-09-29  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_set_ic_values):
+	Fix a typo and memory leak.
+
 2008-09-25  Akira TAGOH  <tagoh@redhat.com>
 
 	* applet/main.c (notify_notification): set urgency.

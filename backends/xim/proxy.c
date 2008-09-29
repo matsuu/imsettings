@@ -2331,13 +2331,18 @@ xim_proxy_protocol_real_xim_set_ic_values(GXimProtocol *proto,
 		}
 		g_free(name);
 	}
-	if (!g_xim_client_connection_cmd_set_ic_values(conn, cimid, icid, attributes, TRUE)) {
+	if (!g_xim_client_connection_cmd_set_ic_values(conn, cimid, icid, alt, TRUE)) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
 				      "Unable to deliver XIM_SET_IC_VALUES for %p",
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
 	INC_PENDING (proxy);
+
+	g_slist_foreach(alt,
+			(GFunc)g_xim_attribute_free,
+			NULL);
+	g_slist_free(alt);
 
 	return TRUE;
 }
