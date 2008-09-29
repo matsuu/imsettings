@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-17 23:05+0900\n"
-"PO-Revision-Date: 2008-07-04 16:47+0200\n"
+"PO-Revision-Date: 2008-09-28 02:43+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,112 +15,116 @@ msgstr ""
 
 #: ../applet/imsettings-applet.desktop.in.in.h:1
 msgid "IMSettings Applet"
-msgstr ""
+msgstr "Aplet ustawień metody wejścia"
 
 #: ../applet/main.c:139 ../applet/main.c:172 ../applet/main.c:210
 msgid "No detailed information"
-msgstr ""
+msgstr "Brak szczegółowych informacji"
 
 #: ../applet/main.c:142
 msgid "Mismatch the version of im-settings-daemon"
-msgstr ""
+msgstr "Wersja im-settings-daemon nie zgadza się"
 
 #: ../applet/main.c:169 ../applet/main.c:247
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to start %s"
-msgstr "Uruchomienie procesu metody wejścia nie powiodło się: `%s'\n"
+msgstr "Nie można uruchomić %s"
 
 #: ../applet/main.c:182
 msgid ""
 " and the default Input Method has been changed. if you need to change that "
 "to anything else, please use im-chooser."
 msgstr ""
+" a domyślna metoda wejścia została zmieniona. Jeśli musisz ją zmienić na "
+"cokolwiek innego, użyj im-chooser."
 
 #: ../applet/main.c:187
 #, c-format
 msgid "Connected to %s.%s"
-msgstr ""
+msgstr "Połączono z %s.%s"
 
 #: ../applet/main.c:192 ../applet/main.c:227 ../applet/main.c:930
 msgid "Information"
-msgstr ""
+msgstr "Informacja"
 
 #: ../applet/main.c:207 ../applet/main.c:273
 #, c-format
 msgid "Unable to stop %s"
-msgstr ""
+msgstr "Nie można zatrzymać %s"
 
 #: ../applet/main.c:224
 msgid "Disconnected from Input Method"
-msgstr ""
+msgstr "Rozłączono z metody wejścia"
 
 #: ../applet/main.c:251 ../applet/main.c:277
 msgid "maybe DBus related issue."
-msgstr ""
+msgstr "może to być problem związany z D-Bus."
 
 #: ../applet/main.c:332 ../applet/main.c:419
 msgid "Unable to store a value to GConf"
-msgstr ""
+msgstr "Nie można przechowywać wartości w GConf"
 
 #: ../applet/main.c:371
 msgid "Unable to get a value from GConf"
-msgstr ""
+msgstr "Nie można uzyskać wartości z GConf"
 
 #: ../applet/main.c:504
 #, c-format
 msgid "The acceleration key %s may be invalid. disabled it temporarily."
-msgstr ""
+msgstr "Klawisz skrótu %s może być nieprawidłowy. Został tymczasowo wyłączony."
 
 #: ../applet/main.c:506
 msgid "Unable to set up the acceleration key"
-msgstr ""
+msgstr "Nie można ustawić klawisza skrótu"
 
 #: ../applet/main.c:646
 msgid "Unable to store the acceleration key into GConf"
-msgstr ""
+msgstr "Nie można przechowywać klawisza skrótu w GConf"
 
 #: ../applet/main.c:667
 msgid "Please press the acceleration key..."
-msgstr ""
+msgstr "Naciśnij klawisz skrótu..."
 
 #: ../applet/main.c:711
 msgid "IMSettings Applet Preferences"
-msgstr ""
+msgstr "Preferencje apletu ustawień metody wejścia"
 
 #: ../applet/main.c:723
 msgid "_Show the status icon"
-msgstr ""
+msgstr "Wyświetlaj ikonę _stanu"
 
 #: ../applet/main.c:732
 msgid "_Run XSETTINGS manager as needed"
-msgstr ""
+msgstr "U_ruchom menedżera XSETTINGS"
 
 #: ../applet/main.c:744
 msgid "<b>Trigger key:</b>"
-msgstr ""
+msgstr "<b>Klawisz przełącznika:</b>"
 
 #: ../applet/main.c:756
 msgid "_Grab key"
-msgstr ""
+msgstr "_Przechwyć klawisz"
 
 #: ../applet/main.c:770
 msgid ""
 "Please click Grab key button and press the key combinations you want to "
 "assign for the acceleration key. Press Backspace key to disable this feature."
 msgstr ""
+"Naciśnij przycisk Przechwyć klawisz i naciśnij kombinację klawiszy, które "
+"mają zostać przydzielone do klawisza skrótu. Naciśnij klawisz Backspace, aby "
+"wyłączyć tę funkcję."
 
 #: ../applet/main.c:845
-#, fuzzy
 msgid "Disconnect"
-msgstr "Połączenie D-Bus"
+msgstr "Rozłącz"
 
 #: ../applet/main.c:904
 msgid "Click to connect to Input Method"
-msgstr ""
+msgstr "Naciśnij, aby połączyć się z metodą wejścia"
 
 #: ../applet/main.c:908
 msgid "Click to disconnect from Input Method"
-msgstr ""
+msgstr "Naciśnij, aby rozłączyć się z metodą wejścia"
 
 #: ../applet/main.c:931
 msgid ""
@@ -128,11 +132,14 @@ msgid ""
 "to set up that on im-chooser or select one from the menu which appears by "
 "the right click first."
 msgstr ""
+"Domyślna metoda wejścia nie została jeszcze skonfigurowana. Aby działała, "
+"należy ustawić ją w im-chooser lub wybrać jedną z menu, które pojawia się po "
+"naciśnięciu prawym przyciskiem."
 
 #: ../applet/main.c:1005
 #, c-format
 msgid "Press %s or "
-msgstr ""
+msgstr "Naciśnij %s lub "
 
 #: ../applet/main.c:1008
 #, c-format
@@ -140,26 +147,29 @@ msgid ""
 "%sLeft-click on the icon to connect to/disconnect from Input Method.\n"
 "Right-click to show up the Input Method menu."
 msgstr ""
+"%sNaciśnij lewym przyciskiem na ikonę, aby połączyć się z/rozłączyć się z "
+"metodą wejścia.\n"
+"Naciśnij prawym przyciskiem, aby wyświetlić menu metody wejścia."
 
 #: ../applet/main.c:1010
 msgid "Tips"
-msgstr ""
+msgstr "Wskazówki"
 
 #: ../applet/main.c:1016
 msgid "Do not show this again"
-msgstr ""
+msgstr "Nie wyświetlaj tego ponownie"
 
 #: ../applet/main.c:1060
 msgid "Unable to take an ownership for XIM server"
-msgstr ""
+msgstr "Nie można przejąć właściciela serwera XIM"
 
 #: ../applet/radiomenuitem.c:314
 msgid "Image widget"
-msgstr ""
+msgstr "Widget obrazu"
 
 #: ../applet/radiomenuitem.c:315
 msgid "Child widget to appear next to the menu text"
-msgstr ""
+msgstr "Widget potomny pojawiający się obok tekstu menu"
 
 #: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:845
 #: ../src/factory.c:815 ../src/factory_info.c:1311
@@ -195,34 +205,31 @@ msgstr "Wyświetla na wyjściu dzienniki debugowania"
 
 #: ../backends/xim/main.c:145
 msgid "XIM server connects to, for debugging purpose only"
-msgstr ""
+msgstr "Serwer XIM do połączenia się z, tylko do celów debugowania"
 
 #: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:660
 msgid "XIM"
 msgstr "XIM"
 
 #: ../backends/xim/proxy.c:2659
-#, fuzzy
 msgid "A XIM server name"
 msgstr "Nazwa serwera XIM"
 
 #: ../backends/xim/proxy.c:2660
-#, fuzzy
 msgid "A XIM server name would connects to"
 msgstr "Nazwa serwera XIM do połączenia"
 
 #: ../backends/xim/proxy.c:2665
 msgid "Signals for Protocol class"
-msgstr ""
+msgstr "Sygnały dla klasy protokołu"
 
 #: ../backends/xim/proxy.c:2666
 msgid "A structure of signals for Protocol class"
-msgstr ""
+msgstr "Struktura sygnałów dla klasy protokołu"
 
 #: ../imsettings/imsettings-info.c:632 ../imsettings/imsettings-info.c:633
-#, fuzzy
 msgid "Home directory"
-msgstr "folder domowy"
+msgstr "Folder domowy"
 
 #: ../imsettings/imsettings-info.c:639
 msgid "Language"
@@ -602,7 +609,6 @@ msgid "Failed to start IM process `%s'\n"
 msgstr "Uruchomienie procesu metody wejścia nie powiodło się: `%s'\n"
 
 #: ../utils/imsettings-stop.c:43
-#, fuzzy
 msgid "Force stopping the IM process regardless of any errors."
 msgstr ""
 "Wymuś ponowne uruchomienie procesu metody wejścia, niezależnie od błędów."
@@ -616,51 +622,3 @@ msgstr "Zatrzymano %s\n"
 #, c-format
 msgid "Failed to stop IM process `%s'\n"
 msgstr "Zatrzymanie procesu metody wejścia nie powiodło się: `%s'\n"
-
-#~ msgid "X display"
-#~ msgstr "Ekran X Window"
-
-#~ msgid "Window ID"
-#~ msgstr "Identyfikator okna"
-
-#~ msgid "Window ID for the client"
-#~ msgstr "Identyfikator okna dla klienta"
-
-#~ msgid "Communication Window ID"
-#~ msgstr "Identyfikator okna komunikacji"
-
-#~ msgid "Window ID to communicate the client"
-#~ msgstr "Identyfikator okna do komunikacji z klientem"
-
-#~ msgid "Selection Atom"
-#~ msgstr "Atom wyboru"
-
-#~ msgid "Atom for selection"
-#~ msgstr "Atom do wyboru"
-
-#~ msgid "Verbose flag"
-#~ msgstr "Flaga zwiększenia ilości informacji na wyjściu"
-
-#~ msgid "Output a lot of helpful messages to debug"
-#~ msgstr "Wyświetla na wyjściu dużo komunikatów pomocnych w debugowaniu"
-
-#~ msgid "Protocol"
-#~ msgstr "Protokół"
-
-#~ msgid "GType to deal with the XIM protocol"
-#~ msgstr "GType do komunikowania się z protokołem XIM"
-
-#~ msgid "XIMProtocol"
-#~ msgstr "Protokół XIM"
-
-#~ msgid "GObject of GObject"
-#~ msgstr "GObject GObjectu"
-
-#~ msgid "Selection Window ID"
-#~ msgstr "Identyfikator okna wyboru"
-
-#~ msgid "Connection object"
-#~ msgstr "Obiekt połączenia"
-
-#~ msgid "XIMConnection Gobject"
-#~ msgstr "GObject połączenia XIM"

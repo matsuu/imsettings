@@ -1,3 +1,7 @@
+2008-09-29  Akira TAGOH  <tagoh@redhat.com>
+
+	* pl.po: Update Polish translation from Piotr Drąg.
+
 2008-09-24  Akira TAGOH  <tagoh@redhat.com>
 
 	* POTFILES.in: Add imsettings-applet.schemas.in
