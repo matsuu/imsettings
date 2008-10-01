@@ -77,7 +77,6 @@ struct _XimProxy {
 	gchar                   *connect_to;
 	GXimLazySignalConnector *client_proto_signals;
 	GXimServerTemplate      *default_server;
-	gulong                   pending_tasks;
 	guint16                 *simid_table;
 	guint16                 *cimid_table;
 	guint16                  latest_imid;
@@ -90,6 +89,7 @@ struct _XimProxyConnectionClass {
 struct _XimProxyConnection {
 	GXimServerConnection  parent_instance;
 	GXimStr              *locale;
+	GQueue               *pendingq;
 };
 
 

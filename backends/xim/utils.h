@@ -28,6 +28,14 @@
 
 G_BEGIN_DECLS
 
+typedef struct _XimReply		XimReply;
+
+struct _XimReply {
+	guint16 major_opcode;
+	guint16 minor_opcode;
+};
+
+
 gchar *xim_substitute_display_name(const gchar *display_name) G_GNUC_MALLOC;
 
 G_END_DECLS

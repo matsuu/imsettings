@@ -64,6 +64,7 @@ struct _XimClientClass {
 struct _XimClient {
 	GXimClientTemplate  parent_instance;
 	gboolean            is_reconnecting;
+	GQueue             *pendingq;
 };
 
 struct _XimClientConnectionClass {
@@ -74,6 +75,7 @@ struct _XimClientConnection {
 	GXimClientConnection  parent_instance;
 	gboolean              is_reconnecting;
 	guint                 reconnection_state;
+	GQueue               *pendingq;
 };
 
 

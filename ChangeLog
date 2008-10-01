@@ -1,3 +1,10 @@
+2008-10-01  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (_INC_PENDING): manage the pending tasks
+	strictly.
+	(_DEC_PENDING): likewise.
+	(_find_reply): new.
+
 2008-09-29  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_set_ic_values):

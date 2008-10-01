@@ -79,6 +79,11 @@ xim_client_real_get_property(GObject    *object,
 static void
 xim_client_real_finalize(GObject *object)
 {
+	XimClient *client = XIM_CLIENT (object);
+
+	g_queue_foreach(client->pendingq, (GFunc)g_free, NULL);
+	g_queue_free(client->pendingq);
+
 	if (G_OBJECT_CLASS (xim_client_parent_class)->finalize)
 		(* G_OBJECT_CLASS (xim_client_parent_class)->finalize) (object);
 }
@@ -109,16 +114,33 @@ xim_client_class_init(XimClientClass *klass)
 static void
 xim_client_init(XimClient *client)
 {
+	client->pendingq = g_queue_new();
+}
+
+static void
+xim_client_connection_real_finalize(GObject *object)
+{
+	XimClientConnection *conn = XIM_CLIENT_CONNECTION (object);
+
+	g_queue_foreach(conn->pendingq, (GFunc)g_free, NULL);
+	g_queue_free(conn->pendingq);
+
+	if (G_OBJECT_CLASS (xim_client_connection_parent_class)->finalize)
+		(* G_OBJECT_CLASS (xim_client_connection_parent_class)->finalize) (object);
 }
 
 static void
 xim_client_connection_class_init(XimClientConnectionClass *klass)
 {
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	object_class->finalize = xim_client_connection_real_finalize;
 }
 
 static void
 xim_client_connection_init(XimClientConnection *conn)
 {
+	conn->pendingq = g_queue_new();
 }
 
 /*
