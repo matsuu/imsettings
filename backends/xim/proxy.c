@@ -97,7 +97,27 @@
 #define INC_PENDING(_p_,_mj_,_mn_)					\
 	_INC_PENDING (_p_,_mj_,_mn_,G_XIM_PROTOCOL_GET_IFACE (_p_)->message)
 #define DEC_PENDING(_p_,_mj_,_mn_)					\
-	_DEC_PENDING (_p_,_mj_,_mn_,G_XIM_PROTOCOL_GET_IFACE (_p_)->message)
+	G_STMT_START {							\
+		_DEC_PENDING (_p_,_mj_,_mn_,G_XIM_PROTOCOL_GET_IFACE (_p_)->message); \
+		if (g_queue_get_length((_p_)->pendingq) == 0) {		\
+			GXimProtocolPrivate *_priv_ = g_xim_protocol_get_private(G_XIM_PROTOCOL (_p_)); \
+									\
+			if (g_queue_get_length(_priv_->sendq) > 0) {	\
+				GList *_l_;				\
+									\
+				_l_ = g_queue_find_custom(_priv_->sendq, NULL, _find_packet_to_send); \
+				if (_l_) {				\
+					GXimProtocolQueueNode *_node_ = _l_->data; \
+									\
+					g_xim_protocol_send_packets(G_XIM_PROTOCOL (_p_), \
+								    _node_->data, \
+								    _node_->length); \
+					_node_->is_sent = TRUE;		\
+					INC_PENDING ((_p_), _node_->major_opcode, _node_->minor_opcode); \
+				}					\
+			}						\
+		}							\
+	} G_STMT_END
 #define INC_PENDING_C(_p_,_mj_,_mn_)				\
 	_INC_PENDING (_p_,_mj_,_mn_,G_XIM_CORE (_p_)->message)
 #define DEC_PENDING_C(_p_,_mj_,_mn_)				\
@@ -137,6 +157,28 @@ G_DEFINE_TYPE (XimProxyConnection, xim_proxy_connection, G_TYPE_XIM_SERVER_CONNE
 /*
  * Private functions
  */
+static gint
+_find_packet_to_receive(gconstpointer a,
+			gconstpointer b)
+{
+	const GXimProtocolQueueNode *na = a, *nb = b;
+
+	/* XXX: we may have to deal with XIM_ERROR */
+	return !(na->imid == nb->imid &&
+		 na->icid == nb->icid &&
+		 na->major_opcode == nb->major_opcode &&
+		 na->minor_opcode == nb->minor_opcode);
+}
+
+static gint
+_find_packet_to_send(gconstpointer a,
+		     gconstpointer b)
+{
+	const GXimProtocolQueueNode *node = a;
+
+	return node->is_sent;
+}
+
 static gint
 _find_reply(gconstpointer a,
 	    gconstpointer b)
@@ -1147,15 +1189,32 @@ xim_proxy_client_protocol_real_xim_set_ic_values_reply(GXimProtocol *proto,
 {
 	XimProxy *proxy = XIM_PROXY (data);
 	GXimServerConnection *conn = NULL;
+	GXimProtocolPrivate *priv;
+	GXimProtocolQueueNode *node, *req;
 	gboolean retval = FALSE;
 	guint16 simid = _get_server_imid(proxy, imid);
+	GList *l;
 
 	if (simid == 0)
 		goto end;
 
 	conn = _get_server_connection(proxy, proto);
 
-	retval = g_xim_server_connection_cmd_set_ic_values_reply(conn, simid, icid);
+	priv = g_xim_protocol_get_private(G_XIM_PROTOCOL (conn));
+	req = g_new0(GXimProtocolQueueNode, 1);
+	req->imid = imid;
+	req->icid = icid;
+	req->major_opcode = G_XIM_SET_IC_VALUES_REPLY;
+	req->minor_opcode = 0;
+	if ((l = g_queue_find_custom(priv->sendq, req, _find_packet_to_receive))) {
+		node = l->data;
+		g_queue_remove(priv->sendq, node);
+		g_free(node->data);
+		g_free(node);
+	} else {
+		retval = g_xim_server_connection_cmd_set_ic_values_reply(conn, simid, icid);
+	}
+	g_free(req);
 	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SET_IC_VALUES_REPLY, 0);
   end:
 
@@ -2290,6 +2349,10 @@ xim_proxy_protocol_real_xim_set_ic_values(GXimProtocol *proto,
 	GdkNativeWindow	client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 	guint16 cimid = _get_client_imid(proxy, imid);
 	GSList *alt = NULL, *l;
+	GList *ll;
+	GXimProtocolQueueNode *node;
+	XimReply *rep;
+	gboolean is_queued = FALSE;
 
 	/* the case when cimid is 0 means new XIM server is being brought up.
 	 * So IC is already invalid for new one. we don't need to send this out.
@@ -2320,11 +2383,29 @@ xim_proxy_protocol_real_xim_set_ic_values(GXimProtocol *proto,
 		}
 		g_free(name);
 	}
+	rep = g_new0(XimReply, 1);
+	rep->major_opcode = G_XIM_SYNC_REPLY;
+	rep->minor_opcode = 0;
+	if ((ll = g_queue_find_custom(XIM_PROXY_CONNECTION (proto)->pendingq, rep, _find_reply))) {
+		/* someone is waiting for a synchronous event. fake a reply to avoid a race condition */
+		is_queued = g_xim_protocol_start_queue(proto);
+	}
+	g_free(rep);
 	if (!g_xim_client_connection_cmd_set_ic_values(conn, cimid, icid, alt, TRUE)) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
 				      "Unable to deliver XIM_SET_IC_VALUES for %p",
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
+		g_xim_protocol_cancel_queue(proto);
 		return FALSE;
+	}
+	if (is_queued) {
+		node = g_xim_protocol_end_queue(proto);
+		node->major_opcode = G_XIM_SET_IC_VALUES_REPLY;
+		node->minor_opcode = 0;
+		node->imid = cimid;
+		node->icid = icid;
+
+		return g_xim_server_connection_cmd_set_ic_values_reply(G_XIM_SERVER_CONNECTION (proto), imid, icid);
 	}
 	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_SET_IC_VALUES_REPLY, 0);
 

@@ -1,3 +1,15 @@
+2008-10-02  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (DEC_PENDING): send packet in the queue when no
+	pending tasks.
+	(_find_packet_to_receive): new.
+	(_find_packet_to_send): new.
+	(xim_proxy_client_protocol_real_xim_set_ic_values_reply): do not send
+	back an event to the client if it's a reply for delayed packet.
+	(xim_proxy_protocol_real_xim_set_ic_values): put the packet into
+	the queue and just send back a reply if waiting for any synchronous
+	event.
+
 2008-10-01  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/proxy.c (_INC_PENDING): manage the pending tasks
