@@ -133,12 +133,24 @@
 	_INC_PENDING (_p_,_mj_,_mn_,G_XIM_CORE (_p_)->message)
 #define DEC_PENDING_C(_p_,_mj_,_mn_)				\
 	_DEC_PENDING (_p_,_mj_,_mn_,G_XIM_CORE (_p_)->message)
-#define INC_PENDING_K(_p_)					\
-	XIM_PROXY_CONNECTION (_p_)->n_pending_key_event++
+#define INC_PENDING_K(_p_)						\
+	G_STMT_START {							\
+		XIM_PROXY_CONNECTION (_p_)->n_pending_key_event++;	\
+		g_xim_message_debug(G_XIM_PROTOCOL_GET_IFACE (_p_)->message, "proxy/task", \
+				    "%s(++): %s pending forward event: %d", \
+				    __FUNCTION__,			\
+				    g_type_name(G_TYPE_FROM_INSTANCE (_p_)), \
+				    XIM_PROXY_CONNECTION (_p_)->n_pending_key_event); \
+	} G_STMT_END
 #define DEC_PENDING_K(_p_)						\
 	G_STMT_START {							\
 		if (XIM_PROXY_CONNECTION (_p_)->n_pending_key_event > 0) { \
 			XIM_PROXY_CONNECTION (_p_)->n_pending_key_event--; \
+			g_xim_message_debug(G_XIM_PROTOCOL_GET_IFACE (_p_)->message, "proxy/task", \
+					    "%s(--): %s pending forward event: %d", \
+					    __FUNCTION__,		\
+					    g_type_name(G_TYPE_FROM_INSTANCE (_p_)), \
+					    XIM_PROXY_CONNECTION (_p_)->n_pending_key_event); \
 		} else {						\
 			g_xim_message_bug(G_XIM_PROTOCOL_GET_IFACE (_p_)->message, \
 					  "%s: The pending key event counter is overflowed", \
