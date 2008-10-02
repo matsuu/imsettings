@@ -1,5 +1,8 @@
 2008-10-02  Akira TAGOH  <tagoh@redhat.com>
 
+	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_unset_ic_focus): 
+	reset the number of the forward event that is waiting for the response.
+
 	* backends/xim/proxy.c (DEC_PENDING): resend the packet to the proper
 	place.
 	(INC_PENDING_K): new.

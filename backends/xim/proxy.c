@@ -2571,6 +2571,10 @@ xim_proxy_protocol_real_xim_unset_ic_focus(GXimProtocol *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
+	/* reset the number of the forward event so that IM won't sends back
+	 * XIM_FORWARD_EVENT after focusing out.
+	 */
+	XIM_PROXY_CONNECTION (proto)->n_pending_key_event = 0;
 
 	return TRUE;
 }
