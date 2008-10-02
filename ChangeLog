@@ -1,5 +1,14 @@
 2008-10-02  Akira TAGOH  <tagoh@redhat.com>
 
+	* backends/xim/proxy.c (DEC_PENDING): resend the packet to the proper
+	place.
+	(INC_PENDING_K): new.
+	(DEC_PENDING_K): new.
+	(xim_proxy_client_protocol_real_xim_set_ic_values_reply): return true
+	if the received packet is a delayed event for fake.
+	(xim_proxy_protocol_real_xim_set_ic_values): look at the number of
+	the forward event.
+
 	* backends/xim/proxy.c (DEC_PENDING): send packet in the queue when no
 	pending tasks.
 	(_find_packet_to_receive): new.

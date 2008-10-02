@@ -108,8 +108,19 @@
 				_l_ = g_queue_find_custom(_priv_->sendq, NULL, _find_packet_to_send); \
 				if (_l_) {				\
 					GXimProtocolQueueNode *_node_ = _l_->data; \
+					GXimProtocol *_proto_;		\
 									\
-					g_xim_protocol_send_packets(G_XIM_PROTOCOL (_p_), \
+					if (XIM_IS_PROXY_CONNECTION (_p_)) { \
+						GXimClientConnection *_c_ = _get_client_connection(proxy, G_XIM_PROTOCOL (_p_)); \
+									\
+						_proto_ = G_XIM_PROTOCOL (_c_);	\
+					} else {			\
+						_proto_ = G_XIM_PROTOCOL (_p_);	\
+					}				\
+					g_xim_message_debug(G_XIM_PROTOCOL_GET_IFACE (_p_)->message, "proxy/event", \
+							    "Resending event %s queued for fake", \
+							    g_xim_protocol_name(_node_->data[0])); \
+					g_xim_protocol_send_packets(_proto_, \
 								    _node_->data, \
 								    _node_->length); \
 					_node_->is_sent = TRUE;		\
@@ -122,6 +133,18 @@
 	_INC_PENDING (_p_,_mj_,_mn_,G_XIM_CORE (_p_)->message)
 #define DEC_PENDING_C(_p_,_mj_,_mn_)				\
 	_DEC_PENDING (_p_,_mj_,_mn_,G_XIM_CORE (_p_)->message)
+#define INC_PENDING_K(_p_)					\
+	XIM_PROXY_CONNECTION (_p_)->n_pending_key_event++
+#define DEC_PENDING_K(_p_)						\
+	G_STMT_START {							\
+		if (XIM_PROXY_CONNECTION (_p_)->n_pending_key_event > 0) { \
+			XIM_PROXY_CONNECTION (_p_)->n_pending_key_event--; \
+		} else {						\
+			g_xim_message_bug(G_XIM_PROTOCOL_GET_IFACE (_p_)->message, \
+					  "%s: The pending key event counter is overflowed", \
+					  __FUNCTION__);		\
+		}							\
+	} G_STMT_END
 
 enum {
 	PROP_0,
@@ -1211,6 +1234,7 @@ xim_proxy_client_protocol_real_xim_set_ic_values_reply(GXimProtocol *proto,
 		g_queue_remove(priv->sendq, node);
 		g_free(node->data);
 		g_free(node);
+		retval = TRUE;
 	} else {
 		retval = g_xim_server_connection_cmd_set_ic_values_reply(conn, simid, icid);
 	}
@@ -1287,6 +1311,7 @@ xim_proxy_client_protocol_real_xim_forward_event(GXimProtocol *proto,
 	conn = _get_server_connection(proxy, proto);
 	if (flag & G_XIM_Event_Synchronous)
 		INC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SYNC_REPLY, 0);
+	DEC_PENDING_K (conn);
 
 	return g_xim_connection_cmd_forward_event(G_XIM_CONNECTION (conn), simid, icid, flag, event);
 }
@@ -2349,7 +2374,6 @@ xim_proxy_protocol_real_xim_set_ic_values(GXimProtocol *proto,
 	GdkNativeWindow	client_window = g_xim_transport_get_client_window(G_XIM_TRANSPORT (proto));
 	guint16 cimid = _get_client_imid(proxy, imid);
 	GSList *alt = NULL, *l;
-	GList *ll;
 	GXimProtocolQueueNode *node;
 	XimReply *rep;
 	gboolean is_queued = FALSE;
@@ -2386,24 +2410,29 @@ xim_proxy_protocol_real_xim_set_ic_values(GXimProtocol *proto,
 	rep = g_new0(XimReply, 1);
 	rep->major_opcode = G_XIM_SYNC_REPLY;
 	rep->minor_opcode = 0;
-	if ((ll = g_queue_find_custom(XIM_PROXY_CONNECTION (proto)->pendingq, rep, _find_reply))) {
+	if (XIM_PROXY_CONNECTION (proto)->n_pending_key_event > 0) {
 		/* someone is waiting for a synchronous event. fake a reply to avoid a race condition */
-		is_queued = g_xim_protocol_start_queue(proto);
+		is_queued = g_xim_protocol_start_queue(G_XIM_PROTOCOL (conn));
 	}
 	g_free(rep);
 	if (!g_xim_client_connection_cmd_set_ic_values(conn, cimid, icid, alt, TRUE)) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
 				      "Unable to deliver XIM_SET_IC_VALUES for %p",
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
-		g_xim_protocol_cancel_queue(proto);
+		g_xim_protocol_cancel_queue(G_XIM_PROTOCOL (conn));
 		return FALSE;
 	}
 	if (is_queued) {
-		node = g_xim_protocol_end_queue(proto);
+		GXimProtocolPrivate *priv = g_xim_protocol_get_private(proto);
+		GXimProtocolPrivate *cpriv = g_xim_protocol_get_private(G_XIM_PROTOCOL (conn));
+
+		node = g_xim_protocol_end_queue(G_XIM_PROTOCOL (conn));
 		node->major_opcode = G_XIM_SET_IC_VALUES_REPLY;
 		node->minor_opcode = 0;
 		node->imid = cimid;
 		node->icid = icid;
+		g_queue_push_tail(priv->sendq, node);
+		g_queue_pop_tail(cpriv->sendq);
 
 		return g_xim_server_connection_cmd_set_ic_values_reply(G_XIM_SERVER_CONNECTION (proto), imid, icid);
 	}
@@ -2559,8 +2588,14 @@ xim_proxy_protocol_real_xim_forward_event(GXimProtocol *proto,
 
 		return TRUE;
 	}
-	if (flag & G_XIM_Event_Synchronous)
+	if (flag & G_XIM_Event_Synchronous) {
 		INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_SYNC_REPLY, 0);
+	} else {
+		/* asynchronous forward event has to keep on track to avoid
+		 * the race condition issue with other synchronous event.
+		 */
+		INC_PENDING_K (proto);
+	}
 
 	return TRUE;
 }
@@ -2911,6 +2946,8 @@ xim_proxy_is_pending(XimProxy *proxy)
 	while (g_hash_table_iter_next(&iter, &key, &val)) {
 		XimProxyConnection *sconn = XIM_PROXY_CONNECTION (val);
 
+		if (sconn->n_pending_key_event > 0)
+			return TRUE;
 		if (g_queue_get_length(sconn->pendingq) > 0)
 			return TRUE;
 	}

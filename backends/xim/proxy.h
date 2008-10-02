@@ -90,6 +90,7 @@ struct _XimProxyConnection {
 	GXimServerConnection  parent_instance;
 	GXimStr              *locale;
 	GQueue               *pendingq;
+	gint                  n_pending_key_event;
 };
 
 
