@@ -1247,6 +1247,10 @@ xim_proxy_client_protocol_real_xim_set_ic_values_reply(GXimProtocol *proto,
 		g_free(node->data);
 		g_free(node);
 		retval = TRUE;
+		g_xim_message_debug(G_XIM_PROTOCOL_GET_IFACE (proto)->message, "proxy/event",
+				    "Discarding the event %s. the number of queue: %d",
+				    g_xim_protocol_name(req->major_opcode),
+				    g_queue_get_length(priv->sendq));
 	} else {
 		retval = g_xim_server_connection_cmd_set_ic_values_reply(conn, simid, icid);
 	}
