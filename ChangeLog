@@ -1,3 +1,8 @@
+2008-10-03  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_set_ic_values): 
+	serialize the event if waiting for any replies of synchronous event.
+
 2008-10-02  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_unset_ic_focus): 
