@@ -1,3 +1,9 @@
+2008-10-06  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_client_protocol_real_parser_error):
+	send back the appropriate error to the client application when
+	the parser error happens.
+
 2008-10-03  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_set_ic_values): 

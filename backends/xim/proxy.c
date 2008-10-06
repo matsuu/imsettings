@@ -697,6 +697,74 @@ xim_proxy_client_real_xconnect_cb(GXimClientTemplate *client,
 }
 
 static gboolean
+xim_proxy_client_protocol_real_parser_error(GXimProtocol *proto,
+					    guint         major_opcode,
+					    guint         minor_opcode,
+					    guint         imid,
+					    guint         icid,
+					    gpointer      data)
+{
+	XimProxy *proxy = XIM_PROXY (data);
+	GXimServerConnection *conn;
+	gchar *msg;
+	gboolean retval = FALSE;
+	guint flag = G_XIM_EMASK_NO_VALID_ID;
+
+	conn = _get_server_connection(proxy, proto);
+	if (minor_opcode > 0) {
+		msg = g_strdup_printf("Unable to parse the protocol major %d, minor %d properly",
+				      major_opcode, minor_opcode);
+	} else {
+		msg = g_strdup_printf("Unable to parse the protocol %s properly",
+				      g_xim_protocol_name(major_opcode));
+
+		switch (major_opcode) {
+		    case G_XIM_CONNECT_REPLY:
+		    case G_XIM_AUTH_REQUIRED:
+		    case G_XIM_AUTH_NEXT:
+		    case G_XIM_AUTH_SETUP:
+			    retval = g_xim_connection_cmd_auth_ng(G_XIM_CONNECTION (conn));
+			    break;
+		    case G_XIM_SYNC:
+			    /* This might not work, because XIM_SYNC just
+			     * requires imid and icid. but it somehow failed.
+			     * so imid and/or icid may be invalid then.
+			     * However just try to send back XIM_SYNC_REPLY to
+			     * the XIM server to avoid a freeze. in this case
+			     * we don't need to send this event to the client.
+			     * it won't affect anything.
+			     */
+			    retval = g_xim_connection_cmd_sync_reply(G_XIM_CONNECTION (proto),
+								     imid, icid);
+			    break;
+		    case G_XIM_SYNC_REPLY:
+			    /* This might not work, because XIM_SYNC_REPLY just
+			     * requires imid and icid. but it somehow failed.
+			     * so imid and/or icid may be invalid then.
+			     * However just try to send XIM_SYNC_REPLY to
+			     * the client to avoid a freeze.
+			     */
+			    retval = g_xim_connection_cmd_sync_reply(G_XIM_CONNECTION (conn),
+								     imid, icid);
+			    break;
+		}
+	}
+
+	if (!retval) {
+		if (imid > 0)
+			flag |= G_XIM_EMASK_VALID_IMID;
+		if (icid > 0)
+			flag |= G_XIM_EMASK_VALID_ICID;
+		retval = g_xim_connection_cmd_error(G_XIM_CONNECTION (conn), imid, icid, flag,
+						    G_XIM_ERR_BadProtocol, 0, msg);
+	}
+	g_xim_message_error(G_XIM_PROTOCOL_GET_IFACE (proto)->message, msg);
+	g_free(msg);
+
+	return retval;
+}
+
+static gboolean
 xim_proxy_client_protocol_real_xim_connect_reply(GXimProtocol *proto,
 						 guint16       major_version,
 						 guint16       minor_version,
@@ -1923,6 +1991,9 @@ xim_proxy_real_xconnect(GXimServerTemplate *server,
 
 		return NULL;
 	}
+	g_signal_connect(G_XIM_CL_TMPL (client)->connection, "parser_error",
+			 G_CALLBACK (xim_proxy_client_protocol_real_parser_error),
+			 proxy);
 	comm_window = g_xim_transport_get_native_channel(G_XIM_TRANSPORT (G_XIM_CL_TMPL (client)->connection));
 	g_hash_table_insert(proxy->comm_table,
 			    G_XIM_NATIVE_WINDOW_TO_POINTER (comm_window),
