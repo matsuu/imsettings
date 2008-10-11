@@ -1,5 +1,12 @@
 2008-10-11  Akira TAGOH  <tagoh@redhat.com>
 
+	* data/xinput.sh.in.in (is_gtk_supported): Add a "kde" since KDE
+	support XDG autostart and imsettings-applet could works for XSETTINGS
+	manager on KDE.
+
+	* imsettings/imsettings-xsettings.c (_imsettings_xsettings_new):
+	Use better API to create an instance of XSETTINGS manager.
+
 	* imsettings/imsettings-xsettings.c (_imsettings_xsettings_dispatch_events): 
 	event handler for GdkEvent.
 	(imsettings_xsettings_new_with_gdkevent): new.
