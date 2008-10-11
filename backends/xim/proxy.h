@@ -101,6 +101,7 @@ XimProxy *xim_proxy_new           (GdkDisplay   *dpy,
 gboolean  xim_proxy_take_ownership(XimProxy     *proxy,
                                    gboolean      force,
                                    GError      **error);
+void      xim_proxy_flush_queue   (XimProxy     *proxy);
 gboolean  xim_proxy_is_pending    (XimProxy     *proxy);
 void      xim_proxy_disconnect_all(XimProxy     *proxy);
 

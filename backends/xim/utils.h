@@ -33,6 +33,8 @@ typedef struct _XimReply		XimReply;
 struct _XimReply {
 	guint16 major_opcode;
 	guint16 minor_opcode;
+	guint16 imid;
+	guint16 icid;
 };
 
 

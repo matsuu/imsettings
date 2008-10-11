@@ -48,12 +48,14 @@
 #define _MN_LOCALES	2
 #define _MN_TRANSPORT	3
 
-#define _INC_PENDING(_p_,_mj_,_mn_,_msg_)				\
+#define _INC_PENDING(_p_,_mj_,_mn_,_imid_,_icid_,_msg_)			\
 	G_STMT_START {							\
 		XimReply *_rep_ = g_new0(XimReply, 1);			\
 									\
 		_rep_->major_opcode = (_mj_);				\
 		_rep_->minor_opcode = (_mn_);				\
+		_rep_->imid = (_imid_);					\
+		_rep_->icid = (_icid_);					\
 		g_queue_push_tail((_p_)->pendingq, _rep_);		\
 		g_xim_message_debug((_msg_), "proxy/task",		\
 				    "%s(++): %s pending tasks: %d",	\
@@ -61,7 +63,7 @@
 				    g_type_name(G_TYPE_FROM_INSTANCE (_p_)), \
 				    g_queue_get_length((_p_)->pendingq)); \
 	} G_STMT_END
-#define _DEC_PENDING(_p_,_mj_,_mn_,_msg_)				\
+#define _DEC_PENDING(_p_,_mj_,_mn_,_imid_,_icid_,_msg_)			\
 	G_STMT_START {							\
 		if ((_mj_) == G_XIM_ERROR &&				\
 		    (_mn_) == 0) {					\
@@ -73,6 +75,8 @@
 									\
 			_rep_->major_opcode = (_mj_);			\
 			_rep_->minor_opcode = (_mn_);			\
+			_rep_->imid = (_imid_);				\
+			_rep_->icid = (_icid_);				\
 			_l_ = g_queue_find_custom((_p_)->pendingq,	\
 						  _rep_,		\
 						  _find_reply);		\
@@ -94,11 +98,11 @@
 				    g_type_name(G_TYPE_FROM_INSTANCE (_p_)), \
 				    g_queue_get_length((_p_)->pendingq)); \
 	} G_STMT_END
-#define INC_PENDING(_p_,_mj_,_mn_)					\
-	_INC_PENDING (_p_,_mj_,_mn_,G_XIM_PROTOCOL_GET_IFACE (_p_)->message)
-#define DEC_PENDING(_p_,_mj_,_mn_)					\
+#define INC_PENDING(_p_,_mj_,_mn_,_imid_,_icid_)			\
+	_INC_PENDING (_p_,_mj_,_mn_,_imid_,_icid_,G_XIM_PROTOCOL_GET_IFACE (_p_)->message)
+#define DEC_PENDING(_p_,_mj_,_mn_,_imid_,_icid_)			\
 	G_STMT_START {							\
-		_DEC_PENDING (_p_,_mj_,_mn_,G_XIM_PROTOCOL_GET_IFACE (_p_)->message); \
+		_DEC_PENDING (_p_,_mj_,_mn_,_imid_,_icid_,G_XIM_PROTOCOL_GET_IFACE (_p_)->message); \
 		if (g_queue_get_length((_p_)->pendingq) == 0) {		\
 			GXimProtocolPrivate *_priv_ = g_xim_protocol_get_private(G_XIM_PROTOCOL (_p_)); \
 									\
@@ -124,15 +128,15 @@
 								    _node_->data, \
 								    _node_->length); \
 					_node_->is_sent = TRUE;		\
-					INC_PENDING ((_p_), _node_->major_opcode, _node_->minor_opcode); \
+					INC_PENDING ((_p_), _node_->major_opcode, _node_->minor_opcode, _node_->imid, _node_->icid); \
 				}					\
 			}						\
 		}							\
 	} G_STMT_END
-#define INC_PENDING_C(_p_,_mj_,_mn_)				\
-	_INC_PENDING (_p_,_mj_,_mn_,G_XIM_CORE (_p_)->message)
-#define DEC_PENDING_C(_p_,_mj_,_mn_)				\
-	_DEC_PENDING (_p_,_mj_,_mn_,G_XIM_CORE (_p_)->message)
+#define INC_PENDING_C(_p_,_mj_,_mn_,_imid_,_icid_)			\
+	_INC_PENDING (_p_,_mj_,_mn_,_imid_,_icid_,G_XIM_CORE (_p_)->message)
+#define DEC_PENDING_C(_p_,_mj_,_mn_,_imid_,_icid_)			\
+	_DEC_PENDING (_p_,_mj_,_mn_,_imid_,_icid_,G_XIM_CORE (_p_)->message)
 #define INC_PENDING_K(_p_)						\
 	G_STMT_START {							\
 		XIM_PROXY_CONNECTION (_p_)->n_pending_key_event++;	\
@@ -324,14 +328,14 @@ _reconnect(XimProxy             *proxy,
 	    case 1:
 		    /* XIM_CONNECT */
 		    sconn = _get_server_connection(proxy, G_XIM_PROTOCOL (conn));
-		    INC_PENDING (XIM_PROXY_CONNECTION (sconn), G_XIM_CONNECT_REPLY, 0);
+		    INC_PENDING (XIM_PROXY_CONNECTION (sconn), G_XIM_CONNECT_REPLY, 0, 0, 0);
 		    /* XXX */
 		    retval = g_xim_client_connection_cmd_connect(conn, 1, 0, NULL, TRUE);
 		    break;
 	    case 2:
 		    /* XIM_OPEN */
 		    sconn = _get_server_connection(proxy, G_XIM_PROTOCOL (conn));
-		    INC_PENDING (XIM_PROXY_CONNECTION (sconn), G_XIM_OPEN_REPLY, 0);
+		    INC_PENDING (XIM_PROXY_CONNECTION (sconn), G_XIM_OPEN_REPLY, 0, 0, 0);
 		    retval = g_xim_client_connection_cmd_open_im(conn,
 								 XIM_PROXY_CONNECTION (sconn)->locale,
 								 TRUE);
@@ -359,7 +363,7 @@ _reconnect(XimProxy             *proxy,
 				    e = g_slist_append(e, p);
 			    }
 			    imid = _get_client_imid(proxy, G_XIM_CONNECTION (sconn)->imid);
-			    INC_PENDING (XIM_PROXY_CONNECTION (sconn), G_XIM_ENCODING_NEGOTIATION_REPLY, 0);
+			    INC_PENDING (XIM_PROXY_CONNECTION (sconn), G_XIM_ENCODING_NEGOTIATION_REPLY, 0, G_XIM_CONNECTION (sconn)->imid, 0);
 			    retval = g_xim_client_connection_cmd_encoding_negotiation(conn, imid, e, d, TRUE);
 
 			    g_slist_free(e);
@@ -465,7 +469,7 @@ _get_client_connection(XimProxy     *proxy,
 		GXimCore *core = G_XIM_CORE (proxy);
 
 		client->is_reconnecting = TRUE;
-		INC_PENDING_C (client, 0, _MN_XCONNECT);
+		INC_PENDING_C (client, 0, _MN_XCONNECT, 0, 0);
 		if (!g_xim_cl_tmpl_connect_to_server(cltmpl, &error)) {
 			if (error) {
 				g_xim_message_gerror(core->message, error);
@@ -474,7 +478,7 @@ _get_client_connection(XimProxy     *proxy,
 				g_xim_message_warning(core->message,
 						      "Waiting for reconnecting on other thread.");
 			}
-			DEC_PENDING_C (client, 0, _MN_XCONNECT);
+			DEC_PENDING_C (client, 0, _MN_XCONNECT, 0, 0);
 
 			return NULL;
 		}
@@ -565,7 +569,7 @@ xim_proxy_client_real_notify_locales_cb(GXimClientTemplate  *client,
 	g_hash_table_remove(proxy->selection_table,
 			    G_XIM_NATIVE_WINDOW_TO_POINTER (selection_window));
 	g_free(prop);
-	DEC_PENDING_C (XIM_CLIENT (client), 0, _MN_LOCALES);
+	DEC_PENDING_C (XIM_CLIENT (client), 0, _MN_LOCALES, 0, 0);
 
 	return retval;
 }
@@ -618,7 +622,7 @@ xim_proxy_client_real_notify_transport_cb(GXimClientTemplate  *client,
 	g_hash_table_remove(proxy->selection_table,
 			    G_XIM_NATIVE_WINDOW_TO_POINTER (selection_window));
 	g_free(prop);
-	DEC_PENDING_C (XIM_CLIENT (client), 0, _MN_TRANSPORT);
+	DEC_PENDING_C (XIM_CLIENT (client), 0, _MN_TRANSPORT, 0, 0);
 
 	return retval;
 }
@@ -691,7 +695,7 @@ xim_proxy_client_real_xconnect_cb(GXimClientTemplate *client,
 		gdk_event_free(ev);
 	}
 	client->is_connection_initialized = GXC_ESTABLISHED;
-	DEC_PENDING_C (XIM_CLIENT (client), 0, _MN_XCONNECT);
+	DEC_PENDING_C (XIM_CLIENT (client), 0, _MN_XCONNECT, 0, 0);
 
 	return TRUE;
 }
@@ -782,7 +786,7 @@ xim_proxy_client_protocol_real_xim_connect_reply(GXimProtocol *proto,
 	} else {
 		retval = g_xim_server_connection_cmd_connect_reply(conn, major_version, minor_version);
 	}
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_CONNECT_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_CONNECT_REPLY, 0, 0, 0);
 
 	return retval;
 }
@@ -798,7 +802,7 @@ xim_proxy_client_protocol_real_xim_disconnect_reply(GXimProtocol *proto,
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_disconnect_reply(conn);
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_DISCONNECT_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_DISCONNECT_REPLY, 0, 0, 0);
 
 	return retval;
 }
@@ -836,7 +840,7 @@ xim_proxy_client_protocol_real_xim_error(GXimProtocol  *proto,
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_connection_cmd_error(G_XIM_CONNECTION (conn), simid, icid, flag, error_code, detail, error_message);
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_ERROR, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_ERROR, 0, imid, icid);
 
 	return retval;
 }
@@ -993,7 +997,7 @@ xim_proxy_client_protocol_real_xim_open_reply(GXimProtocol *proto,
 	} else {
 		retval = g_xim_server_connection_cmd_open_reply(conn, simid, imlist, iclist);
 	}
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_OPEN_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_OPEN_REPLY, 0, simid, 0);
 
 	g_slist_foreach(imlist, (GFunc)g_xim_raw_attr_free, NULL);
 	g_slist_foreach(iclist, (GFunc)g_xim_raw_attr_free, NULL);
@@ -1019,7 +1023,7 @@ xim_proxy_client_protocol_real_xim_close_reply(GXimProtocol *proto,
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_close_reply(conn, simid);
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_CLOSE_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_CLOSE_REPLY, 0, simid, 0);
   end:
 	_remove_imid(proxy, imid);
 
@@ -1062,7 +1066,7 @@ xim_proxy_client_protocol_real_xim_trigger_notify_reply(GXimProtocol *proto,
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_trigger_notify_reply(conn, simid, icid);
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_TRIGGER_NOTIFY_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_TRIGGER_NOTIFY_REPLY, 0, simid, icid);
   end:
 
 	return retval;
@@ -1138,7 +1142,7 @@ xim_proxy_client_protocol_real_xim_encoding_negotiation_reply(GXimProtocol *prot
 	} else {
 		retval = g_xim_server_connection_cmd_encoding_negotiation_reply(conn, simid, category, index_);
 	}
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_ENCODING_NEGOTIATION_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_ENCODING_NEGOTIATION_REPLY, 0, simid, 0);
   end:
 
 	return retval;
@@ -1161,7 +1165,7 @@ xim_proxy_client_protocol_real_xim_query_extension_reply(GXimProtocol *proto,
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_query_extension_reply(conn, simid, extensions);
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_QUERY_EXTENSION_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_QUERY_EXTENSION_REPLY, 0, simid, 0);
   end:
 
 	return retval;
@@ -1183,7 +1187,7 @@ xim_proxy_client_protocol_real_xim_set_im_values_reply(GXimProtocol *proto,
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_set_im_values_reply(conn, simid);
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SET_IM_VALUES_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SET_IM_VALUES_REPLY, 0, simid, 0);
   end:
 
 	return retval;
@@ -1228,7 +1232,7 @@ xim_proxy_client_protocol_real_xim_get_im_values_reply(GXimProtocol *proto,
 	}
 
 	retval = g_xim_server_connection_cmd_get_im_values_reply(conn, simid, alt);
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_GET_IM_VALUES_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_GET_IM_VALUES_REPLY, 0, simid, 0);
   end:
 	g_slist_foreach(alt,
 			(GFunc)g_xim_attribute_free,
@@ -1255,7 +1259,7 @@ xim_proxy_client_protocol_real_xim_create_ic_reply(GXimProtocol *proto,
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_create_ic_reply(conn, simid, icid);
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_CREATE_IC_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_CREATE_IC_REPLY, 0, simid, icid);
   end:
 
 	return retval;
@@ -1278,7 +1282,7 @@ xim_proxy_client_protocol_real_xim_destroy_ic_reply(GXimProtocol *proto,
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_destroy_ic_reply(conn, simid, icid);
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_DESTROY_IC_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_DESTROY_IC_REPLY, 0, simid, icid);
   end:
 
 	return retval;
@@ -1323,7 +1327,7 @@ xim_proxy_client_protocol_real_xim_set_ic_values_reply(GXimProtocol *proto,
 		retval = g_xim_server_connection_cmd_set_ic_values_reply(conn, simid, icid);
 	}
 	g_free(req);
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SET_IC_VALUES_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SET_IC_VALUES_REPLY, 0, simid, icid);
   end:
 
 	return retval;
@@ -1367,7 +1371,7 @@ xim_proxy_client_protocol_real_xim_get_ic_values_reply(GXimProtocol *proto,
 	}
 
 	retval = g_xim_server_connection_cmd_get_ic_values_reply(conn, simid, icid, alt);
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_GET_IC_VALUES_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_GET_IC_VALUES_REPLY, 0, simid, icid);
   end:
 	g_slist_foreach(alt,
 			(GFunc)g_xim_attribute_free,
@@ -1394,7 +1398,7 @@ xim_proxy_client_protocol_real_xim_forward_event(GXimProtocol *proto,
 
 	conn = _get_server_connection(proxy, proto);
 	if (flag & G_XIM_Event_Synchronous)
-		INC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SYNC_REPLY, 0);
+		INC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SYNC_REPLY, 0, simid, icid);
 	DEC_PENDING_K (conn);
 
 	return g_xim_connection_cmd_forward_event(G_XIM_CONNECTION (conn), simid, icid, flag, event);
@@ -1414,7 +1418,7 @@ xim_proxy_client_protocol_real_xim_sync(GXimProtocol *proto,
 		return FALSE;
 
 	conn = _get_server_connection(proxy, proto);
-	INC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SYNC_REPLY, 0);
+	INC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SYNC_REPLY, 0, simid, icid);
 
 	return g_xim_server_connection_cmd_sync(conn, simid, icid);
 }
@@ -1436,7 +1440,7 @@ xim_proxy_client_protocol_real_xim_sync_reply(GXimProtocol *proto,
 	conn = G_XIM_CONNECTION (_get_server_connection(proxy, proto));
 
 	retval = g_xim_connection_cmd_sync_reply(conn, simid, icid);
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SYNC_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SYNC_REPLY, 0, simid, icid);
   end:
 
 	return retval;
@@ -1463,7 +1467,7 @@ xim_proxy_client_protocol_real_xim_commit(GXimProtocol *proto,
 
 	retval = g_xim_server_connection_cmd_commit(conn, simid, icid, flag, keysym, string);
 	if (retval && (flag & G_XIM_XLookupSynchronous))
-		INC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SYNC_REPLY, 0);
+		INC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SYNC_REPLY, 0, simid, icid);
 
 	return retval;
 }
@@ -1486,7 +1490,7 @@ xim_proxy_client_protocol_real_xim_reset_ic_reply(GXimProtocol  *proto,
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_reset_ic_reply(conn, simid, icid, preedit_string);
-	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_RESET_IC_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_RESET_IC_REPLY, 0, simid, icid);
   end:
 
 	return retval;
@@ -1509,7 +1513,7 @@ xim_proxy_client_protocol_real_xim_preedit_start(GXimProtocol *proto,
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_preedit_start(conn, simid, icid);
-	INC_PENDING (XIM_CLIENT_CONNECTION (proto), G_XIM_PREEDIT_START_REPLY, 0);
+	INC_PENDING (XIM_CLIENT_CONNECTION (proto), G_XIM_PREEDIT_START_REPLY, 0, simid, icid);
 
 	return retval;
 }
@@ -1551,7 +1555,7 @@ xim_proxy_client_protocol_real_xim_preedit_caret(GXimProtocol     *proto,
 	conn = _get_server_connection(proxy, proto);
 
 	retval = g_xim_server_connection_cmd_preedit_caret(conn, simid, icid, caret);
-	INC_PENDING (XIM_CLIENT_CONNECTION (proto), G_XIM_PREEDIT_CARET_REPLY, 0);
+	INC_PENDING (XIM_CLIENT_CONNECTION (proto), G_XIM_PREEDIT_CARET_REPLY, 0, simid, icid);
 
 	return retval;
 }
@@ -1735,8 +1739,15 @@ xim_proxy_real_dispose(GObject *object)
 	GHashTableIter iter;
 	gpointer key, val;
 
+#if 0
 	while (xim_proxy_is_pending(proxy))
 		g_main_context_iteration(NULL, TRUE);
+#else
+	/* imsettings is killing input-method process immediately right now.
+	 * so probably just waiting for the pending request doesn't make sense.
+	 */
+	xim_proxy_flush_queue(proxy);
+#endif
 
 	g_hash_table_iter_init(&iter, proxy->sconn_table);
 	while (g_hash_table_iter_next(&iter, &key, &val)) {
@@ -1821,7 +1832,7 @@ xim_proxy_real_selection_request_event(GXimCore          *core,
 			 */
 			retval = FALSE;
 		} else {
-			INC_PENDING_C (client, 0, _MN_LOCALES);
+			INC_PENDING_C (client, 0, _MN_LOCALES, 0, 0);
 		}
 	} else if (event->property == core->atom_transport) {
 		if (!g_xim_cl_tmpl_send_selection_request(G_XIM_CL_TMPL (client),
@@ -1839,7 +1850,7 @@ xim_proxy_real_selection_request_event(GXimCore          *core,
 			 */
 			retval = FALSE;
 		} else {
-			INC_PENDING_C (client, 0, _MN_TRANSPORT);
+			INC_PENDING_C (client, 0, _MN_TRANSPORT, 0, 0);
 		}
 	} else {
 		gchar *s = gdk_atom_name(event->property);
@@ -2006,7 +2017,7 @@ xim_proxy_real_xconnect(GXimServerTemplate *server,
 			    G_XIM_NATIVE_WINDOW_TO_POINTER (w),
 			    G_XIM_NATIVE_WINDOW_TO_POINTER (comm_window));
 	G_XIM_CL_TMPL (client)->is_connection_initialized = GXC_NEGOTIATING;
-	INC_PENDING_C (client, 0, _MN_XCONNECT);
+	INC_PENDING_C (client, 0, _MN_XCONNECT, 0, 0);
 
 	return conn;
 }
@@ -2032,7 +2043,7 @@ xim_proxy_protocol_real_xim_connect(GXimProtocol *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
-	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_CONNECT_REPLY, 0);
+	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_CONNECT_REPLY, 0, 0, 0);
 
 	return TRUE;
 }
@@ -2057,7 +2068,7 @@ xim_proxy_protocol_real_xim_disconnect(GXimProtocol *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
-	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_DISCONNECT_REPLY, 0);
+	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_DISCONNECT_REPLY, 0, 0, 0);
 
 	return TRUE;
 }
@@ -2128,7 +2139,7 @@ xim_proxy_protocol_real_xim_open(GXimProtocol  *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
-	INC_PENDING (pconn, G_XIM_OPEN_REPLY, 0);
+	INC_PENDING (pconn, G_XIM_OPEN_REPLY, 0, 0, 0);
 
 	return TRUE;
 }
@@ -2152,7 +2163,7 @@ xim_proxy_protocol_real_xim_close(GXimProtocol *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
-	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_CLOSE_REPLY, 0);
+	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_CLOSE_REPLY, 0, imid, 0);
 
 	return TRUE;
 }
@@ -2187,7 +2198,7 @@ xim_proxy_protocol_real_xim_trigger_notify(GXimProtocol *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
-	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_TRIGGER_NOTIFY_REPLY, 0);
+	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_TRIGGER_NOTIFY_REPLY, 0, imid, icid);
 
 	return TRUE;
 }
@@ -2235,7 +2246,7 @@ xim_proxy_protocol_real_xim_encoding_negotiation(GXimProtocol *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
-	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_ENCODING_NEGOTIATION_REPLY, 0);
+	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_ENCODING_NEGOTIATION_REPLY, 0, imid, 0);
 
 	return TRUE;
 }
@@ -2260,7 +2271,7 @@ xim_proxy_protocol_real_xim_query_extension(GXimProtocol *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
-	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_QUERY_EXTENSION_REPLY, 0);
+	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_QUERY_EXTENSION_REPLY, 0, imid, 0);
 
 	return TRUE;
 }
@@ -2308,7 +2319,7 @@ xim_proxy_protocol_real_xim_set_im_values(GXimProtocol *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
-	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_SET_IM_VALUES_REPLY, 0);
+	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_SET_IM_VALUES_REPLY, 0, imid, 0);
 
 	g_slist_foreach(alt,
 			(GFunc)g_xim_attribute_free,
@@ -2357,7 +2368,7 @@ xim_proxy_protocol_real_xim_get_im_values(GXimProtocol *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
-	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_GET_IM_VALUES_REPLY, 0);
+	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_GET_IM_VALUES_REPLY, 0, imid, 0);
 
 	g_slist_free(alt);
 
@@ -2407,7 +2418,7 @@ xim_proxy_protocol_real_xim_create_ic(GXimProtocol *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
-	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_CREATE_IC_REPLY, 0);
+	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_CREATE_IC_REPLY, 0, imid, 0);
 
 	g_slist_foreach(alt,
 			(GFunc)g_xim_attribute_free,
@@ -2444,7 +2455,7 @@ xim_proxy_protocol_real_xim_destroy_ic(GXimProtocol *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
-	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_DESTROY_IC_REPLY, 0);
+	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_DESTROY_IC_REPLY, 0, imid, icid);
 
 	return TRUE;
 }
@@ -2527,7 +2538,7 @@ xim_proxy_protocol_real_xim_set_ic_values(GXimProtocol *proto,
 
 		return g_xim_server_connection_cmd_set_ic_values_reply(G_XIM_SERVER_CONNECTION (proto), imid, icid);
 	}
-	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_SET_IC_VALUES_REPLY, 0);
+	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_SET_IC_VALUES_REPLY, 0, imid, icid);
 
 	g_slist_foreach(alt,
 			(GFunc)g_xim_attribute_free,
@@ -2587,7 +2598,7 @@ xim_proxy_protocol_real_xim_get_ic_values(GXimProtocol *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
-	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_GET_IC_VALUES_REPLY, 0);
+	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_GET_IC_VALUES_REPLY, 0, imid, icid);
 
 	g_slist_free(alt);
 
@@ -2684,7 +2695,7 @@ xim_proxy_protocol_real_xim_forward_event(GXimProtocol *proto,
 		return TRUE;
 	}
 	if (flag & G_XIM_Event_Synchronous) {
-		INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_SYNC_REPLY, 0);
+		INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_SYNC_REPLY, 0, imid, icid);
 	} else {
 		/* asynchronous forward event has to keep on track to avoid
 		 * the race condition issue with other synchronous event.
@@ -2721,7 +2732,7 @@ xim_proxy_protocol_real_xim_sync(GXimProtocol *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
-	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_SYNC_REPLY, 0);
+	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_SYNC_REPLY, 0, imid, icid);
 
 	return TRUE;
 }
@@ -2747,7 +2758,7 @@ xim_proxy_protocol_real_xim_sync_reply(GXimProtocol *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 	}
   end:
-	DEC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_SYNC_REPLY, 0);
+	DEC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_SYNC_REPLY, 0, imid, icid);
 
 	return retval;
 }
@@ -2779,7 +2790,7 @@ xim_proxy_protocol_real_xim_reset_ic(GXimProtocol *proto,
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 		return FALSE;
 	}
-	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_RESET_IC_REPLY, 0);
+	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_RESET_IC_REPLY, 0, imid, icid);
 
 	return TRUE;
 }
@@ -2805,7 +2816,7 @@ xim_proxy_protocol_real_xim_preedit_start_reply(GXimProtocol *proto,
 				      "Unable to deliver XIM_PREEDIT_START_REPLY for %p",
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 	}
-	DEC_PENDING (XIM_CLIENT_CONNECTION (conn), G_XIM_PREEDIT_START_REPLY, 0);
+	DEC_PENDING (XIM_CLIENT_CONNECTION (conn), G_XIM_PREEDIT_START_REPLY, 0, imid, icid);
   end:
 
 	return retval;
@@ -2832,7 +2843,7 @@ xim_proxy_protocol_real_xim_preedit_caret_reply(GXimProtocol *proto,
 				      "Unable to deliver XIM_PREEDIT_CARET_REPLY for %p",
 				      G_XIM_NATIVE_WINDOW_TO_POINTER (client_window));
 	}
-	DEC_PENDING (XIM_CLIENT_CONNECTION (conn), G_XIM_PREEDIT_CARET_REPLY, 0);
+	DEC_PENDING (XIM_CLIENT_CONNECTION (conn), G_XIM_PREEDIT_CARET_REPLY, 0, imid, icid);
   end:
 
 	return retval;
@@ -3029,6 +3040,32 @@ xim_proxy_take_ownership(XimProxy  *proxy,
 					     error);
 }
 
+void
+xim_proxy_flush_queue(XimProxy *proxy)
+{
+	GHashTableIter iter;
+	gpointer key, val;
+
+	g_return_if_fail (XIM_IS_PROXY (proxy));
+
+	g_hash_table_iter_init(&iter, proxy->sconn_table);
+	while (g_hash_table_iter_next(&iter, &key, &val)) {
+		XimProxyConnection *sconn = XIM_PROXY_CONNECTION (val);
+
+		while (g_queue_get_length(sconn->pendingq) > 0) {
+			XimReply *rep = g_queue_pop_head(sconn->pendingq);
+
+			g_xim_protocol_raise_parser_error(G_XIM_PROTOCOL (sconn),
+							  rep->major_opcode,
+							  rep->minor_opcode,
+							  rep->imid,
+							  rep->icid);
+			g_free(rep);
+		}
+		/* XXX: should we deal with the forward event as well? */
+	}
+}
+
 gboolean
 xim_proxy_is_pending(XimProxy *proxy)
 {
@@ -3069,8 +3106,15 @@ xim_proxy_disconnect_all(XimProxy *proxy)
 
 	g_return_if_fail (XIM_IS_PROXY (proxy));
 
+#if 0
 	while (xim_proxy_is_pending(proxy))
 		g_main_context_iteration(NULL, TRUE);
+#else
+	/* imsettings is killing input-method process immediately right now.
+	 * so probably just waiting for the pending request doesn't make sense.
+	 */
+	xim_proxy_flush_queue(proxy);
+#endif
 
 	g_hash_table_iter_init(&iter, proxy->sconn_table);
 	while (g_hash_table_iter_next(&iter, &key, &val)) {

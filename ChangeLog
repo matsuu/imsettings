@@ -1,5 +1,16 @@
 2008-10-11  Akira TAGOH  <tagoh@redhat.com>
 
+	* backends/xim/proxy.c (_INC_PENDING): store imid and icid as well.
+	(_DEC_PENDING): take imid and icid as argument.
+	(INC_PENDING): likewise.
+	(DEC_PENDING): likewise.
+	(INC_PENDING_C): likewise.
+	(DEC_PENDING_C): likewise.
+	(xim_proxy_real_dispose): just flush the queue instead of waiting for
+	the pending request.
+	(xim_proxy_disconnect_all): likewise.
+	(xim_proxy_flush_queue): new.
+
 	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_encoding_negotiation_reply):
 	decrease the pending counter when reconnecting as well.
 
