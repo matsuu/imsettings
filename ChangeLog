@@ -1,5 +1,8 @@
 2008-10-11  Akira TAGOH  <tagoh@redhat.com>
 
+	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_encoding_negotiation_reply):
+	decrease the pending counter when reconnecting as well.
+
 	* data/xinput.sh.in.in (is_gtk_supported): Add a "kde" since KDE
 	support XDG autostart and imsettings-applet could works for XSETTINGS
 	manager on KDE.

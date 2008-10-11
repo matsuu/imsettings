@@ -1134,10 +1134,10 @@ xim_proxy_client_protocol_real_xim_encoding_negotiation_reply(GXimProtocol *prot
 				    e2, e1);
 		_reconnect(proxy, G_XIM_CLIENT_CONNECTION (proto));
 
-		return TRUE;
+		retval = TRUE;
+	} else {
+		retval = g_xim_server_connection_cmd_encoding_negotiation_reply(conn, simid, category, index_);
 	}
-
-	retval = g_xim_server_connection_cmd_encoding_negotiation_reply(conn, simid, category, index_);
 	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_ENCODING_NEGOTIATION_REPLY, 0);
   end:
 
