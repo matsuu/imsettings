@@ -1,3 +1,9 @@
+2008-10-11  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-xsettings.c (_imsettings_xsettings_dispatch_events): 
+	event handler for GdkEvent.
+	(imsettings_xsettings_new_with_gdkevent): new.
+
 2008-10-06  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/proxy.c (xim_proxy_client_protocol_real_parser_error):

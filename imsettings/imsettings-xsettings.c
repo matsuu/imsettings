@@ -128,6 +128,24 @@ _source_finalize(GSource *source)
 {
 }
 
+static GdkFilterReturn
+_imsettings_xsettings_dispatch_events(GdkXEvent *gdk_xevent,
+				      GdkEvent  *event,
+				      gpointer   data)
+{
+	IMSettingsXSettings *s = (IMSettingsXSettings *)data;
+	gint i, n_screens = gdk_display_get_n_screens(s->display), c = 0;
+
+	for (i = 0; i < n_screens; i++) {
+		if (xsettings_manager_process_event(s->managers[i], (XEvent *)gdk_xevent))
+			c++;
+	}
+	if (c > 0)
+		return GDK_FILTER_REMOVE;
+
+	return GDK_FILTER_CONTINUE;
+}
+
 static void
 _gtk_im_module_cb(GConfClient *conf,
 		  guint        cnxn_id,
@@ -179,22 +197,10 @@ _set_value(IMSettingsXSettings *settings,
 	}
 }
 
-/*
- * Public functions
- */
-gboolean
-imsettings_xsettings_is_available(GdkDisplay *dpy)
-{
-	g_return_val_if_fail (GDK_IS_DISPLAY (dpy), FALSE);
-
-	return xsettings_manager_check_running(GDK_DISPLAY_XDISPLAY (dpy),
-					       gdk_screen_get_number(gdk_display_get_default_screen(dpy)));
-}
-
-IMSettingsXSettings *
-imsettings_xsettings_new(GdkDisplay *display,
-			 GFreeFunc   term_func,
-			 gpointer    data)
+static IMSettingsXSettings *
+_imsettings_xsettings_new(GdkDisplay *display,
+			  GFreeFunc   term_func,
+			  gpointer    data)
 {
 	IMSettingsXSettings *retval;
 	IMSettingsGConfNotify notifications[] = {
@@ -261,12 +267,6 @@ imsettings_xsettings_new(GdkDisplay *display,
 		_set_value(retval, entry);
 	}
 
-	retval->poll_fd.fd = ConnectionNumber(GDK_DISPLAY_XDISPLAY (display));
-	retval->poll_fd.events = G_IO_IN;
-
-	g_source_add_poll((GSource *)retval, &retval->poll_fd);
-	g_source_attach((GSource *)retval, NULL);
-
 	g_object_unref(G_OBJECT (client));
 
 	return retval;
@@ -276,10 +276,71 @@ imsettings_xsettings_new(GdkDisplay *display,
 	return NULL;
 }
 
+/*
+ * Public functions
+ */
+gboolean
+imsettings_xsettings_is_available(GdkDisplay *dpy)
+{
+	g_return_val_if_fail (GDK_IS_DISPLAY (dpy), FALSE);
+
+	return xsettings_manager_check_running(GDK_DISPLAY_XDISPLAY (dpy),
+					       gdk_screen_get_number(gdk_display_get_default_screen(dpy)));
+}
+
+IMSettingsXSettings *
+imsettings_xsettings_new(GdkDisplay *display,
+			  GFreeFunc   term_func,
+			  gpointer    data)
+{
+	IMSettingsXSettings *retval;
+
+	retval = _imsettings_xsettings_new(display, term_func, data);
+	if (retval) {
+		retval->poll_fd.fd = ConnectionNumber(GDK_DISPLAY_XDISPLAY (display));
+		retval->poll_fd.events = G_IO_IN;
+
+		g_source_add_poll((GSource *)retval, &retval->poll_fd);
+		g_source_attach((GSource *)retval, NULL);
+	}
+
+	return retval;
+}
+
+IMSettingsXSettings *
+imsettings_xsettings_new_with_gdkevent(GdkDisplay *display,
+				       GFreeFunc   term_func,
+				       gpointer    data)
+{
+	IMSettingsXSettings *retval;
+	Window w;
+	GdkWindow *ww;
+	gint i, n_screens;
+
+	retval = _imsettings_xsettings_new(display, term_func, data);
+	if (retval) {
+		n_screens = gdk_display_get_n_screens(display);
+		for (i = 0; i < n_screens; i++) {
+			w = xsettings_manager_get_window(retval->managers[i]);
+			ww = gdk_window_lookup_for_display(display, w);
+			if (ww == NULL ||
+			    !GDK_IS_WINDOW (ww) ||
+			    GDK_WINDOW_DESTROYED (ww)) {
+				if (ww)
+					gdk_window_destroy(ww);
+				ww = gdk_window_foreign_new_for_display(display, w);
+			}
+			gdk_window_add_filter(ww, _imsettings_xsettings_dispatch_events, retval);
+		}
+	}
+
+	return retval;
+}
+
 void
 imsettings_xsettings_free(IMSettingsXSettings *xsettings)
 {
-	gint i;
+	gint i, n_screens = gdk_display_get_n_screens(xsettings->display);
 	GConfClient *client;
 
 	g_return_if_fail (xsettings != NULL);
@@ -295,7 +356,13 @@ imsettings_xsettings_free(IMSettingsXSettings *xsettings)
 		g_ptr_array_free(xsettings->array, TRUE);
 	}
 	if (xsettings->managers) {
-		for (i = 0; i < gdk_display_get_n_screens(xsettings->display); i++) {
+		for (i = 0; i < n_screens; i++) {
+			if (xsettings->poll_fd.fd == 0) {
+				Window w = xsettings_manager_get_window(xsettings->managers[i]);
+				GdkWindow *ww = gdk_window_lookup_for_display(xsettings->display, w);
+
+				gdk_window_remove_filter(ww, _imsettings_xsettings_dispatch_events, xsettings);
+			}
 			xsettings_manager_destroy(xsettings->managers[i]);
 		}
 		g_free(xsettings->managers);
@@ -304,6 +371,8 @@ imsettings_xsettings_free(IMSettingsXSettings *xsettings)
 		g_hash_table_destroy(xsettings->translation_table);
 	if (xsettings->display)
 		g_object_unref(xsettings->display);
-	g_source_remove_poll((GSource *)xsettings, &xsettings->poll_fd);
+	if (xsettings->poll_fd.fd) {
+		g_source_remove_poll((GSource *)xsettings, &xsettings->poll_fd);
+	}
 	g_source_destroy((GSource *)xsettings);
 }

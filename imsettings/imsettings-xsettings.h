@@ -32,11 +32,14 @@ G_BEGIN_DECLS
 typedef struct _IMSettingsXSettings		IMSettingsXSettings;
 
 
-gboolean             imsettings_xsettings_is_available(GdkDisplay          *dpy);
-IMSettingsXSettings *imsettings_xsettings_new         (GdkDisplay          *display,
-						       GFreeFunc            term_func,
-						       gpointer             data);
-void                 imsettings_xsettings_free        (IMSettingsXSettings *xsettings);
+gboolean             imsettings_xsettings_is_available     (GdkDisplay          *dpy);
+IMSettingsXSettings *imsettings_xsettings_new              (GdkDisplay          *display,
+							    GFreeFunc            term_func,
+							    gpointer             data);
+IMSettingsXSettings *imsettings_xsettings_new_with_gdkevent(GdkDisplay          *display,
+							    GFreeFunc            term_func,
+							    gpointer             data);
+void                 imsettings_xsettings_free             (IMSettingsXSettings *xsettings);
 
 G_END_DECLS
 

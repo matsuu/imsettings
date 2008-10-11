@@ -396,15 +396,18 @@ _xsettings_update(IMApplet *applet)
 		applet->is_xsettings_manager_enabled = TRUE;
 		if (applet->xsettings == NULL) {
 			if (imsettings_xsettings_is_available(gdk_display_get_default())) {
+				g_print("XSETTINGS manager support is enabled, but another XSETTINGS manager instance is already running.\n");
 				applet->is_another_xsettings_manager_running = TRUE;
 			} else {
+				g_print("XSETTINGS manager support is enabled. creating an instance...\n");
 				applet->is_another_xsettings_manager_running = FALSE;
-				applet->xsettings = imsettings_xsettings_new(gdk_display_get_default(),
-									     _xsettings_terminated,
-									     applet);
+				applet->xsettings = imsettings_xsettings_new_with_gdkevent(gdk_display_get_default(),
+											   _xsettings_terminated,
+											   applet);
 			}
 		}
 	} else {
+		g_print("XSETTINGS manager support is explicitly disabled.\n");
 		applet->is_xsettings_manager_enabled = FALSE;
 		if (applet->xsettings) {
 			imsettings_xsettings_free(applet->xsettings);
