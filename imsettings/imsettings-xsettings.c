@@ -224,7 +224,10 @@ _imsettings_xsettings_new(GdkDisplay *display,
 							  g_free,
 							  g_free);
 	for (i = 0; i < n_screens; i++) {
-		retval->managers[i] = xsettings_manager_new(GDK_DISPLAY_XDISPLAY (display), i,
+		GdkScreen *screen = gdk_display_get_screen(display, i);
+
+		retval->managers[i] = xsettings_manager_new(gdk_x11_display_get_xdisplay(display),
+							    gdk_screen_get_number(screen),
 							    term_func,
 							    data);
 		if (retval->managers[i] == NULL) {
