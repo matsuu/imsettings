@@ -3113,6 +3113,7 @@ xim_proxy_disconnect_all(XimProxy *proxy)
 {
 	GHashTableIter iter;
 	gpointer key, val;
+	gboolean is_reconnecting = FALSE;
 
 	g_return_if_fail (XIM_IS_PROXY (proxy));
 
@@ -3120,6 +3121,20 @@ xim_proxy_disconnect_all(XimProxy *proxy)
 	while (xim_proxy_is_pending(proxy))
 		g_main_context_iteration(NULL, TRUE);
 #else
+	/* do not proceed the disconnection during reconnecting */
+	do {
+		g_hash_table_iter_init(&iter, proxy->client_table);
+		is_reconnecting = FALSE;
+		while (g_hash_table_iter_next(&iter, &key, &val)) {
+			XimClient *client = XIM_CLIENT (val);
+
+			if (client->is_reconnecting) {
+				g_main_context_iteration(NULL, TRUE);
+				is_reconnecting = TRUE;
+				break;
+			}
+		}
+	} while (is_reconnecting);
 	/* imsettings is killing input-method process immediately right now.
 	 * so probably just waiting for the pending request doesn't make sense.
 	 */

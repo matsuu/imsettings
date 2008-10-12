@@ -1,5 +1,8 @@
 2008-10-12  Akira TAGOH  <tagoh@redhat.com>
 
+	* backends/xim/proxy.c (xim_proxy_disconnect_all): wait for finishing
+	the reconnection before disconnecting the session.
+
 	* backends/xim/proxy.c (xim_proxy_client_protocol_real_parser_error):
 	send back XIM_DESTROY_IC_REPLY instead of XIM_ERROR.
 
