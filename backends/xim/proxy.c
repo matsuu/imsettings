@@ -729,6 +729,16 @@ xim_proxy_client_protocol_real_parser_error(GXimProtocol *proto,
 		    case G_XIM_AUTH_SETUP:
 			    retval = g_xim_connection_cmd_auth_ng(G_XIM_CONNECTION (conn));
 			    break;
+		    case G_XIM_DESTROY_IC_REPLY:
+			    /* This might not work, because XIM_DESTROY_IC_REPLY
+			     * just requires imid and icid. but it somehow
+			     * failed. so imid and/or icid may be invalid then.
+			     * However just try to send XIM_DESTROY_IC_REPLY to
+			     * the client to avoid a freeze.
+			     */
+			    retval = g_xim_destroy_ic_reply(G_XIM_CONNECTION (conn),
+							    imid, icid);
+			    break;
 		    case G_XIM_SYNC:
 			    /* This might not work, because XIM_SYNC just
 			     * requires imid and icid. but it somehow failed.
