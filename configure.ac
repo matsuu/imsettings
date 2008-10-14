@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT([imsettings], 0.104.99, [http://code.google.com/p/imsettings/issues/entry])
+AC_INIT([imsettings], 0.105.0, [http://code.google.com/p/imsettings/issues/entry])
 
 . ./requires
 

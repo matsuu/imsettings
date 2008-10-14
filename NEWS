@@ -1,10 +1,10 @@
-0.104.1 ->
+0.104.1 -> 0.105.0
 =====================
 * Bug Fixes:
   * XIM backend:
     * Fix a memory leak.
     * rhbz#452849: Workaround for race condition issue.
-    * Fix a freeze issue for Desktop not supporting XSETTINGS.
+    * Fix a freeze issue on Desktops not supporting XSETTINGS.
 * Translation updated:
   * Polish
 

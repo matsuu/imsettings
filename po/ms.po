@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser 0.3.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-17 23:05+0900\n"
+"POT-Creation-Date: 2008-10-14 11:28+0900\n"
 "PO-Revision-Date: 2007-01-18 23:12+0800\n"
 "Last-Translator: Sharuzzaman Ahmat Raslan <sharuzzaman@myrealbox.com>\n"
 "Language-Team: none\n"
@@ -19,139 +19,182 @@ msgstr ""
 msgid "IMSettings Applet"
 msgstr ""
 
-#: ../applet/main.c:139 ../applet/main.c:172 ../applet/main.c:210
+#: ../applet/imsettings-applet.schemas.in.h:1
+#, fuzzy
+msgid "A shortcut key to connect to/disconnect from Input Method"
+msgstr "_Guna kaedah masukan tersendiri"
+
+#: ../applet/imsettings-applet.schemas.in.h:2
+msgid ""
+"If \"auto\" is set, imsettings-applet has a facility of XSETTINGS manager as "
+"needed. if you want to disable it explicitly, set \"disabled\"."
+msgstr ""
+
+#: ../applet/imsettings-applet.schemas.in.h:3
+msgid ""
+"If false, all of informations will not delivered through libnotify, except "
+"error and warning messages."
+msgstr ""
+
+#: ../applet/imsettings-applet.schemas.in.h:4
+msgid "If true, the icon will be displayed at the systray."
+msgstr ""
+
+#: ../applet/imsettings-applet.schemas.in.h:5
+msgid "Run a facility of XSETTINGS manager"
+msgstr ""
+
+#: ../applet/imsettings-applet.schemas.in.h:6
+msgid "Show the status icon"
+msgstr ""
+
+#: ../applet/imsettings-applet.schemas.in.h:7
+msgid ""
+"The keybinding which connect to Input Method or disconnect from Input "
+"Method. The format looks like \"&lt;Control&gt;a\" or \"&lt;Shift&gt;&lt;"
+"Alt&gt;F1\". The parser is fairly liberal and allows lower or upper case, "
+"and also abbreviations such as \"&lt;Ctl&gt;\" and \"&lt;Ctrl&gt;\". If you "
+"set the option to the special string \"disabled\", then there will be no "
+"keybinding for this."
+msgstr ""
+
+#: ../applet/imsettings-applet.schemas.in.h:8
+msgid "Whether to notify informations with libnotify"
+msgstr ""
+
+#: ../applet/main.c:156 ../applet/main.c:189 ../applet/main.c:229
 msgid "No detailed information"
 msgstr ""
 
-#: ../applet/main.c:142
+#: ../applet/main.c:159
 msgid "Mismatch the version of im-settings-daemon"
 msgstr ""
 
-#: ../applet/main.c:169 ../applet/main.c:247
+#: ../applet/main.c:186 ../applet/main.c:266
 #, fuzzy, c-format
 msgid "Unable to start %s"
 msgstr "Ja_ngan guna kaedah masukan"
 
-#: ../applet/main.c:182
+#: ../applet/main.c:200
 msgid ""
 " and the default Input Method has been changed. if you need to change that "
 "to anything else, please use im-chooser."
 msgstr ""
 
-#: ../applet/main.c:187
+#: ../applet/main.c:206
 #, c-format
 msgid "Connected to %s.%s"
 msgstr ""
 
-#: ../applet/main.c:192 ../applet/main.c:227 ../applet/main.c:930
+#: ../applet/main.c:211 ../applet/main.c:246 ../applet/main.c:956
 msgid "Information"
 msgstr ""
 
-#: ../applet/main.c:207 ../applet/main.c:273
+#: ../applet/main.c:226 ../applet/main.c:292
 #, c-format
 msgid "Unable to stop %s"
 msgstr ""
 
-#: ../applet/main.c:224
+#: ../applet/main.c:243
 msgid "Disconnected from Input Method"
 msgstr ""
 
-#: ../applet/main.c:251 ../applet/main.c:277
+#: ../applet/main.c:270 ../applet/main.c:296
 msgid "maybe DBus related issue."
 msgstr ""
 
-#: ../applet/main.c:332 ../applet/main.c:419
+#: ../applet/main.c:351 ../applet/main.c:441
 msgid "Unable to store a value to GConf"
 msgstr ""
 
-#: ../applet/main.c:371
+#: ../applet/main.c:390
 msgid "Unable to get a value from GConf"
 msgstr ""
 
-#: ../applet/main.c:504
+#: ../applet/main.c:529
 #, c-format
 msgid "The acceleration key %s may be invalid. disabled it temporarily."
 msgstr ""
 
-#: ../applet/main.c:506
+#: ../applet/main.c:531
 msgid "Unable to set up the acceleration key"
 msgstr ""
 
-#: ../applet/main.c:646
+#: ../applet/main.c:672
 msgid "Unable to store the acceleration key into GConf"
 msgstr ""
 
-#: ../applet/main.c:667
+#: ../applet/main.c:693
 msgid "Please press the acceleration key..."
 msgstr ""
 
-#: ../applet/main.c:711
+#: ../applet/main.c:737
 msgid "IMSettings Applet Preferences"
 msgstr ""
 
-#: ../applet/main.c:723
+#: ../applet/main.c:749
 msgid "_Show the status icon"
 msgstr ""
 
-#: ../applet/main.c:732
+#: ../applet/main.c:758
 msgid "_Run XSETTINGS manager as needed"
 msgstr ""
 
-#: ../applet/main.c:744
+#: ../applet/main.c:770
 msgid "<b>Trigger key:</b>"
 msgstr ""
 
-#: ../applet/main.c:756
+#: ../applet/main.c:782
 msgid "_Grab key"
 msgstr ""
 
-#: ../applet/main.c:770
+#: ../applet/main.c:796
 msgid ""
 "Please click Grab key button and press the key combinations you want to "
 "assign for the acceleration key. Press Backspace key to disable this feature."
 msgstr ""
 
-#: ../applet/main.c:845
+#: ../applet/main.c:871
 msgid "Disconnect"
 msgstr ""
 
-#: ../applet/main.c:904
+#: ../applet/main.c:930
 msgid "Click to connect to Input Method"
 msgstr ""
 
-#: ../applet/main.c:908
+#: ../applet/main.c:934
 #, fuzzy
 msgid "Click to disconnect from Input Method"
 msgstr "_Guna kaedah masukan tersendiri"
 
-#: ../applet/main.c:931
+#: ../applet/main.c:957
 msgid ""
 "The default Input Method isn't yet configured. To get this working, you need "
 "to set up that on im-chooser or select one from the menu which appears by "
 "the right click first."
 msgstr ""
 
-#: ../applet/main.c:1005
+#: ../applet/main.c:1031
 #, c-format
 msgid "Press %s or "
 msgstr ""
 
-#: ../applet/main.c:1008
+#: ../applet/main.c:1034
 #, c-format
 msgid ""
 "%sLeft-click on the icon to connect to/disconnect from Input Method.\n"
 "Right-click to show up the Input Method menu."
 msgstr ""
 
-#: ../applet/main.c:1010
+#: ../applet/main.c:1037
 msgid "Tips"
 msgstr ""
 
-#: ../applet/main.c:1016
-msgid "Do not show this again"
+#: ../applet/main.c:1043
+msgid "Do not show notifications again"
 msgstr ""
 
-#: ../applet/main.c:1060
+#: ../applet/main.c:1087
 msgid "Unable to take an ownership for XIM server"
 msgstr ""
 
@@ -163,13 +206,13 @@ msgstr ""
 msgid "Child widget to appear next to the menu text"
 msgstr ""
 
-#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:845
-#: ../src/factory.c:815 ../src/factory_info.c:1311
+#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:848
+#: ../src/factory.c:819 ../src/factory_info.c:1311
 msgid "Replace the running settings daemon with new instance."
 msgstr ""
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:842 ../src/factory_info.c:1336
+#: ../src/factory.c:846 ../src/factory_info.c:1336
 #: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:66
 #: ../utils/imsettings-start.c:69 ../utils/imsettings-stop.c:65
 msgid "Unknown error in parsing the command lines."
@@ -180,11 +223,11 @@ msgstr ""
 msgid "Button Label|Input Method"
 msgstr "Kaedah Masukan"
 
-#: ../backends/xim/main.c:142 ../src/factory.c:816
+#: ../backends/xim/main.c:142 ../src/factory.c:820
 msgid "X display to use"
 msgstr ""
 
-#: ../backends/xim/main.c:142 ../src/factory.c:816
+#: ../backends/xim/main.c:142 ../src/factory.c:820
 msgid "DISPLAY"
 msgstr ""
 
@@ -204,19 +247,19 @@ msgstr ""
 msgid "XIM"
 msgstr ""
 
-#: ../backends/xim/proxy.c:2659
+#: ../backends/xim/proxy.c:2885
 msgid "A XIM server name"
 msgstr ""
 
-#: ../backends/xim/proxy.c:2660
+#: ../backends/xim/proxy.c:2886
 msgid "A XIM server name would connects to"
 msgstr ""
 
-#: ../backends/xim/proxy.c:2665
+#: ../backends/xim/proxy.c:2891
 msgid "Signals for Protocol class"
 msgstr ""
 
-#: ../backends/xim/proxy.c:2666
+#: ../backends/xim/proxy.c:2892
 msgid "A structure of signals for Protocol class"
 msgstr ""
 
@@ -356,29 +399,29 @@ msgstr ""
 msgid "Whether or not IM is an user default."
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:396
+#: ../imsettings/imsettings-observer.c:399
 #, c-format
 msgid "Invalid IM module type: %d"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:838
+#: ../imsettings/imsettings-observer.c:841
 msgid "IM module name"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:839
+#: ../imsettings/imsettings-observer.c:842
 msgid "A target IM module name that to observe signals"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:844
+#: ../imsettings/imsettings-observer.c:847
 msgid "Replace"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:850
+#: ../imsettings/imsettings-observer.c:853
 #: ../imsettings/imsettings-request.c:175
 msgid "DBus connection"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:851
+#: ../imsettings/imsettings-observer.c:854
 #: ../imsettings/imsettings-request.c:176
 msgid "An object to be a DBus connection"
 msgstr ""
@@ -414,7 +457,7 @@ msgstr ""
 #: ../imsettings/imsettings-request.c:483
 #: ../imsettings/imsettings-request.c:531
 #: ../imsettings/imsettings-request.c:591
-#: ../imsettings/imsettings-request.c:638
+#: ../imsettings/imsettings-request.c:642
 #, c-format
 msgid ""
 "Failed to invoke a method `%s' on %s:\n"
@@ -483,24 +526,24 @@ msgstr ""
 msgid "No XIM server is available in %s"
 msgstr ""
 
-#: ../src/factory.c:771
+#: ../src/factory.c:775
 msgid "X display name"
 msgstr ""
 
-#: ../src/factory.c:772
+#: ../src/factory.c:776
 msgid "X display name to use"
 msgstr ""
 
 #. FIXME
-#: ../src/factory.c:819
+#: ../src/factory.c:823
 msgid "X screen to use"
 msgstr ""
 
-#: ../src/factory.c:819
+#: ../src/factory.c:823
 msgid "SCREEN"
 msgstr ""
 
-#: ../src/factory.c:850
+#: ../src/factory.c:854
 #, c-format
 msgid "Failed to open a X display."
 msgstr ""
