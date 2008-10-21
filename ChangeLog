@@ -1,3 +1,8 @@
+2008-10-21  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (imsettings_manager_real_start_im): allow to start none
+	without any warnings.
+
 2008-10-12  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/proxy.c (xim_proxy_disconnect_all): wait for finishing

@@ -517,18 +517,21 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 		pidfile = NULL;
 	}
 
-	xim_prog = imsettings_info_get_xim_program(info);
-	xim_args = imsettings_info_get_xim_args(info);
-	if (xim_prog == NULL) {
-		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_INVALID_IMM,
-			    _("No XIM server is available in %s"), module);
-		goto end;
-	}
-	pidfile = _build_pidfilename(xinputfile, priv->display_name, "xim");
+	/* hack to allow starting none.conf */
+	if (strcmp(module, "none") != 0) {
+		xim_prog = imsettings_info_get_xim_program(info);
+		xim_args = imsettings_info_get_xim_args(info);
+		if (xim_prog == NULL) {
+			g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_INVALID_IMM,
+				    _("No XIM server is available in %s"), module);
+			goto end;
+		}
+		pidfile = _build_pidfilename(xinputfile, priv->display_name, "xim");
 
-	/* bring up a XIM server */
-	if (!_start_process(xim_prog, xim_args, pidfile, lang, error))
-		goto end;
+		/* bring up a XIM server */
+		if (!_start_process(xim_prog, xim_args, pidfile, lang, error))
+			goto end;
+	}
 
 	/* FIXME: We need to take care of imsettings per X screens?
 	 */
