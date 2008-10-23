@@ -2519,7 +2519,8 @@ xim_proxy_protocol_real_xim_set_ic_values(GXimProtocol *proto,
 	rep->major_opcode = G_XIM_SYNC_REPLY;
 	rep->minor_opcode = 0;
 	if (XIM_PROXY_CONNECTION (proto)->n_pending_key_event > 0 ||
-	    g_queue_get_length(XIM_PROXY_CONNECTION (proto)->pendingq) > 0) {
+	    g_queue_get_length(XIM_PROXY_CONNECTION (proto)->pendingq) > 0 ||
+	    g_xim_protocol_get_queue_length(proto) > 0) {
 		/* someone is waiting for a reply of forward event. fake
 		 * a reply to avoid a race condition. also serialize if any
 		 * synchronous event is proceeded.

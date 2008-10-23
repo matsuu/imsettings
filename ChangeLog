@@ -1,3 +1,10 @@
+2008-10-23  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_set_ic_values): 
+	Fix a freeze issue when focus out and reset the number of the forward
+	event waiting for. this might be the race condition issue again. so it
+	would be safe to append the request into the queue still.
+
 2008-10-21  Akira TAGOH  <tagoh@redhat.com>
 
 	* src/factory.c (imsettings_manager_real_start_im): allow to start none
