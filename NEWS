@@ -1,3 +1,10 @@
+0.105.0 -> 0.105.1
+=====================
+* Bug Fixes:
+  * XIM backend:
+    * Fix a freeze issue when reset the number of the forward event still waiting for with the focus change.
+  * Allow none to start IM.
+
 0.104.1 -> 0.105.0
 =====================
 * Bug Fixes:
