@@ -1051,9 +1051,11 @@ xim_proxy_client_protocol_real_xim_register_triggerkeys(GXimProtocol *proto,
 	GXimServerConnection *conn;
 	guint16 simid = _get_server_imid(proxy, imid);
 
-	if (simid == 0)
-		return FALSE;
-
+	/* In XIM protocol specification, it says XIM_REGISTER_TRIGGERKEYS is
+	 * sent before XIM_OPEN_REPLY. but at this moment there are no way to
+	 * determine input-method id because it will be notified to the client
+	 * through XIM_OPEN_REPLY. so imid should be always 0 then.
+	 */
 	conn = _get_server_connection(proxy, proto);
 
 	return g_xim_server_connection_cmd_register_triggerkeys(conn, simid, onkeys, offkeys);

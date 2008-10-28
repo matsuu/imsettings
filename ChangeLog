@@ -1,3 +1,8 @@
+2008-10-28  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_register_triggerkeys):
+	do not discard the signal when imid is 0.
+
 2008-10-23  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_set_ic_values): 
