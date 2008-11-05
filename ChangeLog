@@ -1,5 +1,8 @@
 2008-11-05  Akira TAGOH  <tagoh@redhat.com>
 
+	* utils/imsettings-restart.c (main): restart IM currently running
+	if no arguments specified.
+
 	* utils/imsettings-stop.c (main): stop IM currently running
 	if no arguments specified.
 
