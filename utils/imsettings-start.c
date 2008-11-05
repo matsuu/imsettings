@@ -39,10 +39,11 @@ main(int    argc,
 	IMSettingsRequest *req_settings, *req_info;
 	DBusConnection *connection;
 	gchar *locale, *module = NULL;
-	gboolean arg_no_update = FALSE;
+	gboolean arg_no_update = FALSE, arg_no_restart = FALSE;
 	GOptionContext *ctx = g_option_context_new(_("[Input Method]"));
 	GOptionEntry entries[] = {
-		{"no-update", 'n', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_no_update, N_("Do not update .xinputrc.")},
+		{"no-update", 'n', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_no_update, N_("Do not update .xinputrc."), NULL},
+		{"no-restart", 0, G_OPTION_FLAG_NO_ARG|G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &arg_no_restart, N_("Do not restart the daemons at first."), NULL},
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};
 	GError *error = NULL;
@@ -82,10 +83,12 @@ main(int    argc,
 	imsettings_request_set_locale(req_settings, locale);
 	imsettings_request_set_locale(req_info, locale);
 
-	/* restart the deamons to be safe. */
-	imsettings_request_reload(req_settings, TRUE);
-	imsettings_request_reload(req_info, TRUE);
-	sleep(1);
+	/* restart the daemons to be safe. */
+	if (!arg_no_restart) {
+		imsettings_request_reload(req_settings, TRUE);
+		imsettings_request_reload(req_info, TRUE);
+		sleep(1);
+	}
 
   retry:
 	if (imsettings_request_get_version(req_settings, NULL) != IMSETTINGS_SETTINGS_DAEMON_VERSION) {
@@ -140,7 +143,7 @@ main(int    argc,
 	if (imsettings_request_start_im(req_settings, module, !arg_no_update, &error)) {
 		g_print(_("Started %s\n"), module);
 	} else {
-		g_printerr(_("Failed to start IM process `%s'\n"), argv[1]);
+		g_printerr(_("Failed to start IM process `%s'\n"), module);
 		retval = 1;
 		g_error_free(error);
 	}
