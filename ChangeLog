@@ -1,3 +1,7 @@
+2008-11-05  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/none.in.in (QT_IM_MODULE): default to xim.
+
 2008-10-28  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_register_triggerkeys):
