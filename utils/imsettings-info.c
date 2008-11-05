@@ -52,7 +52,7 @@ main(int    argc,
 
 	connection = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	if (connection == NULL) {
-		g_printerr("Failed to get a session bus.\n");
+		g_printerr(_("Failed to get a session bus.\n"));
 		return 1;
 	}
 	req_settings = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
@@ -61,12 +61,13 @@ main(int    argc,
   retry:
 	if (imsettings_request_get_version(req_settings, NULL) != IMSETTINGS_SETTINGS_DAEMON_VERSION) {
 		if (n_retry > 0) {
-			g_printerr("Mismatch the version of im-settings-daemon.");
-			exit(1);
+			g_printerr(_("Mismatch the version of im-settings-daemon.\n"));
+			retval = 1;
+			goto end;
 		}
 		/* version is inconsistent. try to reload the process */
 		imsettings_request_reload(req_settings, TRUE);
-		g_print("Waiting for reloading the process...\n");
+		g_print(_("Waiting for reloading the process...\n"));
 		/* XXX */
 		sleep(1);
 		n_retry++;
@@ -76,12 +77,13 @@ main(int    argc,
   retry2:
 	if (imsettings_request_get_version(req_info, NULL) != IMSETTINGS_IMINFO_DAEMON_VERSION) {
 		if (n_retry > 0) {
-			g_printerr("Mismatch the version of im-info-daemon.");
-			exit(1);
+			g_printerr(_("Mismatch the version of im-info-daemon.\n"));
+			retval = 1;
+			goto end;
 		}
 		/* version is inconsistent. try to reload the process */
 		imsettings_request_reload(req_info, TRUE);
-		g_print("Waiting for reloading the process...\n");
+		g_print(_("Waiting for reloading the process...\n"));
 		/* XXX */
 		sleep(1);
 		n_retry++;
@@ -100,7 +102,7 @@ main(int    argc,
 			goto end;
 		}
 		if (module == NULL || module[0] == 0) {
-			g_print("No IM is running. please specify the IM name explicitly.\n");
+			g_print(_("No Input Method running. please specify Input Method name explicitly if necessary.\n"));
 			retval = 1;
 			goto end;
 		}
@@ -109,7 +111,8 @@ main(int    argc,
 	}
 	info = imsettings_request_get_info_object(req_info, module, &error);
 	if (error) {
-		g_printerr("Unable to get an IM info.\n");
+		g_printerr(_("Unable to get an IM info.\n"));
+		retval = 1;
 		g_clear_error(&error);
 	} else {
 		file = imsettings_info_get_filename(info);
@@ -160,5 +163,5 @@ main(int    argc,
 	g_object_unref(req_info);
 	dbus_connection_unref(connection);
 
-	return 0;
+	return retval;
 }
