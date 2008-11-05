@@ -74,7 +74,7 @@ main(int    argc,
 
 	connection = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	if (connection == NULL) {
-		g_printerr("Failed to get a session bus.\n");
+		g_printerr(_("Failed to get a session bus.\n"));
 		return 1;
 	}
 	req_settings = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
