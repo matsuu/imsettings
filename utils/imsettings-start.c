@@ -36,17 +36,18 @@ int
 main(int    argc,
      char **argv)
 {
-	IMSettingsRequest *imsettings;
+	IMSettingsRequest *req_settings, *req_info;
 	DBusConnection *connection;
-	gchar *locale;
+	gchar *locale, *module = NULL;
 	gboolean arg_no_update = FALSE;
-	GOptionContext *ctx = g_option_context_new(_("<Input Method>"));
+	GOptionContext *ctx = g_option_context_new(_("[Input Method]"));
 	GOptionEntry entries[] = {
 		{"no-update", 'n', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_no_update, N_("Do not update .xinputrc.")},
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};
 	GError *error = NULL;
 	guint n_retry = 0;
+	int retval = 0;
 
 #ifdef ENABLE_NLS
 	bindtextdomain (GETTEXT_PACKAGE, IMSETTINGS_LOCALEDIR);
@@ -68,48 +69,86 @@ main(int    argc,
 		} else {
 			g_warning(_("Unknown error in parsing the command lines."));
 		}
-		exit(1);
+		return 1;
 	}
-	if (argc < 2) {
-		gchar *help = g_option_context_get_help(ctx, TRUE, NULL);
-
-		g_print("%s\n", help);
-		g_free(help);
-
-		exit(1);
-	}
-	g_option_context_free(ctx);
 
 	connection = dbus_bus_get(DBUS_BUS_SESSION, NULL);
 	if (connection == NULL) {
 		g_printerr("Failed to get a session bus.\n");
 		return 1;
 	}
-	imsettings = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
-	imsettings_request_set_locale(imsettings, locale);
+	req_settings = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
+	req_info = imsettings_request_new(connection, IMSETTINGS_INFO_INTERFACE_DBUS);
+	imsettings_request_set_locale(req_settings, locale);
+	imsettings_request_set_locale(req_info, locale);
+
+	/* restart the deamons to be safe. */
+	imsettings_request_reload(req_settings, TRUE);
+	imsettings_request_reload(req_info, TRUE);
+	sleep(1);
+
   retry:
-	if (imsettings_request_get_version(imsettings, NULL) != IMSETTINGS_SETTINGS_DAEMON_VERSION) {
+	if (imsettings_request_get_version(req_settings, NULL) != IMSETTINGS_SETTINGS_DAEMON_VERSION) {
 		if (n_retry > 0) {
-			g_printerr("Mismatch the version of im-settings-daemon.");
-			exit(1);
+			g_printerr(_("Mismatch the version of im-settings-daemon.\n"));
+			retval = 1;
+			goto end;
 		}
 		/* version is inconsistent. try to reload the process */
-		imsettings_request_reload(imsettings, TRUE);
-		g_print("Waiting for reloading the process...\n");
+		imsettings_request_reload(req_settings, TRUE);
+		g_print(_("Waiting for reloading the process...\n"));
 		/* XXX */
 		sleep(1);
 		n_retry++;
 		goto retry;
 	}
+	n_retry = 0;
+  retry2:
+	if (imsettings_request_get_version(req_info, NULL) != IMSETTINGS_IMINFO_DAEMON_VERSION) {
+		if (n_retry > 0) {
+			g_printerr(_("Mismatch the version of im-info-daemon.\n"));
+			retval = 1;
+			goto end;
+		}
+		/* version is inconsistent. try to reload the process */
+		imsettings_request_reload(req_info, TRUE);
+		g_print(_("Waiting for reloading the process...\n"));
+		/* XXX */
+		sleep(1);
+		n_retry++;
+		goto retry2;
+	}
 
-	if (imsettings_request_start_im(imsettings, argv[1], !arg_no_update, &error)) {
-		g_print(_("Started %s\n"), argv[1]);
+	if (argc < 2) {
+		module = imsettings_request_get_current_user_im(req_info, &error);
+		if (error) {
+			g_printerr("%s\n", error->message);
+			g_error_free(error);
+			retval = 1;
+			goto end;
+		}
+		if (module == NULL || module[0] == 0) {
+			g_print(_("No Input Method available\n"));
+			retval = 1;
+			goto end;
+		}
+	} else {
+		module = g_strdup(argv[1]);
+	}
+	g_option_context_free(ctx);
+
+	if (imsettings_request_start_im(req_settings, module, !arg_no_update, &error)) {
+		g_print(_("Started %s\n"), module);
 	} else {
 		g_printerr(_("Failed to start IM process `%s'\n"), argv[1]);
-		exit(1);
+		retval = 1;
+		g_error_free(error);
 	}
-	g_object_unref(imsettings);
+  end:
+	g_free(module);
+	g_object_unref(req_info);
+	g_object_unref(req_settings);
 	dbus_connection_unref(connection);
 
-	return 0;
+	return retval;
 }
