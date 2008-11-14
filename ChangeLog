@@ -1,3 +1,8 @@
+2008-11-14  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/main.c (main): Disable immodule to prevent the event loop in
+	itself. (Issue#22)
+
 2008-11-05  Akira TAGOH  <tagoh@redhat.com>
 
 	* utils/imsettings-restart.c (main): restart IM currently running

@@ -1306,6 +1306,12 @@ main(int    argc,
 {
 	IMApplet *applet;
 
+	/* Do not try to set up any immodule.
+	 * We do not need anything here.
+	 */
+	g_setenv("GTK_IM_MODULE", "gtk-im-context-simple", TRUE);
+	g_setenv("XMODIFIERS", "@im=none", TRUE);
+
 #ifdef ENABLE_NLS
 	bindtextdomain (GETTEXT_PACKAGE, IMAPPLET_LOCALEDIR);
 #ifdef HAVE_BIND_TEXTDOMAIN_CODESET
