@@ -1,3 +1,7 @@
+2008-12-22  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: add AC_PROG_CXX.
+
 2008-11-14  Akira TAGOH  <tagoh@redhat.com>
 
 	* applet/main.c (main): Disable immodule to prevent the event loop in
