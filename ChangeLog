@@ -1,5 +1,7 @@
 2009-01-08  Akira TAGOH  <tagoh@redhat.com>
 
+	* applet/imsettings-applet.desktop.in.in: correct Categories.
+
 	* applet/main.c: get rid of xsettings support.
 
 	* applet/Makefile.am: likewise.

@@ -6,4 +6,5 @@ _Comment=IMSettings Applet
 Icon=imsettings-applet
 Exec=imsettings-applet
 Terminal=false
-Categories=TrayIcon
+Categories=TrayIcon;
+NotShowIn=GNOME;XFCE;
