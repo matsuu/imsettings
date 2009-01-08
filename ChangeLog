@@ -1,5 +1,8 @@
 2009-01-08  Akira TAGOH  <tagoh@redhat.com>
 
+	* data/xinput.sh.in.in: stop bringing imsettings-xim up. we are relying
+	on XDG's autostart to provide full features of imsettings now.
+
 	* applet/imsettings-applet.desktop.in.in: correct Categories.
 
 	* applet/main.c: get rid of xsettings support.

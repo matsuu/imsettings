@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 1999-2004,2007-2008 Red Hat, Inc. All rights reserved. This
+# Copyright (C) 1999-2004,2007-2009 Red Hat, Inc. All rights reserved. This
 # copyrighted material is made available to anyone wishing to use, modify,
 # copy, or redistribute it subject to the terms and conditions of the
 # GNU General Public License version 2.
@@ -21,7 +21,7 @@ function is_imsettings_enabled() {
 function is_gtk_supported() {
     [ -n "$IMSETTINGS_DISABLE_DESKTOP_CHECK" ] && return 0
     case "$DESKTOP_SESSION" in
-	*gnome|*kde|openbox|xfce4)
+	*gnome|openbox|xfce4)
 	    return 0
 	    ;;
 	*)
@@ -76,7 +76,10 @@ function run_imsettings() {
 	echo "*** DRY RUN MODE: running IM through imsettings"
     else
 	which imsettings-start > /dev/null 2>&1 && LANG="$tmplang" imsettings-start -n "$IMSETTINGS_MODULE" || :
-	which imsettings-xim > /dev/null 2>&1 && imsettings-xim &
+	# NOTE: We don't bring up imsettings-xim nor imsettings-applet here to support XIM.
+	#       imsettings-applet will starts through XDG autostart mechanism.
+	#       If the desktop doesn't support that, this function shouldn't be invoked.
+	#       but run_xim() instead.
     fi
 }
 
