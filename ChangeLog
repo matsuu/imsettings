@@ -1,5 +1,15 @@
 2009-01-08  Akira TAGOH  <tagoh@redhat.com>
 
+	* applet/main.c: get rid of xsettings support.
+
+	* applet/Makefile.am: likewise.
+
+	* src/Makefile.am: likewise.
+
+	* imsettings/Makefile.am: likewise.
+
+	* configure.ac: likewise.
+
 	* utils/imsettings-info.c (main): Fix a build issue.
 
 2008-12-22  Akira TAGOH  <tagoh@redhat.com>

@@ -33,11 +33,6 @@ INCLUDES += 						\
 LIBS += $(top_builddir)/backends/xim/libimsettings-xim.la
 DEPS += $(top_builddir)/backends/xim/libimsettings-xim.la
 endif
-if ENABLE_XSETTINGS
-INCLUDES += -DENABLE_XSETTINGS
-LIBS += $(top_builddir)/imsettings/libimsettings-xsettings.la
-DEPS += $(top_builddir)/imsettings/libimsettings-xsettings.la
-endif
 
 ##
 # Local definitions
@@ -53,7 +48,10 @@ bin_PROGRAMS = imsettings-applet
 #
 autostartdir = $(sysconfdir)/xdg/autostart
 #
-autostart_in_files = imsettings-applet.desktop.in
+autostart_in_files = 				\
+	imsettings-applet.desktop.in		\
+	gnome-imsettings-applet.desktop.in	\
+	$(NULL)
 autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 #
 schemadir = @GCONF_SCHEMA_FILE_DIR@

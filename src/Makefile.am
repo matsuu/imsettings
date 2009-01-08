@@ -43,12 +43,6 @@ libexec_PROGRAMS =					\
 	im-settings-daemon				\
 	im-info-daemon					\
 	$(NULL)
-if ENABLE_XSETTINGS
-bin_PROGRAMS =						\
-	im-xsettings-daemon				\
-	$(NULL)
-DEPS += $(top_builddir)/imsettings/libimsettings-xsettings.la
-endif
 #
 im_settings_daemon_SOURCES =				\
 	factory.c					\
@@ -72,20 +66,6 @@ im_info_daemon_CFLAGS =					\
 im_info_daemon_LDADD =					\
 	$(IMINFO_LIBS)					\
 	$(NULL)
-#
-if ENABLE_XSETTINGS
-im_xsettings_daemon_SOURCES =				\
-	factory_xsettings.c				\
-	$(NULL)
-im_xsettings_daemon_CFLAGS =				\
-	-I$(top_srcdir)/imsettings			\
-	$(XSETTINGS_CFLAGS)				\
-	-DG_LOG_DOMAIN="\"IM-XSETTINGS-Daemon\""	\
-	$(NULL)
-im_xsettings_daemon_LDADD =				\
-	$(top_builddir)/imsettings/libimsettings-xsettings.la	\
-	$(NULL)
-endif
 #
 servicedir = $(DBUS_SERVICE_DIR)
 service_DATA =						\

@@ -113,11 +113,6 @@ PKG_CHECK_MODULES(XIM, libgxim >= $LIBGXIM_REQUIRED
 		       gdk-2.0 >= $GDK_REQUIRED,
 	[use_xim="yes"],
 	[use_xim="no"])
-PKG_CHECK_MODULES(XSETTINGS, x11
-			     gconf-2.0
-			     gdk-2.0,
-	[use_xsettings="yes"],
-	[use_xsettings="no"])
 PKG_CHECK_MODULES(APPLET, gtk+-2.0
 			  libnotify
 			  gconf-2.0,
@@ -150,7 +145,6 @@ AM_CONDITIONAL(ENABLE_GCONF, test x$use_gconf != xno)
 AM_CONDITIONAL(ENABLE_QT, test x$use_qt != xno)
 AM_CONDITIONAL(ENABLE_XFCE, test x$use_xfce != xno)
 AM_CONDITIONAL(ENABLE_XIM, test x$use_xim != xno)
-AM_CONDITIONAL(ENABLE_XSETTINGS, test x$use_xsettings != xno)
 AM_CONDITIONAL(ENABLE_APPLET, test x$use_applet != xno)
 
 dnl ======================================================================
@@ -327,11 +321,6 @@ echo " XIM support:            $use_xim"
 if test "x$use_xim" = "xyes"; then
    echo "   CFLAGS:               $XIM_CFLAGS"
    echo "   LDFLAGS:              $XIM_LIBS"
-fi
-echo " XSETTINGS support:      $use_xsettings"
-if test "x$use_xsettings" = "xyes"; then
-   echo "   CFLAGS:               $XSETTINGS_CFLAGS"
-   echo "   LDFLAGS:              $XSETTINGS_LIBS"
 fi
 echo " Applet support:         $use_applet"
 if test "x$use_applet" = "xyes"; then

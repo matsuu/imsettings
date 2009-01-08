@@ -49,9 +49,6 @@
 #include "proxy.h"
 #include "utils.h"
 #endif
-#ifdef ENABLE_XSETTINGS
-#include "imsettings/imsettings-xsettings.h"
-#endif
 #include "eggaccelerators.h"
 #include "radiomenuitem.h"
 
@@ -83,12 +80,6 @@ typedef struct _IMApplet {
 #ifdef ENABLE_XIM
 	XimProxy            *server;
 	gchar               *xim_server;
-#endif
-#ifdef ENABLE_XSETTINGS
-	IMSettingsXSettings *xsettings;
-	GtkWidget           *checkbox_xsettings;
-	gboolean             is_xsettings_manager_enabled;
-	gboolean             is_another_xsettings_manager_running;
 #endif
 	KeyCode              keycode;
 	gboolean             watch_accel;
@@ -367,98 +358,6 @@ _gconf_show_icon_cb(GConfClient *conf,
 	gtk_status_icon_set_visible(applet->status_icon, gconf_value_get_bool(val));
 }
 
-#ifdef ENABLE_XSETTINGS
-static void
-_xsettings_terminated(gpointer data)
-{
-	IMApplet *applet = data;
-
-	imsettings_xsettings_free(applet->xsettings);
-	applet->xsettings = NULL;
-	applet->is_xsettings_manager_enabled = FALSE;
-}
-
-static void
-_xsettings_update(IMApplet *applet)
-{
-	GConfClient *client = gconf_client_get_default();
-	GConfValue *val;
-	GError *error = NULL;
-
-	val = gconf_client_get(client, "/apps/imsettings-applet/xsettings_manager", &error);
-	if (error) {
-		notify_notification(applet, NOTIFY_URGENCY_CRITICAL, N_("Unable to get a value from GConf"), error->message, 5);
-		g_error_free(error);
-
-		return;
-	}
-	if (g_ascii_strcasecmp(gconf_value_get_string(val), "auto") == 0) {
-		applet->is_xsettings_manager_enabled = TRUE;
-		if (applet->xsettings == NULL) {
-			if (imsettings_xsettings_is_available(gdk_display_get_default())) {
-				g_print("XSETTINGS manager support is enabled, but another XSETTINGS manager instance is already running.\n");
-				applet->is_another_xsettings_manager_running = TRUE;
-			} else {
-				g_print("XSETTINGS manager support is enabled. creating an instance...\n");
-				applet->is_another_xsettings_manager_running = FALSE;
-				applet->xsettings = imsettings_xsettings_new_with_gdkevent(gdk_display_get_default(),
-											   _xsettings_terminated,
-											   applet);
-			}
-		}
-	} else {
-		g_print("XSETTINGS manager support is explicitly disabled.\n");
-		applet->is_xsettings_manager_enabled = FALSE;
-		if (applet->xsettings) {
-			imsettings_xsettings_free(applet->xsettings);
-			applet->xsettings = NULL;
-			applet->is_another_xsettings_manager_running = FALSE;
-		}
-			
-	}
-	gconf_value_free(val);
-	g_object_unref(G_OBJECT (client));
-}
-
-static void
-_preference_xsettings_toggled(GtkToggleButton *button,
-			      gpointer         data)
-{
-	IMApplet *applet = data;
-	GConfClient *client = gconf_client_get_default();
-	GConfValue *val;
-	GError *error = NULL;
-
-	val = gconf_value_new(GCONF_VALUE_STRING);
-	if (gtk_toggle_button_get_active(button)) {
-		gconf_value_set_string(val, "auto");
-	} else {
-		gconf_value_set_string(val, "disabled");
-	}
-	gconf_client_set(client, "/apps/imsettings-applet/xsettings_manager",
-			 val, &error);
-	if (error) {
-		notify_notification(applet, NOTIFY_URGENCY_CRITICAL, N_("Unable to store a value to GConf"), error->message, 5);
-		g_error_free(error);
-	}
-	gconf_value_free(val);
-	g_object_unref(G_OBJECT (client));
-
-	_xsettings_update(applet);
-}
-
-static void
-_gconf_xsettings_cb(GConfClient *client,
-		    guint        cnxn_id,
-		    GConfEntry  *entry,
-		    gpointer     user_data)
-{
-	IMApplet *applet = user_data;
-
-	_xsettings_update(applet);
-}
-#endif
-
 static void
 _lookup_ignorable_modifiers(GdkKeymap *keymap)
 {
@@ -722,9 +621,6 @@ _preference_activated(GtkMenuItem *item,
 
 	if (applet->dialog == NULL) {
 		gchar *iconfile;
-#ifdef ENABLE_XSETTINGS
-		GtkWidget *align_xsettings;
-#endif
 		GtkWidget *align_showicon;
 		GtkWidget *button_trigger_grab;
 		GtkWidget *vbox_item_trigger, *vbox_item_trigger_value;
@@ -751,16 +647,6 @@ _preference_activated(GtkMenuItem *item,
 		gtk_alignment_set_padding(GTK_ALIGNMENT (align_showicon), 9, 6, 6, 6);
 		g_signal_connect(applet->checkbox_showicon, "toggled",
 				 G_CALLBACK (_preference_showicon_toggled), applet);
-
-#ifdef ENABLE_XSETTINGS
-		/* xsettings manager */
-		align_xsettings = gtk_alignment_new(0, 0, 0, 0);
-		applet->checkbox_xsettings = gtk_check_button_new_with_mnemonic(_("_Run XSETTINGS manager as needed"));
-		gtk_container_add(GTK_CONTAINER (align_xsettings), applet->checkbox_xsettings);
-		gtk_alignment_set_padding(GTK_ALIGNMENT (align_xsettings), 9, 6, 6, 6);
-		g_signal_connect(applet->checkbox_xsettings, "toggled",
-				 G_CALLBACK (_preference_xsettings_toggled), applet);
-#endif /* ENABLE_XSETTINGS */
 
 		/* trigger key */
 		vbox_item_trigger = gtk_vbox_new(FALSE, 0);
@@ -809,9 +695,6 @@ _preference_activated(GtkMenuItem *item,
 
 		/* items / packing */
 		gtk_box_pack_start(GTK_BOX (GTK_DIALOG (applet->dialog)->vbox), align_showicon, TRUE, TRUE, 0);
-#ifdef ENABLE_XSETTINGS
-		gtk_box_pack_start(GTK_BOX (GTK_DIALOG (applet->dialog)->vbox), align_xsettings, TRUE, TRUE, 0);
-#endif
 		gtk_box_pack_start(GTK_BOX (GTK_DIALOG (applet->dialog)->vbox), vbox_item_trigger, TRUE, TRUE, 0);
 
 		/* */
@@ -825,12 +708,6 @@ _preference_activated(GtkMenuItem *item,
 
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (applet->checkbox_showicon),
 				     gtk_status_icon_get_visible(applet->status_icon));
-#ifdef ENABLE_XSETTINGS
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (applet->checkbox_xsettings),
-				     applet->is_xsettings_manager_enabled);
-	gtk_widget_set_sensitive(applet->checkbox_xsettings,
-				 !applet->is_another_xsettings_manager_running);
-#endif
 	gtk_editable_set_editable(GTK_EDITABLE (applet->entry_grabkey), FALSE);
 	gtk_widget_show(applet->dialog);
 	gtk_widget_grab_focus(applet->close_button);
@@ -1217,10 +1094,6 @@ _create_applet(void)
 			     NULL);
 	gconf_client_notify_add(client, "/apps/imsettings-applet/trigger_key",
 				_gconf_trigger_key_cb, applet, NULL, &error);
-#ifdef ENABLE_XSETTINGS
-	gconf_client_notify_add(client, "/apps/imsettings-applet/xsettings_manager",
-				_gconf_xsettings_cb, applet, NULL, &error);
-#endif
 	gconf_client_notify_add(client, "/apps/imsettings-applet/show_icon",
 				_gconf_show_icon_cb, applet, NULL, &error);
 
@@ -1271,10 +1144,6 @@ _create_applet(void)
 			   &derror);
 	dbus_connection_add_filter(applet->conn, imsettings_xim_message_filter, applet->server, NULL);
 #endif
-
-#ifdef ENABLE_XSETTINGS
-	_xsettings_update(applet);
-#endif /* ENABLE_XSETTINGS */
 
 	return applet;
 }
