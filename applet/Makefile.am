@@ -50,7 +50,6 @@ autostartdir = $(sysconfdir)/xdg/autostart
 #
 autostart_in_files = 				\
 	imsettings-applet.desktop.in		\
-	gnome-imsettings-applet.desktop.in	\
 	$(NULL)
 autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 #
