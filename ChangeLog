@@ -1,3 +1,7 @@
+2009-01-08  Akira TAGOH  <tagoh@redhat.com>
+
+	* utils/imsettings-info.c (main): Fix a build issue.
+
 2008-12-22  Akira TAGOH  <tagoh@redhat.com>
 
 	* configure.ac: add AC_PROG_CXX.

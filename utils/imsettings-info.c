@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <locale.h>
+#include <glib/gi18n.h>
 #include "imsettings/imsettings.h"
 #include "imsettings/imsettings-request.h"
 
@@ -41,7 +42,7 @@ main(int    argc,
 	const gchar *short_desc, *long_desc;
 	const gchar *icon;
 	const gchar *locale;
-	gchar *module;
+	gchar *module = NULL;
 	gboolean is_system_default, is_user_default, is_xim;
 	GError *error = NULL;
 	guint n_retry = 0;
