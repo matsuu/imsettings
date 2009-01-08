@@ -7,4 +7,3 @@ Icon=imsettings-applet
 Exec=imsettings-applet
 Terminal=false
 Categories=TrayIcon;
-NotShowIn=GNOME;XFCE;
