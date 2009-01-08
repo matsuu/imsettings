@@ -33,19 +33,6 @@
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/imsettings-applet/xsettings_manager</key>
-      <applyto>/apps/imsettings-applet/xsettings_manager</applyto>
-      <owner>imsettings-applet</owner>
-      <type>string</type>
-      <default>auto</default>
-      <locale name="C">
-	<short>Run a facility of XSETTINGS manager</short>
-	<long>
-	  If "auto" is set, imsettings-applet has a facility of XSETTINGS manager as needed. if you want to disable it explicitly, set "disabled".
-	</long>
-      </locale>
-    </schema>
-    <schema>
       <key>/schemas/apps/imsettings-applet/show_icon</key>
       <applyto>/apps/imsettings-applet/show_icon</applyto>
       <owner>imsettings-applet</owner>
