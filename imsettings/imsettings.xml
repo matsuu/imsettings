@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- 
      imsettings.xml
      Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
@@ -20,8 +21,6 @@
      Free Software Foundation, Inc., 59 Temple Place - Suite 330,
      Boston, MA 02111-1307, USA.
   -->
-
-<?xml version="1.0" encoding="UTF-8" ?>
 <node name="/com/redhat/imsettings">
   <interface name="com.redhat.imsettings">
     <!-- Information APIs -->
