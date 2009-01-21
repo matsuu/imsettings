@@ -1,5 +1,7 @@
 2009-01-21  Akira TAGOH  <tagoh@redhat.com>
 
+	* configure.ac: update to support xfconf and mcs separately.
+
 	Integrated im-info-daemon into im-settings-daemon.
 
 	* applet/main.c: get rid of the dbus interface no longer used.

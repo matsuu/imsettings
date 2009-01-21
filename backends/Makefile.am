@@ -7,8 +7,8 @@ endif
 if ENABLE_QT
 SUBDIRS += qt
 endif
-if ENABLE_XFCE
-SUBDIRS += xfce
+if ENABLE_XFCE_MCS
+SUBDIRS += xfce_mcs
 endif
 if ENABLE_XIM
 SUBDIRS += xim
