@@ -156,11 +156,8 @@ Processes
 
 * im-settings-daemon
 
-  A DBus service that provide a facility to start/stop IM processes.
-
-* im-info-daemon
-
-  A DBus service that provide Input Method information.
+  A DBus service that provide a imsettings facility to
+  start/stop IM processes and gather input methods information.
 
 * gconf-im-settings-daemon
 
