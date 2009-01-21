@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * main.c
- * Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -69,7 +69,6 @@ typedef struct _IMApplet {
 	GtkWidget           *close_button;
 	DBusConnection      *conn;
 	IMSettingsRequest   *req;
-	IMSettingsRequest   *req_info;
 	NotifyNotification  *notify;
 	gchar               *current_im;
 	gchar               *process_im;
@@ -141,7 +140,7 @@ _check_version(IMApplet *applet)
 	GError *error = NULL;
 
   retry:
-	if (imsettings_request_get_version(applet->req, &error) != IMSETTINGS_SETTINGS_DAEMON_VERSION) {
+	if (imsettings_request_get_version(applet->req, &error) != IMSETTINGS_SETTINGS_API_VERSION) {
 		if (n_retry > 0) {
 			gchar *body = g_strdup_printf("%s",
 						      error ? error->message : N_("No detailed information"));
@@ -735,11 +734,11 @@ _popup_menu(GtkStatusIcon *status_icon,
 	item = gtk_separator_menu_item_new();
 	gtk_menu_shell_append(GTK_MENU_SHELL (menu), item);
 
-	array = imsettings_request_get_info_objects(applet->req_info, NULL);
+	array = imsettings_request_get_info_objects(applet->req, NULL);
 	if (applet->current_im)
 		current_im = g_strdup(applet->current_im);
 	else
-		current_im = imsettings_request_what_im_is_running(applet->req, NULL);
+		current_im = imsettings_request_whats_input_method_running(applet->req, NULL);
 
 	prev_item = item = imsettings_radio_menu_item_new_from_stock(NULL,
 								     GTK_STOCK_DISCONNECT,
@@ -819,14 +818,14 @@ _activate(GtkStatusIcon *status_icon,
 	IMApplet *applet = data;
 	gchar *name;
 
-	name = imsettings_request_what_im_is_running(applet->req, NULL);
+	name = imsettings_request_whats_input_method_running(applet->req, NULL);
 	if (applet->is_enabled) {
 		g_free(applet->process_im);
 		applet->process_im = g_strdup(applet->current_im);
 
 		_stop_process(applet, TRUE);
 	} else {
-		gchar *current_im = imsettings_request_get_current_user_im(applet->req_info, NULL);
+		gchar *current_im = imsettings_request_get_current_user_im(applet->req, NULL);
 
 		if (current_im == NULL || current_im[0] == 0 ||
 		    strcmp(current_im, "none") == 0) {
@@ -1055,11 +1054,9 @@ _create_applet(void)
 		return NULL;
 	}
 	applet->req = imsettings_request_new(applet->conn, IMSETTINGS_INTERFACE_DBUS);
-	applet->req_info = imsettings_request_new(applet->conn, IMSETTINGS_INFO_INTERFACE_DBUS);
 
 	locale = setlocale(LC_CTYPE, "");
 	imsettings_request_set_locale(applet->req, locale);
-	imsettings_request_set_locale(applet->req_info, locale);
 
 	g_signal_connect(applet->status_icon, "popup_menu",
 			 G_CALLBACK (_popup_menu),
@@ -1068,7 +1065,7 @@ _create_applet(void)
 			 G_CALLBACK (_activate),
 			 applet);
 
-	name = imsettings_request_what_im_is_running(applet->req, NULL);
+	name = imsettings_request_whats_input_method_running(applet->req, NULL);
 	if (name == NULL || name[0] == 0) {
 		g_free(name);
 		name = g_strdup("none");
@@ -1128,7 +1125,7 @@ _create_applet(void)
 		applet->need_update_xinputrc = FALSE;
 		applet->is_enabled = TRUE;
 	}
-	info = imsettings_request_get_info_object(applet->req_info,
+	info = imsettings_request_get_info_object(applet->req,
 						  applet->need_update_xinputrc ? "none" : applet->current_im,
 						  NULL);
 	xim = imsettings_info_get_xim(info);
@@ -1152,7 +1149,6 @@ static void
 _destroy_applet(IMApplet *applet)
 {
 	notify_notification_close(applet->notify, NULL);
-	g_object_unref(applet->req_info);
 	g_object_unref(applet->req);
 	if (applet->conn)
 		dbus_connection_unref(applet->conn);

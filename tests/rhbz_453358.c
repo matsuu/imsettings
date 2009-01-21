@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * rhbz_453358.c
- * Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -42,7 +42,7 @@ void
 setup(void)
 {
 	dbus_conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(dbus_conn, IMSETTINGS_INFO_INTERFACE_DBUS);
+	req = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
 }
 
 void

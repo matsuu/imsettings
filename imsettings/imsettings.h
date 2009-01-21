@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * imsetting.h
- * Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -31,9 +31,6 @@ G_BEGIN_DECLS
 #define IMSETTINGS_SERVICE_DBUS		"com.redhat.imsettings"
 #define IMSETTINGS_PATH_DBUS		"/com/redhat/imsettings"
 #define IMSETTINGS_INTERFACE_DBUS	"com.redhat.imsettings"
-#define IMSETTINGS_INFO_SERVICE_DBUS	"com.redhat.imsettings.IMInfo"
-#define IMSETTINGS_INFO_PATH_DBUS	"/com/redhat/imsettings/IMInfo"
-#define IMSETTINGS_INFO_INTERFACE_DBUS	"com.redhat.imsettings.IMInfo"
 #define IMSETTINGS_GCONF_SERVICE_DBUS	"com.redhat.imsettings.GConf"
 #define IMSETTINGS_GCONF_PATH_DBUS	"/com/redhat/imsettings/GConf"
 #define IMSETTINGS_GCONF_INTERFACE_DBUS	"com.redhat.imsettings.GConf"
@@ -44,8 +41,13 @@ G_BEGIN_DECLS
 #define IMSETTINGS_XIM_PATH_DBUS	"/com/redhat/imsettings/XIM"
 #define IMSETTINGS_XIM_INTERFACE_DBUS	"com.redhat.imsettings.XIM"
 
-#define IMSETTINGS_SETTINGS_DAEMON_VERSION	2
-#define IMSETTINGS_IMINFO_DAEMON_VERSION	2
+#define IMSETTINGS_SETTINGS_API_VERSION	3
+
+#ifdef GNOME_ENABLE_DEBUG
+#define d(e)	e
+#else
+#define d(e)
+#endif
 
 enum IMSettingsIMModuleType {
 	IMSETTINGS_IMM_GTK,

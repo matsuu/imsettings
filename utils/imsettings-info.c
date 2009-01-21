@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * imsettings-info.c
- * Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -32,7 +32,7 @@ int
 main(int    argc,
      char **argv)
 {
-	IMSettingsRequest *req_settings, *req_info;
+	IMSettingsRequest *req;
 	IMSettingsInfo *info;
 	DBusConnection *connection;
 	const gchar *file, *gtkimm, *qtimm, *xim;
@@ -56,18 +56,17 @@ main(int    argc,
 		g_printerr(_("Failed to get a session bus.\n"));
 		return 1;
 	}
-	req_settings = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
-	req_info = imsettings_request_new(connection, IMSETTINGS_INFO_INTERFACE_DBUS);
+	req = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
 
   retry:
-	if (imsettings_request_get_version(req_settings, NULL) != IMSETTINGS_SETTINGS_DAEMON_VERSION) {
+	if (imsettings_request_get_version(req, NULL) != IMSETTINGS_SETTINGS_API_VERSION) {
 		if (n_retry > 0) {
-			g_printerr(_("Mismatch the version of im-settings-daemon.\n"));
+			g_printerr(_("Mismatch the version of imsettings.\n"));
 			retval = 1;
 			goto end;
 		}
 		/* version is inconsistent. try to reload the process */
-		imsettings_request_reload(req_settings, TRUE);
+		imsettings_request_reload(req, TRUE);
 		g_print(_("Waiting for reloading the process...\n"));
 		/* XXX */
 		sleep(1);
@@ -75,27 +74,11 @@ main(int    argc,
 		goto retry;
 	}
 	n_retry = 0;
-  retry2:
-	if (imsettings_request_get_version(req_info, NULL) != IMSETTINGS_IMINFO_DAEMON_VERSION) {
-		if (n_retry > 0) {
-			g_printerr(_("Mismatch the version of im-info-daemon.\n"));
-			retval = 1;
-			goto end;
-		}
-		/* version is inconsistent. try to reload the process */
-		imsettings_request_reload(req_info, TRUE);
-		g_print(_("Waiting for reloading the process...\n"));
-		/* XXX */
-		sleep(1);
-		n_retry++;
-		goto retry2;
-	}
 
 	locale = setlocale(LC_CTYPE, NULL);
-	imsettings_request_set_locale(req_settings, locale);
-	imsettings_request_set_locale(req_info, locale);
+	imsettings_request_set_locale(req, locale);
 	if (argc < 2) {
-		module = imsettings_request_what_im_is_running(req_settings, &error);
+		module = imsettings_request_whats_input_method_running(req, &error);
 		if (error) {
 			g_printerr("%s\n", error->message);
 			g_error_free(error);
@@ -110,9 +93,9 @@ main(int    argc,
 	} else {
 		module = g_strdup(argv[1]);
 	}
-	info = imsettings_request_get_info_object(req_info, module, &error);
+	info = imsettings_request_get_info_object(req, module, &error);
 	if (error) {
-		g_printerr(_("Unable to get an IM info.\n"));
+		g_printerr(_("Unable to obtain an Input Method Information."));
 		retval = 1;
 		g_clear_error(&error);
 	} else {
@@ -160,8 +143,7 @@ main(int    argc,
 	}
   end:
 	g_free(module);
-	g_object_unref(req_settings);
-	g_object_unref(req_info);
+	g_object_unref(req);
 	dbus_connection_unref(connection);
 
 	return retval;

@@ -1,8 +1,8 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * main.c
- * Copyright (C) 2007,2008 Akira TAGOH
- * Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2007-2009 Akira TAGOH
+ * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -108,7 +108,7 @@ imsettings_test_restart_daemons_full(const gchar *xinputrcdir,
 				     const gchar *homedir)
 {
 	gchar *xxinputrcdir, *xxinputdir, *xhomedir;
-	gchar *p = g_build_filename(IMSETTINGS_BUILDDIR, "src", "im-info-daemon", NULL);
+	gchar *p = g_build_filename(IMSETTINGS_BUILDDIR, "src", "im-settings-daemon", NULL);
 	gchar *s;
 
 	if (xinputrcdir == NULL)
@@ -139,6 +139,8 @@ imsettings_test_restart_daemons_full(const gchar *xinputrcdir,
 	/* stop all the processes first */
 	imsettings_test_reload_daemons();
 
+	sleep(1);
+
 	if (!g_spawn_command_line_async(s, NULL))
 		abort();
 	g_free(s);
@@ -146,18 +148,6 @@ imsettings_test_restart_daemons_full(const gchar *xinputrcdir,
 	g_free(xxinputrcdir);
 	g_free(xxinputdir);
 	g_free(xhomedir);
-
-	/* FIXME! */
-	sleep(1);
-
-	p = g_build_filename(IMSETTINGS_BUILDDIR, "src", "im-settings-daemon", NULL);
-	s = g_strdup_printf("%s --replace", p);
-	g_print("%s\n", s);
-
-	if (!g_spawn_command_line_async(s, NULL))
-		abort();
-	g_free(s);
-	g_free(p);
 
 	/* FIXME! */
 	sleep(1);

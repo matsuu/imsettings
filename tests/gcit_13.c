@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * gcit_13.c
- * Copyright (C) 2008 Akira TAGOH
+ * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -42,7 +42,7 @@ void
 setup(void)
 {
 	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
+	req = imsettings_request_new(conn, IMSETTINGS_INTERFACE_DBUS);
 }
 
 void
@@ -68,7 +68,7 @@ TDEF (issue) {
 	g_usleep(2 * G_USEC_PER_SEC);
 
 	imsettings_request_set_locale(req, "ja_JP.UTF-8");
-	list = imsettings_request_get_im_list(req, &error);
+	list = imsettings_request_get_input_method_list(req, &error);
 	fail_unless(list != NULL, "Unable to get the IM list (take 1)");
 	for (i = 0; list[i] != NULL; i++) {
 		g_print("%d. %s\n", i+1, list[i]);
@@ -84,7 +84,7 @@ TDEF (issue) {
 	/* testing other locale */
 	flag = FALSE;
 	imsettings_request_set_locale(req, "en_US.UTF-8");
-	list = imsettings_request_get_im_list(req, &error);
+	list = imsettings_request_get_input_method_list(req, &error);
 	fail_unless(list != NULL, "Unable to get the IM list (take 2)");
 	for (i = 0; list[i] != NULL; i++) {
 		g_print("%d. %s\n", i+1, list[i]);
@@ -103,7 +103,7 @@ TDEF (issue) {
 
 	flag = FALSE;
 	imsettings_request_set_locale(req, "ja_JP.UTF-8");
-	list = imsettings_request_get_im_list(req, &error);
+	list = imsettings_request_get_input_method_list(req, &error);
 	fail_unless(list != NULL, "Unable to get the IM list (take 3)");
 	for (i = 0; list[i] != NULL; i++) {
 		g_print("%d. %s\n", i+1, list[i]);
@@ -119,7 +119,7 @@ TDEF (issue) {
 	/* testing other locale */
 	flag = FALSE;
 	imsettings_request_set_locale(req, "en_US.UTF-8");
-	list = imsettings_request_get_im_list(req, &error);
+	list = imsettings_request_get_input_method_list(req, &error);
 	fail_unless(list != NULL, "Unable to get the IM list (take 4)");
 	for (i = 0; list[i] != NULL; i++) {
 		g_print("%d. %s\n", i+1, list[i]);
@@ -163,7 +163,7 @@ TDEF (issue) {
 
 	flag = FALSE;
 	imsettings_request_set_locale(req, "ja_JP.UTF-8");
-	list = imsettings_request_get_im_list(req, &error);
+	list = imsettings_request_get_input_method_list(req, &error);
 	fail_unless(list != NULL, "Unable to get the IM list (take 5)");
 	for (i = 0; list[i] != NULL; i++) {
 		g_print("%d. %s\n", i+1, list[i]);
@@ -179,7 +179,7 @@ TDEF (issue) {
 	/* testing other locale */
 	flag = FALSE;
 	imsettings_request_set_locale(req, "en_US.UTF-8");
-	list = imsettings_request_get_im_list(req, &error);
+	list = imsettings_request_get_input_method_list(req, &error);
 	fail_unless(list != NULL, "Unable to get the IM list (take 6)");
 	for (i = 0; list[i] != NULL; i++) {
 		g_print("%d. %s\n", i+1, list[i]);

@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * imsettings-reload.c
- * Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -35,7 +35,7 @@ int
 main(int    argc,
      char **argv)
 {
-	IMSettingsRequest *imsettings, *iminfo, *imgconf;
+	IMSettingsRequest *req, *req_gconf;
 	gboolean arg_force = FALSE;
 	GOptionContext *ctx = g_option_context_new(NULL);
 	GOptionEntry entries[] = {
@@ -71,19 +71,16 @@ main(int    argc,
 		g_printerr("Failed to get a session bus.\n");
 		return 1;
 	}
-	imsettings = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
-	imgconf = imsettings_request_new(connection, IMSETTINGS_GCONF_INTERFACE_DBUS);
-	iminfo = imsettings_request_new(connection, IMSETTINGS_INFO_INTERFACE_DBUS);
-	imsettings_request_reload(imsettings, arg_force);
-	imsettings_request_reload(imgconf, arg_force);
-	imsettings_request_reload(iminfo, arg_force);
+	req = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
+	req_gconf = imsettings_request_new(connection, IMSETTINGS_GCONF_INTERFACE_DBUS);
+	imsettings_request_reload(req, arg_force);
+	imsettings_request_reload(req_gconf, arg_force);
 	sleep(1);
 
 	g_print("Reloaded.\n");
 
-	g_object_unref(iminfo);
-	g_object_unref(imgconf);
-	g_object_unref(imsettings);
+	g_object_unref(req);
+	g_object_unref(req_gconf);
 	dbus_connection_unref(connection);
 
 	return 0;

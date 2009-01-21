@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * gcit_5.c
- * Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -62,7 +62,7 @@ TDEF (issue) {
 	gchar *p;
 	GError *error = NULL;
 
-	p = imsettings_request_what_im_is_running(req, &error);
+	p = imsettings_request_whats_input_method_running(req, &error);
 	fail_unless(p != NULL, "We don't expect null as the result of imsettings_request_what_im_is_running(): %s",
 		    error ? error->message : "no details");
 } TEND

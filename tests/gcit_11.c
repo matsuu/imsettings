@@ -44,7 +44,7 @@ setup(void)
 	imsettings_test_restart_daemons("issue_11");
 
 	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
+	req = imsettings_request_new(conn, IMSETTINGS_INTERFACE_DBUS);
 }
 
 void

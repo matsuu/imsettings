@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * imsettings-observer.c
- * Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -34,11 +34,6 @@
 #include "imsettings-marshal.h"
 
 #define IMSETTINGS_OBSERVER_GET_PRIVATE(_o_)	(G_TYPE_INSTANCE_GET_PRIVATE ((_o_), IMSETTINGS_TYPE_OBSERVER, IMSettingsObserverPrivate))
-#ifdef GNOME_ENABLE_DEBUG
-#define d(e)	e
-#else
-#define d(e)
-#endif
 
 
 typedef gboolean (* IMSettingsSignalFunction) (IMSettingsObserver *imsettings,
@@ -87,6 +82,7 @@ G_DEFINE_TYPE (IMSettingsObserver, imsettings_observer, G_TYPE_OBJECT);
 /*
  * Private functions
  */
+/* Information APIs */
 static gboolean
 imsettings_get_version(GObject  *object,
 		       guint    *ret,
@@ -95,111 +91,15 @@ imsettings_get_version(GObject  *object,
 	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
 	gboolean retval = FALSE;
 
-	d(g_print("Getting version...\n"));
+	d(g_print("Obtaining a DBus API version...\n"));
 	if (klass->get_version) {
 		*ret = klass->get_version(IMSETTINGS_OBSERVER (object),
 					  error);
 		if (*error == NULL)
 			retval = TRUE;
-	}
-
-	return retval;
-}
-
-static gboolean
-imsettings_start_im(GObject      *object,
-		    const gchar  *lang,
-		    const gchar  *module,
-		    gboolean      update_xinputrc,
-		    gboolean     *ret,
-		    GError      **error)
-{
-	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
-
-	*ret = FALSE;
-	d(g_print("Starting IM `%s' with `%s' language\n", module, lang));
-	if (klass->start_im) {
-		*ret = klass->start_im(IMSETTINGS_OBSERVER (object),
-				       lang,
-				       module,
-				       update_xinputrc,
-				       error);
-	}
-
-	return *ret;
-}
-
-static gboolean
-imsettings_stop_im(GObject      *object,
-		   const gchar  *module,
-		   gboolean      update_xinputrc,
-		   gboolean      force,
-		   gboolean     *ret,
-		   GError      **error)
-{
-	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
-
-	*ret = FALSE;
-	d(g_print("Stopping IM `%s'%s\n", module, (force ? " forcibly" : "")));
-	if (klass->stop_im) {
-		*ret = klass->stop_im(IMSETTINGS_OBSERVER (object),
-				      module,
-				      update_xinputrc,
-				      force,
-				      error);
-	}
-
-	return *ret;
-}
-
-static gboolean
-imsettings_what_input_method_is_running(GObject      *object,
-					const gchar **ret,
-					GError      **error)
-{
-	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
-	const gchar *module;
-	gboolean retval = FALSE;
-
-	d(g_print("Getting current IM running\n"));
-	if (klass->what_im_is_running) {
-		module = klass->what_im_is_running(IMSETTINGS_OBSERVER (object),
-						   error);
-		if (*error == NULL) {
-			*ret = g_strdup(module);
-			retval = TRUE;
-		} else {
-			*ret = NULL;
-		}
-	}
-
-	return retval;
-}
-
-static gboolean
-imsettings_get_list(GObject     *object,
-		    const gchar *lang,
-		    gchar     ***ret,
-		    GError     **error)
-{
-	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
-	GPtrArray *list;
-	gboolean retval = FALSE;
-	gint i;
-
-	d(g_print("Getting list for `%s' language\n", lang));
-	if (klass->get_list) {
-		list = klass->get_list(IMSETTINGS_OBSERVER (object), lang, error);
-		if (*error == NULL) {
-			*ret = g_strdupv((gchar **)list->pdata);
-			retval = TRUE;
-		}
-		if (list) {
-			for (i = 0; i < list->len; i++) {
-				g_free(g_ptr_array_index(list, i));
-			}
-			g_ptr_array_free(list, TRUE);
-		}
+	} else {
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
+			    "No GetVersion method is supported.");
 	}
 
 	return retval;
@@ -215,12 +115,12 @@ imsettings_get_info_objects(GObject      *object,
 	GPtrArray *retval = NULL;
 	gsize i;
 
-	d(g_print("Getting IMInfo Objects...\n"));
+	d(g_print("Obtaining IMInfo Objects...\n"));
 	if (klass->get_info_objects) {
 		retval = klass->get_info_objects(IMSETTINGS_OBSERVER (object), lang, error);
 	} else {
 		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
-			    "No GetObjects method is supported");
+			    "No GetInfoObjects method is supported");
 	}
 	if (*error == NULL) {
 		GValueArray *varray;
@@ -254,6 +154,13 @@ imsettings_get_info_objects(GObject      *object,
 			g_string_free(s, TRUE);
 		}
 	}
+	if (retval) {
+		if (klass->info_objects_free)
+			klass->info_objects_free(IMSETTINGS_OBSERVER (object), retval);
+		else
+			g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
+				    "No GetInfoObjects methid is supported");
+	}
 
 	return *error == NULL;
 }
@@ -268,9 +175,9 @@ imsettings_get_info_object(GObject      *object,
 	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
 	IMSettingsInfo *info = NULL;
 
-	d(g_print("Getting IMInfo Object...\n"));
-	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), locale, name, error);
+	d(g_print("Obtaining IMInfo Object...\n"));
+	if (klass->get_info_object) {
+		info = klass->get_info_object(IMSETTINGS_OBSERVER (object), locale, name, error);
 	} else {
 		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
 			    "No GetInfoObject method is supported");
@@ -302,8 +209,42 @@ imsettings_get_info_object(GObject      *object,
 		g_array_free(v, TRUE);
 		g_string_free(s, TRUE);
 	}
+	if (info)
+		g_object_unref(info);
 
 	return *error == NULL;
+}
+
+static gboolean
+imsettings_get_input_method_list(GObject       *object,
+				 const gchar   *lang,
+				 gchar       ***ret,
+				 GError       **error)
+{
+	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
+	GPtrArray *list;
+	gboolean retval = FALSE;
+	gint i;
+
+	d(g_print("Obtaining Input Method list for `%s' language\n", lang));
+	if (klass->get_input_method_list) {
+		list = klass->get_input_method_list(IMSETTINGS_OBSERVER (object), lang, error);
+		if (*error == NULL) {
+			*ret = g_strdupv((gchar **)list->pdata);
+			retval = TRUE;
+		}
+		if (list) {
+			for (i = 0; i < list->len; i++) {
+				g_free(g_ptr_array_index(list, i));
+			}
+			g_ptr_array_free(list, TRUE);
+		}
+	} else {
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
+			    "No GetInputMethodList method is supported.");
+	}
+
+	return retval;
 }
 
 static gboolean
@@ -313,15 +254,23 @@ imsettings_get_current_user_im(GObject      *object,
 {
 	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
 	gboolean retval = FALSE;
-	const gchar *name;
+	gchar *name;
 
-	d(g_print("Getting current user IM\n"));
+	d(g_print("Obtaining current user IM\n"));
 	if (klass->get_current_user_im) {
 		name = klass->get_current_user_im(IMSETTINGS_OBSERVER (object), error);
 		if (*error == NULL) {
-			*ret = g_strdup(name);
+			if (name)
+				*ret = name;
+			else
+				*ret = g_strdup("");
 			retval = TRUE;
+		} else {
+			g_free(name);
 		}
+	} else {
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
+			    "No GetCurrentUserIM method is supported.");
 	}
 
 	return retval;
@@ -334,184 +283,20 @@ imsettings_get_current_system_im(GObject      *object,
 {
 	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
 	gboolean retval = FALSE;
-	const gchar *name;
+	gchar *name;
 
-	d(g_print("Getting current system IM\n"));
+	d(g_print("Obtaining current system IM\n"));
 	if (klass->get_current_system_im) {
 		name = klass->get_current_system_im(IMSETTINGS_OBSERVER (object), error);
 		if (*error == NULL) {
-			*ret = g_strdup(name);
+			*ret = name;
 			retval = TRUE;
+		} else {
+			g_free(name);
 		}
-	}
-
-	return retval;
-}
-
-static gboolean
-imsettings_get_xinput_filename(GObject      *object,
-			       const gchar  *module,
-			       const gchar **ret,
-			       GError      **error)
-{
-	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
-	IMSettingsInfo *info;
-	gboolean retval = FALSE;
-
-	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
-		if (*error == NULL) {
-			*ret = imsettings_info_get_filename(info);
-			retval = TRUE;
-		}
-	}
-
-	return retval;
-}
-
-static gboolean
-imsettings_get_im_module_name(GObject      *object,
-			      const gchar  *imname,
-			      guint32       type,
-			      const gchar **ret,
-			      GError      **error)
-{
-	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
-	IMSettingsInfo *info;
-	gboolean retval = FALSE;
-
-	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, imname, error);
-		if (*error == NULL) {
-			retval = TRUE;
-			switch (type) {
-			    case IMSETTINGS_IMM_GTK:
-				    *ret = imsettings_info_get_gtkimm(info);
-				    break;
-			    case IMSETTINGS_IMM_QT:
-				    *ret = imsettings_info_get_qtimm(info);
-				    break;
-			    case IMSETTINGS_IMM_XIM:
-				    *ret = imsettings_info_get_xim(info);
-				    break;
-			    default:
-				    g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_INVALID_IMM,
-						_("Invalid IM module type: %d"), type);
-				    retval = FALSE;
-				    break;
-			}
-		}
-	}
-
-	return retval;
-}
-
-static gboolean
-imsettings_get_xim_program(GObject      *object,
-			   const gchar  *module,
-			   const gchar **progname,
-			   const gchar **progargs,
-			   GError      **error)
-{
-	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
-	IMSettingsInfo *info;
-	gboolean retval = FALSE;
-
-	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
-		if (*error == NULL) {
-			*progname = imsettings_info_get_xim_program(info);
-			*progargs = imsettings_info_get_xim_args(info);
-			retval = TRUE;
-		}
-	}
-
-	return retval;
-}
-
-static gboolean
-imsettings_get_preferences_program(GObject      *object,
-				   const gchar  *module,
-				   const gchar **progname,
-				   const gchar **progargs,
-				   GError      **error)
-{
-	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
-	IMSettingsInfo *info;
-	gboolean retval = FALSE;
-
-	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
-		if (*error == NULL) {
-			*progname = imsettings_info_get_prefs_program(info);
-			*progargs = imsettings_info_get_prefs_args(info);
-			retval = TRUE;
-		}
-	}
-
-	return retval;
-}
-
-static gboolean
-imsettings_get_auxiliary_program(GObject      *object,
-				 const gchar  *module,
-				 const gchar **progname,
-				 const gchar **progargs,
-				 GError      **error)
-{
-	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
-	IMSettingsInfo *info;
-	gboolean retval = FALSE;
-
-	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
-		if (*error == NULL) {
-			*progname = imsettings_info_get_aux_program(info);
-			*progargs = imsettings_info_get_aux_args(info);
-			retval = TRUE;
-		}
-	}
-
-	return retval;
-}
-
-static gboolean
-imsettings_get_short_description(GObject      *object,
-				 const gchar  *module,
-				 const gchar **ret,
-				 GError      **error)
-{
-	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
-	IMSettingsInfo *info;
-	gboolean retval = FALSE;
-
-	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
-		if (*error == NULL) {
-			*ret = imsettings_info_get_short_desc(info);
-			retval = TRUE;
-		}
-	}
-
-	return retval;
-}
-
-static gboolean
-imsettings_get_long_description(GObject      *object,
-				const gchar  *module,
-				const gchar **ret,
-				GError      **error)
-{
-	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
-	IMSettingsInfo *info;
-	gboolean retval = FALSE;
-
-	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
-		if (*error == NULL) {
-			*ret = imsettings_info_get_long_desc(info);
-			retval = TRUE;
-		}
+	} else {
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
+			    "No GetCurrentSystemIM method is supported.");
 	}
 
 	return retval;
@@ -527,12 +312,15 @@ imsettings_is_system_default(GObject      *object,
 	IMSettingsInfo *info;
 	gboolean retval = FALSE;
 
-	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
+	if (klass->get_info_object) {
+		info = klass->get_info_object(IMSETTINGS_OBSERVER (object), NULL, module, error);
 		if (*error == NULL) {
 			*ret = imsettings_info_is_system_default(info);
 			retval = TRUE;
 		}
+	} else {
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
+			    "No IsSystemDefault method is supported.");
 	}
 
 	return retval;
@@ -548,12 +336,15 @@ imsettings_is_user_default(GObject      *object,
 	IMSettingsInfo *info;
 	gboolean retval = FALSE;
 
-	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
+	if (klass->get_info_object) {
+		info = klass->get_info_object(IMSETTINGS_OBSERVER (object), NULL, module, error);
 		if (*error == NULL) {
 			*ret = imsettings_info_is_user_default(info);
 			retval = TRUE;
 		}
+	} else {
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
+			    "No IsUserDefault method is supported.");
 	}
 
 	return retval;
@@ -569,33 +360,95 @@ imsettings_is_xim(GObject      *object,
 	IMSettingsInfo *info;
 	gboolean retval = FALSE;
 
-	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
+	if (klass->get_info_object) {
+		info = klass->get_info_object(IMSETTINGS_OBSERVER (object), NULL, module, error);
 		if (*error == NULL) {
 			*ret = imsettings_info_is_xim(info);
 			retval = TRUE;
 		}
+	} else {
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
+			    "No IsXim method is supported.");
 	}
 
 	return retval;
 }
 
+/* Operation APIs */
 static gboolean
-imsettings_get_supported_language(GObject      *object,
-				  const gchar  *module,
-				  const gchar **ret,
-				  GError      **error)
+imsettings_start_im(GObject      *object,
+		    const gchar  *lang,
+		    const gchar  *module,
+		    gboolean      update_xinputrc,
+		    gboolean     *ret,
+		    GError      **error)
 {
 	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
-	IMSettingsInfo *info;
+
+	*ret = FALSE;
+	d(g_print("Starting IM `%s' with `%s' language\n", module, lang));
+	if (klass->start_im) {
+		*ret = klass->start_im(IMSETTINGS_OBSERVER (object),
+				       lang,
+				       module,
+				       update_xinputrc,
+				       error);
+	} else {
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
+			    "No StartIM method is supported.");
+	}
+
+	return *ret;
+}
+
+static gboolean
+imsettings_stop_im(GObject      *object,
+		   const gchar  *module,
+		   gboolean      update_xinputrc,
+		   gboolean      force,
+		   gboolean     *ret,
+		   GError      **error)
+{
+	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
+
+	*ret = FALSE;
+	d(g_print("Stopping IM `%s'%s\n", module, (force ? " forcibly" : "")));
+	if (klass->stop_im) {
+		*ret = klass->stop_im(IMSETTINGS_OBSERVER (object),
+				      module,
+				      update_xinputrc,
+				      force,
+				      error);
+	} else {
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
+			    "No StopIM method is supported.");
+	}
+
+	return *ret;
+}
+
+static gboolean
+imsettings_whats_input_method_running(GObject      *object,
+				      const gchar **ret,
+				      GError      **error)
+{
+	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
+	const gchar *module;
 	gboolean retval = FALSE;
 
-	if (klass->get_info) {
-		info = klass->get_info(IMSETTINGS_OBSERVER (object), NULL, module, error);
+	d(g_print("Obtaining which Input Method is currently running\n"));
+	if (klass->whats_im_running) {
+		module = klass->whats_im_running(IMSETTINGS_OBSERVER (object),
+						 error);
 		if (*error == NULL) {
-			*ret = imsettings_info_get_supported_language(info);
+			*ret = g_strdup(module);
 			retval = TRUE;
+		} else {
+			*ret = NULL;
 		}
+	} else {
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
+			    "No WhatsInputMethodRunning method is supported.");
 	}
 
 	return retval;
@@ -758,9 +611,6 @@ imsettings_observer_real_message_filter(DBusConnection *connection,
 		 0,
 		 imsettings_observer_signal_name_owner_changed},
 		{IMSETTINGS_INTERFACE_DBUS, "Reload",
-		 0,
-		 imsettings_observer_signal_reload},
-		{IMSETTINGS_INFO_INTERFACE_DBUS, "Reload",
 		 0,
 		 imsettings_observer_signal_reload},
 		{NULL, NULL, 0, NULL}

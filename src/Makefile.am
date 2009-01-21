@@ -20,11 +20,9 @@ DEPS =							\
 	$(top_builddir)/imsettings/libimsettings.la	\
 	$(NULL)
 EXTRA_DIST =						\
-	im-info-daemon.service.in			\
 	im-settings-daemon.service.in			\
 	$(NULL)
 DISTCLEANFILES =					\
-	im-info-daemon.service				\
 	im-settings-daemon.service			\
 	$(NULL)
 
@@ -41,10 +39,11 @@ DISTCLEANFILES =					\
 # Target platform
 libexec_PROGRAMS =					\
 	im-settings-daemon				\
-	im-info-daemon					\
 	$(NULL)
 #
 im_settings_daemon_SOURCES =				\
+	monitor.c					\
+	monitor.h					\
 	factory.c					\
 	$(NULL)
 im_settings_daemon_CFLAGS =				\
@@ -55,20 +54,7 @@ im_settings_daemon_LDADD =				\
 	$(X11_LIBS)					\
 	$(NULL)
 #
-im_info_daemon_SOURCES =				\
-	factory_info.c					\
-	$(NULL)
-im_info_daemon_CFLAGS =					\
-	-DG_LOG_DOMAIN="\"IM-Info-Daemon\""		\
-	-fno-strict-aliasing				\
-	$(IMINFO_CFLAGS)				\
-	$(NULL)
-im_info_daemon_LDADD =					\
-	$(IMINFO_LIBS)					\
-	$(NULL)
-#
 servicedir = $(DBUS_SERVICE_DIR)
 service_DATA =						\
-	im-info-daemon.service				\
 	im-settings-daemon.service			\
 	$(NULL)

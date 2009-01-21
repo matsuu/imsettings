@@ -1,3 +1,52 @@
+2009-01-21  Akira TAGOH  <tagoh@redhat.com>
+
+	Integrated im-info-daemon into im-settings-daemon.
+
+	* applet/main.c: get rid of the dbus interface no longer used.
+
+	* imsettings/imsettings.xml: integrate methods from
+	/com/redhat/imsettings/IMINfo to /com/redhat/imsettings.
+
+	* imsettings/imsettings.h: bump API version.
+
+	* imsettings/imsettings-observer.c: clean up obsolete DBus APIs.
+
+	* imsettings/imsettings-request.c: likewise.
+
+	* src/monitor.[ch]: new to deal with monitoring files.
+
+	* src/factory.c: integrate methods from factory_info.c
+
+	* utils/imsettings-list.c (main): get rid of the dbus interface
+	no longer used.
+
+	* utils/imsettings-info.c (main): likewise.
+
+	* utils/imsettings-start.c (main): likewise.
+
+	* utils/imsettings-restart.c (main): likewise.
+
+	* utils/imsettings-stop.c (main): likewise.
+
+	* utils/imsettings-reload.c (main): likewise.
+
+	* tests/rhbz_455363.c (setup): likewise.
+
+	* tests/rhbz_453358.c (setup): likewise.
+
+	* tests/imsettings-request.c (test_imsettings_request_new): likewise.
+
+	* tests/gcit_5.c (setup): likewise.
+
+	* tests/gcit_11.c (setup): likewise.
+
+	* tests/rhbz_431291.c (setup): likewise.
+
+	* tests/gcit_13.c (setup): likewise.
+
+	* tests/main.c (imsettings_test_restart_daemons_full): get rid of
+	the code bringing up im-info-daemon.
+
 2009-01-08  Akira TAGOH  <tagoh@redhat.com>
 
 	* data/xinput.sh.in.in: stop bringing imsettings-xim up. we are relying

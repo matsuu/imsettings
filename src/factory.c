@@ -36,6 +36,7 @@
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 #include <X11/Xlib.h>
+#include "monitor.h"
 #include "imsettings/imsettings-info-private.h"
 #include "imsettings/imsettings-observer.h"
 #include "imsettings/imsettings-request.h"
@@ -70,16 +71,21 @@ struct _IMSettingsManagerPrivate {
 	gchar             *display_name;
 	DBusConnection    *req_conn;
 	GSList            *im_running;
+	IMSettingsMonitor *monitor;
 };
 
 enum {
 	PROP_0,
 	PROP_DISPLAY_NAME,
+	PROP_XINPUTRCDIR,
+	PROP_XINPUTDIR,
+	PROP_HOMEDIR,
+	LAST_PROP
 };
 
-GType        imsettings_manager_get_type               (void) G_GNUC_CONST;
-const gchar *imsettings_manager_real_what_im_is_running(IMSettingsObserver  *observer,
-							GError             **error);
+GType  imsettings_manager_get_type             (void) G_GNUC_CONST;
+gchar *imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
+						GError             **error);
 
 G_DEFINE_TYPE (IMSettingsManager, imsettings_manager, IMSETTINGS_TYPE_OBSERVER);
 
@@ -418,11 +424,24 @@ imsettings_manager_real_set_property(GObject      *object,
 				     GParamSpec   *pspec)
 {
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (object);
+	const gchar *p;
 
 	switch (prop_id) {
 	    case PROP_DISPLAY_NAME:
 		    g_free(priv->display_name);
 		    priv->display_name = g_strdup(g_value_get_string(value));
+		    break;
+	    case PROP_XINPUTRCDIR:
+		    p = g_value_get_string(value);
+		    g_object_set(priv->monitor, "xinputrcdir", p, NULL);
+		    break;
+	    case PROP_XINPUTDIR:
+		    p = g_value_get_string(value);
+		    g_object_set(priv->monitor, "xinputdir", p, NULL);
+		    break;
+	    case PROP_HOMEDIR:
+		    p = g_value_get_string(value);
+		    g_object_set(priv->monitor, "homedir", p, NULL);
 		    break;
 	    default:
 		    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -462,12 +481,97 @@ imsettings_manager_real_finalize(GObject *object)
 	if (priv->qt_req)
 		g_object_unref(priv->qt_req);
 	dbus_connection_unref(priv->req_conn);
+	if (priv->monitor)
+		g_object_unref(priv->monitor);
 	g_free(priv->display_name);
 	if (priv->im_running)
 		g_slist_free(priv->im_running);
 
 	if (G_OBJECT_CLASS (imsettings_manager_parent_class)->finalize)
 		G_OBJECT_CLASS (imsettings_manager_parent_class)->finalize(object);
+}
+
+static guint
+imsettings_manager_real_get_version(IMSettingsObserver  *observer,
+				    GError             **error)
+{
+	return IMSETTINGS_SETTINGS_API_VERSION;
+}
+
+static GPtrArray *
+imsettings_manager_real_get_info_objects(IMSettingsObserver  *imsettings,
+					 const gchar         *locale,
+					 GError             **error)
+{
+	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (imsettings);
+	GPtrArray *array;
+
+	array = imsettings_monitor_foreach(priv->monitor, locale);
+	if (array->len == 0) {
+		g_set_error(error, IMSETTINGS_MONITOR_ERROR,
+			    IMSETTINGS_MONITOR_ERROR_NOT_AVAILABLE,
+			    _("No input methods available on your system."));
+	}
+
+	return array;
+}
+
+static IMSettingsInfo *
+imsettings_manager_real_get_info_object(IMSettingsObserver  *imsettings,
+					const gchar         *locale,
+					const gchar         *module,
+					GError             **error)
+{
+	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (imsettings);
+
+	return imsettings_monitor_lookup(priv->monitor, locale, module, error);
+}
+
+static GPtrArray *
+imsettings_manager_real_get_input_method_list(IMSettingsObserver  *imsettings,
+					      const gchar         *locale,
+					      GError             **error)
+{
+	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (imsettings);
+	GPtrArray *array, *retval = g_ptr_array_new();
+	gint i;
+
+	array = imsettings_monitor_foreach(priv->monitor, locale);
+	for (i = 0; i < array->len; i++) {
+		IMSettingsInfo *info;
+		gchar *name;
+
+		info = IMSETTINGS_INFO (g_ptr_array_index(array, i));
+		name = g_strdup(imsettings_info_get_short_desc(info));
+		g_ptr_array_add(retval, name);
+	}
+	imsettings_monitor_array_free(array);
+	if (retval->len == 0) {
+		g_set_error(error, IMSETTINGS_MONITOR_ERROR,
+			    IMSETTINGS_MONITOR_ERROR_NOT_AVAILABLE,
+			    _("No input methods available on your system."));
+	}
+	g_ptr_array_add(retval, NULL);
+
+	return retval;
+}
+
+static gchar *
+imsettings_manager_real_get_current_user_im(IMSettingsObserver  *imsettings,
+					    GError             **error)
+{
+	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (imsettings);
+
+	return imsettings_monitor_get_current_user_im(priv->monitor, error);
+}
+
+static gchar *
+imsettings_manager_real_get_current_system_im(IMSettingsObserver  *imsettings,
+					      GError             **error)
+{
+	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (imsettings);
+
+	return imsettings_monitor_get_current_system_im(priv->monitor, error);
 }
 
 static gboolean
@@ -483,16 +587,11 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 	const gchar *xim_prog = NULL, *xim_args = NULL;
 	gchar *pidfile = NULL;
 	gboolean retval = FALSE;
-	IMSettingsRequest *req;
 	IMSettingsInfo *info = NULL;
-	DBusConnection *conn;
 
 	g_print("Starting %s...\n", module);
 
-	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
-	imsettings_request_set_locale(req, lang);
-	info = imsettings_request_get_info_object(req, module, error);
+	info = imsettings_manager_real_get_info_object(imsettings, lang, module, error);
 	if (*error) {
 		gchar *p = g_strdup((*error)->message);
 
@@ -559,10 +658,8 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 
 	retval = TRUE;
   end:
-	g_object_unref(req);
 	if (info)
 		g_object_unref(info);
-	dbus_connection_unref(conn);
 	g_free(pidfile);
 
 	return retval;
@@ -576,7 +673,6 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 				GError             **error)
 {
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (imsettings);
-	IMSettingsRequest *req;
 	IMSettingsInfo *info = NULL;
 	const gchar *homedir;
 	const gchar *xinputfile = NULL;
@@ -584,13 +680,10 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 	gchar *pidfile = NULL;
 	gboolean retval = FALSE;
 	GString *strerr = g_string_new(NULL);
-	DBusConnection *conn;
 
 	g_print("Stopping %s...\n", module);
 
-	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
-	info = imsettings_request_get_info_object(req, "none", error);
+	info = imsettings_manager_real_get_info_object(imsettings, NULL, "none", error);
 	if (*error)
 		goto end;
 
@@ -608,7 +701,7 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 
 	g_object_unref(info);
 
-	info = imsettings_request_get_info_object(req, module, error);
+	info = imsettings_manager_real_get_info_object(imsettings, NULL, module, error);
 	if (*error)
 		goto end;
 
@@ -673,33 +766,27 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
   end:
 	g_free(pidfile);
 	g_string_free(strerr, TRUE);
-	g_object_unref(req);
 	if (info)
 		g_object_unref(info);
-	dbus_connection_unref(conn);
 
 	return retval;
 }
 
-const gchar *
-imsettings_manager_real_what_im_is_running(IMSettingsObserver  *observer,
-					   GError             **error)
+gchar *
+imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
+					 GError             **error)
 {
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (observer);
-	IMSettingsRequest *req;
 	IMSettingsInfo *info = NULL;
-	DBusConnection *conn;
 	gchar *module, *pidfile = NULL;
 	const gchar *xinputfile;
 	pid_t pid;
 
-	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
-	module = imsettings_request_get_current_user_im(req, error);
+	module = imsettings_manager_real_get_current_user_im(observer, error);
 	if (*error != NULL)
 		goto end;
 	if (module) {
-		info = imsettings_request_get_info_object(req, module, error);
+		info = imsettings_manager_real_get_info_object(observer, NULL, module, error);
 		if (*error) {
 			gchar *p = g_strdup((*error)->message);
 
@@ -740,19 +827,19 @@ imsettings_manager_real_what_im_is_running(IMSettingsObserver  *observer,
 	}
   end:
 	g_free(pidfile);
-	g_object_unref(req);
 	if (info)
 		g_object_unref(info);
-	dbus_connection_unref(conn);
 
 	return module;
 }
 
-static guint
-imsettings_manager_real_get_version(IMSettingsObserver  *observer,
-				    GError             **error)
+static void
+imsettings_manager_real_info_objects_free(IMSettingsObserver *observer,
+					  GPtrArray          *array)
 {
-	return IMSETTINGS_SETTINGS_DAEMON_VERSION;
+	g_return_if_fail (array != NULL);
+
+	imsettings_monitor_array_free(array);
 }
 
 static void
@@ -767,16 +854,42 @@ imsettings_manager_class_init(IMSettingsManagerClass *klass)
 	object_class->get_property = imsettings_manager_real_get_property;
 	object_class->finalize     = imsettings_manager_real_finalize;
 
-	observer_class->start_im           = imsettings_manager_real_start_im;
-	observer_class->stop_im            = imsettings_manager_real_stop_im;
-	observer_class->what_im_is_running = imsettings_manager_real_what_im_is_running;
-	observer_class->get_version        = imsettings_manager_real_get_version;
+	observer_class->get_version           = imsettings_manager_real_get_version;
+	observer_class->get_info_objects      = imsettings_manager_real_get_info_objects;
+	observer_class->get_info_object       = imsettings_manager_real_get_info_object;
+	observer_class->get_input_method_list = imsettings_manager_real_get_input_method_list;
+	observer_class->get_current_user_im   = imsettings_manager_real_get_current_user_im;
+	observer_class->get_current_system_im = imsettings_manager_real_get_current_system_im;
+
+	observer_class->start_im              = imsettings_manager_real_start_im;
+	observer_class->stop_im               = imsettings_manager_real_stop_im;
+	observer_class->whats_im_running      = imsettings_manager_real_whats_im_running;
+
+	observer_class->info_objects_free     = imsettings_manager_real_info_objects_free;
 
 	/* properties */
 	g_object_class_install_property(object_class, PROP_DISPLAY_NAME,
 					g_param_spec_string("display_name",
 							    _("X display name"),
 							    _("X display name to use"),
+							    NULL,
+							    G_PARAM_READWRITE));
+	g_object_class_install_property(object_class, PROP_XINPUTRCDIR,
+					g_param_spec_string("xinputrcdir",
+							    _("xinputrc directory"),
+							    _("A directory where puts the system wide xinputrc on."),
+							    NULL,
+							    G_PARAM_READWRITE));
+	g_object_class_install_property(object_class, PROP_XINPUTDIR,
+					g_param_spec_string("xinputdir",
+							    _("xinput directory"),
+							    _("A directory where puts the IM configurations on."),
+							    NULL,
+							    G_PARAM_READWRITE));
+	g_object_class_install_property(object_class, PROP_HOMEDIR,
+					g_param_spec_string("homedir",
+							    _("home directory"),
+							    _("home directory"),
 							    NULL,
 							    G_PARAM_READWRITE));
 }
@@ -791,18 +904,54 @@ imsettings_manager_init(IMSettingsManager *manager)
 	priv->gtk_req = imsettings_request_new(priv->req_conn, IMSETTINGS_GCONF_INTERFACE_DBUS);
 	priv->xim_req = imsettings_request_new(priv->req_conn, IMSETTINGS_XIM_INTERFACE_DBUS);
 //	priv->qt_req = imsettings_request_new(priv->req_conn, IMSETTINGS_QT_INTERFACE_DBUS);
+	priv->monitor = imsettings_monitor_new(NULL, NULL, NULL);
 }
 
 static IMSettingsManager *
 imsettings_manager_new(DBusGConnection *connection,
+		       const gchar     *xinputrcdir,
+		       const gchar     *xinputdir,
+		       const gchar     *homedir,
 		       gboolean         replace)
 {
+	IMSettingsManager *retval;
+
 	g_return_val_if_fail (connection != NULL, NULL);
 
-	return IMSETTINGS_MANAGER (g_object_new(IMSETTINGS_TYPE_MANAGER,
-						"replace", replace,
-						"connection", connection,
-						NULL));
+	retval = IMSETTINGS_MANAGER (g_object_new(IMSETTINGS_TYPE_MANAGER,
+						  "replace", replace,
+						  "connection", connection,
+						  NULL));
+	if (xinputrcdir)
+		g_object_set(G_OBJECT (retval),
+			     "xinputrcdir", xinputrcdir,
+			     NULL);
+	if (xinputdir)
+		g_object_set(G_OBJECT (retval),
+			     "xinputdir", xinputdir,
+			     NULL);
+	if (homedir)
+		g_object_set(G_OBJECT (retval),
+			     "homedir", homedir,
+			     NULL);
+
+	return retval;
+}
+
+static void
+imsettings_manager_start_monitor(IMSettingsManager *manager)
+{
+	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (manager);
+
+	imsettings_monitor_start(priv->monitor);
+}
+
+static void
+imsettings_manager_stop_monitor(IMSettingsManager *manager)
+{
+	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (manager);
+
+	imsettings_monitor_stop(priv->monitor);
 }
 
 /*
@@ -817,6 +966,7 @@ main(int    argc,
 	IMSettingsManager *manager;
 	gboolean arg_replace = FALSE;
 	gchar *arg_display_name = NULL, *display_name = NULL;
+	gchar *arg_xinputrcdir = NULL, *arg_xinputdir = NULL, *arg_homedir = NULL;
 	GOptionContext *ctx = g_option_context_new(NULL);
 	GOptionEntry entries[] = {
 		{"replace", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_replace, N_("Replace the running settings daemon with new instance."), NULL},
@@ -825,6 +975,9 @@ main(int    argc,
 		/* FIXME */
 		{"screen", 0, 0, G_OPTION_ARG_INT, &arg_screen, N_("X screen to use"), N_("SCREEN")},
 #endif
+		{"xinputrcdir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_xinputrcdir, N_("A directory where puts the system-wide xinputrc puts on (debugging only)"), N_("DIR")},
+		{"xinputdir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_xinputdir, N_("A directory where puts the IM configurations puts on (debugging only)"), N_("DIR")},
+		{"homedir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_homedir, N_("A home directory (debugging only)"), N_("DIR")},
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};
 	DBusGConnection *gconn;
@@ -863,11 +1016,17 @@ main(int    argc,
 	XCloseDisplay(display);
 
 	gconn = dbus_g_bus_get(DBUS_BUS_SESSION, NULL);
-	manager = imsettings_manager_new(gconn, arg_replace);
+	manager = imsettings_manager_new(gconn,
+					 arg_xinputrcdir,
+					 arg_xinputdir,
+					 arg_homedir,
+					 arg_replace);
 	if (manager == NULL) {
 		g_print("Failed to create an instance for the settings daemon.\n");
 		exit(1);
 	}
+	imsettings_manager_stop_monitor(manager);
+	imsettings_manager_start_monitor(manager);
 	g_object_set(G_OBJECT (manager), "display_name", display_name, NULL);
 
 	g_signal_connect(manager, "disconnected",

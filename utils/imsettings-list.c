@@ -33,13 +33,13 @@ int
 main(int    argc,
      char **argv)
 {
-	IMSettingsRequest *imsettings_info, *imsettings;
+	IMSettingsRequest *req;
 	DBusConnection *connection;
 	gchar **list, *locale;
 	gchar *user_im, *system_im, *running_im;
 	gint i;
 	GError *error = NULL;
-	guint n_retry = 0, n_info_retry = 0;
+	guint n_retry = 0;
 
 	setlocale(LC_ALL, "");
 	locale = setlocale(LC_CTYPE, NULL);
@@ -51,45 +51,30 @@ main(int    argc,
 		g_printerr("Failed to get a session bus.\n");
 		return 1;
 	}
-	imsettings = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
-	imsettings_info = imsettings_request_new(connection, IMSETTINGS_INFO_INTERFACE_DBUS);
-	imsettings_request_set_locale(imsettings_info, locale);
+	req = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
+	imsettings_request_set_locale(req, locale);
 
   retry:
-	if (imsettings_request_get_version(imsettings, NULL) != IMSETTINGS_SETTINGS_DAEMON_VERSION) {
+	if (imsettings_request_get_version(req, NULL) != IMSETTINGS_SETTINGS_API_VERSION) {
 		if (n_retry > 0) {
-			g_printerr("Mismatch the version of im-settings-daemon.");
+			g_printerr("Mismatch the version of imsettings.");
 			exit(1);
 		}
 		/* version is inconsistent. try to reload the process */
-		imsettings_request_reload(imsettings, TRUE);
+		imsettings_request_reload(req, TRUE);
 		g_print("Waiting for reloading the process...\n");
 		/* XXX */
 		sleep(1);
 		n_retry++;
 		goto retry;
 	}
-  info_retry:
-	if (imsettings_request_get_version(imsettings_info, NULL) != IMSETTINGS_IMINFO_DAEMON_VERSION) {
-		if (n_info_retry > 0) {
-			g_printerr("Mismatch the version of im-info-daemon.");
-			exit(1);
-		}
-		/* version is inconsistent. try to reload the process */
-		imsettings_request_reload(imsettings_info, TRUE);
-		g_print("Waiting for reloading the process...\n");
-		/* XXX */
-		sleep(1);
-		n_info_retry++;
-		goto info_retry;
-	}
 
-	if ((list = imsettings_request_get_im_list(imsettings_info, &error)) == NULL) {
-		g_printerr("Failed to get an IM list.\n");
+	if ((list = imsettings_request_get_input_method_list(req, &error)) == NULL) {
+		g_printerr("Failed to obtain an Input Method list.\n");
 	} else {
-		user_im = imsettings_request_get_current_user_im(imsettings_info, &error);
-		system_im = imsettings_request_get_current_system_im(imsettings_info, &error);
-		running_im = imsettings_request_what_im_is_running(imsettings, &error);
+		user_im = imsettings_request_get_current_user_im(req, &error);
+		system_im = imsettings_request_get_current_system_im(req, &error);
+		running_im = imsettings_request_whats_input_method_running(req, &error);
 		if (error) {
 			g_printerr("%s\n", error->message);
 			exit(1);
@@ -103,8 +88,7 @@ main(int    argc,
 		}
 		g_strfreev(list);
 	}
-	g_object_unref(imsettings);
-	g_object_unref(imsettings_info);
+	g_object_unref(req);
 	dbus_connection_unref(connection);
 
 	return 0;

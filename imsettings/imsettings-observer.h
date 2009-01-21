@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * imsettings-observer.h
- * Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -48,88 +48,108 @@ struct _IMSettingsObserverClass {
 	GObjectClass parent_class;
 
 	/* dbus handlers */
-	void              (* unregistered_handler) (DBusConnection      *connection,
-						    void                *data);
-	DBusHandlerResult (* message_handler)      (DBusConnection      *connection,
-						    DBusMessage         *message,
-						    void                *data);
-	DBusHandlerResult (* message_filter)       (DBusConnection      *connection,
-						    DBusMessage         *message,
-						    void                *data);
+	void              (* unregistered_handler)  (DBusConnection      *connection,
+						     void                *data);
+	DBusHandlerResult (* message_handler)       (DBusConnection      *connection,
+						     DBusMessage         *message,
+						     void                *data);
+	DBusHandlerResult (* message_filter)        (DBusConnection      *connection,
+						     DBusMessage         *message,
+						     void                *data);
 
-	void              (* dh_reserved1)         (void);
-	void              (* dh_reserved2)         (void);
-	void              (* dh_reserved3)         (void);
-	void              (* dh_reserved4)         (void);
-	void              (* dh_reserved5)         (void);
+	void              (* dh_reserved1)          (void);
+	void              (* dh_reserved2)          (void);
+	void              (* dh_reserved3)          (void);
+	void              (* dh_reserved4)          (void);
+	void              (* dh_reserved5)          (void);
 
 	/* dbus signals */
-	void              (* disconnected)         (IMSettingsObserver  *imsettings);
+	void              (* disconnected)          (IMSettingsObserver  *imsettings);
 
-	void              (* ds_reserved1)         (void);
-	void              (* ds_reserved2)         (void);
-	void              (* ds_reserved3)         (void);
-	void              (* ds_reserved4)         (void);
-	void              (* ds_reserved5)         (void);
-	void              (* ds_reserved6)         (void);
-	void              (* ds_reserved7)         (void);
+	void              (* ds_reserved1)          (void);
+	void              (* ds_reserved2)          (void);
+	void              (* ds_reserved3)          (void);
+	void              (* ds_reserved4)          (void);
+	void              (* ds_reserved5)          (void);
+	void              (* ds_reserved6)          (void);
+	void              (* ds_reserved7)          (void);
 
 	/* dbus methods */
-	gboolean          (* reload)               (IMSettingsObserver  *imsettings,
-						    gboolean             force,
-						    GError             **error);
-	GPtrArray       * (* get_list)             (IMSettingsObserver  *imsettings,
-						    const gchar         *lang,
-						    GError             **error);
-	const gchar     * (* get_current_user_im)  (IMSettingsObserver  *imsettings,
-						    GError             **error);
-	const gchar     * (* get_current_system_im)(IMSettingsObserver  *imsettings,
-						    GError             **error);
-	GPtrArray       * (* get_info_objects)     (IMSettingsObserver  *imsettings,
-						    const gchar         *locale,
-						    GError             **error);
-	IMSettingsInfo  * (* get_info)             (IMSettingsObserver  *imsettings,
-						    const gchar         *locale,
-						    const gchar         *module,
-						    GError             **error);
-	gboolean          (* start_im)             (IMSettingsObserver  *imsettings,
-						    const gchar         *lang,
-						    const gchar         *module,
-						    gboolean             update_xinputrc,
-						    GError             **error);
-	gboolean          (* stop_im)              (IMSettingsObserver  *imsettings,
-						    const gchar         *module,
-						    gboolean             update_xinputrc,
-						    gboolean             force,
-						    GError             **error);
-	const gchar     * (* what_im_is_running)   (IMSettingsObserver  *imsettings,
-						    GError             **error);
-	guint             (* get_version)          (IMSettingsObserver  *imsettings,
-						    GError             **error);
+	guint             (* get_version)           (IMSettingsObserver  *imsettings,
+						     GError             **error);
+	GPtrArray       * (* get_info_objects)      (IMSettingsObserver  *imsettings,
+						     const gchar         *locale,
+						     GError             **error);
+	IMSettingsInfo  * (* get_info_object)       (IMSettingsObserver  *imsettings,
+						     const gchar         *locale,
+						     const gchar         *module,
+						     GError             **error);
+	GPtrArray       * (* get_input_method_list) (IMSettingsObserver  *imsettings,
+						     const gchar         *lang,
+						     GError             **error);
+	gchar           * (* get_current_user_im)   (IMSettingsObserver  *imsettings,
+						     GError             **error);
+	gchar           * (* get_current_system_im) (IMSettingsObserver  *imsettings,
+						     GError             **error);
 
-	void              (* dm_reserved1)         (void);
-	void              (* dm_reserved2)         (void);
-	void              (* dm_reserved3)         (void);
-	void              (* dm_reserved4)         (void);
-	void              (* dm_reserved5)         (void);
-	void              (* dm_reserved6)         (void);
+	void              (* dm_info_reserved1)     (void);
+	void              (* dm_info_reserved2)     (void);
+	void              (* dm_info_reserved3)     (void);
+	void              (* dm_info_reserved4)     (void);
+	void              (* dm_info_reserved5)     (void);
+	void              (* dm_info_reserved6)     (void);
+	void              (* dm_info_reserved7)     (void);
+	void              (* dm_info_reserved8)     (void);
+	void              (* dm_info_reserved9)     (void);
+	void              (* dm_info_reserved10)    (void);
+
+	gboolean          (* start_im)              (IMSettingsObserver  *imsettings,
+						     const gchar         *lang,
+						     const gchar         *module,
+						     gboolean             update_xinputrc,
+						     GError             **error);
+	gboolean          (* stop_im)               (IMSettingsObserver  *imsettings,
+						     const gchar         *module,
+						     gboolean             update_xinputrc,
+						     gboolean             force,
+						     GError             **error);
+	gchar           * (* whats_im_running)      (IMSettingsObserver  *imsettings,
+						     GError             **error);
+
+	void              (* dm_op_reserved1)       (void);
+	void              (* dm_op_reserved2)       (void);
+	void              (* dm_op_reserved3)       (void);
+	void              (* dm_op_reserved4)       (void);
+	void              (* dm_op_reserved5)       (void);
 
 	/* signals */
-	void              (* s_start_im)           (IMSettingsObserver  *imsettings,
-						    const gchar         *module,
-						    gboolean             update_xinputrc);
-	void              (* s_stop_im)            (IMSettingsObserver  *imsettings,
-						    const gchar         *module,
-						    gboolean             update_xinputrc,
-						    gboolean             force);
+	gboolean          (* reload)                (IMSettingsObserver  *imsettings,
+						     gboolean             force,
+						     GError             **error);
+	void              (* s_start_im)            (IMSettingsObserver  *imsettings,
+						     const gchar         *module,
+						     gboolean             update_xinputrc);
+	void              (* s_stop_im)             (IMSettingsObserver  *imsettings,
+						     const gchar         *module,
+						     gboolean             update_xinputrc,
+						     gboolean             force);
 
-	void              (* s_reserved1)          (void);
-	void              (* s_reserved2)          (void);
+	void              (* s_reserved1)           (void);
+	void              (* s_reserved2)           (void);
+	void              (* s_reserved3)           (void);
+	void              (* s_reserved4)           (void);
+	void              (* s_reserved5)           (void);
 
-	void              (* reserved1)            (void);
-	void              (* reserved2)            (void);
-	void              (* reserved3)            (void);
-	void              (* reserved4)            (void);
+	/* for internal */
+	void              (* info_objects_free)     (IMSettingsObserver  *imsettings,
+						     GPtrArray           *array);
+	void              (* i_reserved1)           (void);
+	void              (* i_reserved2)           (void);
+	void              (* i_reserved3)           (void);
+	void              (* i_reserved4)           (void);
+	void              (* i_reserved5)           (void);
+	void              (* i_reserved6)           (void);
+	void              (* i_reserved7)           (void);
 };
 
 struct _IMSettingsObserver {

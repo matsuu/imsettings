@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * imsettings-request.c
- * Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -63,10 +63,6 @@ TDEF (imsettings_request_new)
 	TNUL (o);
 	g_object_unref(o);
 
-	o = imsettings_request_new(dbus_conn, IMSETTINGS_INFO_INTERFACE_DBUS);
-	TNUL (o);
-	g_object_unref(o);
-
 	o = imsettings_request_new(dbus_conn, IMSETTINGS_GCONF_INTERFACE_DBUS);
 	TNUL (o);
 	g_object_unref(o);
@@ -84,15 +80,15 @@ TDEF (imsettings_request_set_locale)
 {
 } TEND
 
-TDEF (imsettings_request_get_im_list)
+TDEF (imsettings_request_get_input_method_list)
 {
 	gchar **listv = NULL;
 	GError *error = NULL;
 
 	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "general");
 
-	o = imsettings_request_new(dbus_conn, IMSETTINGS_INFO_INTERFACE_DBUS);
-	listv = imsettings_request_get_im_list(o, &error);
+	o = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
+	listv = imsettings_request_get_input_method_list(o, &error);
 	if (error)
 		fail("%s", error->message);
 	fail_unless(listv != NULL, "Unable to get the IM list");
@@ -104,7 +100,7 @@ TDEF (imsettings_request_get_im_list)
 
 	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "noent");
 
-	listv = imsettings_request_get_im_list(o, &error);
+	listv = imsettings_request_get_input_method_list(o, &error);
 	/* XXX: Is there any better way of checking the error without comparing the message? */
 	fail_unless(error != NULL, "Exception has to appear");
 	fail_unless(strcmp(error->message,
@@ -116,10 +112,12 @@ TDEF (imsettings_request_get_im_list)
 	g_strfreev(listv);
 	g_object_unref(o);
 
+#if 0
+	/* no more valid test since both daemons are integrated */
 	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "general");
 
 	o = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
-	listv = imsettings_request_get_im_list(o, &error);
+	listv = imsettings_request_get_input_method_list(o, &error);
 	if (error) {
 		size_t len = strlen(error->message);
 		const gchar *er = "doesn't exist\n";
@@ -133,11 +131,12 @@ TDEF (imsettings_request_get_im_list)
 	}
 	g_strfreev(listv);
 	g_object_unref(o);
+#endif
 
 	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "fake");
 
-	o = imsettings_request_new(dbus_conn, IMSETTINGS_INFO_INTERFACE_DBUS);
-	listv = imsettings_request_get_im_list(o, &error);
+	o = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
+	listv = imsettings_request_get_input_method_list(o, &error);
 	/* XXX: Is there any better way of checking the error without comparing the message? */
 	fail_unless(error != NULL, "Exception has to appear");
 	fail_unless(strcmp(error->message,
@@ -157,7 +156,7 @@ TDEF (imsettings_request_get_current_user_im)
 
 	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "currentim");
 
-	o = imsettings_request_new(dbus_conn, IMSETTINGS_INFO_INTERFACE_DBUS);
+	o = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
 	im = imsettings_request_get_current_user_im(o, &error);
 	if (error)
 		fail("%s", error->message);
@@ -176,6 +175,8 @@ TDEF (imsettings_request_get_current_user_im)
 
 	g_object_unref(o);
 
+#if 0
+	/* no more valid test since both daemons are integrated */
 	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "general");
 
 	o = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
@@ -191,10 +192,11 @@ TDEF (imsettings_request_get_current_user_im)
 		fail("Unexpected result. a method shouldn't be available");
 	}
 	g_object_unref(o);
+#endif
 
 	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "fake");
 
-	o = imsettings_request_new(dbus_conn, IMSETTINGS_INFO_INTERFACE_DBUS);
+	o = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
 	im = imsettings_request_get_current_user_im(o, &error);
 	if (error)
 		fail("%s", error->message);
@@ -210,7 +212,7 @@ TDEF (imsettings_request_get_current_system_im)
 
 	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "currentim");
 
-	o = imsettings_request_new(dbus_conn, IMSETTINGS_INFO_INTERFACE_DBUS);
+	o = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
 	im = imsettings_request_get_current_system_im(o, &error);
 	if (error)
 		fail("%s", error->message);
@@ -229,6 +231,8 @@ TDEF (imsettings_request_get_current_system_im)
 
 	g_object_unref(o);
 
+#if 0
+	/* no more valid test since both daemons are integrated */
 	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "general");
 
 	o = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
@@ -244,10 +248,11 @@ TDEF (imsettings_request_get_current_system_im)
 		fail("Unexpected result. a method shouldn't be available");
 	}
 	g_object_unref(o);
+#endif
 
 	imsettings_test_restart_daemons("imsettings-request" G_DIR_SEPARATOR_S "fake");
 
-	o = imsettings_request_new(dbus_conn, IMSETTINGS_INFO_INTERFACE_DBUS);
+	o = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
 	im = imsettings_request_get_current_system_im(o, &error);
 	if (error)
 		fail("%s", error->message);
@@ -304,7 +309,7 @@ imsettings_suite(void)
 
 	T (imsettings_request_new);
 	T (imsettings_request_set_locale);
-	T (imsettings_request_get_im_list);
+	T (imsettings_request_get_input_method_list);
 	T (imsettings_request_get_current_user_im);
 	T (imsettings_request_get_current_system_im);
 	T (imsettings_request_get_info_objects);

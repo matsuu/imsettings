@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * imsettings-request.h
- * Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -56,59 +56,59 @@ struct _IMSettingsRequest {
 };
 
 
-GType              imsettings_request_get_type               (void) G_GNUC_CONST;
-IMSettingsRequest *imsettings_request_new                    (DBusConnection     *connection,
-                                                              const gchar        *interface);
-void               imsettings_request_set_locale             (IMSettingsRequest  *imsettings,
-                                                              const gchar        *locale);
-gchar            **imsettings_request_get_im_list            (IMSettingsRequest  *imsettings,
-                                                              GError            **error);
-gchar             *imsettings_request_get_current_user_im    (IMSettingsRequest  *imsettings,
-                                                              GError            **error);
-gchar             *imsettings_request_get_current_system_im  (IMSettingsRequest  *imsettings,
-                                                              GError            **error);
-GPtrArray         *imsettings_request_get_info_objects       (IMSettingsRequest  *imsettings,
-                                                              GError            **error);
-IMSettingsInfo    *imsettings_request_get_info_object        (IMSettingsRequest  *imsettings,
-							      const gchar        *module,
-							      GError            **error);
-gboolean           imsettings_request_start_im               (IMSettingsRequest  *imsettings,
-                                                              const gchar        *module,
-                                                              gboolean            update_xinputrc,
-                                                              GError            **error);
-gboolean           imsettings_request_stop_im                (IMSettingsRequest  *imsettings,
-                                                              const gchar        *module,
-                                                              gboolean            update_xinputrc,
-                                                              gboolean            force,
-                                                              GError            **error);
-gchar             *imsettings_request_what_im_is_running     (IMSettingsRequest  *imsettings,
-                                                              GError            **error);
-gboolean           imsettings_request_reload                 (IMSettingsRequest  *imsettings,
-                                                              gboolean            force);
-gboolean           imsettings_request_change_to              (IMSettingsRequest  *imsettings,
-                                                              const gchar        *module,
-                                                              GError            **error);
-gboolean           imsettings_request_change_to_with_signal  (IMSettingsRequest  *imsettings,
-                                                              const gchar        *module);
-guint              imsettings_request_get_version            (IMSettingsRequest  *imsettings,
-							      GError            **error);
-gboolean           imsettings_request_send_signal_changed    (IMSettingsRequest  *imsettings,
-							      const gchar        *module);
+GType              imsettings_request_get_type                  (void) G_GNUC_CONST;
+IMSettingsRequest *imsettings_request_new                       (DBusConnection    *connection,
+                                                                 const gchar       *interface);
+void               imsettings_request_set_locale                (IMSettingsRequest *imsettings,
+                                                                 const gchar       *locale);
+guint              imsettings_request_get_version               (IMSettingsRequest *imsettings,
+                                                                 GError            **error);
+GPtrArray         *imsettings_request_get_info_objects          (IMSettingsRequest *imsettings,
+                                                                 GError            **error);
+IMSettingsInfo    *imsettings_request_get_info_object           (IMSettingsRequest *imsettings,
+                                                                 const gchar       *module,
+                                                                 GError            **error);
+gchar            **imsettings_request_get_input_method_list     (IMSettingsRequest *imsettings,
+                                                                 GError            **error);
+gchar             *imsettings_request_get_current_user_im       (IMSettingsRequest *imsettings,
+                                                                 GError            **error);
+gchar             *imsettings_request_get_current_system_im     (IMSettingsRequest *imsettings,
+                                                                 GError            **error);
+gboolean           imsettings_request_start_im                  (IMSettingsRequest *imsettings,
+                                                                 const gchar       *module,
+                                                                 gboolean           update_xinputrc,
+                                                                 GError            **error);
+gboolean           imsettings_request_stop_im                   (IMSettingsRequest *imsettings,
+                                                                 const gchar       *module,
+                                                                 gboolean           update_xinputrc,
+                                                                 gboolean           force,
+                                                                 GError            **error);
+gchar             *imsettings_request_whats_input_method_running(IMSettingsRequest *imsettings,
+                                                                 GError            **error);
+gboolean           imsettings_request_reload                    (IMSettingsRequest *imsettings,
+                                                                 gboolean           force);
+gboolean           imsettings_request_change_to                 (IMSettingsRequest *imsettings,
+                                                                 const gchar       *module,
+                                                                 GError            **error);
+gboolean           imsettings_request_change_to_with_signal     (IMSettingsRequest *imsettings,
+                                                                 const gchar       *module);
+gboolean           imsettings_request_send_signal_changed       (IMSettingsRequest *imsettings,
+                                                                 const gchar       *module);
 
-gboolean imsettings_request_get_im_list_async(IMSettingsRequest                           *imsettings,
-                                              com_redhat_imsettings_IMInfo_get_list_reply  callback,
-                                              gpointer                                     user_data);
-gboolean imsettings_request_start_im_async   (IMSettingsRequest                           *imsettings,
-                                              const gchar                                 *module,
-                                              gboolean                                     update_xinputrc,
-                                              com_redhat_imsettings_start_im_reply         callback,
-                                              gpointer                                     user_data);
-gboolean imsettings_request_stop_im_async    (IMSettingsRequest                           *imsettings,
-                                              const gchar                                 *module,
-                                              gboolean                                     update_xinputrc,
-                                              gboolean                                     force,
-                                              com_redhat_imsettings_stop_im_reply          callback,
-                                              gpointer                                     user_data);
+gboolean imsettings_request_get_input_method_list_async(IMSettingsRequest                                 *imsettings,
+                                                        com_redhat_imsettings_get_input_method_list_reply  callback,
+                                                        gpointer                                           user_data);
+gboolean imsettings_request_start_im_async             (IMSettingsRequest                                 *imsettings,
+                                                        const gchar                                       *module,
+                                                        gboolean                                           update_xinputrc,
+                                                        com_redhat_imsettings_start_im_reply               callback,
+                                                        gpointer                                           user_data);
+gboolean imsettings_request_stop_im_async              (IMSettingsRequest                                 *imsettings,
+                                                        const gchar                                       *module,
+                                                        gboolean                                           update_xinputrc,
+                                                        gboolean                                           force,
+                                                        com_redhat_imsettings_stop_im_reply                callback,
+                                                        gpointer                                           user_data);
 
 
 G_END_DECLS
