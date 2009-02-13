@@ -1,3 +1,7 @@
+2009-02-13  Akira TAGOH  <tagoh@redhat.com>
+
+	* POTFILES.in: Add src/monitor.c and utils/imsettings-info.c
+
 2008-09-29  Akira TAGOH  <tagoh@redhat.com>
 
 	* pl.po: Update Polish translation from Piotr Drąg.

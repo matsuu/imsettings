@@ -3,7 +3,7 @@ applet/imsettings-applet.schemas.in
 applet/main.c
 applet/radiomenuitem.c
 backends/gconf/main.c
-backends/xfce/imsettings_plugin.c
+backends/xfce_mcs/imsettings_plugin.c
 backends/xim/loopback.c
 backends/xim/main.c
 backends/xim/proxy.c
@@ -12,6 +12,8 @@ imsettings/imsettings-observer.c
 imsettings/imsettings-request.c
 src/factory.c
 src/factory_info.c
+src/monitor.c
+utils/imsettings-info.c
 utils/imsettings-list.c
 utils/imsettings-reload.c
 utils/imsettings-restart.c

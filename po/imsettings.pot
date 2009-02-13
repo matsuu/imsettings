@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-14 11:28+0900\n"
+"POT-Creation-Date: 2009-02-12 16:43+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,29 +26,19 @@ msgstr ""
 
 #: ../applet/imsettings-applet.schemas.in.h:2
 msgid ""
-"If \"auto\" is set, imsettings-applet has a facility of XSETTINGS manager as "
-"needed. if you want to disable it explicitly, set \"disabled\"."
-msgstr ""
-
-#: ../applet/imsettings-applet.schemas.in.h:3
-msgid ""
 "If false, all of informations will not delivered through libnotify, except "
 "error and warning messages."
 msgstr ""
 
-#: ../applet/imsettings-applet.schemas.in.h:4
+#: ../applet/imsettings-applet.schemas.in.h:3
 msgid "If true, the icon will be displayed at the systray."
 msgstr ""
 
-#: ../applet/imsettings-applet.schemas.in.h:5
-msgid "Run a facility of XSETTINGS manager"
-msgstr ""
-
-#: ../applet/imsettings-applet.schemas.in.h:6
+#: ../applet/imsettings-applet.schemas.in.h:4
 msgid "Show the status icon"
 msgstr ""
 
-#: ../applet/imsettings-applet.schemas.in.h:7
+#: ../applet/imsettings-applet.schemas.in.h:5
 msgid ""
 "The keybinding which connect to Input Method or disconnect from Input "
 "Method. The format looks like \"&lt;Control&gt;a\" or \"&lt;Shift&gt;&lt;"
@@ -58,142 +48,134 @@ msgid ""
 "keybinding for this."
 msgstr ""
 
-#: ../applet/imsettings-applet.schemas.in.h:8
+#: ../applet/imsettings-applet.schemas.in.h:6
 msgid "Whether to notify informations with libnotify"
 msgstr ""
 
-#: ../applet/main.c:156 ../applet/main.c:189 ../applet/main.c:229
+#: ../applet/main.c:146 ../applet/main.c:179 ../applet/main.c:219
 msgid "No detailed information"
 msgstr ""
 
-#: ../applet/main.c:159
+#: ../applet/main.c:149
 msgid "Mismatch the version of im-settings-daemon"
 msgstr ""
 
-#: ../applet/main.c:186 ../applet/main.c:266
+#: ../applet/main.c:176 ../applet/main.c:256
 #, c-format
 msgid "Unable to start %s"
 msgstr ""
 
-#: ../applet/main.c:200
+#: ../applet/main.c:190
 msgid ""
 " and the default Input Method has been changed. if you need to change that "
 "to anything else, please use im-chooser."
 msgstr ""
 
-#: ../applet/main.c:206
+#: ../applet/main.c:196
 #, c-format
 msgid "Connected to %s.%s"
 msgstr ""
 
-#: ../applet/main.c:211 ../applet/main.c:246 ../applet/main.c:956
+#: ../applet/main.c:201 ../applet/main.c:236 ../applet/main.c:832
 msgid "Information"
 msgstr ""
 
-#: ../applet/main.c:226 ../applet/main.c:292
+#: ../applet/main.c:216 ../applet/main.c:282
 #, c-format
 msgid "Unable to stop %s"
 msgstr ""
 
-#: ../applet/main.c:243
+#: ../applet/main.c:233
 msgid "Disconnected from Input Method"
 msgstr ""
 
-#: ../applet/main.c:270 ../applet/main.c:296
+#: ../applet/main.c:260 ../applet/main.c:286
 msgid "maybe DBus related issue."
 msgstr ""
 
-#: ../applet/main.c:351 ../applet/main.c:441
+#: ../applet/main.c:341
 msgid "Unable to store a value to GConf"
 msgstr ""
 
-#: ../applet/main.c:390
-msgid "Unable to get a value from GConf"
-msgstr ""
-
-#: ../applet/main.c:529
+#: ../applet/main.c:427
 #, c-format
 msgid "The acceleration key %s may be invalid. disabled it temporarily."
 msgstr ""
 
-#: ../applet/main.c:531
+#: ../applet/main.c:429
 msgid "Unable to set up the acceleration key"
 msgstr ""
 
-#: ../applet/main.c:672
+#: ../applet/main.c:570
 msgid "Unable to store the acceleration key into GConf"
 msgstr ""
 
-#: ../applet/main.c:693
+#: ../applet/main.c:591
 msgid "Please press the acceleration key..."
 msgstr ""
 
-#: ../applet/main.c:737
+#: ../applet/main.c:632
 msgid "IMSettings Applet Preferences"
 msgstr ""
 
-#: ../applet/main.c:749
+#: ../applet/main.c:644
 msgid "_Show the status icon"
 msgstr ""
 
-#: ../applet/main.c:758
-msgid "_Run XSETTINGS manager as needed"
-msgstr ""
-
-#: ../applet/main.c:770
+#: ../applet/main.c:655
 msgid "<b>Trigger key:</b>"
 msgstr ""
 
-#: ../applet/main.c:782
+#: ../applet/main.c:667
 msgid "_Grab key"
 msgstr ""
 
-#: ../applet/main.c:796
+#: ../applet/main.c:681
 msgid ""
 "Please click Grab key button and press the key combinations you want to "
 "assign for the acceleration key. Press Backspace key to disable this feature."
 msgstr ""
 
-#: ../applet/main.c:871
+#: ../applet/main.c:747
 msgid "Disconnect"
 msgstr ""
 
-#: ../applet/main.c:930
+#: ../applet/main.c:806
 msgid "Click to connect to Input Method"
 msgstr ""
 
-#: ../applet/main.c:934
+#: ../applet/main.c:810
 msgid "Click to disconnect from Input Method"
 msgstr ""
 
-#: ../applet/main.c:957
+#: ../applet/main.c:833
 msgid ""
 "The default Input Method isn't yet configured. To get this working, you need "
 "to set up that on im-chooser or select one from the menu which appears by "
 "the right click first."
 msgstr ""
 
-#: ../applet/main.c:1031
+#: ../applet/main.c:907
 #, c-format
 msgid "Press %s or "
 msgstr ""
 
-#: ../applet/main.c:1034
+#: ../applet/main.c:910
 #, c-format
 msgid ""
 "%sLeft-click on the icon to connect to/disconnect from Input Method.\n"
 "Right-click to show up the Input Method menu."
 msgstr ""
 
-#: ../applet/main.c:1037
+#: ../applet/main.c:913
 msgid "Tips"
 msgstr ""
 
-#: ../applet/main.c:1043
+#: ../applet/main.c:919
 msgid "Do not show notifications again"
 msgstr ""
 
-#: ../applet/main.c:1087
+#: ../applet/main.c:963
 msgid "Unable to take an ownership for XIM server"
 msgstr ""
 
@@ -205,27 +187,27 @@ msgstr ""
 msgid "Child widget to appear next to the menu text"
 msgstr ""
 
-#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:848
-#: ../src/factory.c:819 ../src/factory_info.c:1311
+#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:698
+#: ../src/factory.c:972 ../src/factory_info.c:1311
 msgid "Replace the running settings daemon with new instance."
 msgstr ""
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:846 ../src/factory_info.c:1336
-#: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:66
-#: ../utils/imsettings-start.c:69 ../utils/imsettings-stop.c:65
+#: ../src/factory.c:1002 ../src/factory_info.c:1336
+#: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:72
+#: ../utils/imsettings-start.c:71 ../utils/imsettings-stop.c:71
 msgid "Unknown error in parsing the command lines."
 msgstr ""
 
-#: ../backends/xfce/imsettings_plugin.c:88
+#: ../backends/xfce_mcs/imsettings_plugin.c:88
 msgid "Button Label|Input Method"
 msgstr ""
 
-#: ../backends/xim/main.c:142 ../src/factory.c:820
+#: ../backends/xim/main.c:142 ../src/factory.c:973
 msgid "X display to use"
 msgstr ""
 
-#: ../backends/xim/main.c:142 ../src/factory.c:820
+#: ../backends/xim/main.c:142 ../src/factory.c:973
 msgid "DISPLAY"
 msgstr ""
 
@@ -245,19 +227,19 @@ msgstr ""
 msgid "XIM"
 msgstr ""
 
-#: ../backends/xim/proxy.c:2885
+#: ../backends/xim/proxy.c:2888
 msgid "A XIM server name"
 msgstr ""
 
-#: ../backends/xim/proxy.c:2886
+#: ../backends/xim/proxy.c:2889
 msgid "A XIM server name would connects to"
 msgstr ""
 
-#: ../backends/xim/proxy.c:2891
+#: ../backends/xim/proxy.c:2894
 msgid "Signals for Protocol class"
 msgstr ""
 
-#: ../backends/xim/proxy.c:2892
+#: ../backends/xim/proxy.c:2895
 msgid "A structure of signals for Protocol class"
 msgstr ""
 
@@ -397,29 +379,24 @@ msgstr ""
 msgid "Whether or not IM is an user default."
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:399
-#, c-format
-msgid "Invalid IM module type: %d"
-msgstr ""
-
-#: ../imsettings/imsettings-observer.c:841
+#: ../imsettings/imsettings-observer.c:691
 msgid "IM module name"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:842
+#: ../imsettings/imsettings-observer.c:692
 msgid "A target IM module name that to observe signals"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:847
+#: ../imsettings/imsettings-observer.c:697
 msgid "Replace"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:853
+#: ../imsettings/imsettings-observer.c:703
 #: ../imsettings/imsettings-request.c:175
 msgid "DBus connection"
 msgstr ""
 
-#: ../imsettings/imsettings-observer.c:854
+#: ../imsettings/imsettings-observer.c:704
 #: ../imsettings/imsettings-request.c:176
 msgid "An object to be a DBus connection"
 msgstr ""
@@ -440,108 +417,154 @@ msgstr ""
 msgid "Locale to get the imsettings information"
 msgstr ""
 
-#: ../imsettings/imsettings-request.c:240
-#: ../imsettings/imsettings-request.c:277
-#: ../imsettings/imsettings-request.c:299
-#: ../imsettings/imsettings-request.c:329
-#: ../imsettings/imsettings-request.c:383
-#: ../imsettings/imsettings-request.c:435
-#, c-format
-msgid ""
-"Failed to invoke a method `%s':\n"
-"  %s"
-msgstr ""
-
-#: ../imsettings/imsettings-request.c:483
-#: ../imsettings/imsettings-request.c:531
-#: ../imsettings/imsettings-request.c:591
-#: ../imsettings/imsettings-request.c:642
+#: ../imsettings/imsettings-request.c:243
+#: ../imsettings/imsettings-request.c:270
+#: ../imsettings/imsettings-request.c:330
+#: ../imsettings/imsettings-request.c:624
 #, c-format
 msgid ""
 "Failed to invoke a method `%s' on %s:\n"
 "  %s"
 msgstr ""
 
-#: ../src/factory.c:138
+#: ../imsettings/imsettings-request.c:378
+#: ../imsettings/imsettings-request.c:418
+#: ../imsettings/imsettings-request.c:440
+#: ../imsettings/imsettings-request.c:470
+#: ../imsettings/imsettings-request.c:524
+#: ../imsettings/imsettings-request.c:576
+#, c-format
+msgid ""
+"Failed to invoke a method `%s':\n"
+"  %s"
+msgstr ""
+
+#: ../src/factory.c:144
 #, c-format
 msgid "Failed to remove a pidfile: %s"
 msgstr ""
 
-#: ../src/factory.c:180
+#: ../src/factory.c:186
 #, c-format
 msgid "Failed to open a pidfile: %s"
 msgstr ""
 
-#: ../src/factory.c:268
+#: ../src/factory.c:274
 #, c-format
 msgid "%s: No such file or directory"
 msgstr ""
 
-#: ../src/factory.c:278
+#: ../src/factory.c:284
 #, c-format
 msgid "Couldn't determine the pid for %s process."
 msgstr ""
 
-#: ../src/factory.c:308
+#: ../src/factory.c:314
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr ""
 
-#: ../src/factory.c:332 ../src/factory.c:644
+#: ../src/factory.c:338 ../src/factory.c:740
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr ""
 
-#: ../src/factory.c:349
+#: ../src/factory.c:355
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr ""
 
-#: ../src/factory.c:361
+#: ../src/factory.c:367
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr ""
 
-#: ../src/factory.c:370
+#: ../src/factory.c:376
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr ""
 
-#: ../src/factory.c:381
+#: ../src/factory.c:387
 #, c-format
 msgid "Failed to make a symlink: %s"
 msgstr ""
 
-#: ../src/factory.c:501 ../src/factory.c:705
+#: ../src/factory.c:513 ../src/factory.c:552 ../src/factory_info.c:947
+#: ../src/factory_info.c:982
+#, c-format
+msgid "No input methods available on your system."
+msgstr ""
+
+#: ../src/factory.c:600 ../src/factory.c:795
 #, c-format
 msgid ""
 "No such input method on your system: %s\n"
 "  Details: %s"
 msgstr ""
 
-#: ../src/factory.c:524
+#: ../src/factory.c:625
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr ""
 
-#: ../src/factory.c:775
+#: ../src/factory.c:873
 msgid "X display name"
 msgstr ""
 
-#: ../src/factory.c:776
+#: ../src/factory.c:874
 msgid "X display name to use"
 msgstr ""
 
+#: ../src/factory.c:879 ../src/factory_info.c:1227 ../src/monitor.c:237
+msgid "xinputrc directory"
+msgstr ""
+
+#: ../src/factory.c:880 ../src/factory_info.c:1228
+msgid "A directory where puts the system wide xinputrc on."
+msgstr ""
+
+#: ../src/factory.c:885 ../src/factory_info.c:1233 ../src/monitor.c:243
+msgid "xinput directory"
+msgstr ""
+
+#: ../src/factory.c:886 ../src/factory_info.c:1234
+msgid "A directory where puts the IM configurations on."
+msgstr ""
+
+#: ../src/factory.c:891 ../src/factory.c:892 ../src/factory_info.c:1239
+#: ../src/factory_info.c:1240 ../src/monitor.c:249 ../src/monitor.c:250
+msgid "home directory"
+msgstr ""
+
 #. FIXME
-#: ../src/factory.c:823
+#: ../src/factory.c:976
 msgid "X screen to use"
 msgstr ""
 
-#: ../src/factory.c:823
+#: ../src/factory.c:976
 msgid "SCREEN"
 msgstr ""
 
-#: ../src/factory.c:854
+#: ../src/factory.c:978 ../src/factory_info.c:1312
+msgid ""
+"A directory where puts the system-wide xinputrc puts on (debugging only)"
+msgstr ""
+
+#: ../src/factory.c:978 ../src/factory.c:979 ../src/factory.c:980
+#: ../src/factory_info.c:1312 ../src/factory_info.c:1313
+#: ../src/factory_info.c:1314
+msgid "DIR"
+msgstr ""
+
+#: ../src/factory.c:979 ../src/factory_info.c:1313
+msgid "A directory where puts the IM configurations puts on (debugging only)"
+msgstr ""
+
+#: ../src/factory.c:980 ../src/factory_info.c:1314
+msgid "A home directory (debugging only)"
+msgstr ""
+
+#: ../src/factory.c:1010
 #, c-format
 msgid "Failed to open a X display."
 msgstr ""
@@ -551,97 +574,126 @@ msgstr ""
 msgid "Reloading...\n"
 msgstr ""
 
-#: ../src/factory_info.c:285
+#: ../src/factory_info.c:285 ../src/monitor.c:830
 #, c-format
 msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
 msgstr ""
 
-#: ../src/factory_info.c:947 ../src/factory_info.c:982
-#, c-format
-msgid "No input methods available on your system."
-msgstr ""
-
-#: ../src/factory_info.c:1055
+#: ../src/factory_info.c:1055 ../src/monitor.c:1121
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr ""
 
-#: ../src/factory_info.c:1227
-msgid "xinputrc directory"
+#: ../src/monitor.c:238
+msgid "A place to store xinputrc file"
 msgstr ""
 
-#: ../src/factory_info.c:1228
-msgid "A directory where puts the system wide xinputrc on."
+#: ../src/monitor.c:244
+msgid "A place to store xinput configuration files"
 msgstr ""
 
-#: ../src/factory_info.c:1233
-msgid "xinput directory"
+#: ../src/monitor.c:1163
+#, c-format
+msgid "No system default input method."
 msgstr ""
 
-#: ../src/factory_info.c:1234
-msgid "A directory where puts the IM configurations on."
+#: ../utils/imsettings-info.c:56 ../utils/imsettings-restart.c:79
+#: ../utils/imsettings-start.c:78 ../utils/imsettings-stop.c:78
+#, c-format
+msgid "Failed to get a session bus.\n"
 msgstr ""
 
-#: ../src/factory_info.c:1239 ../src/factory_info.c:1240
-msgid "home directory"
+#: ../utils/imsettings-info.c:64 ../utils/imsettings-restart.c:94
+#: ../utils/imsettings-start.c:93 ../utils/imsettings-stop.c:93
+#, c-format
+msgid "Mismatch the version of imsettings.\n"
 msgstr ""
 
-#: ../src/factory_info.c:1312
+#: ../utils/imsettings-info.c:70 ../utils/imsettings-restart.c:100
+#: ../utils/imsettings-start.c:99 ../utils/imsettings-stop.c:99
+#, c-format
+msgid "Waiting for reloading the process...\n"
+msgstr ""
+
+#: ../utils/imsettings-info.c:89 ../utils/imsettings-restart.c:117
+#: ../utils/imsettings-stop.c:116
+#, c-format
 msgid ""
-"A directory where puts the system-wide xinputrc puts on (debugging only)"
+"No Input Method running. please specify Input Method name explicitly if "
+"necessary.\n"
 msgstr ""
 
-#: ../src/factory_info.c:1312 ../src/factory_info.c:1313
-#: ../src/factory_info.c:1314
-msgid "DIR"
-msgstr ""
-
-#: ../src/factory_info.c:1313
-msgid "A directory where puts the IM configurations puts on (debugging only)"
-msgstr ""
-
-#: ../src/factory_info.c:1314
-msgid "A home directory (debugging only)"
+#: ../utils/imsettings-info.c:98
+#, c-format
+msgid "Unable to obtain an Input Method Information."
 msgstr ""
 
 #: ../utils/imsettings-reload.c:42
 msgid "Force reloading the configuration, including restarting the process."
 msgstr ""
 
-#: ../utils/imsettings-restart.c:41 ../utils/imsettings-start.c:43
-#: ../utils/imsettings-stop.c:41
-msgid "<Input Method>"
+#: ../utils/imsettings-restart.c:42 ../utils/imsettings-stop.c:42
+msgid "[Input Method]"
 msgstr ""
 
-#: ../utils/imsettings-restart.c:43
+#: ../utils/imsettings-restart.c:44
 msgid "Force restarting the IM process regardless of any errors."
 msgstr ""
 
-#: ../utils/imsettings-restart.c:44 ../utils/imsettings-start.c:45
-#: ../utils/imsettings-stop.c:44
+#: ../utils/imsettings-restart.c:45 ../utils/imsettings-start.c:45
+#: ../utils/imsettings-stop.c:45
 msgid "Do not update .xinputrc."
 msgstr ""
 
-#: ../utils/imsettings-start.c:106
+#: ../utils/imsettings-restart.c:46 ../utils/imsettings-start.c:46
+#: ../utils/imsettings-stop.c:46
+msgid "Do not restart the daemons at first."
+msgstr ""
+
+#: ../utils/imsettings-restart.c:128 ../utils/imsettings-stop.c:128
+#, c-format
+msgid "Failed to stop IM process `%s'\n"
+msgstr ""
+
+#: ../utils/imsettings-restart.c:136
+#, c-format
+msgid "Forcibly restarted %s, but maybe not completely\n"
+msgstr ""
+
+#: ../utils/imsettings-restart.c:138
+#, c-format
+msgid "Restarted %s\n"
+msgstr ""
+
+#: ../utils/imsettings-restart.c:141
+#, c-format
+msgid "Failed to restart IM process `%s'\n"
+msgstr ""
+
+#: ../utils/imsettings-start.c:43
+msgid "[Input Method[.conf]]"
+msgstr ""
+
+#: ../utils/imsettings-start.c:116
+#, c-format
+msgid "No Input Method available\n"
+msgstr ""
+
+#: ../utils/imsettings-start.c:126
 #, c-format
 msgid "Started %s\n"
 msgstr ""
 
-#: ../utils/imsettings-start.c:108
+#: ../utils/imsettings-start.c:128
 #, c-format
 msgid "Failed to start IM process `%s'\n"
 msgstr ""
 
-#: ../utils/imsettings-stop.c:43
+#: ../utils/imsettings-stop.c:44
 msgid "Force stopping the IM process regardless of any errors."
 msgstr ""
 
-#: ../utils/imsettings-stop.c:101
+#: ../utils/imsettings-stop.c:126
 #, c-format
 msgid "Stopped %s\n"
-msgstr ""
-
-#: ../utils/imsettings-stop.c:103
-#, c-format
-msgid "Failed to stop IM process `%s'\n"
 msgstr ""
