@@ -793,6 +793,7 @@ imsettings_monitor_add_file(IMSettingsMonitor *monitor,
 {
 	IMSettingsInfo *info, *ret;
 	const gchar *name;
+	gchar *lowername = NULL;
 
 	info = imsettings_info_new(filename);
 	if (info != NULL) {
@@ -802,12 +803,14 @@ imsettings_monitor_add_file(IMSettingsMonitor *monitor,
 		if (strcmp(name, IMSETTINGS_NONE_CONF) == 0 &&
 		    imsettings_info_is_xim(info)) {
 			/* hack to register the info object separately */
-			name = g_strdup_printf("%s(xim)", name);
+			lowername = g_strdup_printf("%s(xim)", name);
+		} else {
+			lowername = g_ascii_strdown(name, -1);
 		}
-		if ((ret = g_hash_table_lookup(monitor->im_info_from_name, name)) == NULL) {
+		if ((ret = g_hash_table_lookup(monitor->im_info_from_name, lowername)) == NULL) {
 			d(g_print("Adding %s(%s)...\n", filename, name));
 			g_hash_table_insert(monitor->im_info_from_name,
-					    g_strdup(name),
+					    g_strdup(lowername),
 					    info);
 			g_hash_table_insert(monitor->im_info_from_filename,
 					    g_strdup(filename),
@@ -821,7 +824,7 @@ imsettings_monitor_add_file(IMSettingsMonitor *monitor,
 				 */
 				d(g_print("Adding %s(%s)...\n", filename, name));
 				g_hash_table_replace(monitor->im_info_from_name,
-						     g_strdup(name),
+						     g_strdup(lowername),
 						     info);
 				g_hash_table_replace(monitor->im_info_from_filename,
 						     g_strdup(filename),
@@ -833,6 +836,7 @@ imsettings_monitor_add_file(IMSettingsMonitor *monitor,
 				info = NULL;
 			}
 		}
+		g_free(lowername);
 	} else {
 		g_warning("Unable to get the file information for `%s'",
 			  filename);
@@ -847,22 +851,24 @@ imsettings_monitor_remove_file(IMSettingsMonitor *monitor,
 			       gboolean           is_xinputrc)
 {
 	IMSettingsInfo *info;
-	gchar *name = NULL;
+	gchar *name = NULL, *lowername = NULL;
 	gboolean retval = FALSE;
 
 	if ((info = g_hash_table_lookup(monitor->im_info_from_filename, filename))) {
 		name = g_strdup(imsettings_info_get_short_desc(info));
+		lowername = g_ascii_strdown(name, -1);
 		d(g_print("Removing %s(%s)...\n", filename, name));
 		g_hash_table_remove(monitor->im_info_from_filename, filename);
 		if (!is_xinputrc ||
 		    strcmp(name, IMSETTINGS_USER_SPECIFIC_SHORT_DESC) == 0) {
 			d(g_print("Removing %s...\n", name));
-			g_hash_table_remove(monitor->im_info_from_name, name);
+			g_hash_table_remove(monitor->im_info_from_name, lowername);
 		}
 		retval = TRUE;
 	}
 
 	g_free(name);
+	g_free(lowername);
 
 	return retval;
 }
@@ -965,6 +971,58 @@ _imsettings_monitor_collect_info_objects(gpointer key,
 			v->legacy_im = g_object_ref(info);
 		}
 	}
+}
+
+static IMSettingsInfo *
+_imsettings_monitor_lookup(GHashTable   *table,
+			   const gchar  *module,
+			   const gchar  *locale,
+			   gboolean      need_lower,
+			   GError      **error)
+{
+	IMSettingsInfo *info;
+	gchar *lowername = NULL;
+
+	g_return_val_if_fail (table != NULL, NULL);
+	g_return_val_if_fail (module != NULL, NULL);
+
+	if (need_lower)
+		lowername = g_ascii_strdown(module, -1);
+	else
+		lowername = g_strdup(module);
+	info = g_hash_table_lookup(table, lowername);
+	if (info == NULL) {
+		GHashTableIter iter;
+		gpointer key, val;
+		const gchar *name;
+
+		g_hash_table_iter_init(&iter, table);
+		while (g_hash_table_iter_next(&iter, &key, &val)) {
+			info = IMSETTINGS_INFO (val);
+
+			if (imsettings_info_is_xim(info)) {
+				/* need to update data with the lang */
+				g_object_set(G_OBJECT (info),
+					     "ignore", FALSE,
+					     "language", locale,
+					     NULL);
+				name = imsettings_info_get_short_desc(info);
+				if (strcmp(name, lowername) != 0) {
+					/* module may be a XIM server and running on the different locale */
+					g_set_error(error, IMSETTINGS_MONITOR_ERROR,
+						    IMSETTINGS_MONITOR_ERROR_NOT_AVAILABLE,
+						    _("No such input method on your system: %s"),
+						    module);
+					info = NULL;
+				}
+				break;
+			}
+			info = NULL;
+		}
+	}
+	g_free(lowername);
+
+	return info ? g_object_ref(info) : NULL;
 }
 
 /*
@@ -1087,43 +1145,28 @@ imsettings_monitor_array_free(GPtrArray *array)
 
 IMSettingsInfo *
 imsettings_monitor_lookup(IMSettingsMonitor  *monitor,
-			  const gchar        *locale,
 			  const gchar        *module,
+			  const gchar        *locale,
 			  GError            **error)
 {
 	IMSettingsInfo *info;
 
 	g_return_val_if_fail (IMSETTINGS_IS_MONITOR (monitor), NULL);
-	g_return_val_if_fail (locale != NULL, NULL);
 	g_return_val_if_fail (module != NULL, NULL);
 
-	info = g_hash_table_lookup(monitor->im_info_from_filename, module);
+	info = _imsettings_monitor_lookup(monitor->im_info_from_name, module, locale, TRUE, error);
 	if (info == NULL) {
-		GHashTableIter iter;
-		gpointer key, val;
-		const gchar *name;
+		GError *err = g_error_copy(*error);
+		gchar *filename = g_build_filename(XINPUT_PATH, module, NULL);
 
-		g_hash_table_iter_init(&iter, monitor->im_info_from_filename);
-		while (g_hash_table_iter_next(&iter, &key, &val)) {
-			info = IMSETTINGS_INFO (val);
-
-			if (imsettings_info_is_xim(info)) {
-				/* need to update data with the lang */
-				g_object_set(G_OBJECT (info),
-					     "ignore", FALSE,
-					     "language", locale,
-					     NULL);
-				name = imsettings_info_get_filename(info);
-				if (strcmp(name, module) != 0) {
-					/* module may be a XIM server and running on the different locale */
-					g_set_error(error, IMSETTINGS_MONITOR_ERROR,
-						    IMSETTINGS_MONITOR_ERROR_NOT_AVAILABLE,
-						    _("No such input method on your system: %s"),
-						    module);
-				}
-				break;
-			}
-			info = NULL;
+		g_clear_error(error);
+		/* try to pick one up from filename table */
+		info = _imsettings_monitor_lookup(monitor->im_info_from_filename, filename, locale, FALSE, error);
+		if (info == NULL) {
+			/* revert the original error instance to be sane */
+			g_error_free(*error);
+			*error = g_error_copy(err);
+			g_error_free(err);
 		}
 	}
 
@@ -1134,14 +1177,20 @@ gchar *
 imsettings_monitor_get_current_user_im(IMSettingsMonitor  *monitor,
 				       GError            **error)
 {
+	gchar *lowername = NULL;
+
 	g_return_val_if_fail (IMSETTINGS_IS_MONITOR (monitor), NULL);
 
-	if (monitor->current_user_im &&
+	lowername = g_ascii_strdown(monitor->current_user_im, -1);
+
+	if (lowername &&
 	    g_hash_table_lookup(monitor->im_info_from_name,
-				monitor->current_user_im) == NULL) {
+				lowername) == NULL) {
 		/* IM might be removed */
 		return imsettings_monitor_get_current_system_im(monitor, error);
 	}
+
+	g_free(lowername);
 
 	return (monitor->current_user_im ?
 		g_strdup(monitor->current_user_im) :
@@ -1152,11 +1201,14 @@ gchar *
 imsettings_monitor_get_current_system_im(IMSettingsMonitor  *monitor,
 					 GError            **error)
 {
+	gchar *lowername = NULL;
+
 	g_return_val_if_fail (IMSETTINGS_IS_MONITOR (monitor), NULL);
 
-	if (monitor->current_system_im &&
+	lowername = g_ascii_strdown(monitor->current_system_im, -1);
+	if (lowername &&
 	    g_hash_table_lookup(monitor->im_info_from_name,
-				monitor->current_system_im) == NULL) {
+				lowername) == NULL) {
 		/* IM might be removed */
 		g_set_error(error, IMSETTINGS_MONITOR_ERROR,
 			    IMSETTINGS_MONITOR_ERROR_NOT_AVAILABLE,
@@ -1164,6 +1216,8 @@ imsettings_monitor_get_current_system_im(IMSettingsMonitor  *monitor,
 
 		return NULL;
 	}
+
+	g_free(lowername);
 
 	return g_strdup(monitor->current_system_im);
 }

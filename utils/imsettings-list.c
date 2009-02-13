@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * imsettings-list.c
- * Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -35,11 +35,12 @@ main(int    argc,
 {
 	IMSettingsRequest *req;
 	DBusConnection *connection;
-	gchar **list, *locale;
+	gchar *locale;
 	gchar *user_im, *system_im, *running_im;
 	gint i;
 	GError *error = NULL;
 	guint n_retry = 0;
+	GPtrArray *array;
 
 	setlocale(LC_ALL, "");
 	locale = setlocale(LC_CTYPE, NULL);
@@ -69,7 +70,7 @@ main(int    argc,
 		goto retry;
 	}
 
-	if ((list = imsettings_request_get_input_method_list(req, &error)) == NULL) {
+	if ((array = imsettings_request_get_info_objects(req, &error)) == NULL) {
 		g_printerr("Failed to obtain an Input Method list.\n");
 	} else {
 		user_im = imsettings_request_get_current_user_im(req, &error);
@@ -79,14 +80,23 @@ main(int    argc,
 			g_printerr("%s\n", error->message);
 			exit(1);
 		}
-		for (i = 0; list[i] != NULL; i++) {
-			g_print("%s %d: %s %s\n",
-				(strcmp(running_im, list[i]) == 0 ? "*" : (strcmp(user_im, list[i]) == 0 ? "-" : " ")),
+		for (i = 0; i < array->len; i++) {
+			IMSettingsInfo *info = g_ptr_array_index(array, i);
+			const gchar *name = imsettings_info_get_short_desc(info);
+			gchar *xinput = g_path_get_basename(imsettings_info_get_filename(info));
+
+			g_print("%s %d: %s[%s] %s\n",
+				(strcmp(running_im, name) == 0 ? "*" : (strcmp(user_im, name) == 0 ? "-" : " ")),
 				i + 1,
-				list[i],
-				(strcmp(system_im, list[i]) == 0 ? "(recommended)" : ""));
+				name, xinput,
+				(strcmp(system_im, name) == 0 ? "(recommended)" : ""));
+			g_object_unref(info);
+			g_free(xinput);
 		}
-		g_strfreev(list);
+		g_ptr_array_free(array, TRUE);
+		g_free(user_im);
+		g_free(system_im);
+		g_free(running_im);
 	}
 	g_object_unref(req);
 	dbus_connection_unref(connection);

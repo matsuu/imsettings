@@ -10,6 +10,9 @@ endif
 if ENABLE_XFCE_MCS
 SUBDIRS += xfce_mcs
 endif
+if ENABLE_XFCE_XFCONF
+SUBDIRS += xfce_xfconf
+endif
 if ENABLE_XIM
 SUBDIRS += xim
 endif

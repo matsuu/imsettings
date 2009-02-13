@@ -39,7 +39,7 @@ main(int    argc,
 	DBusConnection *connection;
 	gchar *locale, *module = NULL;
 	gboolean arg_force = FALSE, arg_no_update = FALSE, arg_no_restart = FALSE;
-	GOptionContext *ctx = g_option_context_new(_("[Input Method]"));
+	GOptionContext *ctx = g_option_context_new(_("[Input Method name|xinput.conf]"));
 	GOptionEntry entries[] = {
 		{"force", 'f', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_force, N_("Force restarting the IM process regardless of any errors."), NULL},
 		{"no-update", 'n', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_no_update, N_("Do not update .xinputrc."), NULL},

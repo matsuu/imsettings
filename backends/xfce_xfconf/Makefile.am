@@ -5,12 +5,12 @@ INCLUDES =						\
 	-DIMSETTINGS_LOCALEDIR="\"$(datadir)/locale\""	\
 	-DICONDIR="\"$(datadir)/pixmaps\""		\
 	$(GCONF_CFLAGS)					\
-	$(XFCE_MCS_CFLAGS)				\
+	$(XFCE_XFCONF_CFLAGS)				\
 	$(NULL)
 LIBS =							\
 	@LDFLAGS@					\
 	$(GCONF_LIBS)					\
-	$(XFCE_MCS_LIBS)				\
+	$(XFCE_XFCONF_LIBS)				\
 	$(NULL)
 EXTRA_DIST =						\
 	$(NULL)

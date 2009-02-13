@@ -1,3 +1,19 @@
+2009-02-13  Akira TAGOH  <tagoh@redhat.com>
+
+	Allow a lowercase input method name. (RHBZ#471833)
+	
+	* utils/imsettings-list.c (main): display the xinput conf name
+	in the list too.
+
+	* src/monitor.c (imsettings_monitor_add_file): allow a lower-case name
+	to look up the name.
+	(imsettings_monitor_remove_file): likewise.
+	(imsettings_monitor_get_current_user_im): likewise.
+	(imsettings_monitor_get_current_system_im): likewise.
+	(_imsettings_monitor_lookup): new.
+	(imsettings_monitor_lookup): try to look up IM with .conf to allow
+	xinput conf name.
+
 2009-01-21  Akira TAGOH  <tagoh@redhat.com>
 
 	* configure.ac: update to support xfconf and mcs separately.

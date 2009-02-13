@@ -103,12 +103,16 @@ PKG_CHECK_MODULES(QT, QtCore
 		      QtDBus,
 	[use_qt="yes"],
 	[use_qt="no"])
-PKG_CHECK_MODULES(XFCE, gconf-2.0
+PKG_CHECK_MODULES(XFCE_MCS, gconf-2.0
 			libxfce4mcs-manager-1.0
 			libxfce4util-1.0
 			xfce-mcs-manager,
-	[use_xfce="yes"],
-	[use_xfce="no"])
+	[use_xfce_mcs="yes"],
+	[use_xfce_mcs="no"])
+PKG_CHECK_MODULES(XFCE_XFCONF, gconf-2.0
+			libxfconf-0,
+	[use_xfce_xfconf="yes"],
+	[use_xfce_xfconf="no"])
 PKG_CHECK_MODULES(XIM, libgxim >= $LIBGXIM_REQUIRED
 		       gdk-2.0 >= $GDK_REQUIRED,
 	[use_xim="yes"],
@@ -129,8 +133,10 @@ AC_SUBST(GCONF_CFLAGS)
 AC_SUBST(GCONF_LIBS)
 AC_SUBST(QT_CFLAGS)
 AC_SUBST(QT_LIBS)
-AC_SUBST(XFCE_CFLAGS)
-AC_SUBST(XFCE_LIBS)
+AC_SUBST(XFCE_MCS_CFLAGS)
+AC_SUBST(XFCE_MCS_LIBS)
+AC_SUBST(XFCE_XFCONF_CFLAGS)
+AC_SUBST(XFCE_XFCONF_LIBS)
 AC_SUBST(XIM_CFLAGS)
 AC_SUBST(XIM_LIBS)
 AC_SUBST(XSETTINGS_CFLAGS)
@@ -143,7 +149,8 @@ AC_SUBST(CHECK_LIBS)
 AM_CONDITIONAL(ENABLE_UNIT_TEST, test x$use_check != xno)
 AM_CONDITIONAL(ENABLE_GCONF, test x$use_gconf != xno)
 AM_CONDITIONAL(ENABLE_QT, test x$use_qt != xno)
-AM_CONDITIONAL(ENABLE_XFCE, test x$use_xfce != xno)
+AM_CONDITIONAL(ENABLE_XFCE_MCS, test x$use_xfce_mcs != xno)
+AM_CONDITIONAL(ENABLE_XFCE_XFCONF, test x$use_xfce_xfconf != xno)
 AM_CONDITIONAL(ENABLE_XIM, test x$use_xim != xno)
 AM_CONDITIONAL(ENABLE_APPLET, test x$use_applet != xno)
 
@@ -279,7 +286,8 @@ AC_CONFIG_FILES([
 	backends/Makefile
 	backends/gconf/Makefile
 	backends/qt/Makefile
-	backends/xfce/Makefile
+	backends/xfce_mcs/Makefile
+	backends/xfce_xfconf/Makefile
 	backends/xim/Makefile
 	data/Makefile
 	data/none.in
@@ -312,10 +320,15 @@ if test "x$use_qt" = "xyes"; then
    echo "   CFLAGS:               $QT_CFLAGS"
    echo "   LDFLAGS:              $QT_LIBS"
 fi
-echo " Xfce support:           $use_xfce"
-if test "x$use_xfce" = "xyes"; then
-   echo "   CFLAGS:               $XFCE_CFLAGS"
-   echo "   LDFLAGS:              $XFCE_LIBS"
+echo " Xfce mcs support:       $use_xfce_mcs"
+if test "x$use_xfce_mcs" = "xyes"; then
+   echo "   CFLAGS:               $XFCE_MCS_CFLAGS"
+   echo "   LDFLAGS:              $XFCE_MCS_LIBS"
+fi
+echo " Xfce xfconf support:    $use_xfce_xfconf"
+if test "x$use_xfce_xfconf" = "xyes"; then
+   echo "   CFLAGS:               $XFCE_XFCONF_CFLAGS"
+   echo "   LDFLAGS:              $XFCE_XFCONF_LIBS"
 fi
 echo " XIM support:            $use_xim"
 if test "x$use_xim" = "xyes"; then

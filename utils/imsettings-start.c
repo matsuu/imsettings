@@ -40,7 +40,7 @@ main(int    argc,
 	DBusConnection *connection;
 	gchar *locale, *module = NULL;
 	gboolean arg_no_update = FALSE, arg_no_restart = FALSE;
-	GOptionContext *ctx = g_option_context_new(_("[Input Method[.conf]]"));
+	GOptionContext *ctx = g_option_context_new(_("[Input Method name|xinput.conf]"));
 	GOptionEntry entries[] = {
 		{"no-update", 'n', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_no_update, N_("Do not update .xinputrc."), NULL},
 		{"no-restart", 0, G_OPTION_FLAG_NO_ARG|G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &arg_no_restart, N_("Do not restart the daemons at first."), NULL},

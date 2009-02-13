@@ -83,8 +83,8 @@ GPtrArray         *imsettings_monitor_foreach              (IMSettingsMonitor *m
                                                             const gchar       *locale);
 void               imsettings_monitor_array_free           (GPtrArray         *array);
 IMSettingsInfo    *imsettings_monitor_lookup               (IMSettingsMonitor *monitor,
-                                                            const gchar       *locale,
                                                             const gchar       *module,
+                                                            const gchar       *locale,
                                                             GError            **error);
 gchar             *imsettings_monitor_get_current_user_im  (IMSettingsMonitor *monitor,
                                                             GError            **error);

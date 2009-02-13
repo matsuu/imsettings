@@ -524,7 +524,7 @@ imsettings_manager_real_get_info_object(IMSettingsObserver  *imsettings,
 {
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (imsettings);
 
-	return imsettings_monitor_lookup(priv->monitor, locale, module, error);
+	return imsettings_monitor_lookup(priv->monitor, module, locale, error);
 }
 
 static GPtrArray *
