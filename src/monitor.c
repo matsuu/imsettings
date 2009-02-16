@@ -1007,17 +1007,18 @@ _imsettings_monitor_lookup(GHashTable   *table,
 					     "language", locale,
 					     NULL);
 				name = imsettings_info_get_short_desc(info);
-				if (strcmp(name, lowername) != 0) {
-					/* module may be a XIM server and running on the different locale */
-					g_set_error(error, IMSETTINGS_MONITOR_ERROR,
-						    IMSETTINGS_MONITOR_ERROR_NOT_AVAILABLE,
-						    _("No such input method on your system: %s"),
-						    module);
+				if (strcmp(name, lowername) != 0)
 					info = NULL;
-				}
 				break;
 			}
 			info = NULL;
+		}
+		if (info == NULL) {
+			/* module may be a XIM server and running on the different locale */
+			g_set_error(error, IMSETTINGS_MONITOR_ERROR,
+				    IMSETTINGS_MONITOR_ERROR_NOT_AVAILABLE,
+				    _("No such input method on your system: %s"),
+				    module);
 		}
 	}
 	g_free(lowername);
@@ -1157,7 +1158,7 @@ imsettings_monitor_lookup(IMSettingsMonitor  *monitor,
 	info = _imsettings_monitor_lookup(monitor->im_info_from_name, module, locale, TRUE, error);
 	if (info == NULL) {
 		GError *err = g_error_copy(*error);
-		gchar *filename = g_build_filename(XINPUT_PATH, module, NULL);
+		gchar *filename = g_build_filename(monitor->xinputdir, module, NULL);
 
 		g_clear_error(error);
 		/* try to pick one up from filename table */
