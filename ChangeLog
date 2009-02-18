@@ -1,3 +1,11 @@
+2009-02-18  Akira TAGOH  <tagoh@redhat.com>
+
+	Add Xfconf support. (RHBZ#478669)
+
+	* backends/xfce_xfconf/imsettings-xfce-helper.desktop.in:
+	* backends/xfce_xfconf/main.c:
+	* backends/xfce\xfconf/Makefile.am: New.
+
 2009-02-16  Akira TAGOH  <tagoh@redhat.com>
 
 	* tests/rhbz_471833.c: add new testcase.

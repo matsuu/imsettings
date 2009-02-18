@@ -13,31 +13,38 @@ LIBS =							\
 	$(XFCE_XFCONF_LIBS)				\
 	$(NULL)
 EXTRA_DIST =						\
+	$(autostart_in_files)				\
 	$(NULL)
-
+DISTCLEANFILES =					\
+	$(autostart_DATA)				\
+	$(NULL)
 
 ##
 # Local definitions
 xfce_sources =						\
-	imsettings_plugin.c				\
+	main.c						\
 	$(NULL)
 
 
 ##
 # Local Rules
+@INTLTOOL_DESKTOP_RULE@
 
 ##
 # Target platform
-plugindir = $(libdir)/xfce4/mcs-plugins
-plugin_LTLIBRARIES =					\
-	imsettings_plugin.la				\
+bin_PROGRAMS =						\
+	imsettings-xfce-helper				\
 	$(NULL)
 #
-imsettings_plugin_la_SOURCES =				\
+imsettings_xfce_helper_SOURCES =			\
 	$(xfce_sources)					\
 	$(NULL)
-imsettings_plugin_la_LDFLAGS =				\
-	-avoid-version					\
-	-module						\
-	-no-undefined					\
+imsettings_xfce_helper_CFLAGS =				\
+	-DG_LOG_DOMAIN="\"imsettings-xfce-helper\""	\
 	$(NULL)
+#
+autostartdir = $(sysconfdir)/xdg/autostart
+autostart_in_files =					\
+	imsettings-xfce-helper.desktop.in		\
+	$(NULL)
+autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
