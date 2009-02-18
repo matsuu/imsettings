@@ -193,7 +193,7 @@ main(int    argc,
 	quark_proxy = g_quark_from_static_string("imsettings-xim-proxy");
 
 	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(conn, IMSETTINGS_INFO_INTERFACE_DBUS);
+	req = imsettings_request_new(conn, IMSETTINGS_INTERFACE_DBUS);
 	imsettings_request_set_locale(req, locale);
 	module = imsettings_request_get_current_user_im(req, &error);
 	if (module == NULL) {
