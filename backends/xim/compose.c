@@ -555,7 +555,10 @@ compose_parse(Compose *compose)
 		/* get symbol */
 		_skip_whitespaces(p);
 		if (*p == 0 || _is_comment(*p)) {
-			g_warning("Invalid entry [no symbol]: %s", buf);
+			/* it's likely to happen easily if a symbol isn't supported by current locale.
+			 * so let's shut it up.
+			 */
+			d(g_warning("Invalid entry [no symbol]: %s", buf));
 			goto fail;
 		}
 		for (i = 0; *p && !_is_whitespace(*p) && i < 1024; i++, p++)
