@@ -1,8 +1,5 @@
 2009-02-18  Akira TAGOH  <tagoh@redhat.com>
 
-	* backends/xim/compose.c (compose_parse): get rid of a kind of
-	debugging message that often appears.
-
 	Add Xfconf support. (RHBZ#478669)
 
 	* backends/xfce_xfconf/imsettings-xfce-helper.desktop.in:
