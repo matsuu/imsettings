@@ -1,6 +1,6 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 // main.cpp
-// Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+// Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
 //
 // Authors:
 //   Akira TAGOH  <tagoh@redhat.com>
@@ -23,10 +23,11 @@
 #include "config.h"
 #endif
 
+#include "imsettings/imsettings.h"
+#undef d // to avoid a compile error in Qt headers
 #include <cstdlib>
 #include <QtCore/QCoreApplication>
 #include <QtCore/QFileInfo>
-#include "imsettings/imsettings.h"
 #include "qt-imsettings.h"
 #include "qt-imsettings-glue.h"
 
