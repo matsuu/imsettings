@@ -1,3 +1,13 @@
+2009-02-23  Akira TAGOH  <tagoh@redhat.com>
+
+	Fix a warning during parsing Compose data. (RHBZ#484142)
+	
+	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event): send
+	a key event with XLookupKeySym when no strings available.
+
+	* backends/xim/compose.c (compose_parse): Fix not working in the case
+	when the keysym or the string only is available at the right value.
+
 2009-02-18  Akira TAGOH  <tagoh@redhat.com>
 
 	Add Xfconf support. (RHBZ#478669)

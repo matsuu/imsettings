@@ -424,6 +424,12 @@ compose_parse(Compose *compose)
 	gboolean pending = FALSE;
 	Sequence *node, *sequence;
 	GError *error = NULL;
+	enum {
+		RHS_NONE,
+		RHS_STRING,
+		RHS_KEYSYM,
+		RHS_BOTH
+	} rhs_type = RHS_NONE;
 
 	g_return_val_if_fail (compose != NULL, FALSE);
 	g_return_val_if_fail (compose->fp != NULL, FALSE);
@@ -501,75 +507,87 @@ compose_parse(Compose *compose)
 		p = data;
 
 		if (*p == 0 || _is_comment(*p)) {
-			g_warning("Invalid entry [no string]: %s", buf);
+			g_warning("Invalid entry [no string nor keysym]: %s", buf);
 			goto fail;
 		}
 
 		if (*p != '"') {
-			g_warning("Invalid data [no initiator for string]: %s", data);
-			goto fail;
-		}
-		p++;
-		pending = FALSE;
-		for (i = 0; *p && i < 1024; p++) {
-			if (*p == '\\') {
-				if (!pending) {
-					pending = TRUE;
+			/* this line may be a keysym only */
+			rhs_type = RHS_KEYSYM;
+			string[0] = 0;
+		} else {
+			p++;
+			pending = FALSE;
+			for (i = 0; *p && i < 1024; p++) {
+				if (*p == '\\') {
+					if (!pending) {
+						pending = TRUE;
+						continue;
+					}
+				}
+				if (pending) {
+					/* FIXME: hexadecimal, octadecimal support */
+					switch (*p) {
+					    case '\\':
+					    case '"':
+						    string[i++] = *p;
+						    break;
+					    case 'n':
+						    string[i++] = '\n';
+						    break;
+					    case 'r':
+						    string[i++] = '\r';
+						    break;
+					    case 't':
+						    string[i++] = '\t';
+						    break;
+					    default:
+						    g_warning("unknown escape format: \\%c", *p);
+						    break;
+					}
+					pending = FALSE;
 					continue;
 				}
+				if (*p == '"')
+					break;
+				string[i++] = *p;
 			}
-			if (pending) {
-				/* FIXME: hexadecimal, octadecimal support */
-				switch (*p) {
-				    case '\\':
-				    case '"':
-					    string[i++] = *p;
-					    break;
-				    case 'n':
-					    string[i++] = '\n';
-					    break;
-				    case 'r':
-					    string[i++] = '\r';
-					    break;
-				    case 't':
-					    string[i++] = '\t';
-					    break;
-				    default:
-					    g_warning("unknown escape format: \\%c", *p);
-					    break;
-				}
-				pending = FALSE;
-				continue;
+			string[i] = 0;
+			if (*p != '"') {
+				g_warning("Invalid data [no terminator for string]: %s", data);
+				goto fail;
 			}
-			if (*p == '"')
-				break;
-			string[i++] = *p;
+			p++;
+			_skip_whitespaces(p);
+			rhs_type = RHS_STRING;
 		}
-		string[i] = 0;
-		if (*p != '"') {
-			g_warning("Invalid data [no terminator for string]: %s", data);
-			goto fail;
-		}
-		p++;
-
 		/* get symbol */
-		_skip_whitespaces(p);
 		if (*p == 0 || _is_comment(*p)) {
-			g_warning("Invalid entry [no symbol]: %s", buf);
-			goto fail;
+			if (rhs_type == RHS_KEYSYM) {
+				g_warning("Invalid entry [no keysym]: %s", buf);
+				goto fail;
+			}
+			result_keysym = NoSymbol;
+		} else {
+			for (i = 0; *p && !_is_whitespace(*p) && i < 1024; i++, p++)
+				symbol[i] = *p;
+			symbol[i] = 0;
+			result_keysym = XStringToKeysym(symbol);
+			if (result_keysym == NoSymbol) {
+				g_warning("Invalid symbol for result: %s", symbol);
+			}
+			if (rhs_type == RHS_STRING)
+				rhs_type = RHS_BOTH;
 		}
-		for (i = 0; *p && !_is_whitespace(*p) && i < 1024; i++, p++)
-			symbol[i] = *p;
-		symbol[i] = 0;
-		result_keysym = XStringToKeysym(symbol);
-		if (result_keysym == NoSymbol) {
-			g_warning("Invalid symbol for result: %s", symbol);
-		}
-		utf8_string = g_convert(string, -1, "UTF-8", charset, NULL, NULL, &error);
-		if (error) {
-			g_warning("%s: %s", error->message, buf);
-			g_error_free(error);
-			goto fail;
+		if (string[0] != 0) {
+			utf8_string = g_convert(string, -1, "UTF-8", charset, NULL, NULL, &error);
+			if (error) {
+				g_warning("%s: %s", error->message, buf);
+				g_error_free(error);
+				goto fail;
+			}
+		} else {
+			utf8_string = NULL;
 		}
 		sequence_terminate(sequence, utf8_string, result_keysym, &error);
 		g_free(utf8_string);

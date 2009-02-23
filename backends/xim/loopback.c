@@ -856,15 +856,20 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 			GString *s = g_string_new(NULL);
 			guchar *ctext = NULL;
 			gint len = 0;
+			GXimLookupType lookup_type = G_XIM_XLookupChars;
 
-			gdk_string_to_compound_text_for_display(dpy, string, NULL, NULL, &ctext, &len);
-			g_string_append_len(s, (gchar *)ctext, len);
-			g_free(ctext);
+			if (string) {
+				gdk_string_to_compound_text_for_display(dpy, string, NULL, NULL, &ctext, &len);
+				g_string_append_len(s, (gchar *)ctext, len);
+				g_free(ctext);
+			}
 
 			/* XXX: need to look at the keymap? */
+			if (string == NULL)
+				lookup_type = G_XIM_XLookupKeySym;
 			retval = g_xim_server_connection_cmd_commit(G_XIM_SERVER_CONNECTION (proto),
 								    imid, icid,
-								    G_XIM_XLookupSynchronous | G_XIM_XLookupChars,
+								    G_XIM_XLookupSynchronous | lookup_type,
 								    keysym, s);
 
 			d(g_print("result: %s [%s]: 0x%x\n", gdk_keyval_name(keysym), string, event->key.hardware_keycode));
