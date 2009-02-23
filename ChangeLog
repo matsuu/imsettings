@@ -1,5 +1,9 @@
 2009-02-23  Akira TAGOH  <tagoh@redhat.com>
 
+	* configure.ac: bump to 0.106.0
+
+	* NEWS: update
+
 	Fix a warning during parsing Compose data. (RHBZ#484142)
 	
 	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event): send

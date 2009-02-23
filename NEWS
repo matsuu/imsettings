@@ -1,3 +1,19 @@
+0.105.1 -> 0.106.0
+=====================
+* Bug Fixes:
+  * Do not discard the XIM_REGISTER_TRIGGERKEYS event even when imid is 0.
+  * Issue#22: imsettings-applet freezes with opening preference dialog.
+  * rhbz#484142: imsettings-applet warnings on Emacs startup in Gnome.
+* Improvements:
+  * set xim to QT_IM_MODULE explicitly for none.
+  * imsettings-{start,stop,restart} to work without IM name explicitly.
+  * Integrate im-info-daemon to im-settings-daemon.
+  * rhbz#471833: Allow .conf name and lowercase for imsettings-*.
+* Regressions:
+  * Get rid of incomplete XSETTINGS support.
+* Features:
+  * rhbz#478669: Add Xfconf support.
+
 0.105.0 -> 0.105.1
 =====================
 * Bug Fixes:
