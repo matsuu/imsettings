@@ -1,3 +1,8 @@
+2009-03-04  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xfce_xfconf/imsettings-xfce-helper.desktop.in:
+	Remove Hidden tag.
+
 2009-02-23  Akira TAGOH  <tagoh@redhat.com>
 
 	* configure.ac: bump to 0.106.0
