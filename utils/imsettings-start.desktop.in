@@ -4,5 +4,5 @@ Type=Application
 Version=1.0
 _Name=imsettings-start
 _Comment=Input Method starter
-Exec=imsettings-start --cond-start -n
+Exec=imsettings-start --cond-start -n -q
 Terminal=false
