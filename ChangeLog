@@ -1,3 +1,14 @@
+2009-03-09  Akira TAGOH  <tagoh@redhat.com>
+
+	* README: Add a description of IMSETTINGS_INTEGRATE_DESKTOP env.
+
+	* utils/imsettings-start.c (main): Add --cond-start option.
+
+	* utils/imsettings-start.desktop.in: New.
+
+	* data/xinput.sh.in.in: Support execution-delay to integrate more
+	to desktop.
+
 2009-03-04  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xfce_xfconf/imsettings-xfce-helper.desktop.in:

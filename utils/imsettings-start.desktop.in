@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Version=1.0
+_Name=imsettings-start
+_Comment=Input Method starter
+Exec=imsettings-start --cond-start -n
+Terminal=false

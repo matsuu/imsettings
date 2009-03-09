@@ -14,7 +14,17 @@ LIBS =							\
 DEPS =							\
 	$(top_builddir)/imsettings/libimsettings.la	\
 	$(NULL)
+EXTRA_DIST =						\
+	$(autostart_in_files)				\
+	$(NULL)
+DISTCLEANFILES =					\
+	$(autostart_DATA)				\
+	$(NULL)
 
+
+##
+# Local Rules
+@INTLTOOL_DESKTOP_RULE@
 
 ##
 # Target platform
@@ -26,6 +36,13 @@ bin_PROGRAMS =						\
 	imsettings-start				\
 	imsettings-stop					\
 	$(NULL)
+#
+autostartdir = $(sysconfdir)/xdg/autostart
+#
+autostart_in_files =					\
+	imsettings-start.desktop.in			\
+	$(NULL)
+autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 #
 imsettings_info_SOURCES =				\
 	imsettings-info.c				\

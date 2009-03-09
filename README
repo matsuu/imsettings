@@ -151,6 +151,13 @@ Other variables used in xinput.sh
   supports imsettings, please file a bug to imsettings. and set true
   temporarily to ignore checking the desktop.
 
+* IMSETTINGS_INTEGRATE_DESKTOP=<bool>
+
+  This affects when Input Method would be brought up. If you
+  are sure your desktop system doesn't support XDG autostart
+  mechanism, set "no". if you disable imsettings feature,
+  this won't affects anything.
+
 Processes
 ============
 

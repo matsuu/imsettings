@@ -75,11 +75,13 @@ function run_imsettings() {
     if [ -n "$DRY_RUN" ]; then
 	echo "*** DRY RUN MODE: running IM through imsettings"
     else
-	which imsettings-start > /dev/null 2>&1 && LANG="$tmplang" imsettings-start -n "$IMSETTINGS_MODULE" || :
-	# NOTE: We don't bring up imsettings-xim nor imsettings-applet here to support XIM.
-	#       imsettings-applet will starts through XDG autostart mechanism.
-	#       If the desktop doesn't support that, this function shouldn't be invoked.
-	#       but run_xim() instead.
+	if [ -n "$IMSETTINGS_INTEGRATE_DESKTOP" -a "x$IMSETTINGS_INTEGRATE_DESKTOP" = "xno" ]; then
+	    which imsettings-start > /dev/null 2>&1 && LANG="$tmplang" imsettings-start -n "$IMSETTINGS_MODULE" || :
+	    # NOTE: We don't bring up imsettings-xim nor imsettings-applet here to support XIM.
+	    #       imsettings-applet will starts through XDG autostart mechanism.
+	    #       If the desktop doesn't support that, this function shouldn't be invoked.
+	    #       but run_xim() instead.
+	fi
     fi
 }
 
@@ -124,6 +126,7 @@ function print_info() {
     echo "QT_IM_MODULE: $QT_IM_MODULE"
     echo "XMODIFIERS: $XMODIFIERS"
     echo "IMSETTINGS_MODULE: $IMSETTINGS_MODULE"
+    echo "IMSETTINGS_INTEGRATE_DESKTOP: $IMSETTINGS_INTEGRATE_DESKTOP"
     echo ""
 }
 
@@ -145,7 +148,7 @@ fi
 tmplang=${LC_CTYPE:-${LANG:-"en_US.UTF-8"}}
 
 # unset env vars to be safe
-unset AUXILIARY_PROGRAM AUXILIARY_ARGS GTK_IM_MODULE ICON IMSETTINGS_IGNORE_ME LONG_DESC PREFERENCE_PROGRAM PREFERENCE_ARGS QT_IM_MODULE SHORT_DESC XIM XIM_PROGRAM XIM_ARGS XMODIFIERS
+unset AUXILIARY_PROGRAM AUXILIARY_ARGS GTK_IM_MODULE ICON IMSETTINGS_IGNORE_ME IMSETTINGS_INTEGRATE_DESKTOP LONG_DESC PREFERENCE_PROGRAM PREFERENCE_ARGS QT_IM_MODULE SHORT_DESC XIM XIM_PROGRAM XIM_ARGS XMODIFIERS
 
 [ -z "$IMSETTINGS_DISABLE_USER_XINPUTRC" ] && IMSETTINGS_DISABLE_USER_XINPUTRC=no
 
@@ -157,6 +160,9 @@ if [ -r "$USER_XINPUTRC" -a "x$IMSETTINGS_DISABLE_USER_XINPUTRC" = "xno" ]; then
 elif [ -r "$SYS_XINPUTRC" ]; then
     source "$SYS_XINPUTRC"
 fi
+
+[ -z "$IMSETTINGS_INTEGRATE_DESKTOP" ] && IMSETTINGS_INTEGRATE_DESKTOP=yes
+export IMSETTINGS_INTEGRATE_DESKTOP
 
 [ -z "$XIM" ] && XIM=none
 

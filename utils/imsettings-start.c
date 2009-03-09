@@ -39,11 +39,12 @@ main(int    argc,
 	IMSettingsRequest *req;
 	DBusConnection *connection;
 	gchar *locale, *module = NULL;
-	gboolean arg_no_update = FALSE, arg_no_restart = FALSE;
+	gboolean arg_no_update = FALSE, arg_no_restart = FALSE, arg_cond_start = FALSE;
 	GOptionContext *ctx = g_option_context_new(_("[Input Method name|xinput.conf]"));
 	GOptionEntry entries[] = {
 		{"no-update", 'n', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_no_update, N_("Do not update .xinputrc."), NULL},
 		{"no-restart", 0, G_OPTION_FLAG_NO_ARG|G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &arg_no_restart, N_("Do not restart the daemons at first."), NULL},
+		{"cond-start", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_cond_start, N_("Start Input Method if not yet running."), NULL},
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};
 	GError *error = NULL;
@@ -122,6 +123,15 @@ main(int    argc,
 	}
 	g_option_context_free(ctx);
 
+	if (arg_cond_start) {
+		gchar *name = imsettings_request_whats_input_method_running(req, &error);
+
+		if (name && strcmp(name, module) == 0) {
+			g_free(name);
+			goto end;
+		}
+		g_free(name);
+	}
 	if (imsettings_request_start_im(req, module, !arg_no_update, &error)) {
 		g_print(_("Started %s\n"), module);
 	} else {
