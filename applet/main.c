@@ -478,11 +478,11 @@ _setup_acceleration_key(IMApplet *applet)
 		applet->keyval = GDK_VoidSymbol;
 		applet->modifiers = 0;
 		applet->watch_accel = FALSE;
-		g_print("Acceleration key: disabled\n");
+		d(g_print("Acceleration key: disabled\n"));
 	} else {
 	  no_accel:
 		applet->watch_accel = TRUE;
-		g_print("Acceleration key: %s\n", key);
+		d(g_print("Acceleration key: %s\n", key));
 	}
 
 	g_free(key);

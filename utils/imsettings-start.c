@@ -39,12 +39,13 @@ main(int    argc,
 	IMSettingsRequest *req;
 	DBusConnection *connection;
 	gchar *locale, *module = NULL;
-	gboolean arg_no_update = FALSE, arg_no_restart = FALSE, arg_cond_start = FALSE;
+	gboolean arg_no_update = FALSE, arg_no_restart = FALSE, arg_cond_start = FALSE, arg_quiet = FALSE;
 	GOptionContext *ctx = g_option_context_new(_("[Input Method name|xinput.conf]"));
 	GOptionEntry entries[] = {
 		{"no-update", 'n', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_no_update, N_("Do not update .xinputrc."), NULL},
 		{"no-restart", 0, G_OPTION_FLAG_NO_ARG|G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &arg_no_restart, N_("Do not restart the daemons at first."), NULL},
 		{"cond-start", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_cond_start, N_("Start Input Method if not yet running."), NULL},
+		{"quiet", 'q', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_quiet, N_("Shut up the extra messages."), NULL},
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};
 	GError *error = NULL;
@@ -133,7 +134,8 @@ main(int    argc,
 		g_free(name);
 	}
 	if (imsettings_request_start_im(req, module, !arg_no_update, &error)) {
-		g_print(_("Started %s\n"), module);
+		if (!arg_quiet)
+			g_print(_("Started %s\n"), module);
 	} else {
 		g_printerr(_("Failed to start IM process `%s'\n"), module);
 		retval = 1;

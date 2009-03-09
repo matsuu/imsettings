@@ -1,5 +1,11 @@
 2009-03-09  Akira TAGOH  <tagoh@redhat.com>
 
+	Stop a debugging message. (RHBZ#489119)
+
+	* utils/imsettings-start.c (main): Add -q option.
+
+	* applet/main.c (_setup_acceleration_key): disable a debugging message.
+
 	Workaround to not filtered out the key event with accelerator keys
 	on some X apps. (RHBZ#488675)
 
