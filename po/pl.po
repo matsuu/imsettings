@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-14 11:28+0900\n"
-"PO-Revision-Date: 2008-09-28 02:43+0200\n"
+"PO-Revision-Date: 2009-02-05 22:30+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,35 +18,37 @@ msgid "IMSettings Applet"
 msgstr "Aplet ustawień metody wejścia"
 
 #: ../applet/imsettings-applet.schemas.in.h:1
-#, fuzzy
 msgid "A shortcut key to connect to/disconnect from Input Method"
-msgstr "Naciśnij, aby rozłączyć się z metodą wejścia"
+msgstr "Klawisz skrótu do łączenia się z/rozłączania się od metody wejścia"
 
 #: ../applet/imsettings-applet.schemas.in.h:2
 msgid ""
 "If \"auto\" is set, imsettings-applet has a facility of XSETTINGS manager as "
 "needed. if you want to disable it explicitly, set \"disabled\"."
 msgstr ""
+"Jeśli ustawiono \"auto\", imsettings-applet będzie posiadał funkcję "
+"menedżera XSETTINGS w razie takiej potrzeby. Jeśli chcesz wyłączyć go "
+"bezwarunkowo, ustaw \"disabled\"."
 
 #: ../applet/imsettings-applet.schemas.in.h:3
 msgid ""
 "If false, all of informations will not delivered through libnotify, except "
 "error and warning messages."
 msgstr ""
+"Jeśli fałsz, żadne informacje nie będą dostarczane przez libnotify, poza "
+"komunikatami błędów i ostrzeżeniami."
 
 #: ../applet/imsettings-applet.schemas.in.h:4
 msgid "If true, the icon will be displayed at the systray."
-msgstr ""
+msgstr "Jeśli prawda, ikona zostanie wyświetlona w obszarze powiadamiania."
 
 #: ../applet/imsettings-applet.schemas.in.h:5
-#, fuzzy
 msgid "Run a facility of XSETTINGS manager"
-msgstr "U_ruchom menedżera XSETTINGS"
+msgstr "Uruchamia menedżera XSETTINGS"
 
 #: ../applet/imsettings-applet.schemas.in.h:6
-#, fuzzy
 msgid "Show the status icon"
-msgstr "Wyświetlaj ikonę _stanu"
+msgstr "Wyświetla ikonę stanu"
 
 #: ../applet/imsettings-applet.schemas.in.h:7
 msgid ""
@@ -57,10 +59,15 @@ msgid ""
 "set the option to the special string \"disabled\", then there will be no "
 "keybinding for this."
 msgstr ""
+"Skrót klawiszowy, który łączy się z metodą wejścia lub rozłącza się od niej. "
+"Format to \"&lt;Control&gt;a\" lub \"&lt;Shift&gt;&lt;Alt&gt;F1\". Parser "
+"jest dość liberalny i umożliwia używanie małych i wielkich znaków oraz "
+"skrótów, takich jak \"&lt;Ctl&gt;\" i \"&lt;Ctrl&gt;\". Jeśli ustawisz tę "
+"opcję na specjalny łańcuch \"disabled\", nie będzie skrótu klawiszowego."
 
 #: ../applet/imsettings-applet.schemas.in.h:8
 msgid "Whether to notify informations with libnotify"
-msgstr ""
+msgstr "Czy wyświetlać powiadamiania za pomocą libnotify"
 
 #: ../applet/main.c:156 ../applet/main.c:189 ../applet/main.c:229
 msgid "No detailed information"
@@ -140,7 +147,7 @@ msgstr "Wyświetlaj ikonę _stanu"
 
 #: ../applet/main.c:758
 msgid "_Run XSETTINGS manager as needed"
-msgstr "U_ruchom menedżera XSETTINGS"
+msgstr "U_ruchom menedżera XSETTINGS w razie potrzeby"
 
 #: ../applet/main.c:770
 msgid "<b>Trigger key:</b>"
@@ -201,9 +208,8 @@ msgid "Tips"
 msgstr "Wskazówki"
 
 #: ../applet/main.c:1043
-#, fuzzy
 msgid "Do not show notifications again"
-msgstr "Nie wyświetlaj tego ponownie"
+msgstr "Nie wyświetlaj powiadomień ponownie"
 
 #: ../applet/main.c:1087
 msgid "Unable to take an ownership for XIM server"
