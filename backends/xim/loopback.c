@@ -41,6 +41,7 @@
 
 enum {
 	PROP_0,
+	PROP_SYNCHRONOUS,
 	LAST_PROP
 };
 enum {
@@ -122,6 +123,42 @@ xim_loopback_ic_free(gpointer data)
 }
 
 static void
+xim_loopback_real_set_property(GObject      *object,
+			       guint         prop_id,
+			       const GValue *value,
+			       GParamSpec   *pspec)
+{
+	XimLoopback *loopback = XIM_LOOPBACK (object);
+
+	switch (prop_id) {
+	    case PROP_SYNCHRONOUS:
+		    loopback->sync_on_forward = g_value_get_boolean(value);
+		    break;
+	    default:
+		    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+		    break;
+	}
+}
+
+static void
+xim_loopback_real_get_property(GObject    *object,
+			       guint       prop_id,
+			       GValue     *value,
+			       GParamSpec *pspec)
+{
+	XimLoopback *loopback = XIM_LOOPBACK (object);
+
+	switch (prop_id) {
+	    case PROP_SYNCHRONOUS:
+		    g_value_set_boolean(value, loopback->sync_on_forward);
+		    break;
+	    default:
+		    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+		    break;
+	}
+}
+
+static void
 xim_loopback_real_finalize(GObject *object)
 {
 	XimLoopback *loopback = XIM_LOOPBACK (object);
@@ -144,11 +181,19 @@ xim_loopback_class_init(XimLoopbackClass *klass)
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	GXimCoreClass *core_class = G_XIM_CORE_CLASS (klass);
 
+	object_class->set_property = xim_loopback_real_set_property;
+	object_class->get_property = xim_loopback_real_get_property;
 	object_class->finalize     = xim_loopback_real_finalize;
 
 	core_class->setup_connection = xim_loopback_real_setup_connection;
 
 	/* properties */
+	g_object_class_install_property(object_class, PROP_SYNCHRONOUS,
+					g_param_spec_boolean("synchronous",
+							     _("Synchronous"),
+							     _("Request to send a key event synchronously"),
+							     TRUE,
+							     G_PARAM_READWRITE));
 
 	/* signals */
 }
@@ -666,7 +711,7 @@ xim_loopback_real_xim_create_ic(GXimProtocol *proto,
 				g_xim_server_connection_cmd_set_event_mask(G_XIM_SERVER_CONNECTION (proto),
 									   imid, icid,
 									   KeyPressMask | KeyReleaseMask,
-									   ~(KeyPressMask | KeyReleaseMask));
+									   loopback->sync_on_forward ? ~NoEventMask : ~(KeyPressMask | KeyReleaseMask));
 			} else {
 				g_xim_connection_cmd_error(G_XIM_CONNECTION (proto),
 							   imid, 0, G_XIM_EMASK_VALID_IMID,

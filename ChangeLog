@@ -1,5 +1,17 @@
 2009-03-09  Akira TAGOH  <tagoh@redhat.com>
 
+	Workaround to not filtered out the key event with accelerator keys
+	on some X apps. (RHBZ#488675)
+
+	* backends/xim/loopback.c (xim_loopback_real_set_property): new.
+	(xim_loopback_real_get_property): new.
+	(xim_loopback_real_xim_create_ic): change a event mask for
+	XIM_SET_EVENT_MASK to allow a synchronous event of XIM_FORWARD_EVENT.
+
+	* applet/main.c (_preference_sync_toggled): new.
+	(_preference_activated): Add a option to enable/disable synchronous
+	event on XIM_FORWARD_EVENT for loopback.
+
 	* README: Add a description of IMSETTINGS_INTEGRATE_DESKTOP env.
 
 	* utils/imsettings-start.c (main): Add --cond-start option.

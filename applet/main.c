@@ -47,6 +47,7 @@
 #include <libgxim/gximmisc.h>
 #include "client.h"
 #include "proxy.h"
+#include "loopback.h"
 #include "utils.h"
 #endif
 #include "eggaccelerators.h"
@@ -76,6 +77,7 @@ typedef struct _IMApplet {
 	gboolean             is_enabled;
 	gboolean             need_update_xinputrc;
 	GtkWidget           *checkbox_showicon;
+	GtkWidget           *checkbox_sync;
 #ifdef ENABLE_XIM
 	XimProxy            *server;
 	gchar               *xim_server;
@@ -344,6 +346,37 @@ _preference_showicon_toggled(GtkToggleButton *button,
 	gconf_value_free(val);
 	g_object_unref(client);
 }
+
+#ifdef ENABLE_XIM
+static void
+_preference_sync_toggled(GtkToggleButton *button,
+			 gpointer         data)
+{
+	IMApplet *applet = data;
+	GConfClient *client = gconf_client_get_default();
+	GConfValue *val;
+	GError *error = NULL;
+
+	val = gconf_value_new(GCONF_VALUE_BOOL);
+	if (gtk_toggle_button_get_active(button)) {
+		gconf_value_set_bool(val, TRUE);
+		if (XIM_IS_LOOPBACK (applet->server->default_server))
+			g_object_set(G_OBJECT (applet->server->default_server), "synchronous", TRUE, NULL);
+	} else {
+		gconf_value_set_bool(val, FALSE);
+		if (XIM_IS_LOOPBACK (applet->server->default_server))
+			g_object_set(G_OBJECT (applet->server->default_server), "synchronous", FALSE, NULL);
+	}
+	gconf_client_set(client, "/apps/imsettings-applet/sync_on_forward",
+			 val, &error);
+	if (error) {
+		notify_notification(applet, NOTIFY_URGENCY_CRITICAL, N_("Unable to store a value to GConf"), error->message, 5);
+		g_error_free(error);
+	}
+	gconf_value_free(val);
+	g_object_unref(client);
+}
+#endif /* ENABLE_XIM */
 
 static void
 _gconf_show_icon_cb(GConfClient *conf,
@@ -621,6 +654,10 @@ _preference_activated(GtkMenuItem *item,
 	if (applet->dialog == NULL) {
 		gchar *iconfile;
 		GtkWidget *align_showicon;
+#ifdef ENABLE_XIM
+		GtkWidget *align_sync;
+		GtkTooltips *tooltips_sync;
+#endif /* ENABLE_XIM */
 		GtkWidget *button_trigger_grab;
 		GtkWidget *vbox_item_trigger, *vbox_item_trigger_value;
 		GtkWidget *hbox_item_trigger_value_entry, *hbox_item_trigger_value_notice;
@@ -646,6 +683,23 @@ _preference_activated(GtkMenuItem *item,
 		gtk_alignment_set_padding(GTK_ALIGNMENT (align_showicon), 9, 6, 6, 6);
 		g_signal_connect(applet->checkbox_showicon, "toggled",
 				 G_CALLBACK (_preference_showicon_toggled), applet);
+
+#ifdef ENABLE_XIM
+		/* sync mode */
+		align_sync = gtk_alignment_new(0, 0, 0, 0);
+		applet->checkbox_sync = gtk_check_button_new_with_mnemonic(_("_Enable this when accelerator keys etc doesn't work"));
+		gtk_container_add(GTK_CONTAINER (align_sync), applet->checkbox_sync);
+		gtk_alignment_set_padding(GTK_ALIGNMENT (align_sync), 9, 6, 6, 6);
+		gtk_widget_set_sensitive(applet->checkbox_sync,
+					 (applet->server != NULL &&
+					  XIM_IS_LOOPBACK (applet->server->default_server)));
+		g_signal_connect(applet->checkbox_sync, "toggled",
+				 G_CALLBACK (_preference_sync_toggled), applet);
+		tooltips_sync = gtk_tooltips_new();
+		gtk_tooltips_set_tip(tooltips_sync, applet->checkbox_sync,
+				     _("When this option is enabled, all of key events will be sent to Input Method synchronously. this might affects a performance."),
+				     "");
+#endif /* ENABLE_XIM */
 
 		/* trigger key */
 		vbox_item_trigger = gtk_vbox_new(FALSE, 0);
@@ -694,6 +748,7 @@ _preference_activated(GtkMenuItem *item,
 
 		/* items / packing */
 		gtk_box_pack_start(GTK_BOX (GTK_DIALOG (applet->dialog)->vbox), align_showicon, TRUE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX (GTK_DIALOG (applet->dialog)->vbox), align_sync, TRUE, TRUE, 0);
 		gtk_box_pack_start(GTK_BOX (GTK_DIALOG (applet->dialog)->vbox), vbox_item_trigger, TRUE, TRUE, 0);
 
 		/* */

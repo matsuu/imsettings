@@ -63,6 +63,7 @@ struct _XimLoopback {
 
 	GHashTable         *conn_table;
 	guint               latest_imid;
+	gboolean            sync_on_forward;
 };
 
 struct _XimLoopbackConnectionClass {
