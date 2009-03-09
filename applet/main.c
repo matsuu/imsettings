@@ -360,12 +360,8 @@ _preference_sync_toggled(GtkToggleButton *button,
 	val = gconf_value_new(GCONF_VALUE_BOOL);
 	if (gtk_toggle_button_get_active(button)) {
 		gconf_value_set_bool(val, TRUE);
-		if (XIM_IS_LOOPBACK (applet->server->default_server))
-			g_object_set(G_OBJECT (applet->server->default_server), "synchronous", TRUE, NULL);
 	} else {
 		gconf_value_set_bool(val, FALSE);
-		if (XIM_IS_LOOPBACK (applet->server->default_server))
-			g_object_set(G_OBJECT (applet->server->default_server), "synchronous", FALSE, NULL);
 	}
 	gconf_client_set(client, "/apps/imsettings-applet/sync_on_forward",
 			 val, &error);
@@ -388,6 +384,22 @@ _gconf_show_icon_cb(GConfClient *conf,
 	GConfValue *val = gconf_entry_get_value(entry);
 
 	gtk_status_icon_set_visible(applet->status_icon, gconf_value_get_bool(val));
+}
+
+static void
+_gconf_sync_cb(GConfClient *conf,
+	       guint        cnxn_id,
+	       GConfEntry  *entry,
+	       gpointer     user_data)
+{
+	IMApplet *applet = user_data;
+	GConfValue *val = gconf_entry_get_value(entry);
+	
+	if (XIM_IS_LOOPBACK (applet->server->default_server)) {
+		g_object_set(G_OBJECT (applet->server->default_server),
+			     "synchronous", gconf_value_get_bool(val),
+			     NULL);
+	}
 }
 
 static void
@@ -650,6 +662,8 @@ _preference_activated(GtkMenuItem *item,
 		      gpointer     data)
 {
 	IMApplet *applet = data;
+	GConfClient *client = gconf_client_get_default();
+	GConfValue *val;
 
 	if (applet->dialog == NULL) {
 		gchar *iconfile;
@@ -760,11 +774,20 @@ _preference_activated(GtkMenuItem *item,
 		_preference_update_entry(applet);
 	}
 
+	val = gconf_client_get(client, "/apps/imsettings-applet/sync_on_forward", NULL);
+	if (val == NULL || gconf_value_get_bool(val)) {
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (applet->checkbox_sync),
+					     val == NULL ? TRUE : gconf_value_get_bool(val));
+	}
+	gconf_value_free(val);
+
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (applet->checkbox_showicon),
 				     gtk_status_icon_get_visible(applet->status_icon));
 	gtk_editable_set_editable(GTK_EDITABLE (applet->entry_grabkey), FALSE);
 	gtk_widget_show(applet->dialog);
 	gtk_widget_grab_focus(applet->close_button);
+
+	g_object_unref(client);
 }
 
 static void
@@ -1148,6 +1171,8 @@ _create_applet(void)
 				_gconf_trigger_key_cb, applet, NULL, &error);
 	gconf_client_notify_add(client, "/apps/imsettings-applet/show_icon",
 				_gconf_show_icon_cb, applet, NULL, &error);
+	gconf_client_notify_add(client, "/apps/imsettings-applet/sync_on_forward",
+				_gconf_sync_cb, applet, NULL, &error);
 
 	val = gconf_client_get(client, "/apps/imsettings-applet/trigger_key", NULL);
 	key = gconf_value_get_string(val);

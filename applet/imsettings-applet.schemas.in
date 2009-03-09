@@ -45,5 +45,19 @@
 	</long>
       </locale>
     </schema>
+    <schema>
+      <key>/schemas/apps/imsettings-applet/sync_on_forward</key>
+      <applyto>/apps/imsettings-applet/sync_on_forward</applyto>
+      <owner>imsettings-applet</owner>
+      <type>bool</type>
+      <default>TRUE</default>
+      <locale name="C">
+	<short>Enable this when accelerator keys etc doesn't work</short>
+	<long>
+	  When this option is enabled, all of key events will be sent to Input
+	  Method synchronously.  This might affects a performance.
+	</long>
+      </locale>
+    </schema>
   </schemalist>
 </gconfschemafile>

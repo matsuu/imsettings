@@ -3,6 +3,11 @@
 	Workaround to not filtered out the key event with accelerator keys
 	on some X apps. (RHBZ#488675)
 
+	* applet/main.c (_gconf_sync_cb): new.
+	(_preference_activated): reflect a value from gconf.
+
+	* applet/imsettings-applet.schemas.in: Add a sync_on_forward key.
+
 	* backends/xim/loopback.c (xim_loopback_real_set_property): new.
 	(xim_loopback_real_get_property): new.
 	(xim_loopback_real_xim_create_ic): change a event mask for
