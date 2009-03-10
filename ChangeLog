@@ -1,5 +1,7 @@
 2009-03-10  Akira TAGOH  <tagoh@redhat.com>
 
+	* applet/main.c (_create_applet): set a default value.
+
 	* backends/xim/compose.c (compose_parse): Fix a double-free issue. (RHBZ#485595)
 
 2009-03-09  Akira TAGOH  <tagoh@redhat.com>

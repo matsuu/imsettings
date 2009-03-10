@@ -1215,6 +1215,16 @@ _create_applet(void)
 	if (applet->server)
 		g_object_set_qdata(G_OBJECT (applet->server), quark_applet, applet);
 
+	val = gconf_client_get(client, "/apps/imsettings-applet/sync_on_forward", NULL);
+	if (val == NULL || gconf_value_get_bool(val)) {
+		if (XIM_IS_LOOPBACK (applet->server->default_server)) {
+			g_object_set(G_OBJECT (applet->server->default_server),
+				     "synchronous", gconf_value_get_bool(val),
+				     NULL);
+		}
+	}
+	gconf_value_free(val);
+
 	dbus_bus_add_match(applet->conn,
 			   "type='signal',"
 			   "interface='" IMSETTINGS_XIM_INTERFACE_DBUS "'",
