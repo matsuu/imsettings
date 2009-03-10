@@ -19,4 +19,5 @@ utils/imsettings-list.c
 utils/imsettings-reload.c
 utils/imsettings-restart.c
 utils/imsettings-start.c
+utils/imsettings-start.desktop.in
 utils/imsettings-stop.c
