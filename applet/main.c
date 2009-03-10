@@ -372,19 +372,6 @@ _preference_sync_toggled(GtkToggleButton *button,
 	gconf_value_free(val);
 	g_object_unref(client);
 }
-#endif /* ENABLE_XIM */
-
-static void
-_gconf_show_icon_cb(GConfClient *conf,
-		    guint        cnxn_id,
-		    GConfEntry  *entry,
-		    gpointer     user_data)
-{
-	IMApplet *applet = user_data;
-	GConfValue *val = gconf_entry_get_value(entry);
-
-	gtk_status_icon_set_visible(applet->status_icon, gconf_value_get_bool(val));
-}
 
 static void
 _gconf_sync_cb(GConfClient *conf,
@@ -400,6 +387,19 @@ _gconf_sync_cb(GConfClient *conf,
 			     "synchronous", gconf_value_get_bool(val),
 			     NULL);
 	}
+}
+#endif /* ENABLE_XIM */
+
+static void
+_gconf_show_icon_cb(GConfClient *conf,
+		    guint        cnxn_id,
+		    GConfEntry  *entry,
+		    gpointer     user_data)
+{
+	IMApplet *applet = user_data;
+	GConfValue *val = gconf_entry_get_value(entry);
+
+	gtk_status_icon_set_visible(applet->status_icon, gconf_value_get_bool(val));
 }
 
 static void
@@ -762,7 +762,9 @@ _preference_activated(GtkMenuItem *item,
 
 		/* items / packing */
 		gtk_box_pack_start(GTK_BOX (GTK_DIALOG (applet->dialog)->vbox), align_showicon, TRUE, TRUE, 0);
+#ifdef ENABLE_XIM
 		gtk_box_pack_start(GTK_BOX (GTK_DIALOG (applet->dialog)->vbox), align_sync, TRUE, TRUE, 0);
+#endif /* ENABLE_XIM */
 		gtk_box_pack_start(GTK_BOX (GTK_DIALOG (applet->dialog)->vbox), vbox_item_trigger, TRUE, TRUE, 0);
 
 		/* */
@@ -775,10 +777,8 @@ _preference_activated(GtkMenuItem *item,
 	}
 
 	val = gconf_client_get(client, "/apps/imsettings-applet/sync_on_forward", NULL);
-	if (val == NULL || gconf_value_get_bool(val)) {
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (applet->checkbox_sync),
-					     val == NULL ? TRUE : gconf_value_get_bool(val));
-	}
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (applet->checkbox_sync),
+				     val == NULL ? TRUE : gconf_value_get_bool(val));
 	gconf_value_free(val);
 
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (applet->checkbox_showicon),
@@ -1171,8 +1171,10 @@ _create_applet(void)
 				_gconf_trigger_key_cb, applet, NULL, &error);
 	gconf_client_notify_add(client, "/apps/imsettings-applet/show_icon",
 				_gconf_show_icon_cb, applet, NULL, &error);
+#ifdef ENABLE_XIM
 	gconf_client_notify_add(client, "/apps/imsettings-applet/sync_on_forward",
 				_gconf_sync_cb, applet, NULL, &error);
+#endif /* ENABLE_XIM */
 
 	val = gconf_client_get(client, "/apps/imsettings-applet/trigger_key", NULL);
 	key = gconf_value_get_string(val);
@@ -1216,12 +1218,10 @@ _create_applet(void)
 		g_object_set_qdata(G_OBJECT (applet->server), quark_applet, applet);
 
 	val = gconf_client_get(client, "/apps/imsettings-applet/sync_on_forward", NULL);
-	if (val == NULL || gconf_value_get_bool(val)) {
-		if (XIM_IS_LOOPBACK (applet->server->default_server)) {
-			g_object_set(G_OBJECT (applet->server->default_server),
-				     "synchronous", gconf_value_get_bool(val),
-				     NULL);
-		}
+	if (XIM_IS_LOOPBACK (applet->server->default_server)) {
+		g_object_set(G_OBJECT (applet->server->default_server),
+			     "synchronous", val == NULL ? TRUE : gconf_value_get_bool(val),
+			     NULL);
 	}
 	gconf_value_free(val);
 
