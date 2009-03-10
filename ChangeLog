@@ -1,5 +1,9 @@
 2009-03-10  Akira TAGOH  <tagoh@redhat.com>
 
+	* src/monitor.c (imsettings_monitor_get_current_user_im): Fix appearing
+	a critical message in g_ascii_strdown().
+	(imsettings_monitor_get_current_system_im): likewise.
+
 	* applet/main.c (_create_applet): set a default value.
 
 	* backends/xim/compose.c (compose_parse): Fix a double-free issue. (RHBZ#485595)

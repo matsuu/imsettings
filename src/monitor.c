@@ -1182,7 +1182,8 @@ imsettings_monitor_get_current_user_im(IMSettingsMonitor  *monitor,
 
 	g_return_val_if_fail (IMSETTINGS_IS_MONITOR (monitor), NULL);
 
-	lowername = g_ascii_strdown(monitor->current_user_im, -1);
+	if (monitor->current_user_im)
+		lowername = g_ascii_strdown(monitor->current_user_im, -1);
 
 	if (lowername &&
 	    g_hash_table_lookup(monitor->im_info_from_name,
@@ -1206,7 +1207,8 @@ imsettings_monitor_get_current_system_im(IMSettingsMonitor  *monitor,
 
 	g_return_val_if_fail (IMSETTINGS_IS_MONITOR (monitor), NULL);
 
-	lowername = g_ascii_strdown(monitor->current_system_im, -1);
+	if (monitor->current_system_im)
+		lowername = g_ascii_strdown(monitor->current_system_im, -1);
 	if (lowername &&
 	    g_hash_table_lookup(monitor->im_info_from_name,
 				lowername) == NULL) {
