@@ -583,7 +583,8 @@ compose_parse(Compose *compose)
 			utf8_string = g_convert(string, -1, "UTF-8", charset, NULL, NULL, &error);
 			if (error) {
 				g_warning("%s: %s", error->message, buf);
-				g_error_free(error);
+				/* error might be still re-used later */
+				g_clear_error(&error);
 				goto fail;
 			}
 		} else {
@@ -594,7 +595,8 @@ compose_parse(Compose *compose)
 		if (error) {
 			/* unlikely to happen usually */
 			g_warning("%s", error->message);
-			g_error_free(error);
+			/* error might be still re-used later */
+			g_clear_error(&error);
 			goto fail;
 		}
 
@@ -607,6 +609,7 @@ compose_parse(Compose *compose)
 				sequence_add(node, s, &error);
 				if (error) {
 					g_warning("%s: %s", error->message, seq);
+					g_clear_error(&error);
 					sequence_free(s);
 					goto fail;
 				}

@@ -1,3 +1,7 @@
+2009-03-10  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/compose.c (compose_parse): Fix a double-free issue. (RHBZ#485595)
+
 2009-03-09  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_set_ic_values_reply): 
