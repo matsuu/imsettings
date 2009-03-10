@@ -1,3 +1,14 @@
+0.106.0 -> 0.106.1
+=====================
+* Bug Fixes:
+  * Fix not running of imsettings-xfce-helper.
+  * rhbz#488675: Workaround to not filtered out the key events with accelerator
+    keys on some X apps.
+  * rhbz#489119: Stop debugging messages.
+  * rhbz#485595: Fix a double-free.
+* Features:
+  * More integrate destkop.
+
 0.105.1 -> 0.106.0
 =====================
 * Bug Fixes:

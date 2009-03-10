@@ -1,5 +1,7 @@
 2009-03-10  Akira TAGOH  <tagoh@redhat.com>
 
+	* configure.ac: bump to 0.106.1.
+
 	* src/monitor.c (imsettings_monitor_get_current_user_im): Fix appearing
 	a critical message in g_ascii_strdown().
 	(imsettings_monitor_get_current_system_im): likewise.
