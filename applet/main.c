@@ -779,7 +779,8 @@ _preference_activated(GtkMenuItem *item,
 	val = gconf_client_get(client, "/apps/imsettings-applet/sync_on_forward", NULL);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (applet->checkbox_sync),
 				     val == NULL ? TRUE : gconf_value_get_bool(val));
-	gconf_value_free(val);
+	if (val)
+		gconf_value_free(val);
 
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (applet->checkbox_showicon),
 				     gtk_status_icon_get_visible(applet->status_icon));
@@ -1223,7 +1224,8 @@ _create_applet(void)
 			     "synchronous", val == NULL ? TRUE : gconf_value_get_bool(val),
 			     NULL);
 	}
-	gconf_value_free(val);
+	if (val)
+		gconf_value_free(val);
 
 	dbus_bus_add_match(applet->conn,
 			   "type='signal',"

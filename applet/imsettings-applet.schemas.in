@@ -50,7 +50,7 @@
       <applyto>/apps/imsettings-applet/sync_on_forward</applyto>
       <owner>imsettings-applet</owner>
       <type>bool</type>
-      <default>FALSE</default>
+      <default>TRUE</default>
       <locale name="C">
 	<short>Enable this when accelerator keys etc doesn't work</short>
 	<long>
