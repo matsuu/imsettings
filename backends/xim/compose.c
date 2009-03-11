@@ -487,9 +487,7 @@ compose_parse(Compose *compose)
 
 			keysym = XStringToKeysym(seqbuf);
 			if (keysym == NoSymbol) {
-				/* dirty hack to get rid of known warnings */
-				if (strncmp(seqbuf, "combining_", 10) != 0)
-					g_warning("Invalid symbol: %s", seqbuf);
+				d(g_warning("Invalid symbol: %s", seqbuf));
 				goto fail;
 			}
 			sequence = sequence_new(keysym, modifiers, mod_mask);
@@ -574,7 +572,8 @@ compose_parse(Compose *compose)
 			symbol[i] = 0;
 			result_keysym = XStringToKeysym(symbol);
 			if (result_keysym == NoSymbol) {
-				g_warning("Invalid symbol for result: %s", symbol);
+				d(g_warning("Invalid symbol for result: %s", symbol));
+				goto fail;
 			}
 			if (rhs_type == RHS_STRING)
 				rhs_type = RHS_BOTH;

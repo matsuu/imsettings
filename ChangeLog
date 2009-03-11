@@ -1,3 +1,8 @@
+2009-03-11  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/compose.c (compose_parse): get rid of NoSymbol warning.
+	maybe passed thourgh enough time to estimate. (rhbz#484142)
+
 2009-03-10  Akira TAGOH  <tagoh@redhat.com>
 
 	* applet/main.c (_preference_activated): Fix a warning on free.
