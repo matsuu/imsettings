@@ -1,3 +1,12 @@
+2009-03-12  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event): wait
+	for a XIM_SYNC_REPLY if it's on going and postpone processing of
+	a keyevent.
+	(xim_loopback_real_xim_sync_reply): set a timer to restart processing
+	of keyevents if there are.
+	(_process_keyevent): new.
+
 2009-03-11  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/compose.c (compose_parse): get rid of NoSymbol warning.

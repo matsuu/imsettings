@@ -80,6 +80,9 @@ struct _XimLoopbackConnection {
 struct _XimLoopbackIC {
 	Sequence   *sequence_state;
 	GXimICAttr *icattr;
+	GQueue     *keyeventq;
+	gboolean    wait_for_reply;
+	gboolean    resend;
 };
 
 GType        xim_loopback_get_type(void) G_GNUC_CONST;

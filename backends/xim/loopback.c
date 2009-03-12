@@ -39,6 +39,14 @@
 #include <libgxim/gximtransport.h>
 #include "loopback.h"
 
+typedef struct _XimLoopbackQueueContainer {
+	GXimProtocol *proto;
+	guint16       imid;
+	guint16       icid;
+	guint16       flag;
+	GdkEvent     *event;
+} XimLoopbackQueueContainer;
+
 enum {
 	PROP_0,
 	PROP_SYNCHRONOUS,
@@ -98,6 +106,7 @@ static gboolean xim_loopback_real_xim_sync_reply          (GXimProtocol  *proto,
 							   guint16        imid,
 							   guint16        icid,
 							   gpointer       data);
+static gboolean _process_keyevent                         (gpointer       data);
 
 //static guint signals[LAST_SIGNAL] = { 0 };
 
@@ -111,7 +120,12 @@ G_DEFINE_TYPE (XimLoopbackConnection, xim_loopback_connection, G_TYPE_XIM_SERVER
 static XimLoopbackIC *
 xim_loopback_ic_new(void)
 {
-	return g_new0(XimLoopbackIC, 1);
+	XimLoopbackIC *retval = g_new0(XimLoopbackIC, 1);
+
+	G_XIM_CHECK_ALLOC (retval, NULL);
+	retval->keyeventq = g_queue_new();
+
+	return retval;
 }
 
 static void
@@ -119,7 +133,10 @@ xim_loopback_ic_free(gpointer data)
 {
 	XimLoopbackIC *ic = data;
 
-	g_free(ic);
+	if (ic) {
+		g_queue_free(ic->keyeventq);
+		g_free(ic);
+	}
 }
 
 static void
@@ -884,6 +901,25 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 				      icid);
 		goto end;
 	}
+	if (!ic->resend &&
+	    (ic->wait_for_reply || g_queue_get_length(ic->keyeventq) > 0)) {
+		XimLoopbackQueueContainer *c = g_new0(XimLoopbackQueueContainer, 1);
+
+		c->proto = g_object_ref(proto);
+		c->imid = imid;
+		c->icid = icid;
+		c->flag = flag;
+		c->event = gdk_event_copy(event);
+		g_queue_push_tail(ic->keyeventq, c);
+		g_xim_message_debug(G_XIM_PROTOCOL_GET_IFACE (proto)->message, "loopback/proto/event",
+				    "Queueing a keyevent. (imid: %d, icid: %d, type: %s, keyval: %X)",
+				    imid, icid,
+				    event->type == GDK_KEY_PRESS ? "KeyPress" : "KeyRelease",
+				    event->key.keyval);
+
+		return TRUE;
+	}
+
 	if (event->type == GDK_KEY_RELEASE)
 		goto end;
 
@@ -916,6 +952,7 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 								    imid, icid,
 								    G_XIM_XLookupSynchronous | lookup_type,
 								    keysym, s);
+			sflag = G_XIM_Event_Synchronous;
 
 			d(g_print("result: %s [%s]: 0x%x\n", gdk_keyval_name(keysym), string, event->key.hardware_keycode));
 
@@ -929,15 +966,19 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 	} else {
 		ic->sequence_state = NULL;
 	}
-	
 
   end:
 	if (!retval)
 		retval = g_xim_connection_cmd_forward_event(G_XIM_CONNECTION (proto),
 							    imid, icid, sflag, event);
-
 	if (flag & G_XIM_Event_Synchronous)
 		g_xim_connection_cmd_sync_reply(G_XIM_CONNECTION (proto), imid, icid);
+	if (sflag & G_XIM_Event_Synchronous) {
+		ic->wait_for_reply = TRUE;
+	}
+	if (!ic->wait_for_reply && g_queue_get_length(ic->keyeventq)) {
+		g_idle_add(_process_keyevent, ic->keyeventq);
+	}
 
 	return retval;
 }
@@ -948,8 +989,60 @@ xim_loopback_real_xim_sync_reply(GXimProtocol *proto,
 				 guint16       icid,
 				 gpointer      data)
 {
-	/* Nothing to do */
+	XimLoopbackConnection *lconn = XIM_LOOPBACK_CONNECTION (proto);
+	XimLoopbackIC *ic = g_hash_table_lookup(lconn->ic_table, GUINT_TO_POINTER ((guint)icid));
+	gboolean flag = g_atomic_int_get(&ic->wait_for_reply);
+
+  retry:
+	if (flag) {
+		if (!g_atomic_int_compare_and_exchange(&ic->wait_for_reply, flag, FALSE))
+			goto retry;
+	}
+	if (g_queue_get_length(ic->keyeventq) > 0) {
+		g_idle_add(_process_keyevent, ic->keyeventq);
+	}
+
 	return TRUE;
+}
+
+static gboolean
+_process_keyevent(gpointer data)
+{
+	GQueue *q = data;
+	XimLoopbackQueueContainer *c;
+	XimLoopbackConnection *lconn;
+	XimLoopbackIC *ic;
+	gboolean retval;
+	GClosure *closure;
+
+	c = g_queue_pop_head(q);
+	closure = (GClosure *)g_xim_protocol_lookup_protocol_by_id(c->proto, G_XIM_FORWARD_EVENT, 0);
+	if (closure == NULL) {
+		g_xim_message_bug(G_XIM_PROTOCOL_GET_IFACE (c->proto)->message,
+				  "No closure to re-send back a XIM_FORWARD_EVENT.");
+	} else {
+		lconn = XIM_LOOPBACK_CONNECTION (c->proto);
+		ic = g_hash_table_lookup(lconn->ic_table, GUINT_TO_POINTER ((guint)c->icid));
+		ic->resend = TRUE;
+		g_xim_message_debug(G_XIM_PROTOCOL_GET_IFACE (c->proto)->message, "loopback/proto/event",
+				    "Re-processing XIM_FORWARD_EVENT (imid: %d, icid: %d, type: %s, keyval: %X)",
+				    c->imid, c->icid,
+				    c->event->type == GDK_KEY_PRESS ? "KeyPress" : "KeyRelease",
+				    c->event->key.keyval);
+		retval = g_xim_protocol_closure_emit_signal((GXimProtocolClosure *)closure,
+							    c->proto,
+							    c->imid, c->icid, c->flag, c->event);
+		ic->resend = FALSE;
+		if (!retval) {
+			g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (c->proto)->message,
+					      "Unable to re-send back a XIM_FORWARD_EVENT. this event will be discarded.");
+		}
+	}
+	g_object_unref(c->proto);
+	gdk_event_free(c->event);
+	g_free(c);
+
+	return FALSE;
 }
 
 /*
