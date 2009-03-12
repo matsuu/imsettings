@@ -1,5 +1,8 @@
 2009-03-12  Akira TAGOH  <tagoh@redhat.com>
 
+	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event):
+	Ignore modifker keys.
+
 	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event): wait
 	for a XIM_SYNC_REPLY if it's on going and postpone processing of
 	a keyevent.

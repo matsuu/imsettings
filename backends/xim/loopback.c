@@ -39,6 +39,15 @@
 #include <libgxim/gximtransport.h>
 #include "loopback.h"
 
+/*
+ * Borrow an idea from IsModifierKey() in Xutil.h
+ */
+#define IS_MODIFIER_KEY(x)						\
+	((((x) >= GDK_Shift_L) && ((x) <= GDK_Hyper_R)) ||		\
+	 (((x) >= GDK_ISO_Lock) && ((x) <= GDK_ISO_Group_Lock)) ||	\
+	 ((x) == GDK_Mode_switch) ||					\
+	 ((x) == GDK_Num_Lock))
+
 typedef struct _XimLoopbackQueueContainer {
 	GXimProtocol *proto;
 	guint16       imid;
@@ -920,6 +929,8 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 		return TRUE;
 	}
 
+	if (IS_MODIFIER_KEY (event->key.keyval))
+		goto end;
 	if (event->type == GDK_KEY_RELEASE)
 		goto end;
 
