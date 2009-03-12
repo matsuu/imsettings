@@ -1,6 +1,9 @@
 2009-03-12  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event):
+	Fix an assertion on looking up a sequence.
+
+	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event):
 	Ignore modifker keys.
 
 	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event): wait

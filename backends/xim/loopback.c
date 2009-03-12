@@ -963,7 +963,10 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 								    imid, icid,
 								    G_XIM_XLookupSynchronous | lookup_type,
 								    keysym, s);
+			/* We are about to wait for XIM_SYNC_REPLY */
 			sflag = G_XIM_Event_Synchronous;
+			/* Ensure that we'll try to find out a sequence from the beginning next time */
+			ic->sequence_state = NULL;
 
 			d(g_print("result: %s [%s]: 0x%x\n", gdk_keyval_name(keysym), string, event->key.hardware_keycode));
 
