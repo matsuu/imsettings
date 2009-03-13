@@ -785,7 +785,7 @@ xim_loopback_real_xim_destroy_ic(GXimProtocol *proto,
 	}
 	g_hash_table_remove(lconn->ic_table, GUINT_TO_POINTER ((guint)icid));
 
-	return TRUE;
+	return g_xim_server_connection_cmd_destroy_ic_reply(G_XIM_SERVER_CONNECTION (proto), imid, icid);;
 }
 
 static gboolean
