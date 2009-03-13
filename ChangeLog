@@ -1,3 +1,8 @@
+2009-03-13  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event):
+	get rid of an unnecessary synchronization.
+
 2009-03-12  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event):

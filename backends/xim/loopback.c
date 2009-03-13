@@ -961,10 +961,8 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 				lookup_type = G_XIM_XLookupKeySym;
 			retval = g_xim_server_connection_cmd_commit(G_XIM_SERVER_CONNECTION (proto),
 								    imid, icid,
-								    G_XIM_XLookupSynchronous | lookup_type,
+								    (sflag & G_XIM_Event_Synchronous ? 0 : G_XIM_XLookupSynchronous) | lookup_type,
 								    keysym, s);
-			/* We are about to wait for XIM_SYNC_REPLY */
-			sflag = G_XIM_Event_Synchronous;
 			/* Ensure that we'll try to find out a sequence from the beginning next time */
 			ic->sequence_state = NULL;
 
@@ -985,13 +983,15 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 	if (!retval)
 		retval = g_xim_connection_cmd_forward_event(G_XIM_CONNECTION (proto),
 							    imid, icid, sflag, event);
-	if (flag & G_XIM_Event_Synchronous)
+	if (flag & G_XIM_Event_Synchronous) {
 		g_xim_connection_cmd_sync_reply(G_XIM_CONNECTION (proto), imid, icid);
-	if (sflag & G_XIM_Event_Synchronous) {
+		/* sending XIM_SYNC_REPLY usually means synchronization is done. */
+		ic->wait_for_reply = FALSE;
+	} else if (sflag & G_XIM_Event_Synchronous) {
 		ic->wait_for_reply = TRUE;
 	}
 	if (!ic->wait_for_reply && g_queue_get_length(ic->keyeventq)) {
-		g_idle_add(_process_keyevent, ic->keyeventq);
+		g_idle_add_full(G_PRIORITY_HIGH_IDLE, _process_keyevent, ic->keyeventq, NULL);
 	}
 
 	return retval;
@@ -1013,7 +1013,7 @@ xim_loopback_real_xim_sync_reply(GXimProtocol *proto,
 			goto retry;
 	}
 	if (g_queue_get_length(ic->keyeventq) > 0) {
-		g_idle_add(_process_keyevent, ic->keyeventq);
+		g_idle_add_full(G_PRIORITY_HIGH_IDLE, _process_keyevent, ic->keyeventq, NULL);
 	}
 
 	return TRUE;
