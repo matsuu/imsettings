@@ -961,7 +961,7 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 				lookup_type = G_XIM_XLookupKeySym;
 			retval = g_xim_server_connection_cmd_commit(G_XIM_SERVER_CONNECTION (proto),
 								    imid, icid,
-								    (sflag & G_XIM_Event_Synchronous ? 0 : G_XIM_XLookupSynchronous) | lookup_type,
+								    (sflag ? G_XIM_XLookupSynchronous : 0) | lookup_type,
 								    keysym, s);
 			/* Ensure that we'll try to find out a sequence from the beginning next time */
 			ic->sequence_state = NULL;

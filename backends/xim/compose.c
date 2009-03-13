@@ -125,12 +125,10 @@ sequence_add(Sequence  *seq,
 {
 	GSList *list = NULL, *l;
 
-	if (seq->string) {
-		g_set_error(error, sequence_get_error_quark(), SEQ_ERR_INVALID_SEQUENCE,
-			    "Child sequence won't be matched.");
+	/* Overriding old entry like what XKB does */
+	g_free(seq->string);
+	seq->string = NULL;
 
-		return FALSE;
-	}
 	if (seq->candidates == NULL) {
 		seq->candidates = g_tree_new(_sequence_compare);
 	}
@@ -150,6 +148,25 @@ sequence_add(Sequence  *seq,
 	}
 	list = g_slist_append(list, next);
 	g_tree_insert(seq->candidates, (gpointer)next->keysym, list);
+
+	return TRUE;
+}
+
+static gboolean
+sequence_replace(Sequence  *seq,
+		 Sequence  *next,
+		 GError   **error)
+{
+	GSList *list = NULL;
+
+	g_free(seq->string);
+	if (seq->candidates) {
+		g_tree_foreach(seq->candidates, _sequence_list_free, NULL);
+		g_tree_destroy(seq->candidates);
+		seq->candidates = NULL;
+	}
+	seq->string = g_strdup(next->string);
+	seq->composed = next->composed;
 
 	return TRUE;
 }
@@ -616,8 +633,18 @@ compose_parse(Compose *compose)
 			} else {
 				if ((i + 1) == seqarray->len) {
 					if (child->candidates != NULL) {
+						/* XXX: XKB seems to be overwriting old data. */
+						sequence_replace(child, s, &error);
+						if (error) {
+							g_warning("%s: %s", error->message, seq);
+							g_clear_error(&error);
+							sequence_free(s);
+							goto fail;
+						}
+#if 0
 						g_warning("Duplicate sequence: %s", seq);
 						goto fail;
+#endif
 					} else if (s->composed != child->composed ||
 						   (s->string == NULL && child->string != NULL) ||
 						   (s->string != NULL && child->string == NULL) ||
