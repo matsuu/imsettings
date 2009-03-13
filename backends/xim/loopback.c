@@ -87,6 +87,10 @@ static gboolean xim_loopback_real_xim_create_ic           (GXimProtocol  *proto,
                                                            guint16        imid,
                                                            GSList        *attributes,
                                                            gpointer       data);
+static gboolean xim_loopback_real_xim_destroy_ic          (GXimProtocol  *proto,
+							   guint16        imid,
+							   guint16        icid,
+							   gpointer       data);
 static gboolean xim_loopback_real_xim_set_ic_values       (GXimProtocol  *proto,
                                                            guint16        imid,
                                                            guint16        icid,
@@ -234,6 +238,7 @@ xim_loopback_init(XimLoopback *loopback)
 		{"XIM_ENCODING_NEGOTIATION", G_CALLBACK (xim_loopback_real_xim_encoding_negotiation), loopback},
 		{"XIM_GET_IM_VALUES", G_CALLBACK (xim_loopback_real_xim_get_im_values), loopback},
 		{"XIM_CREATE_IC", G_CALLBACK (xim_loopback_real_xim_create_ic), loopback},
+		{"XIM_DESTROY_IC", G_CALLBACK (xim_loopback_real_xim_destroy_ic), loopback},
 		{"XIM_SET_IC_VALUES", G_CALLBACK (xim_loopback_real_xim_set_ic_values), loopback},
 		{"XIM_GET_IC_VALUES", G_CALLBACK (xim_loopback_real_xim_get_ic_values), loopback},
 		{"XIM_SET_IC_FOCUS", G_CALLBACK (xim_loopback_real_xim_set_ic_focus), loopback},
@@ -751,6 +756,34 @@ xim_loopback_real_xim_create_ic(GXimProtocol *proto,
 						   0, "Unable to assign input-context ID");
 		}
 	}
+
+	return TRUE;
+}
+
+static gboolean
+xim_loopback_real_xim_destroy_ic(GXimProtocol *proto,
+				 guint16       imid,
+				 guint16       icid,
+				 gpointer      data)
+{
+	XimLoopbackConnection *lconn = XIM_LOOPBACK_CONNECTION (proto);
+	XimLoopbackIC *ic = g_hash_table_lookup(lconn->ic_table, GUINT_TO_POINTER ((guint)icid));
+
+	if (ic == NULL) {
+		gchar *msg = g_strdup_printf("Invalid input-context ID: [%d,%d]", imid, icid);
+		gboolean retval;
+
+		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
+				      msg);
+		retval = g_xim_connection_cmd_error(G_XIM_CONNECTION (proto),
+						    imid, icid, G_XIM_EMASK_VALID_IMID | G_XIM_EMASK_VALID_ICID,
+						    G_XIM_ERR_BadProtocol,
+						    0, msg);
+		g_free(msg);
+
+		return retval;
+	}
+	g_hash_table_remove(lconn->ic_table, GUINT_TO_POINTER ((guint)icid));
 
 	return TRUE;
 }

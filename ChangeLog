@@ -1,5 +1,8 @@
 2009-03-13  Akira TAGOH  <tagoh@redhat.com>
 
+	* backends/xim/loopback.c (xim_loopback_real_xim_destroy_ic):
+	implemented.
+
 	* backends/xim/compose.c (sequence_add): Override old entry like XKB.
 	(sequence_replace): new to discard old entry that has more sequences
 	than new one.
