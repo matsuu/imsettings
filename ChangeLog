@@ -1,3 +1,7 @@
+2009-03-14  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/compose.c (sequence_lookup): correct masking modifiers.
+
 2009-03-13  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/loopback.c (xim_loopback_real_xim_destroy_ic):

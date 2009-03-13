@@ -137,7 +137,7 @@ sequence_add(Sequence  *seq,
 			Sequence *s = l->data;
 
 			if (s->keysym == next->keysym &&
-			    s->modifiers == next->modifiers &&+
+			    s->modifiers == next->modifiers &&
 			    s->mod_mask == next->mod_mask) {
 				g_set_error(error, sequence_get_error_quark(), SEQ_ERR_SEQUENCE_EXISTS,
 					    "Sequence [keysym:0x%lx,mods:0x%x,mask:0x%x] already exists.",
@@ -201,7 +201,7 @@ sequence_lookup(Sequence *seq,
 		for (l = list; l != NULL; l = g_slist_next(l)) {
 			Sequence *s = l->data;
 
-			if (s->keysym == keysym && (modifiers & s->mod_mask) == s->modifiers) {
+			if (s->keysym == keysym && (modifiers & ~s->mod_mask) == s->modifiers) {
 				return s;
 			}
 		}
