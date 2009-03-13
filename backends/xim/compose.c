@@ -157,8 +157,6 @@ sequence_replace(Sequence  *seq,
 		 Sequence  *next,
 		 GError   **error)
 {
-	GSList *list = NULL;
-
 	g_free(seq->string);
 	if (seq->candidates) {
 		g_tree_foreach(seq->candidates, _sequence_list_free, NULL);
