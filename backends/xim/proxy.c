@@ -1337,8 +1337,8 @@ xim_proxy_client_protocol_real_xim_set_ic_values_reply(GXimProtocol *proto,
 				    g_queue_get_length(priv->sendq));
 	} else {
 		retval = g_xim_server_connection_cmd_set_ic_values_reply(conn, simid, icid);
-		DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SET_IC_VALUES_REPLY, 0, simid, icid);
 	}
+	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_SET_IC_VALUES_REPLY, 0, simid, icid);
 	g_free(req);
   end:
 

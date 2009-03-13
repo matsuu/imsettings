@@ -35,9 +35,6 @@
 
 2009-03-09  Akira TAGOH  <tagoh@redhat.com>
 
-	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_set_ic_values_reply): 
-	Fix a refcount inconsistency.
-
 	Stop a debugging message. (RHBZ#489119)
 
 	* utils/imsettings-start.c (main): Add -q option.
