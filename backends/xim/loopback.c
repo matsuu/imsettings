@@ -1019,11 +1019,13 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 	if (flag & G_XIM_Event_Synchronous) {
 		g_xim_connection_cmd_sync_reply(G_XIM_CONNECTION (proto), imid, icid);
 		/* sending XIM_SYNC_REPLY usually means synchronization is done. */
-		ic->wait_for_reply = FALSE;
+		if (ic)
+			ic->wait_for_reply = FALSE;
 	} else if (sflag & G_XIM_Event_Synchronous) {
-		ic->wait_for_reply = TRUE;
+		if (ic)
+			ic->wait_for_reply = TRUE;
 	}
-	if (!ic->wait_for_reply && g_queue_get_length(ic->keyeventq)) {
+	if (ic && !ic->wait_for_reply && g_queue_get_length(ic->keyeventq)) {
 		g_idle_add_full(G_PRIORITY_HIGH_IDLE, _process_keyevent, ic->keyeventq, NULL);
 	}
 
