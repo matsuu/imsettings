@@ -1,5 +1,7 @@
 2009-03-24  Akira TAGOH  <tagoh@redhat.com>
 
+	* backends/xim/proxy.c (_reconnect): trivial change to make better.
+
 	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event): avoid
 	a segfault if invalid ic is given.
 

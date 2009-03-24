@@ -172,7 +172,13 @@ enum {
 	SIGNAL_0,
 	LAST_SIGNAL
 };
-
+enum {
+	RECONNECT_START = 0,
+	RECONNECT_OP_CONNECT,
+	RECONNECT_OP_OPEN,
+	RECONNECT_OP_ENCODING_NEGOTIATION,
+	RECONNECT_OP_FINISH
+};
 
 static GXimServerConnection *_get_server_connection                   (XimProxy             *proxy,
                                                                        GXimProtocol         *proto);
@@ -322,17 +328,17 @@ _reconnect(XimProxy             *proxy,
 	guint imid;
 
 	switch (XIM_CLIENT_CONNECTION (conn)->reconnection_state) {
-	    case 0:
+	    case RECONNECT_START:
 		    XIM_CLIENT_CONNECTION (conn)->is_reconnecting = TRUE;
 		    break;
-	    case 1:
+	    case RECONNECT_OP_CONNECT:
 		    /* XIM_CONNECT */
 		    sconn = _get_server_connection(proxy, G_XIM_PROTOCOL (conn));
 		    INC_PENDING (XIM_PROXY_CONNECTION (sconn), G_XIM_CONNECT_REPLY, 0, 0, 0);
 		    /* XXX */
 		    retval = g_xim_client_connection_cmd_connect(conn, 1, 0, NULL, TRUE);
 		    break;
-	    case 2:
+	    case RECONNECT_OP_OPEN:
 		    /* XIM_OPEN */
 		    sconn = _get_server_connection(proxy, G_XIM_PROTOCOL (conn));
 		    INC_PENDING (XIM_PROXY_CONNECTION (sconn), G_XIM_OPEN_REPLY, 0, 0, 0);
@@ -340,7 +346,7 @@ _reconnect(XimProxy             *proxy,
 								 XIM_PROXY_CONNECTION (sconn)->locale,
 								 TRUE);
 		    break;
-	    case 3:
+	    case RECONNECT_OP_ENCODING_NEGOTIATION:
 		    /* XIM_ENCODING_NEGOTIATION */
 		    G_STMT_START {
 			    GSList *e = NULL, *d = NULL;
@@ -370,7 +376,7 @@ _reconnect(XimProxy             *proxy,
 			    g_slist_free(d);
 		    } G_STMT_END;
 		    break;
-	    case 4:
+	    case RECONNECT_OP_FINISH:
 		    XIM_CLIENT_CONNECTION (conn)->is_reconnecting = FALSE;
 		    g_xim_message_debug(G_XIM_CORE (proxy)->message, "proxy/event",
 					"Reconnection finished");
