@@ -1,3 +1,25 @@
+2009-04-01  Akira TAGOH  <tagoh@redhat.com>
+
+	Have a workaround to avoid a freeze issue on applications not
+	supporting reconnecting IC. (rhbz#488877)
+
+	* backends/xim/proxy.c (xim_proxy_ic_new): new.
+	(xim_proxy_ic_free): new.
+	(xim_proxy_client_protocol_real_xim_create_ic_reply): create IC to keep
+	availability on track.
+	(xim_proxy_client_protocol_real_xim_destroy_ic_reply): destroy IC to
+	manage availability.
+	(xim_proxy_protocol_real_xim_trigger_notify): send XIM_ERROR back
+	when IC is invalid.
+	(xim_proxy_protocol_real_xim_destroy_ic): just send back DESTROY_IC
+	even if IC is invalid.
+	(xim_proxy_protocol_real_xim_set_ic_values): send XIM_ERROR back
+	when IC is invalid.
+	(xim_proxy_protocol_real_xim_get_ic_values): likewise.
+	(xim_proxy_protocol_real_xim_reset_ic): likewise.
+	(xim_proxy_protocol_real_xim_forward_event): just send XIM_FORWARD_EVENT
+	and XIM_SYNC_REPLY as needed back even if IC is invalid.
+
 2009-03-24  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/proxy.c (_reconnect): trivial change to make better.

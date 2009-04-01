@@ -999,7 +999,9 @@ xim_loopback_real_xim_forward_event(GXimProtocol *proto,
 			/* Ensure that we'll try to find out a sequence from the beginning next time */
 			ic->sequence_state = NULL;
 
-			d(g_print("result: %s [%s]: 0x%x\n", gdk_keyval_name(keysym), string, event->key.hardware_keycode));
+			g_xim_message_debug(G_XIM_PROTOCOL_GET_IFACE (proto)->message, "loopback/proto/event",
+					    "Composed result: symbol %s, string %s, code 0x%x",
+					    gdk_keyval_name(keysym), string, event->key.hardware_keycode);
 
 			g_string_free(s, TRUE);
 		} else {

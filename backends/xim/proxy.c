@@ -202,6 +202,24 @@ G_DEFINE_TYPE (XimProxyConnection, xim_proxy_connection, G_TYPE_XIM_SERVER_CONNE
 /*
  * Private functions
  */
+static XimProxyIC *
+xim_proxy_ic_new(void)
+{
+	XimProxyIC *retval = g_new0(XimProxyIC, 1);
+
+	G_XIM_CHECK_ALLOC (retval, NULL);
+
+	return retval;
+}
+
+static void
+xim_proxy_ic_free(gpointer data)
+{
+	XimProxyIC *ic = data;
+
+	g_free(ic);
+}
+
 static gint
 _find_packet_to_receive(gconstpointer a,
 			gconstpointer b)
@@ -1270,11 +1288,23 @@ xim_proxy_client_protocol_real_xim_create_ic_reply(GXimProtocol *proto,
 	GXimServerConnection *conn = NULL;
 	gboolean retval = FALSE;
 	guint16 simid = _get_server_imid(proxy, imid);
+	XimProxyIC *ic;
 
 	if (simid == 0)
 		goto end;
 
 	conn = _get_server_connection(proxy, proto);
+
+	if (g_hash_table_lookup(XIM_PROXY_CONNECTION (conn)->ic_table,
+				GUINT_TO_POINTER ((guint)icid)) != NULL) {
+		g_xim_message_bug(G_XIM_CORE (proxy)->message,
+				  "Input-Context ID %d wasn't somehow closed properly. discarding old data",
+				  icid);
+	}
+	ic = xim_proxy_ic_new();
+	g_hash_table_insert(XIM_PROXY_CONNECTION (conn)->ic_table,
+			    GUINT_TO_POINTER ((guint)icid),
+			    ic);
 
 	retval = g_xim_server_connection_cmd_create_ic_reply(conn, simid, icid);
 	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_CREATE_IC_REPLY, 0, simid, icid);
@@ -1298,6 +1328,10 @@ xim_proxy_client_protocol_real_xim_destroy_ic_reply(GXimProtocol *proto,
 		goto end;
 
 	conn = _get_server_connection(proxy, proto);
+
+	if (conn)
+		g_hash_table_remove(XIM_PROXY_CONNECTION (conn)->ic_table,
+				    GUINT_TO_POINTER ((guint)icid));
 
 	retval = g_xim_server_connection_cmd_destroy_ic_reply(conn, simid, icid);
 	DEC_PENDING (XIM_PROXY_CONNECTION (conn), G_XIM_DESTROY_IC_REPLY, 0, simid, icid);
@@ -2203,12 +2237,14 @@ xim_proxy_protocol_real_xim_trigger_notify(GXimProtocol *proto,
 	/* the case when cimid is 0 means new XIM server is being brought up.
 	 * So IC is already invalid for new one. we don't need to send this out.
 	 */
-	if (cimid == 0) {
-		return g_xim_connection_cmd_error(G_XIM_CONNECTION (proto), imid, icid, G_XIM_EMASK_VALID_IMID | G_XIM_EMASK_VALID_ICID,
-						  G_XIM_ERR_BadProtocol, 0, "input-context id is inavlid due to reconnecting");
-	}
+	if (cimid == 0)
+		goto error;
 
 	conn = _get_client_connection(proxy, proto);
+
+	if (g_hash_table_lookup(XIM_PROXY_CONNECTION (proto)->ic_table,
+				GUINT_TO_POINTER ((guint)icid)) == NULL)
+		goto error;
 
 	if (!g_xim_client_connection_cmd_trigger_notify(conn, cimid, icid, flag, index_, event_mask, TRUE)) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
@@ -2219,6 +2255,9 @@ xim_proxy_protocol_real_xim_trigger_notify(GXimProtocol *proto,
 	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_TRIGGER_NOTIFY_REPLY, 0, imid, icid);
 
 	return TRUE;
+  error:
+	return g_xim_connection_cmd_error(G_XIM_CONNECTION (proto), imid, icid, G_XIM_EMASK_VALID_IMID | G_XIM_EMASK_VALID_ICID,
+					  G_XIM_ERR_BadProtocol, 0, "input-context id is inavlid due to reconnecting");
 }
 
 static gboolean
@@ -2460,13 +2499,15 @@ xim_proxy_protocol_real_xim_destroy_ic(GXimProtocol *proto,
 	/* the case when cimid is 0 means new XIM server is being brought up.
 	 * So IC is already invalid for new one. we don't need to send this out.
 	 */
-	if (cimid == 0) {
-		/* to avoid the unnecessary error, send back XIM_DESTROY_IC_REPLY here. */
-		return g_xim_server_connection_cmd_destroy_ic_reply(G_XIM_SERVER_CONNECTION (proto),
-								    imid, icid);
-	}
+	if (cimid == 0)
+		goto error;
 
 	conn = _get_client_connection(proxy, proto);
+
+	if (g_hash_table_lookup(XIM_PROXY_CONNECTION (proto)->ic_table,
+				GUINT_TO_POINTER ((guint)icid)) == NULL)
+		goto error;
+
 	if (!g_xim_client_connection_cmd_destroy_ic(conn, cimid, icid, TRUE)) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
 				      "Unable to deliver XIM_DESTROY_IC for %p",
@@ -2476,6 +2517,10 @@ xim_proxy_protocol_real_xim_destroy_ic(GXimProtocol *proto,
 	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_DESTROY_IC_REPLY, 0, imid, icid);
 
 	return TRUE;
+  error:
+	/* to avoid the unnecessary error, send back XIM_DESTROY_IC_REPLY here. */
+	return g_xim_server_connection_cmd_destroy_ic_reply(G_XIM_SERVER_CONNECTION (proto),
+							    imid, icid);
 }
 
 static gboolean
@@ -2497,12 +2542,14 @@ xim_proxy_protocol_real_xim_set_ic_values(GXimProtocol *proto,
 	/* the case when cimid is 0 means new XIM server is being brought up.
 	 * So IC is already invalid for new one. we don't need to send this out.
 	 */
-	if (cimid == 0) {
-		return g_xim_connection_cmd_error(G_XIM_CONNECTION (proto), imid, icid, G_XIM_EMASK_VALID_IMID | G_XIM_EMASK_VALID_ICID,
-						  G_XIM_ERR_BadProtocol, 0, "input-context id is inavlid due to reconnecting");
-	}
+	if (cimid == 0)
+		goto error;
 
 	conn = _get_client_connection(proxy, proto);
+
+	if (g_hash_table_lookup(XIM_PROXY_CONNECTION (proto)->ic_table,
+				GUINT_TO_POINTER ((guint)icid)) == NULL)
+		goto error;
 
 	for (l = (GSList *)attributes; l != NULL; l = g_slist_next(l)) {
 		GXimAttribute *a, *orig = l->data;
@@ -2565,6 +2612,9 @@ xim_proxy_protocol_real_xim_set_ic_values(GXimProtocol *proto,
 	g_slist_free(alt);
 
 	return TRUE;
+  error:
+	return g_xim_connection_cmd_error(G_XIM_CONNECTION (proto), imid, icid, G_XIM_EMASK_VALID_IMID | G_XIM_EMASK_VALID_ICID,
+					  G_XIM_ERR_BadProtocol, 0, "input-context id is inavlid due to reconnecting");
 }
 
 static gboolean
@@ -2583,12 +2633,14 @@ xim_proxy_protocol_real_xim_get_ic_values(GXimProtocol *proto,
 	/* the case when cimid is 0 means new XIM server is being brought up.
 	 * So IC is already invalid for new one. we don't need to send this out.
 	 */
-	if (cimid == 0) {
-		return g_xim_connection_cmd_error(G_XIM_CONNECTION (proto), imid, icid, G_XIM_EMASK_VALID_IMID | G_XIM_EMASK_VALID_ICID,
-						  G_XIM_ERR_BadProtocol, 0, "input-context id is inavlid due to reconnecting");
-	}
+	if (cimid == 0)
+		goto error;
 
 	conn = _get_client_connection(proxy, proto);
+
+	if (g_hash_table_lookup(XIM_PROXY_CONNECTION (proto)->ic_table,
+				GUINT_TO_POINTER ((guint)icid)) == NULL)
+		goto error;
 
 	for (l = (GSList *)attr_id; l != NULL; l = g_slist_next(l)) {
 		guint16 id = GPOINTER_TO_UINT (l->data);
@@ -2622,6 +2674,9 @@ xim_proxy_protocol_real_xim_get_ic_values(GXimProtocol *proto,
 	g_slist_free(alt);
 
 	return TRUE;
+  error:
+	return g_xim_connection_cmd_error(G_XIM_CONNECTION (proto), imid, icid, G_XIM_EMASK_VALID_IMID | G_XIM_EMASK_VALID_ICID,
+					  G_XIM_ERR_BadProtocol, 0, "input-context id is inavlid due to reconnecting");
 }
 
 static gboolean
@@ -2701,6 +2756,10 @@ xim_proxy_protocol_real_xim_forward_event(GXimProtocol *proto,
 	if (cimid == 0)
 		return FALSE;
 
+	if (g_hash_table_lookup(XIM_PROXY_CONNECTION (proto)->ic_table,
+				GUINT_TO_POINTER ((guint)icid)) == NULL)
+		return FALSE;
+
 	if (!g_xim_connection_cmd_forward_event(G_XIM_CONNECTION (conn), cimid, icid, flag, event)) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
 				      "Unable to deliver XIM_FORWARD_EVENT for %p",
@@ -2739,11 +2798,14 @@ xim_proxy_protocol_real_xim_sync(GXimProtocol *proto,
 	/* the case when cimid is 0 means new XIM server is being brought up.
 	 * So IC is already invalid for new one. we don't need to send this out.
 	 */
-	if (cimid == 0) {
-		return g_xim_connection_cmd_sync_reply(G_XIM_CONNECTION (proto), imid, icid);
-	}
+	if (cimid == 0)
+		goto error;
 
 	conn = _get_client_connection(proxy, proto);
+
+	if (g_hash_table_lookup(XIM_PROXY_CONNECTION (proto)->ic_table,
+				GUINT_TO_POINTER ((guint)icid)) == NULL)
+		goto error;
 
 	if (!g_xim_client_connection_cmd_sync(conn, cimid, icid, TRUE)) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
@@ -2754,6 +2816,8 @@ xim_proxy_protocol_real_xim_sync(GXimProtocol *proto,
 	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_SYNC_REPLY, 0, imid, icid);
 
 	return TRUE;
+  error:
+	return g_xim_connection_cmd_sync_reply(G_XIM_CONNECTION (proto), imid, icid);
 }
 
 static gboolean
@@ -2796,12 +2860,14 @@ xim_proxy_protocol_real_xim_reset_ic(GXimProtocol *proto,
 	/* the case when cimid is 0 means new XIM server is being brought up.
 	 * So IC is already invalid for new one. we don't need to send this out.
 	 */
-	if (cimid == 0) {
-		return g_xim_connection_cmd_error(G_XIM_CONNECTION (proto), imid, icid, G_XIM_EMASK_VALID_IMID | G_XIM_EMASK_VALID_ICID,
-						  G_XIM_ERR_BadProtocol, 0, "input-context id is inavlid due to reconnecting");
-	}
+	if (cimid == 0)
+		goto error;
 
 	conn = _get_client_connection(proxy, proto);
+
+	if (g_hash_table_lookup(XIM_PROXY_CONNECTION (proto)->ic_table,
+				GUINT_TO_POINTER ((guint)icid)) == NULL)
+		goto error;
 
 	if (!g_xim_client_connection_cmd_reset_ic(conn, cimid, icid, TRUE)) {
 		g_xim_message_warning(G_XIM_PROTOCOL_GET_IFACE (proto)->message,
@@ -2812,6 +2878,9 @@ xim_proxy_protocol_real_xim_reset_ic(GXimProtocol *proto,
 	INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_RESET_IC_REPLY, 0, imid, icid);
 
 	return TRUE;
+  error:
+	return g_xim_connection_cmd_error(G_XIM_CONNECTION (proto), imid, icid, G_XIM_EMASK_VALID_IMID | G_XIM_EMASK_VALID_ICID,
+					  G_XIM_ERR_BadProtocol, 0, "input-context id is inavlid due to reconnecting");
 }
 
 static gboolean
@@ -3004,6 +3073,7 @@ xim_proxy_connection_real_finalize(GObject *object)
 	g_xim_str_free(conn->locale);
 	g_queue_foreach(conn->pendingq, (GFunc)g_free, NULL);
 	g_queue_free(conn->pendingq);
+	g_hash_table_destroy(conn->ic_table);
 
 	if (G_OBJECT_CLASS (xim_proxy_connection_parent_class)->finalize)
 		(* G_OBJECT_CLASS (xim_proxy_connection_parent_class)->finalize) (object);
@@ -3021,6 +3091,7 @@ static void
 xim_proxy_connection_init(XimProxyConnection *conn)
 {
 	conn->pendingq = g_queue_new();
+	conn->ic_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, xim_proxy_ic_free);
 }
 
 /*
@@ -3157,6 +3228,7 @@ xim_proxy_disconnect_all(XimProxy *proxy)
 		GdkNativeWindow snw;
 		XimClient *client;
 
+		g_hash_table_remove_all(XIM_PROXY_CONNECTION (conn)->ic_table);
 		client = g_hash_table_lookup(proxy->client_table,
 					     G_XIM_NATIVE_WINDOW_TO_POINTER (nw));
 		if (client) {

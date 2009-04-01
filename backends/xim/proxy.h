@@ -52,6 +52,7 @@ typedef struct _XimProxy		XimProxy;
 
 typedef struct _XimProxyConnectionClass	XimProxyConnectionClass;
 typedef struct _XimProxyConnection	XimProxyConnection;
+typedef struct _XimProxyIC		XimProxyIC;
 
 struct _XimProxyClass {
 	GXimServerTemplateClass  parent_class;
@@ -90,9 +91,13 @@ struct _XimProxyConnection {
 	GXimServerConnection  parent_instance;
 	GXimStr              *locale;
 	GQueue               *pendingq;
+	GHashTable           *ic_table;
 	gint                  n_pending_key_event;
 };
 
+struct _XimProxyIC {
+	gint dummy;
+};
 
 GType     xim_proxy_get_type      (void) G_GNUC_CONST;
 XimProxy *xim_proxy_new           (GdkDisplay   *dpy,
