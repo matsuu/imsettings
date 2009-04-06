@@ -1,3 +1,8 @@
+2009-04-06  Akira TAGOH  <tagoh@redhat.com>
+
+	* utils/imsettings-start.c (main): Use IMSETTINGS_MODULE prior to look
+	up from imsettings to ensure IM running for certain locales. (rhbz#493406)
+
 2009-04-01  Akira TAGOH  <tagoh@redhat.com>
 
 	Have a workaround to avoid a freeze issue on applications not

@@ -107,17 +107,23 @@ main(int    argc,
 	n_retry = 0;
 
 	if (argc < 2) {
-		module = imsettings_request_get_current_user_im(req, &error);
-		if (error) {
-			g_printerr("%s\n", error->message);
-			g_error_free(error);
-			retval = 1;
-			goto end;
-		}
-		if (module == NULL || module[0] == 0) {
-			g_print(_("No Input Method available\n"));
-			retval = 1;
-			goto end;
+		const gchar *env = g_getenv("IMSETTINGS_MODULE");
+
+		if (env != NULL && env[0] != 0) {
+			module = g_strdup(env);
+		} else {
+			module = imsettings_request_get_current_user_im(req, &error);
+			if (error) {
+				g_printerr("%s\n", error->message);
+				g_error_free(error);
+				retval = 1;
+				goto end;
+			}
+			if (module == NULL || module[0] == 0) {
+				g_print(_("No Input Method available\n"));
+				retval = 1;
+				goto end;
+			}
 		}
 	} else {
 		module = g_strdup(argv[1]);
