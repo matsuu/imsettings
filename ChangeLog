@@ -1,5 +1,15 @@
 2009-04-06  Akira TAGOH  <tagoh@redhat.com>
 
+	Fix no creation of .xinputrc with stopping IM. (rhbz#490587)
+
+	* src/factory.c (_update_symlink): Use customizable homedir stored in
+	IMSettingsMonitor instead of g_get_homedir.
+	(imsettings_manager_real_stop_im): likewise.
+	(imsettings_manager_real_stop_im): check if current IM for an user is
+	same to the requested module too, to update .xinputrc.
+
+	* tests/rhbz_490587.c: new testcase.
+
 	* utils/imsettings-start.c (main): Use IMSETTINGS_MODULE prior to look
 	up from imsettings to ensure IM running for certain locales. (rhbz#493406)
 

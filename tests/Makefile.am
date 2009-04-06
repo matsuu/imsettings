@@ -6,6 +6,7 @@ INCLUDES =						\
 	-I$(top_srcdir)/imsettings			\
 	-DIMSETTINGS_SRCDIR="\"$(abs_srcdir)\""		\
 	-DIMSETTINGS_BUILDDIR="\"$(abs_top_builddir)\""	\
+	-DXINPUT_SUFFIX="\"$(XINPUT_SUFFIX)\""		\
 	$(IMSETTINGS_CFLAGS)				\
 	$(CHECK_CFLAGS)					\
 	$(NULL)
@@ -57,6 +58,7 @@ noinst_PROGRAMS +=					\
 	test-rhbz-453358				\
 	test-rhbz-455363				\
 	test-rhbz-471833				\
+	test-rhbz-490587				\
 	$(NULL)
 endif
 #
@@ -115,5 +117,10 @@ test_rhbz_455363_SOURCES =				\
 #
 test_rhbz_471833_SOURCES =				\
 	rhbz_471833.c					\
+	$(common_sources)				\
+	$(NULL)
+#
+test_rhbz_490587_SOURCES =				\
+	rhbz_490587.c					\
 	$(common_sources)				\
 	$(NULL)

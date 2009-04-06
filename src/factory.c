@@ -328,11 +328,11 @@ _update_symlink(IMSettingsManagerPrivate  *priv,
 		GError                   **error)
 {
 	struct stat st;
-	const gchar *homedir;
+	gchar *homedir = NULL;
 	gchar *conffile = NULL, *backfile = NULL, *p = NULL, *n = NULL;
 	int save_errno;
 
-	homedir = g_get_home_dir();
+	g_object_get(priv->monitor, "homedir", &homedir, NULL);
 	if (homedir == NULL) {
 		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
 			    _("Failed to get a place of home directory."));
@@ -393,6 +393,7 @@ _update_symlink(IMSettingsManagerPrivate  *priv,
 	g_free(p);
 	g_free(conffile);
 	g_free(backfile);
+	g_free(homedir);
 
 	return (*error == NULL);
 }
@@ -456,15 +457,29 @@ imsettings_manager_real_get_property(GObject    *object,
 				     GParamSpec *pspec)
 {
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (object);
+	gchar *p = NULL;
 
 	switch (prop_id) {
 	    case PROP_DISPLAY_NAME:
 		    g_value_set_string(value, priv->display_name);
 		    break;
+	    case PROP_XINPUTRCDIR:
+		    g_object_get(priv->monitor, "xinputrcdir", &p, NULL);
+		    g_value_set_string(value, p);
+		    break;
+	    case PROP_XINPUTDIR:
+		    g_object_get(priv->monitor, "xinputdir", &p, NULL);
+		    g_value_set_string(value, p);
+		    break;
+	    case PROP_HOMEDIR:
+		    g_object_get(priv->monitor, "homedir", &p, NULL);
+		    g_value_set_string(value, p);
+		    break;
 	    default:
 		    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		    break;
 	}
+	g_free(p);
 }
 
 static void
@@ -674,10 +689,10 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 {
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (imsettings);
 	IMSettingsInfo *info = NULL;
-	const gchar *homedir;
+	gchar *homedir = NULL;
 	const gchar *xinputfile = NULL;
 	const gchar *gtkimm, *xim;
-	gchar *pidfile = NULL;
+	gchar *pidfile = NULL, *p = NULL;
 	gboolean retval = FALSE;
 	GString *strerr = g_string_new(NULL);
 
@@ -734,13 +749,15 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 	}
 
 	/* finally update .xinputrc */
-	homedir = g_get_home_dir();
+	g_object_get(priv->monitor, "homedir", &homedir, NULL);
 	if (homedir == NULL) {
 		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
 			    _("Failed to get a place of home directory."));
 		goto end;
 	}
-	if (imsettings_info_is_user_default(info)) {
+	if (imsettings_info_is_user_default(info) ||
+	    ((p = imsettings_manager_real_get_current_user_im(imsettings, error)) != NULL &&
+	     strcmp(p, module) == 0)) {
 		gchar *conffile = g_build_filename(XINPUT_PATH, IMSETTINGS_NONE_CONF XINPUT_SUFFIX, NULL);
 
 		if (update_xinputrc && !_update_symlink(priv, conffile, error))
@@ -765,6 +782,7 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 	}
   end:
 	g_free(pidfile);
+	g_free(homedir);
 	g_string_free(strerr, TRUE);
 	if (info)
 		g_object_unref(info);
