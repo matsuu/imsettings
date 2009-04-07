@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT([imsettings], 0.106.1, [http://code.google.com/p/imsettings/issues/entry])
+AC_INIT([imsettings], 0.106.2, [http://code.google.com/p/imsettings/issues/entry])
 
 . ./requires
 
@@ -45,7 +45,7 @@ LT_REVISION=0
 LT_AGE=0
 
 LT_XIM_CURRENT=1
-LT_XIM_REVISION=2
+LT_XIM_REVISION=3
 LT_XIM_AGE=0
 
 AC_SUBST(LT_CURRENT)

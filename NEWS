@@ -1,3 +1,15 @@
+0.106.1 -> 0.106.2
+=====================
+* Bug Fixes:
+  * rhbz#483840: Dead key not working.
+  * rhbz#484142: Get rid of NoSymbol warnings.
+  * rhbz#488976: Get stuck on key events.
+  * rhbz#488877: Have a workaround to avoid a freeze issue on applications
+    not supporting reconnecting IC.
+  * rhbz#488899: Segfault with reconnecting
+  * rhbz#490587: .xinputrc isn't created with disabling IM
+  * rhbz#493406: IM is running for all locales
+
 0.106.0 -> 0.106.1
 =====================
 * Bug Fixes:
