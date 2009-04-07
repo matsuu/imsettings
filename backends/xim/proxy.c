@@ -1976,9 +1976,9 @@ _weak_notify_conn_cb(gpointer  data,
 			comm_window = g_xim_transport_get_native_channel(G_XIM_TRANSPORT (client->connection));
 			g_hash_table_remove(XIM_PROXY (server)->client_table,
 					    G_XIM_NATIVE_WINDOW_TO_POINTER (nw));
+			g_hash_table_remove(XIM_PROXY (server)->comm_table,
+					    G_XIM_NATIVE_WINDOW_TO_POINTER (comm_window));
 		}
-		g_hash_table_remove(XIM_PROXY (server)->comm_table,
-				    G_XIM_NATIVE_WINDOW_TO_POINTER (comm_window));
 	}
 	g_xim_message_debug(core->message, "proxy/conn",
 			    "live server connection: %d [%d][%d]\n",
