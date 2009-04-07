@@ -969,7 +969,7 @@ _delay_notify(gpointer data)
 	IMApplet *applet = data;
 	GConfClient *client = gconf_client_get_default();
 	GConfValue *val;
-	gchar *notice_key, *body, *key, *escaped_key;
+	gchar *notice1, *notice2, *body, *key, *escaped_key;
 
 	val = gconf_client_get(client, "/apps/imsettings-applet/notify_on_bubble", NULL);
 	if (val) {
@@ -980,14 +980,17 @@ _delay_notify(gpointer data)
 	}
 	key = _get_acceleration_key(applet);
 	escaped_key = g_markup_escape_text(key, -1);
+	/* This may looks like "Please press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+	 * or "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+	 */
+	notice1 = g_strdup(_("Left-click on the icon to connect to/disconnect from Input Method.\n"));
+	notice2 = g_strdup(_("Right-click to show up the Input Method menu."));
 	if (strcmp(key, "disabled") == 0) {
-		notice_key = g_strdup("");
+		body = g_strdup_printf(_("Please %s%s"), notice1, notice2);
 	} else {
-		notice_key = g_strdup_printf(_("Press %s or "),
-					     escaped_key);
+		body = g_strdup_printf(_("Please press %s or %s%s"),
+				       escaped_key, notice1, notice2);
 	}
-	body = g_strdup_printf(_("%sLeft-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu."),
-			       notice_key);
 	notify_notification_set_urgency(applet->notify, NOTIFY_URGENCY_LOW);
 	notify_notification_update(applet->notify, _("Tips"), body, NULL);
 	notify_notification_clear_actions(applet->notify);
@@ -1000,6 +1003,8 @@ _delay_notify(gpointer data)
 				       applet,
 				       NULL);
 	notify_notification_show(applet->notify, NULL);
+	g_free(notice1);
+	g_free(notice2);
 	g_free(body);
 	g_free(key);
 	g_free(escaped_key);
