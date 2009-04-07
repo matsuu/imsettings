@@ -1,7 +1,7 @@
 2009-04-07  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/xim/proxy.c (_weak_notify_conn_cb): avoid a segfault related
-	to reconnection.
+	to reconnection. (rhbz#488899)
 
 	* data/xinput.sh.in.in: export IMSETTINGS_MODULE.
 
