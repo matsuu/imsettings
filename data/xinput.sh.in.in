@@ -169,6 +169,7 @@ export IMSETTINGS_INTEGRATE_DESKTOP
 # start IM via imsettings
 IMSETTINGS_MODULE=${SHORT_DESC:-${XIM}}
 [ -z "$IMSETTINGS_MODULE" ] && IMSETTINGS_MODULE="none"
+export IMSETTINGS_MODULE
 
 # NOTE: Please make sure the session bus is established before running this script.
 if ! is_dbus_enabled; then
