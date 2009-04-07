@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: si\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-07 19:54+0900\n"
+"POT-Creation-Date: 2009-04-07 20:11+0900\n"
 "PO-Revision-Date: 2006-11-29 21:42+0530\n"
 "Last-Translator: Tyronne Wickramarathne <tywickra@redhat.com>\n"
 "Language-Team: Sinhala <en@li.org>\n"
@@ -184,11 +184,13 @@ msgstr ""
 #.
 #: ../applet/main.c:986
 #, fuzzy
-msgid "Left-click on the icon to connect to/disconnect from Input Method.\n"
+msgid "Left-click on the icon to connect to/disconnect from Input Method."
 msgstr "රිසි ලෙස සකස්කර තිබෙන අක්‍ෂර ඇතුලත් කිරීමේ ක්‍රමය භාවිත කරන්න(_c)"
 
 #: ../applet/main.c:987
-msgid "Right-click to show up the Input Method menu."
+msgid ""
+"\n"
+"Right-click to show up the Input Method menu."
 msgstr ""
 
 #: ../applet/main.c:989

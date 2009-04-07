@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser 0.3.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-07 19:54+0900\n"
+"POT-Creation-Date: 2009-04-07 20:11+0900\n"
 "PO-Revision-Date: 2007-02-23 04:43+0700\n"
 "Last-Translator: Teguh DC <dheche@bradjamoesti.or.id>\n"
 "Language-Team: Indonesian\n"
@@ -182,11 +182,13 @@ msgstr ""
 #.
 #: ../applet/main.c:986
 #, fuzzy
-msgid "Left-click on the icon to connect to/disconnect from Input Method.\n"
+msgid "Left-click on the icon to connect to/disconnect from Input Method."
 msgstr "Pergunakan metode masukan kustom"
 
 #: ../applet/main.c:987
-msgid "Right-click to show up the Input Method menu."
+msgid ""
+"\n"
+"Right-click to show up the Input Method menu."
 msgstr ""
 
 #: ../applet/main.c:989
