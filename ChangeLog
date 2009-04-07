@@ -1,3 +1,7 @@
+2009-04-07  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xinput.sh.in.in: export IMSETTINGS_MODULE.
+
 2009-04-06  Akira TAGOH  <tagoh@redhat.com>
 
 	Fix no creation of .xinputrc with stopping IM. (rhbz#490587)
