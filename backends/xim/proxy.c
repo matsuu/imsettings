@@ -157,7 +157,7 @@
 					    XIM_PROXY_CONNECTION (_p_)->n_pending_key_event); \
 		} else {						\
 			g_xim_message_bug(G_XIM_PROTOCOL_GET_IFACE (_p_)->message, \
-					  "%s: The pending key event counter is overflowed", \
+					  "%s: The pending key event counter is underflowed", \
 					  __FUNCTION__);		\
 		}							\
 	} G_STMT_END
@@ -1967,9 +1967,16 @@ _weak_notify_conn_cb(gpointer  data,
 				    G_XIM_NATIVE_WINDOW_TO_POINTER (nw));
 		client = g_hash_table_lookup(XIM_PROXY (server)->client_table,
 					     G_XIM_NATIVE_WINDOW_TO_POINTER (nw));
-		comm_window = g_xim_transport_get_native_channel(G_XIM_TRANSPORT (client->connection));
-		g_hash_table_remove(XIM_PROXY (server)->client_table,
-				    G_XIM_NATIVE_WINDOW_TO_POINTER (nw));
+		/* No client instance in the table is likely to happen when
+		 * the client application doesn't support reconnecting and
+		 * applications is destroyed without any conversations on XIM
+		 * protocol.
+		 */
+		if (client) {
+			comm_window = g_xim_transport_get_native_channel(G_XIM_TRANSPORT (client->connection));
+			g_hash_table_remove(XIM_PROXY (server)->client_table,
+					    G_XIM_NATIVE_WINDOW_TO_POINTER (nw));
+		}
 		g_hash_table_remove(XIM_PROXY (server)->comm_table,
 				    G_XIM_NATIVE_WINDOW_TO_POINTER (comm_window));
 	}
