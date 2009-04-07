@@ -983,8 +983,8 @@ _delay_notify(gpointer data)
 	/* This may looks like "Please press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
 	 * or "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
 	 */
-	notice1 = g_strdup(_("Left-click on the icon to connect to/disconnect from Input Method.\n"));
-	notice2 = g_strdup(_("Right-click to show up the Input Method menu."));
+	notice1 = g_strdup(_("Left-click on the icon to connect to/disconnect from Input Method."));
+	notice2 = g_strdup(_("\nRight-click to show up the Input Method menu."));
 	if (strcmp(key, "disabled") == 0) {
 		body = g_strdup_printf(_("Please %s%s"), notice1, notice2);
 	} else {
