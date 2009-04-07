@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser 0.3.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-07 19:48+0900\n"
+"POT-Creation-Date: 2009-04-07 19:54+0900\n"
 "PO-Revision-Date: 2006-09-29 04:28-0400\n"
 "Last-Translator: Magnus Larsson <fedoratrans@gmail.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -178,35 +178,37 @@ msgid ""
 "the right click first."
 msgstr ""
 
-#. This may looks like "Press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#: ../applet/main.c:984
+#. This may looks like "Please press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. * or "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#.
+#: ../applet/main.c:986
 #, fuzzy
 msgid "Left-click on the icon to connect to/disconnect from Input Method.\n"
 msgstr "Använd _anpassad inmatningsmetod"
 
-#: ../applet/main.c:985
-msgid "Right-click to show up the Input Method menu."
-msgstr ""
-
 #: ../applet/main.c:987
-#, c-format
-msgid "Please %s%s"
+msgid "Right-click to show up the Input Method menu."
 msgstr ""
 
 #: ../applet/main.c:989
 #, c-format
+msgid "Please %s%s"
+msgstr ""
+
+#: ../applet/main.c:991
+#, c-format
 msgid "Please press %s or %s%s"
 msgstr ""
 
-#: ../applet/main.c:993
+#: ../applet/main.c:995
 msgid "Tips"
 msgstr ""
 
-#: ../applet/main.c:999
+#: ../applet/main.c:1001
 msgid "Do not show notifications again"
 msgstr ""
 
-#: ../applet/main.c:1045
+#: ../applet/main.c:1047
 msgid "Unable to take an ownership for XIM server"
 msgstr ""
 
