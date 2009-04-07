@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-10 18:28+0900\n"
-"PO-Revision-Date: 2009-02-05 22:30+0100\n"
+"POT-Creation-Date: 2009-04-07 19:48+0900\n"
+"PO-Revision-Date: 2009-03-29 16:25+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,9 +22,8 @@ msgid "A shortcut key to connect to/disconnect from Input Method"
 msgstr "Klawisz skrótu do łączenia się z/rozłączania się od metody wejścia"
 
 #: ../applet/imsettings-applet.schemas.in.h:2
-#, fuzzy
 msgid "Enable this when accelerator keys etc doesn't work"
-msgstr "Nie można przechowywać klawisza skrótu w GConf"
+msgstr "Włącz, kiedy klawisze skrótu itp. nie działają"
 
 #: ../applet/imsettings-applet.schemas.in.h:3
 msgid ""
@@ -62,6 +61,8 @@ msgid ""
 "When this option is enabled, all of key events will be sent to Input Method "
 "synchronously. This might affects a performance."
 msgstr ""
+"Kiedy ta opcja jest włączona, wszystkie zdarzenia klawiszy będą "
+"synchronicznie wysyłane do metody wejścia. To może mieć wpływ na wydajność."
 
 #: ../applet/imsettings-applet.schemas.in.h:8
 msgid "Whether to notify informations with libnotify"
@@ -93,7 +94,7 @@ msgstr ""
 msgid "Connected to %s.%s"
 msgstr "Połączono z %s.%s"
 
-#: ../applet/main.c:203 ../applet/main.c:238 ../applet/main.c:910
+#: ../applet/main.c:203 ../applet/main.c:238 ../applet/main.c:911
 msgid "Information"
 msgstr "Informacja"
 
@@ -140,15 +141,16 @@ msgid "_Show the status icon"
 msgstr "Wyświetlaj ikonę _stanu"
 
 #: ../applet/main.c:704
-#, fuzzy
 msgid "_Enable this when accelerator keys etc doesn't work"
-msgstr "Nie można przechowywać klawisza skrótu w GConf"
+msgstr "Włącz, ki_edy klawisze skrótu itp. nie działają"
 
 #: ../applet/main.c:714
 msgid ""
 "When this option is enabled, all of key events will be sent to Input Method "
 "synchronously. this might affects a performance."
 msgstr ""
+"Kiedy ta opcja jest włączona, wszystkie zdarzenia klawiszy będą "
+"synchronicznie wysyłane do metody wejścia. To może mieć wpływ na wydajność."
 
 #: ../applet/main.c:723
 msgid "<b>Trigger key:</b>"
@@ -167,19 +169,19 @@ msgstr ""
 "mają zostać przydzielone do klawisza skrótu. Naciśnij klawisz Backspace, aby "
 "wyłączyć tę funkcję."
 
-#: ../applet/main.c:825
+#: ../applet/main.c:826
 msgid "Disconnect"
 msgstr "Rozłącz"
 
-#: ../applet/main.c:884
+#: ../applet/main.c:885
 msgid "Click to connect to Input Method"
 msgstr "Naciśnij, aby połączyć się z metodą wejścia"
 
-#: ../applet/main.c:888
+#: ../applet/main.c:889
 msgid "Click to disconnect from Input Method"
 msgstr "Naciśnij, aby rozłączyć się z metodą wejścia"
 
-#: ../applet/main.c:911
+#: ../applet/main.c:912
 msgid ""
 "The default Input Method isn't yet configured. To get this working, you need "
 "to set up that on im-chooser or select one from the menu which appears by "
@@ -189,30 +191,36 @@ msgstr ""
 "należy ustawić ją w im-chooser lub wybrać jedną z menu, które pojawia się po "
 "naciśnięciu prawym przyciskiem."
 
+#. This may looks like "Press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#: ../applet/main.c:984
+#, fuzzy
+msgid "Left-click on the icon to connect to/disconnect from Input Method.\n"
+msgstr "Klawisz skrótu do łączenia się z/rozłączania się od metody wejścia"
+
 #: ../applet/main.c:985
-#, c-format
-msgid "Press %s or "
+#, fuzzy
+msgid "Right-click to show up the Input Method menu."
+msgstr "Naciśnij, aby połączyć się z metodą wejścia"
+
+#: ../applet/main.c:987
+#, fuzzy, c-format
+msgid "Please %s%s"
 msgstr "Naciśnij %s lub "
 
-#: ../applet/main.c:988
-#, c-format
-msgid ""
-"%sLeft-click on the icon to connect to/disconnect from Input Method.\n"
-"Right-click to show up the Input Method menu."
-msgstr ""
-"%sNaciśnij lewym przyciskiem na ikonę, aby połączyć się z/rozłączyć się z "
-"metodą wejścia.\n"
-"Naciśnij prawym przyciskiem, aby wyświetlić menu metody wejścia."
+#: ../applet/main.c:989
+#, fuzzy, c-format
+msgid "Please press %s or %s%s"
+msgstr "Naciśnij %s lub "
 
-#: ../applet/main.c:991
+#: ../applet/main.c:993
 msgid "Tips"
 msgstr "Wskazówki"
 
-#: ../applet/main.c:997
+#: ../applet/main.c:999
 msgid "Do not show notifications again"
 msgstr "Nie wyświetlaj powiadomień ponownie"
 
-#: ../applet/main.c:1041
+#: ../applet/main.c:1045
 msgid "Unable to take an ownership for XIM server"
 msgstr "Nie można przejąć właściciela serwera XIM"
 
@@ -225,14 +233,14 @@ msgid "Child widget to appear next to the menu text"
 msgstr "Widget potomny pojawiający się obok tekstu menu"
 
 #: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:698
-#: ../src/factory.c:972 ../src/factory_info.c:1311
+#: ../src/factory.c:990
 msgid "Replace the running settings daemon with new instance."
 msgstr "Zastąp uruchomionego demona ustawień nowym."
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:1002 ../src/factory_info.c:1336
-#: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:72
-#: ../utils/imsettings-start.c:73 ../utils/imsettings-stop.c:71
+#: ../src/factory.c:1020 ../utils/imsettings-reload.c:63
+#: ../utils/imsettings-restart.c:72 ../utils/imsettings-start.c:73
+#: ../utils/imsettings-stop.c:71
 msgid "Unknown error in parsing the command lines."
 msgstr "Nieznany błąd podczas analizowania wierszy poleceń."
 
@@ -242,26 +250,28 @@ msgstr "Metoda wejścia"
 
 #: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:1
 msgid "Helper application for imsettings"
-msgstr ""
+msgstr "Aplikacja pomocnicza dla imsettings"
 
 #: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
 msgid ""
 "Helper application that delivers GTK+ immodule name between GConf and Xfconf"
 msgstr ""
+"Aplikacja pomocnicza dostarczająca nazwę modułu metody wejścia GTK+ między "
+"GConf a Xfconf"
 
-#: ../backends/xim/loopback.c:193
+#: ../backends/xim/loopback.c:223
 msgid "Synchronous"
-msgstr ""
+msgstr "Synchronicznie"
 
-#: ../backends/xim/loopback.c:194
+#: ../backends/xim/loopback.c:224
 msgid "Request to send a key event synchronously"
-msgstr ""
+msgstr "Żądanie synchronicznego wysłania zdarzenia klawisza"
 
-#: ../backends/xim/main.c:142 ../src/factory.c:973
+#: ../backends/xim/main.c:142 ../src/factory.c:991
 msgid "X display to use"
 msgstr "Użyty ekran X Window"
 
-#: ../backends/xim/main.c:142 ../src/factory.c:973
+#: ../backends/xim/main.c:142 ../src/factory.c:991
 msgid "DISPLAY"
 msgstr "EKRAN"
 
@@ -281,19 +291,19 @@ msgstr "Serwer XIM do połączenia się z, tylko do celów debugowania"
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2888
+#: ../backends/xim/proxy.c:2970
 msgid "A XIM server name"
 msgstr "Nazwa serwera XIM"
 
-#: ../backends/xim/proxy.c:2889
+#: ../backends/xim/proxy.c:2971
 msgid "A XIM server name would connects to"
 msgstr "Nazwa serwera XIM do połączenia"
 
-#: ../backends/xim/proxy.c:2894
+#: ../backends/xim/proxy.c:2976
 msgid "Signals for Protocol class"
 msgstr "Sygnały dla klasy protokołu"
 
-#: ../backends/xim/proxy.c:2895
+#: ../backends/xim/proxy.c:2977
 msgid "A structure of signals for Protocol class"
 msgstr "Struktura sygnałów dla klasy protokołu"
 
@@ -522,7 +532,7 @@ msgstr "Nie można określić PID-u procesu %s."
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "Nie można pomyślnie wysłać sygnału do procesu %s."
 
-#: ../src/factory.c:338 ../src/factory.c:740
+#: ../src/factory.c:338 ../src/factory.c:755
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr "Uzyskanie miejsca folderu domowego nie powiodło się."
@@ -547,13 +557,12 @@ msgstr "Usunięcie pliku .xinputrc nie powiodło się: %s"
 msgid "Failed to make a symlink: %s"
 msgstr "Utworzenie dowiązania symbolicznego nie powiodło się: %s"
 
-#: ../src/factory.c:513 ../src/factory.c:552 ../src/factory_info.c:947
-#: ../src/factory_info.c:982
+#: ../src/factory.c:528 ../src/factory.c:567
 #, c-format
 msgid "No input methods available on your system."
 msgstr "Brak dostępnych metod wejścia w systemie."
 
-#: ../src/factory.c:600 ../src/factory.c:795
+#: ../src/factory.c:615 ../src/factory.c:813
 #, c-format
 msgid ""
 "No such input method on your system: %s\n"
@@ -562,121 +571,113 @@ msgstr ""
 "Brak metody wejścia w systemie: %s\n"
 "  Szczegóły: %s"
 
-#: ../src/factory.c:625
+#: ../src/factory.c:640
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr "Brak dostępnego serwera XIM w %s"
 
-#: ../src/factory.c:873
+#: ../src/factory.c:891
 msgid "X display name"
 msgstr "Nazwa ekranu X Window"
 
-#: ../src/factory.c:874
+#: ../src/factory.c:892
 msgid "X display name to use"
 msgstr "Nazwa użytego ekranu X Window"
 
-#: ../src/factory.c:879 ../src/factory_info.c:1227 ../src/monitor.c:237
+#: ../src/factory.c:897 ../src/monitor.c:237
 msgid "xinputrc directory"
 msgstr "folder xinputrc"
 
-#: ../src/factory.c:880 ../src/factory_info.c:1228
+#: ../src/factory.c:898
 msgid "A directory where puts the system wide xinputrc on."
 msgstr "Folder, w którym umieścić systemową konfigurację xinputrc."
 
-#: ../src/factory.c:885 ../src/factory_info.c:1233 ../src/monitor.c:243
+#: ../src/factory.c:903 ../src/monitor.c:243
 msgid "xinput directory"
 msgstr "folder xinput"
 
-#: ../src/factory.c:886 ../src/factory_info.c:1234
+#: ../src/factory.c:904
 msgid "A directory where puts the IM configurations on."
 msgstr "Folder, w którym umieścić konfiguracje metod wejścia."
 
-#: ../src/factory.c:891 ../src/factory.c:892 ../src/factory_info.c:1239
-#: ../src/factory_info.c:1240 ../src/monitor.c:249 ../src/monitor.c:250
+#: ../src/factory.c:909 ../src/factory.c:910 ../src/monitor.c:249
+#: ../src/monitor.c:250
 msgid "home directory"
 msgstr "folder domowy"
 
 #. FIXME
-#: ../src/factory.c:976
+#: ../src/factory.c:994
 msgid "X screen to use"
 msgstr "Użyty ekran X Window"
 
-#: ../src/factory.c:976
+#: ../src/factory.c:994
 msgid "SCREEN"
 msgstr "EKRAN"
 
-#: ../src/factory.c:978 ../src/factory_info.c:1312
+#: ../src/factory.c:996
 msgid ""
 "A directory where puts the system-wide xinputrc puts on (debugging only)"
 msgstr ""
 "Folder, w którym umieścić systemowe pliki xinputrc (tylko dla debugowania)"
 
-#: ../src/factory.c:978 ../src/factory.c:979 ../src/factory.c:980
-#: ../src/factory_info.c:1312 ../src/factory_info.c:1313
-#: ../src/factory_info.c:1314
+#: ../src/factory.c:996 ../src/factory.c:997 ../src/factory.c:998
 msgid "DIR"
 msgstr "FOLDER"
 
-#: ../src/factory.c:979 ../src/factory_info.c:1313
+#: ../src/factory.c:997
 msgid "A directory where puts the IM configurations puts on (debugging only)"
 msgstr ""
 "Folder, w którym umieścić konfiguracje metod wejścia (tylko dla debugowania)"
 
-#: ../src/factory.c:980 ../src/factory_info.c:1314
+#: ../src/factory.c:998
 msgid "A home directory (debugging only)"
 msgstr "Folder domowy (tylko dla debugowania)"
 
-#: ../src/factory.c:1010
+#: ../src/factory.c:1028
 #, c-format
 msgid "Failed to open a X display."
 msgstr "Otwarcie ekranu X Window nie powiodło się."
 
-#: ../src/factory_info.c:236
-#, c-format
-msgid "Reloading...\n"
-msgstr "Ponowne wczytywanie...\n"
+#: ../src/monitor.c:238
+msgid "A place to store xinputrc file"
+msgstr "Miejsce do przechowania pliku xinputrc"
 
-#: ../src/factory_info.c:285 ../src/monitor.c:833
+#: ../src/monitor.c:244
+msgid "A place to store xinput configuration files"
+msgstr "Miejsce do przechowania plików konfiguracji xinput"
+
+#: ../src/monitor.c:833
 #, c-format
 msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
 msgstr "Duplikat wpisu `%s' z %s. SHORT_DESC musi być unikalne."
 
-#: ../src/factory_info.c:1055 ../src/monitor.c:1020
+#: ../src/monitor.c:1020
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "Brak metody wejścia w systemie: %s"
 
-#: ../src/monitor.c:238
-#, fuzzy
-msgid "A place to store xinputrc file"
-msgstr "Usunięcie pliku .xinputrc nie powiodło się: %s"
-
-#: ../src/monitor.c:244
-msgid "A place to store xinput configuration files"
-msgstr ""
-
 #: ../src/monitor.c:1218
 #, c-format
 msgid "No system default input method."
-msgstr ""
+msgstr "Brak domyślnej metody wejścia systemu."
 
 #: ../utils/imsettings-info.c:56 ../utils/imsettings-restart.c:79
 #: ../utils/imsettings-start.c:80 ../utils/imsettings-stop.c:78
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to get a session bus.\n"
-msgstr "Utworzenie dowiązania symbolicznego nie powiodło się: %s"
+msgstr "Uzyskanie magistrali sesji nie powiodło się.\n"
 
 #: ../utils/imsettings-info.c:64 ../utils/imsettings-restart.c:94
 #: ../utils/imsettings-start.c:95 ../utils/imsettings-stop.c:93
-#, fuzzy, c-format
+#, c-format
 msgid "Mismatch the version of imsettings.\n"
-msgstr "Wersja im-settings-daemon nie zgadza się"
+msgstr "Wersja imsettings nie zgadza się.\n"
 
 #: ../utils/imsettings-info.c:70 ../utils/imsettings-restart.c:100
 #: ../utils/imsettings-start.c:101 ../utils/imsettings-stop.c:99
 #, c-format
 msgid "Waiting for reloading the process...\n"
-msgstr ""
+msgstr "Oczekiwanie na ponowne wczytanie procesu...\n"
 
 #: ../utils/imsettings-info.c:89 ../utils/imsettings-restart.c:117
 #: ../utils/imsettings-stop.c:116
@@ -685,11 +686,13 @@ msgid ""
 "No Input Method running. please specify Input Method name explicitly if "
 "necessary.\n"
 msgstr ""
+"Brak uruchomionej metody wejścia. Podaj bezpośrednio nazwę metody wejścia, "
+"jeśli jest potrzebna.\n"
 
 #: ../utils/imsettings-info.c:98
 #, c-format
 msgid "Unable to obtain an Input Method Information."
-msgstr ""
+msgstr "Nie można uzyskać informacji o metodzie wejścia."
 
 #: ../utils/imsettings-reload.c:42
 msgid "Force reloading the configuration, including restarting the process."
@@ -699,7 +702,7 @@ msgstr ""
 #: ../utils/imsettings-restart.c:42 ../utils/imsettings-start.c:43
 #: ../utils/imsettings-stop.c:42
 msgid "[Input Method name|xinput.conf]"
-msgstr ""
+msgstr "[Nazwa metody wejścia|xinput.conf]"
 
 #: ../utils/imsettings-restart.c:44
 msgid "Force restarting the IM process regardless of any errors."
@@ -714,7 +717,7 @@ msgstr "Nie aktualizuj .xinputrc."
 #: ../utils/imsettings-restart.c:46 ../utils/imsettings-start.c:46
 #: ../utils/imsettings-stop.c:46
 msgid "Do not restart the daemons at first."
-msgstr ""
+msgstr "Nie uruchamiaj ponownie najpierw demonów."
 
 #: ../utils/imsettings-restart.c:128 ../utils/imsettings-stop.c:128
 #, c-format
@@ -724,49 +727,48 @@ msgstr "Zatrzymanie procesu metody wejścia nie powiodło się: `%s'\n"
 #: ../utils/imsettings-restart.c:136
 #, c-format
 msgid "Forcibly restarted %s, but maybe not completely\n"
-msgstr ""
+msgstr "Wymuszono ponowne uruchomienie %s, ale może nie całkowicie\n"
 
 #: ../utils/imsettings-restart.c:138
-#, fuzzy, c-format
+#, c-format
 msgid "Restarted %s\n"
-msgstr "Uruchomiono %s\n"
+msgstr "Ponownie uruchomiono %s\n"
 
 #: ../utils/imsettings-restart.c:141
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to restart IM process `%s'\n"
-msgstr "Uruchomienie procesu metody wejścia nie powiodło się: `%s'\n"
+msgstr "Ponowne uruchomienie procesu metody wejścia nie powiodło się: `%s'\n"
 
 #: ../utils/imsettings-start.c:47
 msgid "Start Input Method if not yet running."
-msgstr ""
+msgstr "Uruchom metodę wejścia, jeśli nie jest jeszcze uruchomiona."
 
 #: ../utils/imsettings-start.c:48
 msgid "Shut up the extra messages."
-msgstr ""
+msgstr "Nie wyświetlaj dodatkowych komunikatów."
 
-#: ../utils/imsettings-start.c:118
-#, fuzzy, c-format
+#: ../utils/imsettings-start.c:123
+#, c-format
 msgid "No Input Method available\n"
-msgstr "Brak dostępnych metod wejścia w systemie."
+msgstr "Brak dostępnych metod wejścia\n"
 
-#: ../utils/imsettings-start.c:138
+#: ../utils/imsettings-start.c:144
 #, c-format
 msgid "Started %s\n"
 msgstr "Uruchomiono %s\n"
 
-#: ../utils/imsettings-start.c:140
+#: ../utils/imsettings-start.c:146
 #, c-format
 msgid "Failed to start IM process `%s'\n"
 msgstr "Uruchomienie procesu metody wejścia nie powiodło się: `%s'\n"
 
 #: ../utils/imsettings-start.desktop.in.h:1
-#, fuzzy
 msgid "Input Method starter"
-msgstr "<Metoda wejścia>"
+msgstr "Uruchamianie metody wejścia"
 
 #: ../utils/imsettings-start.desktop.in.h:2
 msgid "imsettings-start"
-msgstr ""
+msgstr "imsettings-start"
 
 #: ../utils/imsettings-stop.c:44
 msgid "Force stopping the IM process regardless of any errors."
@@ -778,22 +780,14 @@ msgstr ""
 msgid "Stopped %s\n"
 msgstr "Zatrzymano %s\n"
 
+#, fuzzy
 #~ msgid ""
-#~ "If \"auto\" is set, imsettings-applet has a facility of XSETTINGS manager "
-#~ "as needed. if you want to disable it explicitly, set \"disabled\"."
+#~ "Left-click on the icon to connect to/disconnect from Input Method.\n"
+#~ "Right-click to show up the Input Method menu."
 #~ msgstr ""
-#~ "Jeśli ustawiono \"auto\", imsettings-applet będzie posiadał funkcję "
-#~ "menedżera XSETTINGS w razie takiej potrzeby. Jeśli chcesz wyłączyć go "
-#~ "bezwarunkowo, ustaw \"disabled\"."
+#~ "%sNaciśnij lewym przyciskiem na ikonę, aby połączyć się z/rozłączyć się z "
+#~ "metodą wejścia.\n"
+#~ "Naciśnij prawym przyciskiem, aby wyświetlić menu metody wejścia."
 
-#~ msgid "Run a facility of XSETTINGS manager"
-#~ msgstr "Uruchamia menedżera XSETTINGS"
-
-#~ msgid "Unable to get a value from GConf"
-#~ msgstr "Nie można uzyskać wartości z GConf"
-
-#~ msgid "_Run XSETTINGS manager as needed"
-#~ msgstr "U_ruchom menedżera XSETTINGS w razie potrzeby"
-
-#~ msgid "Invalid IM module type: %d"
-#~ msgstr "Nieprawidłowy typ modułu wejścia: %d"
+#~ msgid "Reloading...\n"
+#~ msgstr "Ponowne wczytywanie...\n"

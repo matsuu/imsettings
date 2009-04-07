@@ -2,7 +2,7 @@
 # im-chooser
 # Copyright (C) 2006 Red Hat, Inc. All rights reserved.
 # This file is distributed under the same license as the im-chooser package.
-# Akira TAGOH <tagoh@redhat.com>, 2006,2007.
+# Akira TAGOH <tagoh@redhat.com>, 2006-2007,2009.
 # Kiyoto James Hashida <khashida@redhat.com>, 2006.
 # Noriko Mizumoto <noriko@redhat.com>, 2007.
 # Kiyoto Hashida <khashida@redhat.com>, 2008.
@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-10 18:28+0900\n"
-"PO-Revision-Date: 2008-04-07 07:53+0900\n"
-"Last-Translator: Makoto Mizukami <mmk9060@aol.com>\n"
+"POT-Creation-Date: 2009-04-07 19:48+0900\n"
+"PO-Revision-Date: 2009-04-07 19:50+0900\n"
+"Last-Translator: Akira TAGOH <tagoh@redhat.com>\n"
 "Language-Team: Japanese <fedora-trasn-ja@redhat.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,30 +23,31 @@ msgstr ""
 
 #: ../applet/imsettings-applet.desktop.in.in.h:1
 msgid "IMSettings Applet"
-msgstr ""
+msgstr "IMSettingsアプレット"
 
 #: ../applet/imsettings-applet.schemas.in.h:1
-#, fuzzy
 msgid "A shortcut key to connect to/disconnect from Input Method"
-msgstr "入力メソッドの開始に失敗しました"
+msgstr "入力メソッドへの接続/切断をするショートカットキー"
 
 #: ../applet/imsettings-applet.schemas.in.h:2
 msgid "Enable this when accelerator keys etc doesn't work"
-msgstr ""
+msgstr "アクセラレータキーが動かない場合に有功にする"
 
 #: ../applet/imsettings-applet.schemas.in.h:3
 msgid ""
 "If false, all of informations will not delivered through libnotify, except "
 "error and warning messages."
 msgstr ""
+"もしfalseなら、エラーや警告メッセージを除いて、すべての情報はlibnotifyへ配信"
+"されません。"
 
 #: ../applet/imsettings-applet.schemas.in.h:4
 msgid "If true, the icon will be displayed at the systray."
-msgstr ""
+msgstr "もしtrueなら、システムトレイにアイコンが表示されます。"
 
 #: ../applet/imsettings-applet.schemas.in.h:5
 msgid "Show the status icon"
-msgstr ""
+msgstr "ステータスアイコンの表示"
 
 #: ../applet/imsettings-applet.schemas.in.h:6
 msgid ""
@@ -57,246 +58,262 @@ msgid ""
 "set the option to the special string \"disabled\", then there will be no "
 "keybinding for this."
 msgstr ""
+"入力メソッドへ接続、あるいは入力メソッドから切断するためのキーバインド。"
+"\"&lt;Control&gt;a\"や\"&lt;Shift&gt;&lt;Alt&gt;F1\"のようなフォーマットが使"
+"えます。パーザーはなり自由で、小文字や大文字、\"&lt;Ctl&gt;\"や\"&lt;Ctrl&gt;"
+"\"のような省略形も許可します。このオプションに、特別な文字\"disabled\"をセッ"
+"トすると、このキーバインドは無効になります。"
 
 #: ../applet/imsettings-applet.schemas.in.h:7
 msgid ""
 "When this option is enabled, all of key events will be sent to Input Method "
 "synchronously. This might affects a performance."
 msgstr ""
+"このオプションが有効な時、すべてのキーイベントは入力メソッドへ同期で送られま"
+"す。これはパフォーマンスに影響を与えるかもしれません。"
 
 #: ../applet/imsettings-applet.schemas.in.h:8
 msgid "Whether to notify informations with libnotify"
-msgstr ""
+msgstr "libnotifyへ情報を通知するかどうか"
 
 #: ../applet/main.c:148 ../applet/main.c:181 ../applet/main.c:221
 msgid "No detailed information"
-msgstr ""
+msgstr "詳細の情報がありません"
 
 #: ../applet/main.c:151
 msgid "Mismatch the version of im-settings-daemon"
-msgstr ""
+msgstr "im-settings-daemonのバージョンが一致しません"
 
 #: ../applet/main.c:178 ../applet/main.c:258
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to start %s"
-msgstr "IM プロセス`%s' の停止に失敗しました\n"
+msgstr "%s を開始出来ませんでした"
 
 #: ../applet/main.c:192
 msgid ""
 " and the default Input Method has been changed. if you need to change that "
 "to anything else, please use im-chooser."
 msgstr ""
+"そして、デフォルトの入力メソッドが変更されました。もし他の入力メソッドへ変更"
+"する必要がある場合は、im-chooserを使ってください。"
 
 #: ../applet/main.c:198
 #, c-format
 msgid "Connected to %s.%s"
-msgstr ""
+msgstr "%s へ接続しました。%s"
 
-#: ../applet/main.c:203 ../applet/main.c:238 ../applet/main.c:910
+#: ../applet/main.c:203 ../applet/main.c:238 ../applet/main.c:911
 msgid "Information"
-msgstr ""
+msgstr "情報"
 
 #: ../applet/main.c:218 ../applet/main.c:284
 #, c-format
 msgid "Unable to stop %s"
-msgstr ""
+msgstr "%s を停止出来ませんでした"
 
 #: ../applet/main.c:235
-#, fuzzy
 msgid "Disconnected from Input Method"
-msgstr "入力メソッドの開始に失敗しました"
+msgstr "入力メソッドから切断しました"
 
 #: ../applet/main.c:262 ../applet/main.c:288
 msgid "maybe DBus related issue."
-msgstr ""
+msgstr "おそらくDBusに関連した問題です。"
 
 #: ../applet/main.c:343 ../applet/main.c:369
 msgid "Unable to store a value to GConf"
-msgstr ""
+msgstr "GConfの値を保存出来ませんでした"
 
 #: ../applet/main.c:472
 #, c-format
 msgid "The acceleration key %s may be invalid. disabled it temporarily."
-msgstr ""
+msgstr "アクセラレーションキー %s が正しくありません。一時的に無効にします。"
 
 #: ../applet/main.c:474
 msgid "Unable to set up the acceleration key"
-msgstr ""
+msgstr "アクセラレーションキーの設定が出来ませんでした"
 
 #: ../applet/main.c:615
 msgid "Unable to store the acceleration key into GConf"
-msgstr ""
+msgstr "アクセラレーションキーをGConfに保存出来ませんでした"
 
 #: ../applet/main.c:636
 msgid "Please press the acceleration key..."
-msgstr ""
+msgstr "アクセラレーションキーを押してください..."
 
 #: ../applet/main.c:683
 msgid "IMSettings Applet Preferences"
-msgstr ""
+msgstr "IMSettingsアプレットの設定"
 
 #: ../applet/main.c:695
 msgid "_Show the status icon"
-msgstr ""
+msgstr "ステータスアイコンを表示(_S)"
 
 #: ../applet/main.c:704
 msgid "_Enable this when accelerator keys etc doesn't work"
-msgstr ""
+msgstr "アクセラレーションキーなどが動かない場合にこれを有功にする(_E)"
 
 #: ../applet/main.c:714
 msgid ""
 "When this option is enabled, all of key events will be sent to Input Method "
 "synchronously. this might affects a performance."
 msgstr ""
+"このオプションが有効な時、すべてのキーイベントは同期で入力メソッドへ送られま"
+"す。これはパフォーマンスに影響を与えるかもしれません。"
 
 #: ../applet/main.c:723
 msgid "<b>Trigger key:</b>"
-msgstr ""
+msgstr "<b>トリガーキー:</b>"
 
 #: ../applet/main.c:735
 msgid "_Grab key"
-msgstr ""
+msgstr "キーを掴む(_G)"
 
 #: ../applet/main.c:749
 msgid ""
 "Please click Grab key button and press the key combinations you want to "
 "assign for the acceleration key. Press Backspace key to disable this feature."
 msgstr ""
+"「キーを掴む」ボタンをクリックし、アクセラレーションキーに割り当てたいキーの"
+"組み合わせを押してください。この機能を無効にするためにはBackspaceキーを押して"
+"ください。"
 
-#: ../applet/main.c:825
-#, fuzzy
+#: ../applet/main.c:826
 msgid "Disconnect"
-msgstr "DBus 接続"
+msgstr "切断"
 
-#: ../applet/main.c:884
-#, fuzzy
+#: ../applet/main.c:885
 msgid "Click to connect to Input Method"
-msgstr "入力メソッドの開始に失敗しました"
+msgstr "入力メソッドへ接続するにはクリックしてください"
 
-#: ../applet/main.c:888
-#, fuzzy
+#: ../applet/main.c:889
 msgid "Click to disconnect from Input Method"
-msgstr "入力メソッドの開始に失敗しました"
+msgstr "入力メソッドから切断するにはクリックしてください"
 
-#: ../applet/main.c:911
+#: ../applet/main.c:912
 msgid ""
 "The default Input Method isn't yet configured. To get this working, you need "
 "to set up that on im-chooser or select one from the menu which appears by "
 "the right click first."
 msgstr ""
+"デフォルトの入力メソッドはまだ設定されていません。動作させるためには、はじめ"
+"にim-chooserで設定するか、右クリックで表示されるメニューより選択してくださ"
+"い。"
+
+#. This may looks like "Press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#: ../applet/main.c:984
+msgid "Left-click on the icon to connect to/disconnect from Input Method.\n"
+msgstr "入力メソッドへ接続/切断するためにアイコンを左クリック"
 
 #: ../applet/main.c:985
-#, c-format
-msgid "Press %s or "
-msgstr ""
+msgid "Right-click to show up the Input Method menu."
+msgstr "入力メソッドメニューを表示するには右クリックをしてください"
 
-#: ../applet/main.c:988
+#: ../applet/main.c:987
 #, c-format
-msgid ""
-"%sLeft-click on the icon to connect to/disconnect from Input Method.\n"
-"Right-click to show up the Input Method menu."
-msgstr ""
+msgid "Please %s%s"
+msgstr "%sしてください。%s"
 
-#: ../applet/main.c:991
+#: ../applet/main.c:989
+#, c-format
+msgid "Please press %s or %s%s"
+msgstr "%2$sするか、%1$sを押してください。%3$s"
+
+#: ../applet/main.c:993
 msgid "Tips"
-msgstr ""
+msgstr "ヒント"
 
-#: ../applet/main.c:997
+#: ../applet/main.c:999
 msgid "Do not show notifications again"
-msgstr ""
+msgstr "次回通知を表示しない"
 
-#: ../applet/main.c:1041
+#: ../applet/main.c:1045
 msgid "Unable to take an ownership for XIM server"
-msgstr ""
+msgstr "XIMサーバの所有権を取得出来ませんでした"
 
 #: ../applet/radiomenuitem.c:314
 msgid "Image widget"
-msgstr ""
+msgstr "イメージウィジェット"
 
 #: ../applet/radiomenuitem.c:315
 msgid "Child widget to appear next to the menu text"
-msgstr ""
+msgstr "メニューテキストのとなりに表示される子ウィジェット"
 
 #: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:698
-#: ../src/factory.c:972 ../src/factory_info.c:1311
+#: ../src/factory.c:990
 msgid "Replace the running settings daemon with new instance."
-msgstr "実行中の設定デーモンを新規のインスタンスで入れ替えます。"
+msgstr "実行中の設定デーモンを新規のインスタンスで入れ替える"
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:1002 ../src/factory_info.c:1336
-#: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:72
-#: ../utils/imsettings-start.c:73 ../utils/imsettings-stop.c:71
+#: ../src/factory.c:1020 ../utils/imsettings-reload.c:63
+#: ../utils/imsettings-restart.c:72 ../utils/imsettings-start.c:73
+#: ../utils/imsettings-stop.c:71
 msgid "Unknown error in parsing the command lines."
-msgstr "コマンドラインの構文解析中に不明なエラー。"
+msgstr "コマンドラインの構文解析中に不明なエラー"
 
 #: ../backends/xfce_mcs/imsettings_plugin.c:88
-#, fuzzy
 msgid "Button Label|Input Method"
 msgstr "入力メソッド"
 
 #: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:1
 msgid "Helper application for imsettings"
-msgstr ""
+msgstr "imsettingsのヘルパーアプリケーション"
 
 #: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
 msgid ""
 "Helper application that delivers GTK+ immodule name between GConf and Xfconf"
-msgstr ""
+msgstr "GConfとXfconf間でGTK+ immodule名を配送するヘルパーアプリケーション"
 
-#: ../backends/xim/loopback.c:193
+#: ../backends/xim/loopback.c:223
 msgid "Synchronous"
-msgstr ""
+msgstr "同期"
 
-#: ../backends/xim/loopback.c:194
+#: ../backends/xim/loopback.c:224
 msgid "Request to send a key event synchronously"
-msgstr ""
+msgstr "キーイベントを同期で送信することを要求する"
 
-#: ../backends/xim/main.c:142 ../src/factory.c:973
+#: ../backends/xim/main.c:142 ../src/factory.c:991
 msgid "X display to use"
 msgstr "使用する X ディスプレイ"
 
-#: ../backends/xim/main.c:142 ../src/factory.c:973
+#: ../backends/xim/main.c:142 ../src/factory.c:991
 msgid "DISPLAY"
 msgstr "DISPLAY"
 
 #: ../backends/xim/main.c:143
-#, fuzzy
 msgid "Replace the running XIM server with new instance."
-msgstr "実行中の設定デーモンを新規のインスタンスで入れ替えます。"
+msgstr "実行中の設定デーモンを新規のインスタンスで入れ替える"
 
 #: ../backends/xim/main.c:144
 msgid "Output the debugging logs"
-msgstr ""
+msgstr "デバッグログの出力"
 
 #: ../backends/xim/main.c:145
 msgid "XIM server connects to, for debugging purpose only"
-msgstr ""
+msgstr "接続するXIMサーバー (デバッグ目的専用)"
 
 #: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:660
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2888
-#, fuzzy
+#: ../backends/xim/proxy.c:2970
 msgid "A XIM server name"
 msgstr "XIM サーバー名"
 
-#: ../backends/xim/proxy.c:2889
-#, fuzzy
+#: ../backends/xim/proxy.c:2971
 msgid "A XIM server name would connects to"
-msgstr "実行する XIM サーバープログラム"
+msgstr "接続したいXIMサーバ名"
 
-#: ../backends/xim/proxy.c:2894
+#: ../backends/xim/proxy.c:2976
 msgid "Signals for Protocol class"
-msgstr ""
+msgstr "プロトコルクラスのシグナル"
 
-#: ../backends/xim/proxy.c:2895
+#: ../backends/xim/proxy.c:2977
 msgid "A structure of signals for Protocol class"
-msgstr ""
+msgstr "プロトコルクラスのためのシグナルの構造体"
 
 #: ../imsettings/imsettings-info.c:632 ../imsettings/imsettings-info.c:633
 msgid "Home directory"
-msgstr ""
+msgstr "ホームディレクトリ"
 
 #: ../imsettings/imsettings-info.c:639
 msgid "Language"
@@ -408,11 +425,11 @@ msgstr "詳しい説明"
 
 #: ../imsettings/imsettings-info.c:733
 msgid "Icon"
-msgstr ""
+msgstr "アイコン"
 
 #: ../imsettings/imsettings-info.c:734
 msgid "Icon filename to be used on GUI"
-msgstr ""
+msgstr "GUIで使われるアイコンのファイル名"
 
 #: ../imsettings/imsettings-info.c:739
 msgid "System Default"
@@ -466,7 +483,7 @@ msgstr "言語地域"
 
 #: ../imsettings/imsettings-request.c:182
 msgid "Locale to get the imsettings information"
-msgstr "im セッティング情報を得る為の言語地域"
+msgstr "imsettings情報を得る為の言語地域"
 
 #: ../imsettings/imsettings-request.c:243
 #: ../imsettings/imsettings-request.c:270
@@ -507,7 +524,7 @@ msgstr "pidfile を開くのに失敗しました: %s"
 #: ../src/factory.c:274
 #, c-format
 msgid "%s: No such file or directory"
-msgstr ""
+msgstr "%s: そのようなファイルやディレクトリはありません"
 
 #: ../src/factory.c:284
 #, c-format
@@ -519,7 +536,7 @@ msgstr "%s プロセス用の pid を決定できませんでした。"
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "%s プロセスに信号を正しく送信出来ませんでした。"
 
-#: ../src/factory.c:338 ../src/factory.c:740
+#: ../src/factory.c:338 ../src/factory.c:755
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr "ホームディレクトリの場所確保に失敗しました。"
@@ -544,132 +561,125 @@ msgstr "xinputrc ファイルの削除に失敗しました: %s"
 msgid "Failed to make a symlink: %s"
 msgstr "symlink するのに失敗しました: %s"
 
-#: ../src/factory.c:513 ../src/factory.c:552 ../src/factory_info.c:947
-#: ../src/factory_info.c:982
+#: ../src/factory.c:528 ../src/factory.c:567
 #, c-format
 msgid "No input methods available on your system."
 msgstr "使用中のシステム上には入力メソッドがありません。"
 
-#: ../src/factory.c:600 ../src/factory.c:795
-#, fuzzy, c-format
+#: ../src/factory.c:615 ../src/factory.c:813
+#, c-format
 msgid ""
 "No such input method on your system: %s\n"
 "  Details: %s"
-msgstr "使用中のシステム上にそのような入力メソッドはありません: %s"
+msgstr ""
+"使用中のシステム上にそのような入力メソッドはありません: %s\n"
+"  詳細: %s"
 
-#: ../src/factory.c:625
+#: ../src/factory.c:640
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr "%s では XIM サーバーが使用できません。"
 
-#: ../src/factory.c:873
+#: ../src/factory.c:891
 msgid "X display name"
 msgstr "X ディスプレイ名"
 
-#: ../src/factory.c:874
+#: ../src/factory.c:892
 msgid "X display name to use"
 msgstr "使用する X ディスプレイ名"
 
-#: ../src/factory.c:879 ../src/factory_info.c:1227 ../src/monitor.c:237
+#: ../src/factory.c:897 ../src/monitor.c:237
 msgid "xinputrc directory"
-msgstr ""
+msgstr "xinputrcディレクトリ"
 
-#: ../src/factory.c:880 ../src/factory_info.c:1228
+#: ../src/factory.c:898
 msgid "A directory where puts the system wide xinputrc on."
-msgstr ""
+msgstr "システムのxinputrcが置かれているディレクトリ"
 
-#: ../src/factory.c:885 ../src/factory_info.c:1233 ../src/monitor.c:243
+#: ../src/factory.c:903 ../src/monitor.c:243
 msgid "xinput directory"
-msgstr ""
+msgstr "xinputディレクトリ"
 
-#: ../src/factory.c:886 ../src/factory_info.c:1234
+#: ../src/factory.c:904
 msgid "A directory where puts the IM configurations on."
-msgstr ""
+msgstr "IM設定が置かれているディレクトリ"
 
-#: ../src/factory.c:891 ../src/factory.c:892 ../src/factory_info.c:1239
-#: ../src/factory_info.c:1240 ../src/monitor.c:249 ../src/monitor.c:250
+#: ../src/factory.c:909 ../src/factory.c:910 ../src/monitor.c:249
+#: ../src/monitor.c:250
 msgid "home directory"
-msgstr ""
+msgstr "ホームディレクトリ"
 
 #. FIXME
-#: ../src/factory.c:976
+#: ../src/factory.c:994
 msgid "X screen to use"
 msgstr "使用する X 画面"
 
-#: ../src/factory.c:976
+#: ../src/factory.c:994
 msgid "SCREEN"
 msgstr "SCREEN"
 
-#: ../src/factory.c:978 ../src/factory_info.c:1312
+#: ../src/factory.c:996
 msgid ""
 "A directory where puts the system-wide xinputrc puts on (debugging only)"
-msgstr ""
+msgstr "システムのxinputrcが置かれているディレクトリ (デバッグ専用)"
 
-#: ../src/factory.c:978 ../src/factory.c:979 ../src/factory.c:980
-#: ../src/factory_info.c:1312 ../src/factory_info.c:1313
-#: ../src/factory_info.c:1314
+#: ../src/factory.c:996 ../src/factory.c:997 ../src/factory.c:998
 msgid "DIR"
-msgstr ""
+msgstr "DIR"
 
-#: ../src/factory.c:979 ../src/factory_info.c:1313
+#: ../src/factory.c:997
 msgid "A directory where puts the IM configurations puts on (debugging only)"
-msgstr ""
+msgstr "IM設定が置かれているディレクトリ (デバッグ専用)"
 
-#: ../src/factory.c:980 ../src/factory_info.c:1314
+#: ../src/factory.c:998
 msgid "A home directory (debugging only)"
-msgstr ""
+msgstr "ホームディレクトリ (デバッグ専用)"
 
-#: ../src/factory.c:1010
+#: ../src/factory.c:1028
 #, c-format
 msgid "Failed to open a X display."
 msgstr "X ディスプレイを開くのに失敗しました"
 
-#: ../src/factory_info.c:236
-#, c-format
-msgid "Reloading...\n"
-msgstr "再ロード中... \n"
+#: ../src/monitor.c:238
+msgid "A place to store xinputrc file"
+msgstr "xinputrc ファイルを保存する場所"
 
-#: ../src/factory_info.c:285 ../src/monitor.c:833
+#: ../src/monitor.c:244
+msgid "A place to store xinput configuration files"
+msgstr "xinput 設定ファイルを保存する場所"
+
+#: ../src/monitor.c:833
 #, c-format
 msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
 msgstr "%s. SHORT_DESC からの複製エントリ `%s' は特有でなければなりません。"
 
-#: ../src/factory_info.c:1055 ../src/monitor.c:1020
+#: ../src/monitor.c:1020
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "使用中のシステム上にそのような入力メソッドはありません: %s"
 
-#: ../src/monitor.c:238
-#, fuzzy
-msgid "A place to store xinputrc file"
-msgstr "xinputrc ファイルの削除に失敗しました: %s"
-
-#: ../src/monitor.c:244
-msgid "A place to store xinput configuration files"
-msgstr ""
-
 #: ../src/monitor.c:1218
 #, c-format
 msgid "No system default input method."
-msgstr ""
+msgstr "システムデフォルトの入力メソッドがありません"
 
 #: ../utils/imsettings-info.c:56 ../utils/imsettings-restart.c:79
 #: ../utils/imsettings-start.c:80 ../utils/imsettings-stop.c:78
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to get a session bus.\n"
-msgstr "symlink するのに失敗しました: %s"
+msgstr "セッションバスの取得に失敗しました\n"
 
 #: ../utils/imsettings-info.c:64 ../utils/imsettings-restart.c:94
 #: ../utils/imsettings-start.c:95 ../utils/imsettings-stop.c:93
 #, c-format
 msgid "Mismatch the version of imsettings.\n"
-msgstr ""
+msgstr "imsettingsのバージョンが一致しません\n"
 
 #: ../utils/imsettings-info.c:70 ../utils/imsettings-restart.c:100
 #: ../utils/imsettings-start.c:101 ../utils/imsettings-stop.c:99
 #, c-format
 msgid "Waiting for reloading the process...\n"
-msgstr ""
+msgstr "プロセスが再起動するのを待っています...\n"
 
 #: ../utils/imsettings-info.c:89 ../utils/imsettings-restart.c:117
 #: ../utils/imsettings-stop.c:116
@@ -678,11 +688,13 @@ msgid ""
 "No Input Method running. please specify Input Method name explicitly if "
 "necessary.\n"
 msgstr ""
+"入力メソッドが動作していません。必要なら明示的に入力メソッド名を指定してくだ"
+"さい\n"
 
 #: ../utils/imsettings-info.c:98
 #, c-format
 msgid "Unable to obtain an Input Method Information."
-msgstr ""
+msgstr "入力メソッド情報の取得が出来ませんでした"
 
 #: ../utils/imsettings-reload.c:42
 msgid "Force reloading the configuration, including restarting the process."
@@ -691,12 +703,11 @@ msgstr "プロセスの再スタートを含み、設定の再ロードを強制
 #: ../utils/imsettings-restart.c:42 ../utils/imsettings-start.c:43
 #: ../utils/imsettings-stop.c:42
 msgid "[Input Method name|xinput.conf]"
-msgstr ""
+msgstr "[入力メソッド名|xinput.conf]"
 
 #: ../utils/imsettings-restart.c:44
-#, fuzzy
 msgid "Force restarting the IM process regardless of any errors."
-msgstr "エラーに関わらず強制的に IM プロセスを再起動します。"
+msgstr "エラーに関わらず強制的に IM プロセスを再起動する"
 
 #: ../utils/imsettings-restart.c:45 ../utils/imsettings-start.c:45
 #: ../utils/imsettings-stop.c:45
@@ -706,7 +717,7 @@ msgstr ".xinputrc は更新しないで下さい。"
 #: ../utils/imsettings-restart.c:46 ../utils/imsettings-start.c:46
 #: ../utils/imsettings-stop.c:46
 msgid "Do not restart the daemons at first."
-msgstr ""
+msgstr "はじめにデーモンを再起動しない"
 
 #: ../utils/imsettings-restart.c:128 ../utils/imsettings-stop.c:128
 #, c-format
@@ -716,139 +727,56 @@ msgstr "IM プロセス`%s' の停止に失敗しました\n"
 #: ../utils/imsettings-restart.c:136
 #, c-format
 msgid "Forcibly restarted %s, but maybe not completely\n"
-msgstr ""
+msgstr "強制的に%sを再起動しましたが、完全ではないかもしれません\n"
 
 #: ../utils/imsettings-restart.c:138
-#, fuzzy, c-format
+#, c-format
 msgid "Restarted %s\n"
-msgstr "%s は停止しました\n"
+msgstr ""
+"%sを再起動しました\n"
+"\n"
 
 #: ../utils/imsettings-restart.c:141
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to restart IM process `%s'\n"
-msgstr "IM プロセス`%s' の停止に失敗しました\n"
+msgstr "IM プロセス`%s' の再起動に失敗しました\n"
 
 #: ../utils/imsettings-start.c:47
-#, fuzzy
 msgid "Start Input Method if not yet running."
-msgstr "入力メソッド - %s を開始しています"
+msgstr "まだ動作していない場合入力メソッドを開始する"
 
 #: ../utils/imsettings-start.c:48
 msgid "Shut up the extra messages."
-msgstr ""
+msgstr "余計なメッセージを出力しない"
 
-#: ../utils/imsettings-start.c:118
-#, fuzzy, c-format
+#: ../utils/imsettings-start.c:123
+#, c-format
 msgid "No Input Method available\n"
-msgstr "使用中のシステム上には入力メソッドがありません。"
+msgstr "利用可能な入力メソッドがありません\n"
 
-#: ../utils/imsettings-start.c:138
-#, fuzzy, c-format
+#: ../utils/imsettings-start.c:144
+#, c-format
 msgid "Started %s\n"
-msgstr "%s は停止しました\n"
+msgstr "%sを開始しました\n"
 
-#: ../utils/imsettings-start.c:140
-#, fuzzy, c-format
+#: ../utils/imsettings-start.c:146
+#, c-format
 msgid "Failed to start IM process `%s'\n"
-msgstr "IM プロセス`%s' の停止に失敗しました\n"
+msgstr "IM プロセス`%s' の開始に失敗しました\n"
 
 #: ../utils/imsettings-start.desktop.in.h:1
-#, fuzzy
 msgid "Input Method starter"
-msgstr "入力メソッド"
+msgstr "入力メソッドスターター"
 
 #: ../utils/imsettings-start.desktop.in.h:2
 msgid "imsettings-start"
-msgstr ""
+msgstr "imsettings-start"
 
 #: ../utils/imsettings-stop.c:44
-#, fuzzy
 msgid "Force stopping the IM process regardless of any errors."
-msgstr "エラーに関わらず強制的に IM プロセスを再起動します。"
+msgstr "エラーに関わらず強制的に IM プロセスを停止する"
 
 #: ../utils/imsettings-stop.c:126
 #, c-format
 msgid "Stopped %s\n"
 msgstr "%s は停止しました\n"
-
-#~ msgid "Invalid IM module type: %d"
-#~ msgstr "無効な IM モジュールタイプです: %d"
-
-#, fuzzy
-#~ msgid "X display"
-#~ msgstr "X ディスプレイ名"
-
-#, fuzzy
-#~ msgid "Verbose flag"
-#~ msgstr "無視フラグ"
-
-#~ msgid "Timed out to initialize %s services."
-#~ msgstr "%s サービスの初期化は時間切れです。"
-
-#~ msgid "User Specific"
-#~ msgstr "ユーザー固有"
-
-#~ msgid "xinputrc was modified by the user"
-#~ msgstr "ユーザーにより xinputrc が変更されました"
-
-#~ msgid "Updating Input Method list"
-#~ msgstr "入力メソッド一覧を更新しています"
-
-#~ msgid "Stopping Input Method - %s"
-#~ msgstr "入力メソッド - %s を停止しています"
-
-#~ msgid "Parent Window"
-#~ msgstr "親ウインドウ"
-
-#~ msgid "GtkWindow that points to the parent window"
-#~ msgstr "親ウインドウを指す GtkWindow "
-
-#~ msgid "Work in progress..."
-#~ msgstr "作業は進行中です... "
-
-#~ msgid "Use %s"
-#~ msgstr "%s を使用する"
-
-#~ msgid " (legacy)"
-#~ msgstr " (レガシー)"
-
-#~ msgid " (recommended)"
-#~ msgstr " (推奨)"
-
-#~ msgid "<b>Input Method</b>"
-#~ msgstr "<b>入力メソッド</b>"
-
-#~ msgid "_Enable input method feature"
-#~ msgstr "入力メソッドの機能を有効にする(_E)"
-
-#~ msgid ""
-#~ "<small><i>Note: this change will not take effect until you next log in, "
-#~ "except GTK+ applications.</i></small>"
-#~ msgstr ""
-#~ "<small><i>注記: GTK+ アプリケーション以外はこの変更は次回ログインするまで "
-#~ "反映されません。</i></small>"
-
-#~ msgid "Input Method _Preferences..."
-#~ msgstr "入力メソッドの個人設定(_P)..."
-
-#~ msgid ""
-#~ "<span weight=\"bold\" size=\"larger\">No input method is available</span>"
-#~ msgstr ""
-#~ "<span weight=\"bold\" size=\"larger\">使用できる入力メソッドがありません</"
-#~ "span>"
-
-#~ msgid "Please install any input methods before running if you like."
-#~ msgstr "必要であれば、 実行する前に入力メソッドをインストールしてください。"
-
-#~ msgid "IM Chooser - Input Method configuration tool"
-#~ msgstr "IM Chooser - 入力メソッド設定ツール"
-
-#~ msgid "_Log Out"
-#~ msgstr "ログアウト(_L)"
-
-#~ msgid ""
-#~ "Choose the input method to be used or disable the input method usage on "
-#~ "the desktop"
-#~ msgstr ""
-#~ "デスクトップで使用する入力メソッドを選択、 または入力メソッドの使用を無効"
-#~ "に します。"
