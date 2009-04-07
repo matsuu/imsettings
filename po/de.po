@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop Input Method configuration tool\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-10 18:28+0900\n"
+"POT-Creation-Date: 2009-04-07 19:48+0900\n"
 "PO-Revision-Date: 2008-04-03 09:40+0100\n"
 "Last-Translator: Dominik Sandjaja <dominiksandjaja@fedoraproject.org>\n"
 "Language-Team: German Translation team <fedora-trans-de@redhat.com>\n"
@@ -94,7 +94,7 @@ msgstr ""
 msgid "Connected to %s.%s"
 msgstr ""
 
-#: ../applet/main.c:203 ../applet/main.c:238 ../applet/main.c:910
+#: ../applet/main.c:203 ../applet/main.c:238 ../applet/main.c:911
 msgid "Information"
 msgstr ""
 
@@ -165,49 +165,58 @@ msgid ""
 "assign for the acceleration key. Press Backspace key to disable this feature."
 msgstr ""
 
-#: ../applet/main.c:825
+#: ../applet/main.c:826
 #, fuzzy
 msgid "Disconnect"
 msgstr "DBus-Verbindung"
 
-#: ../applet/main.c:884
+#: ../applet/main.c:885
 #, fuzzy
 msgid "Click to connect to Input Method"
 msgstr "Start der Eingabemethode fehlgeschlagen"
 
-#: ../applet/main.c:888
+#: ../applet/main.c:889
 #, fuzzy
 msgid "Click to disconnect from Input Method"
 msgstr "Start der Eingabemethode fehlgeschlagen"
 
-#: ../applet/main.c:911
+#: ../applet/main.c:912
 msgid ""
 "The default Input Method isn't yet configured. To get this working, you need "
 "to set up that on im-chooser or select one from the menu which appears by "
 "the right click first."
 msgstr ""
 
+#. This may looks like "Press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#: ../applet/main.c:984
+#, fuzzy
+msgid "Left-click on the icon to connect to/disconnect from Input Method.\n"
+msgstr "Start der Eingabemethode fehlgeschlagen"
+
 #: ../applet/main.c:985
+#, fuzzy
+msgid "Right-click to show up the Input Method menu."
+msgstr "Start der Eingabemethode fehlgeschlagen"
+
+#: ../applet/main.c:987
 #, c-format
-msgid "Press %s or "
+msgid "Please %s%s"
 msgstr ""
 
-#: ../applet/main.c:988
+#: ../applet/main.c:989
 #, c-format
-msgid ""
-"%sLeft-click on the icon to connect to/disconnect from Input Method.\n"
-"Right-click to show up the Input Method menu."
+msgid "Please press %s or %s%s"
 msgstr ""
 
-#: ../applet/main.c:991
+#: ../applet/main.c:993
 msgid "Tips"
 msgstr ""
 
-#: ../applet/main.c:997
+#: ../applet/main.c:999
 msgid "Do not show notifications again"
 msgstr ""
 
-#: ../applet/main.c:1041
+#: ../applet/main.c:1045
 msgid "Unable to take an ownership for XIM server"
 msgstr ""
 
@@ -220,14 +229,14 @@ msgid "Child widget to appear next to the menu text"
 msgstr ""
 
 #: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:698
-#: ../src/factory.c:972 ../src/factory_info.c:1311
+#: ../src/factory.c:990
 msgid "Replace the running settings daemon with new instance."
 msgstr "Ersetze den laufenden Einstellungsdämon durch eine neue Instanz."
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:1002 ../src/factory_info.c:1336
-#: ../utils/imsettings-reload.c:63 ../utils/imsettings-restart.c:72
-#: ../utils/imsettings-start.c:73 ../utils/imsettings-stop.c:71
+#: ../src/factory.c:1020 ../utils/imsettings-reload.c:63
+#: ../utils/imsettings-restart.c:72 ../utils/imsettings-start.c:73
+#: ../utils/imsettings-stop.c:71
 msgid "Unknown error in parsing the command lines."
 msgstr "Unbekannter Fehler beim Parsen der Befehlszeilen."
 
@@ -245,19 +254,19 @@ msgid ""
 "Helper application that delivers GTK+ immodule name between GConf and Xfconf"
 msgstr ""
 
-#: ../backends/xim/loopback.c:193
+#: ../backends/xim/loopback.c:223
 msgid "Synchronous"
 msgstr ""
 
-#: ../backends/xim/loopback.c:194
+#: ../backends/xim/loopback.c:224
 msgid "Request to send a key event synchronously"
 msgstr ""
 
-#: ../backends/xim/main.c:142 ../src/factory.c:973
+#: ../backends/xim/main.c:142 ../src/factory.c:991
 msgid "X display to use"
 msgstr "X-Anzeige, die verwendet werden soll"
 
-#: ../backends/xim/main.c:142 ../src/factory.c:973
+#: ../backends/xim/main.c:142 ../src/factory.c:991
 msgid "DISPLAY"
 msgstr "ANZEIGE"
 
@@ -278,21 +287,21 @@ msgstr ""
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2888
+#: ../backends/xim/proxy.c:2970
 #, fuzzy
 msgid "A XIM server name"
 msgstr "XIM-Servername"
 
-#: ../backends/xim/proxy.c:2889
+#: ../backends/xim/proxy.c:2971
 #, fuzzy
 msgid "A XIM server name would connects to"
 msgstr "XIM-Serverprogrammname, welches laufen gelassen wird"
 
-#: ../backends/xim/proxy.c:2894
+#: ../backends/xim/proxy.c:2976
 msgid "Signals for Protocol class"
 msgstr ""
 
-#: ../backends/xim/proxy.c:2895
+#: ../backends/xim/proxy.c:2977
 msgid "A structure of signals for Protocol class"
 msgstr ""
 
@@ -521,7 +530,7 @@ msgstr "Konnte pid für %s Prozess nicht bestimmen."
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "Konnte kein Signal an den %s Prozess senden"
 
-#: ../src/factory.c:338 ../src/factory.c:740
+#: ../src/factory.c:338 ../src/factory.c:755
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr "Konnte Homeverzeichnis nicht finden"
@@ -546,100 +555,82 @@ msgstr "Entfernen einer .xinputrc-Datei fehlgeschlagen: %s"
 msgid "Failed to make a symlink: %s"
 msgstr "Erzeugen eines symlink fehlgeschlagen: %s"
 
-#: ../src/factory.c:513 ../src/factory.c:552 ../src/factory_info.c:947
-#: ../src/factory_info.c:982
+#: ../src/factory.c:528 ../src/factory.c:567
 #, c-format
 msgid "No input methods available on your system."
 msgstr "Keine Eingabemethoden verfügbar auf Ihrem System."
 
-#: ../src/factory.c:600 ../src/factory.c:795
+#: ../src/factory.c:615 ../src/factory.c:813
 #, fuzzy, c-format
 msgid ""
 "No such input method on your system: %s\n"
 "  Details: %s"
 msgstr "Keine solche Eingabemethoden auf Ihrem System: %s"
 
-#: ../src/factory.c:625
+#: ../src/factory.c:640
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr "Kein XIM-Server ist verfügbar in %s"
 
-#: ../src/factory.c:873
+#: ../src/factory.c:891
 msgid "X display name"
 msgstr "X-Bildschirmname"
 
-#: ../src/factory.c:874
+#: ../src/factory.c:892
 msgid "X display name to use"
 msgstr "X-Bildschirmname, der verwendet werden soll"
 
-#: ../src/factory.c:879 ../src/factory_info.c:1227 ../src/monitor.c:237
+#: ../src/factory.c:897 ../src/monitor.c:237
 msgid "xinputrc directory"
 msgstr ""
 
-#: ../src/factory.c:880 ../src/factory_info.c:1228
+#: ../src/factory.c:898
 msgid "A directory where puts the system wide xinputrc on."
 msgstr ""
 
-#: ../src/factory.c:885 ../src/factory_info.c:1233 ../src/monitor.c:243
+#: ../src/factory.c:903 ../src/monitor.c:243
 msgid "xinput directory"
 msgstr ""
 
-#: ../src/factory.c:886 ../src/factory_info.c:1234
+#: ../src/factory.c:904
 msgid "A directory where puts the IM configurations on."
 msgstr ""
 
-#: ../src/factory.c:891 ../src/factory.c:892 ../src/factory_info.c:1239
-#: ../src/factory_info.c:1240 ../src/monitor.c:249 ../src/monitor.c:250
+#: ../src/factory.c:909 ../src/factory.c:910 ../src/monitor.c:249
+#: ../src/monitor.c:250
 msgid "home directory"
 msgstr ""
 
 #. FIXME
-#: ../src/factory.c:976
+#: ../src/factory.c:994
 msgid "X screen to use"
 msgstr "X-Bildschirm, der verwendet werden soll"
 
-#: ../src/factory.c:976
+#: ../src/factory.c:994
 msgid "SCREEN"
 msgstr "BILDSCHIRM"
 
-#: ../src/factory.c:978 ../src/factory_info.c:1312
+#: ../src/factory.c:996
 msgid ""
 "A directory where puts the system-wide xinputrc puts on (debugging only)"
 msgstr ""
 
-#: ../src/factory.c:978 ../src/factory.c:979 ../src/factory.c:980
-#: ../src/factory_info.c:1312 ../src/factory_info.c:1313
-#: ../src/factory_info.c:1314
+#: ../src/factory.c:996 ../src/factory.c:997 ../src/factory.c:998
 msgid "DIR"
 msgstr ""
 
-#: ../src/factory.c:979 ../src/factory_info.c:1313
+#: ../src/factory.c:997
 msgid "A directory where puts the IM configurations puts on (debugging only)"
 msgstr ""
 
-#: ../src/factory.c:980 ../src/factory_info.c:1314
+#: ../src/factory.c:998
 msgid "A home directory (debugging only)"
 msgstr ""
 
-#: ../src/factory.c:1010
+#: ../src/factory.c:1028
 #, c-format
 msgid "Failed to open a X display."
 msgstr "Öffnen eines X-Anzeige fehlgeschlagen"
-
-#: ../src/factory_info.c:236
-#, c-format
-msgid "Reloading...\n"
-msgstr "Neuladen...\n"
-
-#: ../src/factory_info.c:285 ../src/monitor.c:833
-#, c-format
-msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
-msgstr "Doppelter Eintrag `%s' von %s. SHORT_DESC hat einmalig zu sein."
-
-#: ../src/factory_info.c:1055 ../src/monitor.c:1020
-#, c-format
-msgid "No such input method on your system: %s"
-msgstr "Keine solche Eingabemethoden auf Ihrem System: %s"
 
 #: ../src/monitor.c:238
 #, fuzzy
@@ -649,6 +640,16 @@ msgstr "Entfernen einer .xinputrc-Datei fehlgeschlagen: %s"
 #: ../src/monitor.c:244
 msgid "A place to store xinput configuration files"
 msgstr ""
+
+#: ../src/monitor.c:833
+#, c-format
+msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
+msgstr "Doppelter Eintrag `%s' von %s. SHORT_DESC hat einmalig zu sein."
+
+#: ../src/monitor.c:1020
+#, c-format
+msgid "No such input method on your system: %s"
+msgstr "Keine solche Eingabemethoden auf Ihrem System: %s"
 
 #: ../src/monitor.c:1218
 #, c-format
@@ -740,17 +741,17 @@ msgstr "Starte Eingabemethode - %s"
 msgid "Shut up the extra messages."
 msgstr ""
 
-#: ../utils/imsettings-start.c:118
+#: ../utils/imsettings-start.c:123
 #, fuzzy, c-format
 msgid "No Input Method available\n"
 msgstr "Keine Eingabemethoden verfügbar auf Ihrem System."
 
-#: ../utils/imsettings-start.c:138
+#: ../utils/imsettings-start.c:144
 #, fuzzy, c-format
 msgid "Started %s\n"
 msgstr "Gestoppt %s\n"
 
-#: ../utils/imsettings-start.c:140
+#: ../utils/imsettings-start.c:146
 #, fuzzy, c-format
 msgid "Failed to start IM process `%s'\n"
 msgstr "Stoppen des IM-Prozess fehlgeschlagen `%s'\n"
@@ -773,6 +774,9 @@ msgstr "Erzwinge Neustart des IM-Prozesses, auch bei Fehlern."
 #, c-format
 msgid "Stopped %s\n"
 msgstr "Gestoppt %s\n"
+
+#~ msgid "Reloading...\n"
+#~ msgstr "Neuladen...\n"
 
 #~ msgid "Invalid IM module type: %d"
 #~ msgstr "Ungültiger IM-Modultyp: %d"

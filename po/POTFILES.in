@@ -12,7 +12,6 @@ imsettings/imsettings-info.c
 imsettings/imsettings-observer.c
 imsettings/imsettings-request.c
 src/factory.c
-src/factory_info.c
 src/monitor.c
 utils/imsettings-info.c
 utils/imsettings-list.c
