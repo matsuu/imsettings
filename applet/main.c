@@ -982,6 +982,7 @@ _delay_notify(gpointer data)
 	escaped_key = g_markup_escape_text(key, -1);
 	/* This may looks like "Please press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
 	 * or "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+	 * with the combinations of the following 4 translations as a result.
 	 */
 	notice1 = g_strdup(_("Left-click on the icon to connect to/disconnect from Input Method."));
 	notice2 = g_strdup(_("\nRight-click to show up the Input Method menu."));
