@@ -2779,14 +2779,12 @@ xim_proxy_protocol_real_xim_forward_event(GXimProtocol *proto,
 
 		return TRUE;
 	}
-	if (flag & G_XIM_Event_Synchronous) {
+	if (flag & G_XIM_Event_Synchronous)
 		INC_PENDING (XIM_PROXY_CONNECTION (proto), G_XIM_SYNC_REPLY, 0, imid, icid);
-	} else {
-		/* asynchronous forward event has to keep on track to avoid
-		 * the race condition issue with other synchronous event.
-		 */
-		INC_PENDING_K (proto);
-	}
+	/* asynchronous forward event has to keep on track to avoid
+	 * the race condition issue with other synchronous event.
+	 */
+	INC_PENDING_K (proto);
 
 	return TRUE;
 }

@@ -1,3 +1,8 @@
+2009-04-13  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_forward_event):
+	Fix an underflow of pending counter.
+
 2009-04-07  Akira TAGOH  <tagoh@redhat.com>
 
 	* configure.ac: bump to 0.106.2
