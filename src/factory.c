@@ -797,7 +797,7 @@ imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (observer);
 	IMSettingsInfo *info = NULL;
 	gchar *module, *pidfile = NULL;
-	const gchar *xinputfile;
+	const gchar *xinputfile, *xim, *gtkimm;
 	pid_t pid;
 
 	module = imsettings_manager_real_get_current_user_im(observer, error);
@@ -823,6 +823,17 @@ imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
 		pidfile = _build_pidfilename(xinputfile, priv->display_name, "xim");
 		pid = _get_pid(pidfile, "xim", error);
 		if (pid == 0) {
+			/* for immodules */
+			xim = imsettings_info_get_xim(info);
+			if (xim != NULL && strcmp(xim, "none") == 0) {
+				gtkimm = imsettings_info_get_gtkimm(info);
+				if (strcmp(gtkimm, "gtk-im-context-simple") != 0) {
+					/* this may be an immodule that is only available for gtk+ */
+					g_error_free(*error);
+					*error = NULL;
+					goto end;
+				}
+			}
 			if (g_error_matches(*error, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
 				/* No pidfile is available. there aren't anything else to do.
 				 * basically this is no problem. someone may just did stop an IM

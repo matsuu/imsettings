@@ -59,6 +59,7 @@ noinst_PROGRAMS +=					\
 	test-rhbz-455363				\
 	test-rhbz-471833				\
 	test-rhbz-490587				\
+	test-rhbz-510666				\
 	$(NULL)
 endif
 #
@@ -122,5 +123,10 @@ test_rhbz_471833_SOURCES =				\
 #
 test_rhbz_490587_SOURCES =				\
 	rhbz_490587.c					\
+	$(common_sources)				\
+	$(NULL)
+#
+test_rhbz_510666_SOURCES =				\
+	rhbz_510666.c					\
 	$(common_sources)				\
 	$(NULL)
