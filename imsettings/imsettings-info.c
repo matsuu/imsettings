@@ -898,6 +898,19 @@ imsettings_info_is_xim(IMSettingsInfo *info)
 }
 
 gboolean
+imsettings_info_is_immodule_only(IMSettingsInfo *info)
+{
+	IMSettingsInfoPrivate *priv;
+
+	g_return_val_if_fail (IMSETTINGS_IS_INFO (info), FALSE);
+
+	priv = IMSETTINGS_INFO_GET_PRIVATE (info);
+
+	return (priv->xim != NULL && strcmp(priv->xim, "none") == 0 &&
+		priv->gtkimm != NULL && strcmp(priv->gtkimm, "gtk-im-context-simple") != 0);
+}
+
+gboolean
 imsettings_info_compare(const IMSettingsInfo *info1,
 			const IMSettingsInfo *info2)
 {

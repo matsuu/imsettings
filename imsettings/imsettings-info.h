@@ -70,6 +70,7 @@ gboolean        imsettings_info_is_visible            (IMSettingsInfo       *inf
 gboolean        imsettings_info_is_system_default     (IMSettingsInfo       *info);
 gboolean        imsettings_info_is_user_default       (IMSettingsInfo       *info);
 gboolean        imsettings_info_is_xim                (IMSettingsInfo       *info);
+gboolean        imsettings_info_is_immodule_only      (IMSettingsInfo       *info);
 gboolean        imsettings_info_compare               (const IMSettingsInfo *info1,
                                                        const IMSettingsInfo *info2);
 

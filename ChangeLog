@@ -1,3 +1,15 @@
+2009-07-27  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: update the soname info.
+
+	* src/factory.c (imsettings_manager_real_start_im): skip starting
+	the real process for immodule only conf.
+	(imsettings_manager_real_whats_im_running): revert the previous change
+	and better handling for immodule only conf.
+
+	* imsettings/imsettings-info.c (imsettings_info_is_immodule_only): NEW
+	to check for the object if it's immodule only or not.
+
 2009-07-23  Akira TAGOH  <tagoh@redhat.com>
 
 	* src/factory.c (imsettings_manager_real_whats_im_running): Support

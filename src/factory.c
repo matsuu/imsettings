@@ -83,9 +83,9 @@ enum {
 	LAST_PROP
 };
 
-GType  imsettings_manager_get_type             (void) G_GNUC_CONST;
-gchar *imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
-						GError             **error);
+GType  imsettings_manager_get_type                    (void) G_GNUC_CONST;
+static gchar *imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
+						       GError             **error);
 
 G_DEFINE_TYPE (IMSettingsManager, imsettings_manager, IMSETTINGS_TYPE_OBSERVER);
 
@@ -631,8 +631,8 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 		pidfile = NULL;
 	}
 
-	/* hack to allow starting none.conf */
-	if (strcmp(module, "none") != 0) {
+	/* hack to allow starting none.conf and immodule only conf */
+	if (strcmp(module, "none") != 0 && !imsettings_info_is_immodule_only(info)) {
 		xim_prog = imsettings_info_get_xim_program(info);
 		xim_args = imsettings_info_get_xim_args(info);
 		if (xim_prog == NULL) {
@@ -790,14 +790,14 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 	return retval;
 }
 
-gchar *
+static gchar *
 imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
 					 GError             **error)
 {
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (observer);
 	IMSettingsInfo *info = NULL;
 	gchar *module, *pidfile = NULL;
-	const gchar *xinputfile, *xim, *gtkimm;
+	const gchar *xinputfile;
 	pid_t pid;
 
 	module = imsettings_manager_real_get_current_user_im(observer, error);
@@ -819,21 +819,13 @@ imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
 			/* no info object for current IM */
 			goto end;
 		}
+		if (imsettings_info_is_immodule_only(info)) {
+			goto end;
+		}
 		xinputfile = imsettings_info_get_filename(info);
 		pidfile = _build_pidfilename(xinputfile, priv->display_name, "xim");
 		pid = _get_pid(pidfile, "xim", error);
 		if (pid == 0) {
-			/* for immodules */
-			xim = imsettings_info_get_xim(info);
-			if (xim != NULL && strcmp(xim, "none") == 0) {
-				gtkimm = imsettings_info_get_gtkimm(info);
-				if (strcmp(gtkimm, "gtk-im-context-simple") != 0) {
-					/* this may be an immodule that is only available for gtk+ */
-					g_error_free(*error);
-					*error = NULL;
-					goto end;
-				}
-			}
 			if (g_error_matches(*error, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
 				/* No pidfile is available. there aren't anything else to do.
 				 * basically this is no problem. someone may just did stop an IM
