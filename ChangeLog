@@ -1,5 +1,10 @@
 2009-08-06  Akira TAGOH  <tagoh@redhat.com>
 
+	* src/monitor.c (_imsettings_monitor_start_for_xinputdir): 
+	Fix a memory leak.
+	(_imsettings_monitor_start_for_xinputrc): likewise.
+	(imsettings_monitor_validate_from_file_info): likewise.
+
 	* imsettings/imsettings-info.c (imsettings_info_notify_properties):
 	Fix a memory leak.
 

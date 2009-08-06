@@ -214,8 +214,8 @@ imsettings_info_notify_properties(GObject     *object,
 		lang = g_strdup("");
 	xinputinfo = g_build_filename(XINPUTINFO_PATH, "xinputinfo.sh", NULL);
 	g_string_append_printf(cmd, "%s. %s %s", lang, xinputinfo, filename);
-	g_free(xinputinfo);
 
+	g_free(xinputinfo);
 	g_free(lang);
 
 	if (lstat(filename, &st) == -1 ||

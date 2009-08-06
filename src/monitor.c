@@ -519,9 +519,11 @@ _imsettings_monitor_start_for_xinputdir(IMSettingsMonitor *monitor)
 				g_warning("Unable to get the file information: %s",
 					  error->message);
 				g_clear_error(&error);
+				g_object_unref(info);
 				continue;
 			} else if (!imsettings_monitor_validate_from_file_info(info, FALSE)) {
 				/* just ignore them */
+				g_object_unref(info);
 				continue;
 			}
 			filename = g_file_info_get_name(info);
@@ -560,7 +562,7 @@ _imsettings_monitor_start_for_xinputrc(IMSettingsMonitor  *monitor,
 	GError *err = NULL;
 	GFileInfo *finfo;
 	GPtrArray *array;
-	gchar *name;
+	gchar *name = NULL;
 	const gchar *target;
 	gboolean retval = TRUE;
 	IMSettingsMonitorFile *mon;
@@ -621,6 +623,7 @@ _imsettings_monitor_start_for_xinputrc(IMSettingsMonitor  *monitor,
 				g_object_unref(tmp);
 				g_object_unref(finfo);
 				g_object_unref(file);
+				g_free(name);
 
 				return _imsettings_monitor_start_for_xinputrc(monitor,
 									      f,
@@ -668,12 +671,12 @@ _imsettings_monitor_start_for_xinputrc(IMSettingsMonitor  *monitor,
 						    g_strdup(name),
 						    mon);
 		}
-		g_free(name);
 	} else {
 		/* GError is set by g_file_query_info */
 		retval = FALSE;
 	}
   end:
+	g_free(name);
 	if (err) {
 		if (error) {
 			*error = g_error_copy(err);
@@ -732,7 +735,8 @@ imsettings_monitor_validate_from_file_info(GFileInfo *info,
 					   gboolean   check_rc)
 {
 	GFileType type;
-	const char *p, *n;
+	const char *p;
+	gchar *n;
 	gsize slen = strlen(XINPUT_SUFFIX), len;
 
 	type = g_file_info_get_file_type(info);
@@ -748,8 +752,12 @@ imsettings_monitor_validate_from_file_info(GFileInfo *info,
 	n = g_path_get_basename(p);
 	if (check_rc &&
 	    (strcmp(n, IMSETTINGS_USER_XINPUT_CONF) == 0 ||
-	     strcmp(n, IMSETTINGS_GLOBAL_XINPUT_CONF) == 0))
+	     strcmp(n, IMSETTINGS_GLOBAL_XINPUT_CONF) == 0)) {
+		g_free(n);
+
 		return TRUE;
+	}
+	g_free(n);
 	len = strlen(p);
 	if (len <= slen ||
 	    strcmp(&p[len - slen], XINPUT_SUFFIX) != 0)
