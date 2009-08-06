@@ -1,3 +1,8 @@
+2009-08-06  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-info.c (imsettings_info_notify_properties):
+	Fix a memory leak.
+
 2009-07-27  Akira TAGOH  <tagoh@redhat.com>
 
 	* configure.ac: update the soname info.
