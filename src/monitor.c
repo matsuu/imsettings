@@ -375,16 +375,34 @@ imsettings_monitor_real_changed_xinputrc(GFileMonitor      *fmon,
 	IMSettingsMonitorFile *mon = NULL, *m;
 	gint i, depth;
 	GError *error = NULL;
+	GHashTableIter iter;
+	gpointer key, val;
 
 	for (i = 0; i < monitor->mon_xinputrc->len; i++) {
 		m = g_ptr_array_index(monitor->mon_xinputrc, i);
 		if (strcmp(m->filename, filename) == 0) {
 			mon = m;
 			break;
+		} else {
+			gchar *name;
+
+			name = g_file_get_path(m->file);
+			if (strcmp(name, filename) == 0) {
+				mon = m;
+				g_free(name);
+				break;
+			}
+			g_free(name);
 		}
 	}
-	depth = i;
-	g_return_if_fail (mon == NULL);
+	if (mon == NULL) {
+		/* if no targeted file found in current monitored files,
+		 * just assume that it may be the top of the file like xinputrc.
+		 */
+		i = depth = 0;
+	} else {
+		depth = i;
+	}
 
 	switch (event_type) {
 	    case G_FILE_MONITOR_EVENT_CHANGED:
@@ -393,10 +411,11 @@ imsettings_monitor_real_changed_xinputrc(GFileMonitor      *fmon,
 			    /* ignore them */
 			    goto end;
 		    }
-		    d(g_print("*** %s(xinputrc) created/changed\n", filename));
+		    d(g_print("*** %d:%s(xinputrc) created/changed\n", depth, filename));
 		    for (; i < monitor->mon_xinputrc->len; i++) {
 			    imsettings_monitor_file_unref(g_ptr_array_index(monitor->mon_xinputrc, i));
 		    }
+		    monitor->mon_xinputrc->len = depth + 1;
 		    g_object_ref(file);
 		    _imsettings_monitor_start_for_xinputrc(monitor, file, depth, TRUE, &error);
 		    if (error) {
@@ -408,9 +427,14 @@ imsettings_monitor_real_changed_xinputrc(GFileMonitor      *fmon,
 		    proceeded = TRUE;
 		    break;
 	    case G_FILE_MONITOR_EVENT_DELETED:
-		    /* no changes of monitor. we do deal with that
-		     * when only changed/created event happened.
-		     */
+		    g_hash_table_iter_init(&iter, monitor->im_info_from_filename);
+		    while (g_hash_table_iter_next(&iter, &key, &val)) {
+			    IMSettingsInfo *info = IMSETTINGS_INFO (val);
+
+			    g_object_set(G_OBJECT (info), "is_system_default", FALSE, NULL);
+		    }
+		    g_free(monitor->current_system_im);
+		    monitor->current_system_im = NULL;
 		    d(g_print("*** %s(xinputrc) deleted\n", filename));
 		    proceeded = TRUE;
 		    break;
@@ -443,10 +467,20 @@ imsettings_monitor_real_changed_dot_xinputrc(GFileMonitor      *fmon,
 		if (strcmp(m->filename, filename) == 0) {
 			mon = m;
 			break;
+		} else {
+			gchar *name;
+
+			name = g_file_get_path(m->file);
+			if (strcmp(name, filename) == 0) {
+				mon = m;
+				g_free(name);
+				break;
+			}
+			g_free(name);
 		}
 	}
 	depth = i;
-	g_return_if_fail (mon == NULL);
+	g_return_if_fail (mon != NULL);
 
 	tmp = g_build_filename(monitor->homedir, IMSETTINGS_USER_XINPUT_CONF, NULL);
 	switch (event_type) {
@@ -463,6 +497,7 @@ imsettings_monitor_real_changed_dot_xinputrc(GFileMonitor      *fmon,
 		    for (; i < monitor->mon_dot_xinputrc->len; i++) {
 			    imsettings_monitor_file_unref(g_ptr_array_index(monitor->mon_dot_xinputrc, i));
 		    }
+		    monitor->mon_dot_xinputrc->len = depth + 1;
 		    g_object_ref(file);
 		    _imsettings_monitor_start_for_xinputrc(monitor, file, depth, FALSE, &error);
 		    if (error) {

@@ -36,6 +36,7 @@
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 #include <X11/Xlib.h>
+#include <dbus/dbus-glib-lowlevel.h>
 #include "monitor.h"
 #include "imsettings/imsettings-info-private.h"
 #include "imsettings/imsettings-observer.h"
@@ -57,6 +58,11 @@ typedef struct _IMSettingsManagerPrivate	IMSettingsManagerPrivate;
 #define IMSETTINGS_MANAGER_GET_CLASS(_o_)	(G_TYPE_INSTANCE_GET_CLASS ((_o_), IMSETTINGS_TYPE_MANAGER, IMSettingsManagerClass))
 #define IMSETTINGS_MANAGER_GET_PRIVATE(_o_)	(G_TYPE_INSTANCE_GET_PRIVATE ((_o_), IMSETTINGS_TYPE_MANAGER, IMSettingsManagerPrivate))
 
+#define RECONNECT_INTERVAL 3
+#define PROCESSCHECK_INTERVAL 1
+#define RESTART_COUNTER_THRESHOLD 5
+#define MAXRESTART 3
+
 
 struct _IMSettingsManagerClass {
 	IMSettingsObserverClass parent_class;
@@ -72,6 +78,17 @@ struct _IMSettingsManagerPrivate {
 	DBusConnection    *req_conn;
 	GSList            *im_running;
 	IMSettingsMonitor *monitor;
+	GHashTable        *pid2id;
+	GHashTable        *aux2info;
+	GHashTable        *body2info;
+};
+struct ProcessInformation {
+	gchar    *module;
+	gchar    *lang;
+	GPid      pid;
+	guint     id;
+	guint     restart_counter;
+	GTimeVal  started_time;
 };
 
 enum {
@@ -83,71 +100,186 @@ enum {
 	LAST_PROP
 };
 
-GType  imsettings_manager_get_type                    (void) G_GNUC_CONST;
-static gchar *imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
-						       GError             **error);
+GType            imsettings_manager_get_type             (void) G_GNUC_CONST;
+static gboolean  imsettings_manager_real_start_im        (IMSettingsObserver  *imsettings,
+                                                          const gchar         *lang,
+                                                          const gchar         *module,
+                                                          gboolean             update_xinputrc,
+                                                          GError             **error);
+static gchar    *imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
+                                                          GError             **error);
+static void      imsettings_manager_start_monitor        (IMSettingsManager   *manager);
+static void      imsettings_manager_stop_monitor         (IMSettingsManager   *manager);
+
 
 G_DEFINE_TYPE (IMSettingsManager, imsettings_manager, IMSETTINGS_TYPE_OBSERVER);
+
+GMainLoop *loop;
 
 /*
  * Private functions
  */
-static gchar *
-_build_pidfilename(const gchar *base,
-		   const gchar *display_name,
-		   const gchar *type)
+static struct ProcessInformation *
+_process_info_new(void)
 {
-	gchar *retval, *hash, *file;
+	return g_new0(struct ProcessInformation, 1);
+}
 
-#if 0
-	hash = g_compute_checksum_for_string(G_CHECKSUM_MD5, base, -1);
-#else
-	G_STMT_START {
-		gint i;
+static struct ProcessInformation *
+_process_info_dup(const struct ProcessInformation *info)
+{
+	struct ProcessInformation *retval = _process_info_new();
 
-		hash = g_path_get_basename(base);
-		if (strcmp(hash, IMSETTINGS_USER_XINPUT_CONF ".bak") == 0) {
-			hash[strlen(IMSETTINGS_USER_XINPUT_CONF)] = 0;
-		}
-		for (i = 0; hash[i] != 0; i++) {
-			if (hash[i] < 0x30 ||
-			    (hash[i] >= 0x3a && hash[i] <= 0x3f) ||
-			    hash[i] == '\\' ||
-			    hash[i] == '`' ||
-			    hash[i] >= 0x7b)
-				hash[i] = '_';
-		}
-	} G_STMT_END;
-#endif
-	file = g_strdup_printf("%s:%s:%s-%s", hash, type, display_name, g_get_user_name());
-	retval = g_build_filename(g_get_tmp_dir(), file, NULL);
-
-	g_free(hash);
-	g_free(file);
+	retval->module = g_strdup(info->module);
+	retval->lang = g_strdup(info->lang);
+	retval->id = info->id;
+	retval->restart_counter = info->restart_counter;
+	memcpy(&retval->started_time, &info->started_time, sizeof (GTimeVal));
 
 	return retval;
 }
 
-static gboolean
-_remove_pidfile(const gchar  *pidfile,
-		GError      **error)
+static void
+_process_info_free(gpointer data)
 {
-	int save_errno;
-	gboolean retval = TRUE;
+	struct ProcessInformation *info = data;
 
-	if (g_unlink(pidfile) == -1) {
-		if (error) {
-			save_errno = errno;
+	g_free(info->module);
+	g_free(info->lang);
 
-			g_set_error(error, G_FILE_ERROR,
-				    g_file_error_from_errno(save_errno),
-				    _("Failed to remove a pidfile: %s"),
-				    pidfile);
+	g_free(info);
+}
+
+static struct ProcessInformation *
+_get_process_info_by_module(GHashTable  *table,
+			    const gchar *module)
+{
+	GHashTableIter iter;
+	gpointer key, val;
+
+	g_hash_table_iter_init(&iter, table);
+	while (g_hash_table_iter_next(&iter, &key, &val)) {
+		struct ProcessInformation *info = val;
+
+		if (strcmp((gchar *)key, info->module) == 0) {
+			return info;
 		}
-		retval = FALSE;
 	}
 
-	return retval;
+	return NULL;
+}
+
+static struct ProcessInformation *
+_get_process_info_by_id(GHashTable *table,
+			guint       id)
+{
+	GHashTableIter iter;
+	gpointer key, val;
+
+	g_hash_table_iter_init(&iter, table);
+	while (g_hash_table_iter_next(&iter, &key, &val)) {
+		struct ProcessInformation *info = val;
+
+		if (id == info->id) {
+			return info;
+		}
+	}
+
+	return NULL;
+}
+
+static GPid
+_get_pid_from_name(IMSettingsManagerPrivate *priv,
+		   gboolean                  is_body,
+		   const gchar              *name)
+{
+	struct ProcessInformation *info;
+
+	if (is_body) {
+		info = _get_process_info_by_module(priv->body2info, name);
+	} else {
+		info = _get_process_info_by_module(priv->aux2info, name);
+	}
+	if (info == NULL)
+		return 0;
+
+	return info->pid;
+}
+
+static void
+_watch_im_status_cb(GPid     pid,
+		    gint     status,
+		    gpointer data)
+{
+	IMSettingsManager *manager = IMSETTINGS_MANAGER (data);
+	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (manager);
+	guint id;
+	struct ProcessInformation *info;
+	gboolean is_body = TRUE;
+
+	id = GPOINTER_TO_UINT (g_hash_table_lookup(priv->pid2id, GINT_TO_POINTER (pid)));
+	if (id > 0) {
+		g_hash_table_remove(priv->pid2id, GINT_TO_POINTER (pid));
+		/* child process may died unexpectedly. */
+		info = _get_process_info_by_id(priv->body2info, id);
+		if (info == NULL) {
+			is_body = FALSE;
+			info = _get_process_info_by_id(priv->aux2info, id);
+		}
+		if (info == NULL) {
+			g_warning("No consistency in the internal process management database: pid: %d", pid);
+		} else {
+			GTimeVal current;
+
+			g_get_current_time(&current);
+			/* XXX: This is Y2038 unsafe */
+			if (current.tv_sec - info->started_time.tv_sec > RESTART_COUNTER_THRESHOLD) {
+				info->restart_counter = 0;
+			} else {
+				info->restart_counter++;
+			}
+			if (info->restart_counter >= MAXRESTART) {
+				g_printerr("%s Input method process for %s rapidly died many times. giving up to bring it up.", is_body ? "Main" : "AUX", info->module);
+				g_hash_table_remove(is_body ? priv->body2info : priv->aux2info, info->module);
+			} else {
+				GError *error = NULL;
+				gchar *module, *lang;
+
+				module = g_strdup(info->module);
+				lang = g_strdup(info->lang);
+				g_warning("%s Input Method process for %s died with the status %d unexpectedly. restarting...", is_body ? "Main" : "AUX", info->module, status);
+				imsettings_manager_real_start_im(IMSETTINGS_OBSERVER (manager), lang, module, FALSE, &error);
+				g_free(lang);
+				g_free(module);
+			}
+		}
+	} else {
+		d(g_print("pid %d is successfully stopped with the status %d.\n", pid, status));
+	}
+
+	g_spawn_close_pid(pid);
+}
+
+static void
+_stop_all_processes(IMSettingsManager *manager)
+{
+	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (manager);
+	GHashTableIter iter;
+	gpointer key, val;
+	struct ProcessInformation *info = val;
+
+	g_hash_table_remove_all(priv->pid2id);
+
+	g_hash_table_iter_init(&iter, priv->aux2info);
+	while (g_hash_table_iter_next(&iter, &key, &val)) {
+		info = val;
+		kill(-info->pid, SIGTERM);
+	}
+	g_hash_table_iter_init(&iter, priv->body2info);
+	while (g_hash_table_iter_next(&iter, &key, &val)) {
+		info = val;
+		kill(-info->pid, SIGTERM);
+	}
 }
 
 static void
@@ -160,162 +292,128 @@ _child_setup(gpointer data)
 }
 
 static gboolean
-_start_process(const gchar  *prog_name,
-	       const gchar  *prog_args,
-	       const gchar  *pidfile,
-	       const gchar  *lang,
-	       GError      **error)
+_start_process(IMSettingsManager  *manager,
+	       const gchar        *identity,
+	       const gchar        *prog_name,
+	       const gchar        *prog_args,
+	       gboolean            is_body,
+	       const gchar        *lang,
+	       GError            **error)
 {
-	int fd;
-	gchar *contents = NULL;
-	gint tried = 0;
+	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (manager);
 
-	if (prog_name == NULL || prog_name[0] == 0)
-		goto end;
-  retry:
-	if (tried > 1)
-		goto end;
-	tried++;
-	if ((fd = g_open(pidfile, O_CREAT|O_EXCL|O_WRONLY, S_IRUSR|S_IWUSR)) == -1) {
-		gsize len = 0;
-		int pid, save_errno = errno;
+	if (prog_name != NULL && prog_name[0] != 0) {
+		gchar *cmd, **argv, **envp = NULL, **env_list;
+		static const gchar *env_names[] = {
+			"LC_CTYPE",
+			NULL
+		};
+		guint len, i = 0, j = 0;
+		GPid pid;
 
-		if (save_errno != EEXIST) {
-			g_set_error(error, G_FILE_ERROR,
-				    g_file_error_from_errno(save_errno),
-				    _("Failed to open a pidfile: %s"),
-				    pidfile);
-			goto end;
+		env_list = g_listenv();
+		len = g_strv_length(env_list);
+		envp = g_new0(gchar *, G_N_ELEMENTS (env_names) + len + 1);
+		for (i = 0; i < len; i++) {
+			envp[i] = g_strdup_printf("%s=%s",
+						  env_list[i],
+						  g_getenv(env_list[i]));
 		}
-		if (!g_file_get_contents(pidfile, &contents, &len, error))
-			goto end;
-
-		if ((pid = atoi(contents)) == 0) {
-			/* maybe invalid pidfile. retry after removing a pidfile. */
-			g_warning("failed to get a pid.\n");
-			if (!_remove_pidfile(pidfile, error))
-				goto end;
-
-			goto retry;
-		} else {
-			if (kill((pid_t)pid, 0) == -1) {
-				g_warning("failed to send a signal.\n");
-				/* pid may be invalid. retry after removing a pidfile. */
-				if (!_remove_pidfile(pidfile, error))
-					goto end;
-
-				goto retry;
-			}
+		if (lang) {
+			envp[i + j] = g_strdup_printf("%s=%s", env_names[j], lang); j++;
 		}
-		/* the requested IM may be already running */
-	} else {
-		if (prog_name) {
-			gchar *cmd, **argv, **envp = NULL, **env_list;
-			static const gchar *env_names[] = {
-				"LC_CTYPE",
-				NULL
-			};
-			guint len, i = 0, j = 0;
-			GPid pid;
+		envp[i + j] = NULL;
 
-			env_list = g_listenv();
-			len = g_strv_length(env_list);
-			envp = g_new0(gchar *, G_N_ELEMENTS (env_names) + len + 1);
-			for (i = 0; i < len; i++) {
-				envp[i] = g_strdup_printf("%s=%s",
-							  env_list[i],
-							  g_getenv(env_list[i]));
-			}
-			if (lang) {
-				envp[i + j] = g_strdup_printf("%s=%s", env_names[j], lang); j++;
-			}
-			envp[i + j] = NULL;
+		cmd = g_strdup_printf("%s %s", prog_name, (prog_args ? prog_args : ""));
+		g_shell_parse_argv(cmd, NULL, &argv, NULL);
+		if (g_spawn_async(g_get_tmp_dir(), argv, envp,
+				  G_SPAWN_STDOUT_TO_DEV_NULL|
+				  G_SPAWN_STDERR_TO_DEV_NULL|
+				  G_SPAWN_DO_NOT_REAP_CHILD,
+				  _child_setup, NULL, &pid, error)) {
+			GHashTable *hash;
+			const struct ProcessInformation *p;
+			struct ProcessInformation *info;
+			gchar *module = g_strdup(identity);
 
-			cmd = g_strdup_printf("%s %s", prog_name, (prog_args ? prog_args : ""));
-			g_shell_parse_argv(cmd, NULL, &argv, NULL);
-			if (g_spawn_async(g_get_tmp_dir(), argv, envp,
-					  G_SPAWN_STDOUT_TO_DEV_NULL|
-					  G_SPAWN_STDERR_TO_DEV_NULL,
-					  _child_setup, NULL, &pid, error)) {
-				gchar *s = g_strdup_printf("%d", pid);
-
-				write(fd, s, strlen(s));
-				g_free(s);
-				close(fd);
+			if (is_body) {
+				hash = priv->body2info;
 			} else {
-				close(fd);
-				_remove_pidfile(pidfile, NULL);
+				hash = priv->aux2info;
 			}
-			g_strfreev(envp);
+			p = _get_process_info_by_module(hash, identity);
+			if (p == NULL) {
+				info = _process_info_new();
+				info->module = g_strdup(identity);
+				info->lang = g_strdup(lang);
+				info->restart_counter = 0;
+			} else {
+				info = _process_info_dup(p);
+				g_hash_table_remove(hash, identity);
+			}
+			info->pid = pid;
+			g_get_current_time(&info->started_time);
+			g_hash_table_insert(hash, module, info);
 
-			g_free(cmd);
-			g_strfreev(argv);
-			g_strfreev(env_list);
+			info->id = g_child_watch_add(pid, _watch_im_status_cb, manager);
+			g_hash_table_insert(priv->pid2id, GINT_TO_POINTER (pid), GUINT_TO_POINTER (info->id));
+
+			d(gchar *time = g_time_val_to_iso8601(&info->started_time);
+			  g_print("Started %s: process: %s %s, lang=%s, pid: %d, id: %d time: %s\n",
+				  identity, prog_name, prog_args, lang, pid, info->id, time);
+			  g_free(time));
 		}
+		g_strfreev(envp);
+
+		g_free(cmd);
+		g_strfreev(argv);
+		g_strfreev(env_list);
 	}
-  end:
-	g_free(contents);
 
 	return (*error == NULL);
 }
 
-static pid_t
-_get_pid(const gchar  *pidfile,
-	 const gchar  *type,
-	 GError      **error)
-{
-	pid_t pid;
-	gchar *contents = NULL;
-	gsize len = 0;
-
-	/* check the existence first to get rid of the unnecessary error output */
-	if (!g_file_test(pidfile, G_FILE_TEST_EXISTS)) {
-		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_NOENT,
-			    _("%s: No such file or directory"),
-			    pidfile);
-		return 0;
-	}
-	if (!g_file_get_contents(pidfile, &contents, &len, error))
-		return 0;
-
-	if ((pid = atoi(contents)) == 0) {
-		/* maybe invalid pidfile. */
-		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_UNABLE_TO_TRACK_IM,
-			    _("Couldn't determine the pid for %s process."),
-			    type);
-	}
-	g_free(contents);
-
-	return pid;
-}
-
 static gboolean
-_stop_process(const gchar  *pidfile,
-	      const gchar  *type,
-	      GError      **error)
+_stop_process(IMSettingsManagerPrivate  *priv,
+	      const gchar               *identity,
+	      gboolean                   is_body,
+	      GError                   **error)
 {
-	pid_t pid;
 	gboolean retval = FALSE;
+	GHashTable *hash;
+	struct ProcessInformation *info, *tmp;
 
-	pid = _get_pid(pidfile, type, error);
-	if (pid == 0) {
-		if (g_error_matches(*error, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
-			/* No pidfile is available. there aren't anything else to do.
-			 * basically this is no problem. someone may just did stop an IM
-			 * actually not running.
-			 */
-			g_error_free(*error);
-			*error = NULL;
+	if (is_body) {
+		hash = priv->body2info;
+	} else {
+		hash = priv->aux2info;
+	}
+	info = g_hash_table_lookup(hash, identity);
+	if (info == NULL) {
+		if (is_body) {
+			g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
+				    _("No such Input Method is running: %s"),
+				    identity);
+		} else {
+			/* ignore for aux */
 			retval = TRUE;
 		}
 	} else {
-		if (kill(-pid, SIGTERM) == -1) {
+		tmp = _process_info_dup(info);
+		g_hash_table_remove(hash, identity);
+		g_hash_table_remove(priv->pid2id, GINT_TO_POINTER (info->pid));
+		if (kill(-info->pid, SIGTERM) == -1) {
+			gchar *module = g_strdup(identity);
+
 			g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_UNABLE_TO_TRACK_IM,
 				    _("Couldn't send a signal to the %s process successfully."),
-				    type);
+				    is_body ? "Main" : "AUX");
+			/* push back to the table */
+			g_hash_table_insert(hash, module, tmp);
+			g_hash_table_insert(priv->pid2id, GINT_TO_POINTER (info->pid), GUINT_TO_POINTER (info->id));
 		} else {
-			_remove_pidfile(pidfile, NULL);
 			retval = TRUE;
+			_process_info_free(tmp);
 		}
 	}
 
@@ -398,12 +496,36 @@ _update_symlink(IMSettingsManagerPrivate  *priv,
 	return (*error == NULL);
 }
 
+static gboolean
+_reconnect_dbus_cb(gpointer data)
+{
+	IMSettingsManager *manager = IMSETTINGS_MANAGER (data);
+	DBusGConnection *gconn;
+	DBusConnection *conn;
+
+	gconn = dbus_g_bus_get(DBUS_BUS_SESSION, NULL);
+	if (gconn == NULL)
+		return TRUE;
+
+	conn = dbus_g_connection_get_connection(gconn);
+	if (!dbus_connection_get_is_connected(conn)) {
+		dbus_g_connection_unref(gconn);
+		return TRUE;
+	}
+
+	g_object_set(manager, "connection", gconn, NULL);
+	if (!imsettings_observer_setup(IMSETTINGS_OBSERVER (manager), IMSETTINGS_SERVICE_DBUS)) {
+		g_print("Failed to setup the settings daemon.\n");
+		exit(1);
+	}
+
+	return FALSE;
+}
+
 static void
 disconnected_cb(IMSettingsManager *manager)
 {
-	GMainLoop *loop = g_object_get_data(G_OBJECT (manager), "imsettings-daemon-main");
-
-	g_main_loop_quit(loop);
+	g_timeout_add_seconds(RECONNECT_INTERVAL, _reconnect_dbus_cb, manager);
 }
 
 static void
@@ -411,9 +533,10 @@ reload_cb(IMSettingsManager *manager,
 	  gboolean           force)
 {
 	if (force) {
-		GMainLoop *loop = g_object_get_data(G_OBJECT (manager), "imsettings-daemon-main");
-
 		g_main_loop_quit(loop);
+	} else {
+		imsettings_manager_stop_monitor(manager);
+		imsettings_manager_start_monitor(manager);
 	}
 }
 
@@ -483,6 +606,12 @@ imsettings_manager_real_get_property(GObject    *object,
 }
 
 static void
+imsettings_manager_real_dispose(GObject *object)
+{
+	_stop_all_processes(IMSETTINGS_MANAGER (object));
+}
+
+static void
 imsettings_manager_real_finalize(GObject *object)
 {
 	IMSettingsManagerPrivate *priv;
@@ -501,6 +630,12 @@ imsettings_manager_real_finalize(GObject *object)
 	g_free(priv->display_name);
 	if (priv->im_running)
 		g_slist_free(priv->im_running);
+	if (priv->pid2id)
+		g_hash_table_destroy(priv->pid2id);
+	if (priv->aux2info)
+		g_hash_table_destroy(priv->aux2info);
+	if (priv->body2info)
+		g_hash_table_destroy(priv->body2info);
 
 	if (G_OBJECT_CLASS (imsettings_manager_parent_class)->finalize)
 		G_OBJECT_CLASS (imsettings_manager_parent_class)->finalize(object);
@@ -600,7 +735,6 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 	const gchar *imm = NULL, *xinputfile = NULL;
 	const gchar *aux_prog = NULL, *aux_args = NULL;
 	const gchar *xim_prog = NULL, *xim_args = NULL;
-	gchar *pidfile = NULL;
 	gboolean retval = FALSE;
 	IMSettingsInfo *info = NULL;
 
@@ -621,14 +755,9 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 	aux_prog = imsettings_info_get_aux_program(info);
 	aux_args = imsettings_info_get_aux_args(info);
 	if (aux_prog) {
-		pidfile = _build_pidfilename(xinputfile, priv->display_name, "aux");
-
 		/* bring up an auxiliary program */
-		if (!_start_process(aux_prog, aux_args, pidfile, lang, error))
+		if (!_start_process(IMSETTINGS_MANAGER (imsettings), module, aux_prog, aux_args, FALSE, lang, error))
 			goto end;
-
-		g_free(pidfile);
-		pidfile = NULL;
 	}
 
 	/* hack to allow starting none.conf and immodule only conf */
@@ -640,10 +769,8 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 				    _("No XIM server is available in %s"), module);
 			goto end;
 		}
-		pidfile = _build_pidfilename(xinputfile, priv->display_name, "xim");
-
 		/* bring up a XIM server */
-		if (!_start_process(xim_prog, xim_args, pidfile, lang, error))
+		if (!_start_process(IMSETTINGS_MANAGER (imsettings), module, xim_prog, xim_args, TRUE, lang, error))
 			goto end;
 	}
 
@@ -675,7 +802,6 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
   end:
 	if (info)
 		g_object_unref(info);
-	g_free(pidfile);
 
 	return retval;
 }
@@ -692,9 +818,10 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 	gchar *homedir = NULL;
 	const gchar *xinputfile = NULL;
 	const gchar *gtkimm, *xim;
-	gchar *pidfile = NULL, *p = NULL;
+	gchar *p = NULL;
 	gboolean retval = FALSE;
 	GString *strerr = g_string_new(NULL);
+	GPid pid;
 
 	g_print("Stopping %s...\n", module);
 
@@ -721,28 +848,29 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 		goto end;
 
 	xinputfile = imsettings_info_get_filename(info);
-	pidfile = _build_pidfilename(xinputfile, priv->display_name, "aux");
+	pid = _get_pid_from_name(priv, FALSE, module);
 	/* kill an auxiliary program */
-	if (!_stop_process(pidfile, "aux", error)) {
+	if (!_stop_process(priv, module, FALSE, error)) {
 		if (force) {
 			g_string_append_printf(strerr, "%s\n", (*error)->message);
 			g_error_free(*error);
 			*error = NULL;
-			_remove_pidfile(pidfile, NULL);
+			g_hash_table_remove(priv->aux2info, module);
+			g_hash_table_remove(priv->pid2id, GINT_TO_POINTER (pid));
 		} else {
 			goto end;
 		}
 	}
-	g_free(pidfile);
 
-	pidfile = _build_pidfilename(xinputfile, priv->display_name, "xim");
+	pid = _get_pid_from_name(priv, TRUE, module);
 	/* kill a XIM server */
-	if (!_stop_process(pidfile, "xim", error)) {
+	if (!_stop_process(priv, module, TRUE, error)) {
 		if (force) {
 			g_string_append_printf(strerr, "%s\n", (*error)->message);
 			g_error_free(*error);
 			*error = NULL;
-			_remove_pidfile(pidfile, NULL);
+			g_hash_table_remove(priv->body2info, module);
+			g_hash_table_remove(priv->pid2id, GINT_TO_POINTER (pid));
 		} else {
 			goto end;
 		}
@@ -781,7 +909,6 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 #endif
 	}
   end:
-	g_free(pidfile);
 	g_free(homedir);
 	g_string_free(strerr, TRUE);
 	if (info)
@@ -796,7 +923,7 @@ imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
 {
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (observer);
 	IMSettingsInfo *info = NULL;
-	gchar *module, *pidfile = NULL;
+	gchar *module;
 	const gchar *xinputfile;
 	pid_t pid;
 
@@ -823,17 +950,8 @@ imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
 			goto end;
 		}
 		xinputfile = imsettings_info_get_filename(info);
-		pidfile = _build_pidfilename(xinputfile, priv->display_name, "xim");
-		pid = _get_pid(pidfile, "xim", error);
+		pid = _get_pid_from_name(priv, TRUE, module);
 		if (pid == 0) {
-			if (g_error_matches(*error, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
-				/* No pidfile is available. there aren't anything else to do.
-				 * basically this is no problem. someone may just did stop an IM
-				 * actually not running.
-				 */
-				g_error_free(*error);
-				*error = NULL;
-			}
 			g_free(module);
 			module = NULL;
 		} else {
@@ -847,7 +965,6 @@ imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
 		module = g_strdup("");
 	}
   end:
-	g_free(pidfile);
 	if (info)
 		g_object_unref(info);
 
@@ -873,6 +990,7 @@ imsettings_manager_class_init(IMSettingsManagerClass *klass)
 
 	object_class->set_property = imsettings_manager_real_set_property;
 	object_class->get_property = imsettings_manager_real_get_property;
+	object_class->dispose      = imsettings_manager_real_dispose;
 	object_class->finalize     = imsettings_manager_real_finalize;
 
 	observer_class->get_version           = imsettings_manager_real_get_version;
@@ -926,6 +1044,9 @@ imsettings_manager_init(IMSettingsManager *manager)
 	priv->xim_req = imsettings_request_new(priv->req_conn, IMSETTINGS_XIM_INTERFACE_DBUS);
 //	priv->qt_req = imsettings_request_new(priv->req_conn, IMSETTINGS_QT_INTERFACE_DBUS);
 	priv->monitor = imsettings_monitor_new(NULL, NULL, NULL);
+	priv->pid2id = g_hash_table_new(g_direct_hash, g_direct_equal);
+	priv->aux2info = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, _process_info_free);
+	priv->body2info = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, _process_info_free);
 }
 
 static IMSettingsManager *
@@ -975,6 +1096,12 @@ imsettings_manager_stop_monitor(IMSettingsManager *manager)
 	imsettings_monitor_stop(priv->monitor);
 }
 
+static void
+_sig_handler(int signum)
+{
+	g_main_loop_quit(loop);
+}
+
 /*
  * Public functions
  */
@@ -983,7 +1110,6 @@ main(int    argc,
      char **argv)
 {
 	GError *error = NULL;
-	GMainLoop *loop;
 	IMSettingsManager *manager;
 	gboolean arg_replace = FALSE;
 	gchar *arg_display_name = NULL, *display_name = NULL;
@@ -1003,6 +1129,7 @@ main(int    argc,
 	};
 	DBusGConnection *gconn;
 	Display *display;
+	struct sigaction sa;
 
 #ifdef ENABLE_NLS
 	bindtextdomain (GETTEXT_PACKAGE, IMSETTINGS_LOCALEDIR);
@@ -1046,6 +1173,13 @@ main(int    argc,
 		g_print("Failed to create an instance for the settings daemon.\n");
 		exit(1);
 	}
+
+	sa.sa_handler = _sig_handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART;
+	sigaction(SIGTERM, &sa, NULL);
+	sigaction(SIGINT, &sa, NULL);
+
 	imsettings_manager_stop_monitor(manager);
 	imsettings_manager_start_monitor(manager);
 	g_object_set(G_OBJECT (manager), "display_name", display_name, NULL);
@@ -1063,7 +1197,6 @@ main(int    argc,
 	}
 
 	loop = g_main_loop_new(NULL, FALSE);
-	g_object_set_data(G_OBJECT (manager), "imsettings-daemon-main", loop);
 
 	g_main_loop_run(loop);
 

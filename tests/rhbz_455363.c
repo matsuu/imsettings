@@ -117,7 +117,7 @@ TDEF (issue) {
 	for (i = 0; i < list->len; i++) {
 		info = g_ptr_array_index(list, i);
 		if (imsettings_info_is_system_default(info)) {
-			fail_unless(sim == NULL, "Duplicate status for the system defaul (take 2)t: %s, %s",
+			fail_unless(sim == NULL, "Duplicate status for the system default (take 2): %s, %s",
 				    sim, imsettings_info_get_short_desc(info));
 			sim = g_strdup(imsettings_info_get_short_desc(info));
 		}

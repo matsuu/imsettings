@@ -1,5 +1,29 @@
 2009-08-10  Akira TAGOH  <tagoh@redhat.com>
 
+	* tests/rhbz_455363.c (test_issue): Fix a typo.
+
+	* src/monitor.c (imsettings_monitor_real_changed_xinputrc): 
+	Fix unnecessary object creation.
+	(imsettings_monitor_real_changed_xinputrc): reset is_system_default
+	flag in the deletion. (rhbz#514852)
+	(imsettings_monitor_real_changed_dot_xinputrc): Fix unnecessary
+	object creation.
+
+	* src/factory.c (_process_info_new): new
+	(_process_info_dup): new.
+	(_process_info_free): new.
+	(_get_process_info_by_module): new.
+	(_get_process_info_by_id): new.
+	(_get_pid_from_name): new.
+	(_watch_im_status_cb): new.
+	(_stop_all_processes): new.
+	(_start_process): manage the child process without the pid file.
+	(_stop_process): likewise.
+	(reload_cb): restart monitoring files too.
+	(imsettings_manager_real_dispose): stop all of the child processes.
+	(_sig_handler): new.
+	(main): set a signal handlers.
+
 	* imsettings/imsettings-observer.c (imsettings_observer_signal_disconnected):
 	decrease a reference count of the connection.
 

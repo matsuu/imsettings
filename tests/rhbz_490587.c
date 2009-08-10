@@ -31,6 +31,7 @@
 #include "imsettings/imsettings.h"
 #include "imsettings/imsettings-request.h"
 #include "imsettings/imsettings-info-private.h"
+#include "imsettings/imsettings-utils.h"
 #include "main.h"
 
 DBusConnection *dbus_conn;
@@ -83,6 +84,7 @@ TDEF (issue) {
 
 	g_usleep(5 * G_USEC_PER_SEC);
 
+	fail_unless(imsettings_request_start_im(req, "SCIM", TRUE, &error), "Unable to start IM");
 	fail_unless(imsettings_request_stop_im(req, "SCIM", TRUE, TRUE, &error), "Unable to stop IM");
 	fail_unless(error == NULL, "Unable to stop IM: %s", error ? error->message : "unknown");
 
