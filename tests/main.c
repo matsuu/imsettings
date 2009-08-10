@@ -108,7 +108,7 @@ imsettings_test_restart_daemons_full(const gchar *xinputrcdir,
 				     const gchar *homedir)
 {
 	gchar *xxinputrcdir, *xxinputdir, *xhomedir;
-	gchar *p = g_build_filename(IMSETTINGS_BUILDDIR, "src", "im-settings-daemon", NULL);
+	gchar *p;
 	gchar *s;
 
 	if (xinputrcdir == NULL)
@@ -131,6 +131,12 @@ imsettings_test_restart_daemons_full(const gchar *xinputrcdir,
 		xhomedir = g_strdup(xxinputrcdir);
 	else
 		xhomedir = g_strdup(homedir);
+
+	if (getenv("IMSETTINGS_DAEMON") == NULL) {
+		p = g_build_filename(IMSETTINGS_BUILDDIR, "src", "im-settings-daemon", NULL);
+	} else {
+		p = g_strdup(getenv("IMSETTINGS_DAEMON"));
+	}
 
 	s = g_strdup_printf("%s --replace --xinputrcdir=%s --xinputdir=%s --homedir=%s",
 			    p, xxinputrcdir, xxinputdir, xhomedir);
