@@ -533,6 +533,7 @@ imsettings_observer_signal_disconnected(IMSettingsObserver *imsettings,
 {
 	IMSettingsObserverPrivate *priv = IMSETTINGS_OBSERVER_GET_PRIVATE (imsettings);
 
+	dbus_g_connection_unref(priv->connection);
 	d(g_print("***\n*** Disconnected\n***\n"));
 	priv->connection = NULL;
 

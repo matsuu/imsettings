@@ -1,3 +1,8 @@
+2009-08-10  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-observer.c (imsettings_observer_signal_disconnected):
+	decrease a reference count of the connection.
+
 2009-08-06  Akira TAGOH  <tagoh@redhat.com>
 
 	* src/monitor.c (_imsettings_monitor_start_for_xinputdir): 
