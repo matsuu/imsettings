@@ -31,6 +31,8 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -68,7 +70,8 @@ struct _IMSettingsManagerClass {
 	IMSettingsObserverClass parent_class;
 };
 struct _IMSettingsManager {
-	IMSettingsObserver parent_instance;
+	IMSettingsObserver  parent_instance;
+	GLogFunc            old_log_handler;
 };
 struct _IMSettingsManagerPrivate {
 	IMSettingsRequest *gtk_req;
@@ -83,13 +86,18 @@ struct _IMSettingsManagerPrivate {
 	GHashTable        *body2info;
 };
 struct ProcessInformation {
-	gchar    *module;
-	gchar    *lang;
-	GPid      pid;
-	guint     id;
-	guint     restart_counter;
-	GTimeVal  started_time;
+	gchar             *module;
+	gchar             *lang;
+	GPid               pid;
+	guint              id;
+	guint              restart_counter;
+	GTimeVal           started_time;
+	gint               ref_count;
+	GIOChannel        *stdout;
+	GIOChannel        *stderr;
+	IMSettingsManager *manager;
 };
+
 
 enum {
 	PROP_0,
@@ -113,8 +121,9 @@ static void      imsettings_manager_stop_monitor         (IMSettingsManager   *m
 
 
 G_DEFINE_TYPE (IMSettingsManager, imsettings_manager, IMSETTINGS_TYPE_OBSERVER);
+G_LOCK_DEFINE_STATIC (logger);
 
-GMainLoop *loop;
+static GMainLoop *loop;
 
 /*
  * Private functions
@@ -122,32 +131,34 @@ GMainLoop *loop;
 static struct ProcessInformation *
 _process_info_new(void)
 {
-	return g_new0(struct ProcessInformation, 1);
-}
+	struct ProcessInformation *retval = g_new0(struct ProcessInformation, 1);
 
-static struct ProcessInformation *
-_process_info_dup(const struct ProcessInformation *info)
-{
-	struct ProcessInformation *retval = _process_info_new();
-
-	retval->module = g_strdup(info->module);
-	retval->lang = g_strdup(info->lang);
-	retval->id = info->id;
-	retval->restart_counter = info->restart_counter;
-	memcpy(&retval->started_time, &info->started_time, sizeof (GTimeVal));
+	retval->ref_count = 1;
 
 	return retval;
 }
 
+static struct ProcessInformation *
+_process_info_ref(struct ProcessInformation *info)
+{
+	g_atomic_int_add(&info->ref_count, 1);
+
+	return info;
+}
+
 static void
-_process_info_free(gpointer data)
+_process_info_unref(gpointer data)
 {
 	struct ProcessInformation *info = data;
 
-	g_free(info->module);
-	g_free(info->lang);
+	if (g_atomic_int_exchange_and_add(&info->ref_count, -1) - 1 == 0) {
+		g_free(info->module);
+		g_free(info->lang);
+		g_io_channel_unref(info->stdout);
+		g_io_channel_unref(info->stderr);
 
-	g_free(info);
+		g_free(info);
+	}
 }
 
 static struct ProcessInformation *
@@ -207,6 +218,129 @@ _get_pid_from_name(IMSettingsManagerPrivate *priv,
 }
 
 static void
+_output_log(IMSettingsManagerPrivate *priv,
+	    const gchar              *buffer,
+	    gsize                     length)
+{
+	FILE *fp;
+	gchar *logfile, *homedir = NULL;
+
+	if (length < 0) {
+		length = strlen(buffer);
+	}
+	g_object_get(priv->monitor, "homedir", &homedir, NULL);
+	if (homedir == NULL) {
+		g_printerr("No home directory is set.");
+		return;
+	}
+	logfile = g_build_filename(homedir, ".imsettings.log", NULL);
+
+	G_LOCK (logger);
+
+	fp = fopen(logfile, "ab");
+	if (fp == NULL) {
+		g_printerr("Failed to open a log file.");
+		return;
+	}
+
+	fwrite(buffer, length, sizeof (gchar), fp);
+
+	fclose(fp);
+
+	G_UNLOCK (logger);
+
+	g_free(logfile);
+}
+
+static void
+_log_handler(const gchar    *log_domain,
+	     GLogLevelFlags  log_level,
+	     const gchar    *message,
+	     gpointer        data)
+{
+	GString *log = g_string_new(NULL);
+	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (data);
+
+	if (log_domain) {
+		g_string_append(log, log_domain);
+	} else {
+		g_string_append_printf(log, "(%s)", g_get_prgname());
+	}
+	g_string_append_printf(log, "[%lu]: ", (gulong)getpid());
+
+	switch (log_level & G_LOG_LEVEL_MASK) {
+	    case G_LOG_LEVEL_ERROR:
+		    g_string_append(log, "ERROR");
+		    break;
+	    case G_LOG_LEVEL_CRITICAL:
+		    g_string_append(log, "CRITICAL");
+		    break;
+	    case G_LOG_LEVEL_WARNING:
+		    g_string_append(log, "WARNING");
+		    break;
+	    case G_LOG_LEVEL_MESSAGE:
+		    g_string_append(log, "Message");
+		    break;
+	    case G_LOG_LEVEL_INFO:
+		    g_string_append(log, "INFO");
+		    break;
+	    case G_LOG_LEVEL_DEBUG:
+		    g_string_append(log, "DEBUG");
+		    break;
+	    default:
+		    if (log_level) {
+			    g_string_append_printf(log, "LOG-0x%x", log_level & G_LOG_LEVEL_MASK);
+		    } else {
+			    g_string_append(log, "LOG");
+		    }
+		    break;
+	}
+	if (log_level & G_LOG_FLAG_RECURSION)
+		g_string_append(log, " (recursed)");
+	if (log_level & (G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING)) {
+		g_string_prepend(log, "\n");
+		g_string_append(log, " **");
+	}
+	g_string_append(log, ": ");
+	if (message) {
+		g_string_append(log, message);
+	} else {
+		g_string_append(log, "(NULL) message");
+	}
+	g_string_append(log, "\n");
+
+	g_print("%s", log->str);
+	_output_log(priv, log->str, log->len);
+	g_string_free(log, TRUE);
+}
+
+static gboolean
+_logger_write_cb(GIOChannel   *channel,
+		 GIOCondition  condition,
+		 gpointer      data)
+{
+	gchar *buffer = NULL;
+	gsize len;
+	GError *error = NULL;
+	struct ProcessInformation *info = data;
+	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (info->manager);
+	GString *string = g_string_new(NULL);
+
+	g_io_channel_read_to_end(channel, &buffer, &len, &error);
+	if (error) {
+		g_warning("Failed to read the log from IM: %s", error->message);
+
+		return TRUE;
+	}
+	g_string_append_printf(string, "%s[%lu]: %s", info->module, (gulong)info->pid, buffer);
+	_output_log(priv, string->str, string->len);
+	g_string_free(string, TRUE);
+	g_free(buffer);
+
+	return TRUE;
+}
+
+static void
 _watch_im_status_cb(GPid     pid,
 		    gint     status,
 		    gpointer data)
@@ -216,6 +350,27 @@ _watch_im_status_cb(GPid     pid,
 	guint id;
 	struct ProcessInformation *info;
 	gboolean is_body = TRUE;
+	GString *status_message = NULL;
+
+	if (WIFSTOPPED (status)) {
+		g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "pid %d is stopped with the signal %d",
+		      pid, WSTOPSIG (status));
+		return;
+	} else if (WIFCONTINUED (status)) {
+		g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "pid %d is continued.", pid);
+		return;
+	} else {
+		status_message = g_string_new(NULL);
+
+		if (WIFEXITED (status)) {
+			g_string_append_printf(status_message, "the status %d", WEXITSTATUS (status));
+		} else if (WIFSIGNALED (status)) {
+			g_string_append_printf(status_message, "the signal %d", WTERMSIG (status));
+			if (WCOREDUMP (status)) {
+				g_string_append(status_message, " (core dumped)");
+			}
+		}
+	}
 
 	id = GPOINTER_TO_UINT (g_hash_table_lookup(priv->pid2id, GINT_TO_POINTER (pid)));
 	if (id > 0) {
@@ -239,7 +394,7 @@ _watch_im_status_cb(GPid     pid,
 				info->restart_counter++;
 			}
 			if (info->restart_counter >= MAXRESTART) {
-				g_printerr("%s Input method process for %s rapidly died many times. giving up to bring it up.", is_body ? "Main" : "AUX", info->module);
+				g_critical("%s Input method process for %s rapidly died many times. giving up to bring it up.", is_body ? "Main" : "AUX", info->module);
 				g_hash_table_remove(is_body ? priv->body2info : priv->aux2info, info->module);
 			} else {
 				GError *error = NULL;
@@ -247,15 +402,18 @@ _watch_im_status_cb(GPid     pid,
 
 				module = g_strdup(info->module);
 				lang = g_strdup(info->lang);
-				g_warning("%s Input Method process for %s died with the status %d unexpectedly. restarting...", is_body ? "Main" : "AUX", info->module, status);
+				g_warning("%s Input Method process for %s died with %s, but unexpectedly. restarting...", is_body ? "Main" : "AUX", info->module, status_message->str);
 				imsettings_manager_real_start_im(IMSETTINGS_OBSERVER (manager), lang, module, FALSE, &error);
 				g_free(lang);
 				g_free(module);
 			}
 		}
 	} else {
-		d(g_print("pid %d is successfully stopped with the status %d.\n", pid, status));
+		g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
+		      "pid %d is successfully stopped with %s.", pid, status_message->str);
 	}
+	if (status_message)
+		g_string_free(status_message, TRUE);
 
 	g_spawn_close_pid(pid);
 }
@@ -310,6 +468,7 @@ _start_process(IMSettingsManager  *manager,
 		};
 		guint len, i = 0, j = 0;
 		GPid pid;
+		gint ofd, efd;
 
 		env_list = g_listenv();
 		len = g_strv_length(env_list);
@@ -326,15 +485,17 @@ _start_process(IMSettingsManager  *manager,
 
 		cmd = g_strdup_printf("%s %s", prog_name, (prog_args ? prog_args : ""));
 		g_shell_parse_argv(cmd, NULL, &argv, NULL);
-		if (g_spawn_async(g_get_tmp_dir(), argv, envp,
-				  G_SPAWN_STDOUT_TO_DEV_NULL|
-				  G_SPAWN_STDERR_TO_DEV_NULL|
-				  G_SPAWN_DO_NOT_REAP_CHILD,
-				  _child_setup, NULL, &pid, error)) {
+		if (g_spawn_async_with_pipes(g_get_tmp_dir(), argv, envp,
+					     G_SPAWN_DO_NOT_REAP_CHILD,
+					     _child_setup, NULL, &pid,
+					     NULL,
+					     &ofd, &efd,
+					     error)) {
 			GHashTable *hash;
-			const struct ProcessInformation *p;
+			struct ProcessInformation *p;
 			struct ProcessInformation *info;
 			gchar *module = g_strdup(identity);
+			gchar *time;
 
 			if (is_body) {
 				hash = priv->body2info;
@@ -348,20 +509,30 @@ _start_process(IMSettingsManager  *manager,
 				info->lang = g_strdup(lang);
 				info->restart_counter = 0;
 			} else {
-				info = _process_info_dup(p);
+				info = _process_info_ref(p);
 				g_hash_table_remove(hash, identity);
+				g_io_channel_unref(info->stdout);
+				g_io_channel_unref(info->stderr);
 			}
 			info->pid = pid;
+			info->stdout = g_io_channel_unix_new(ofd);
+			info->stderr = g_io_channel_unix_new(efd);
+			info->manager = manager;
+
+			g_io_add_watch(info->stdout, G_IO_IN, _logger_write_cb, info);
+			g_io_add_watch(info->stderr, G_IO_IN, _logger_write_cb, info);
+			
 			g_get_current_time(&info->started_time);
 			g_hash_table_insert(hash, module, info);
 
 			info->id = g_child_watch_add(pid, _watch_im_status_cb, manager);
 			g_hash_table_insert(priv->pid2id, GINT_TO_POINTER (pid), GUINT_TO_POINTER (info->id));
 
-			d(gchar *time = g_time_val_to_iso8601(&info->started_time);
-			  g_print("Started %s: process: %s %s, lang=%s, pid: %d, id: %d time: %s\n",
-				  identity, prog_name, prog_args, lang, pid, info->id, time);
-			  g_free(time));
+			time = g_time_val_to_iso8601(&info->started_time);
+			g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
+			      "Started %s: process: %s %s, lang=%s, pid: %d, id: %d, time: %s",
+			      identity, prog_name, prog_args ? prog_args : "", lang, pid, info->id, time);
+			g_free(time);
 		}
 		g_strfreev(envp);
 
@@ -399,7 +570,7 @@ _stop_process(IMSettingsManagerPrivate  *priv,
 			retval = TRUE;
 		}
 	} else {
-		tmp = _process_info_dup(info);
+		tmp = _process_info_ref(info);
 		g_hash_table_remove(hash, identity);
 		g_hash_table_remove(priv->pid2id, GINT_TO_POINTER (info->pid));
 		if (kill(-info->pid, SIGTERM) == -1) {
@@ -413,7 +584,7 @@ _stop_process(IMSettingsManagerPrivate  *priv,
 			g_hash_table_insert(priv->pid2id, GINT_TO_POINTER (info->pid), GUINT_TO_POINTER (info->id));
 		} else {
 			retval = TRUE;
-			_process_info_free(tmp);
+			_process_info_unref(tmp);
 		}
 	}
 
@@ -1045,8 +1216,8 @@ imsettings_manager_init(IMSettingsManager *manager)
 //	priv->qt_req = imsettings_request_new(priv->req_conn, IMSETTINGS_QT_INTERFACE_DBUS);
 	priv->monitor = imsettings_monitor_new(NULL, NULL, NULL);
 	priv->pid2id = g_hash_table_new(g_direct_hash, g_direct_equal);
-	priv->aux2info = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, _process_info_free);
-	priv->body2info = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, _process_info_free);
+	priv->aux2info = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, _process_info_unref);
+	priv->body2info = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, _process_info_unref);
 }
 
 static IMSettingsManager *
@@ -1179,6 +1350,8 @@ main(int    argc,
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGTERM, &sa, NULL);
 	sigaction(SIGINT, &sa, NULL);
+
+	manager->old_log_handler = g_log_set_default_handler(_log_handler, manager);
 
 	imsettings_manager_stop_monitor(manager);
 	imsettings_manager_start_monitor(manager);

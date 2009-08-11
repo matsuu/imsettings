@@ -130,6 +130,14 @@ function print_info() {
     echo ""
 }
 
+function output() {
+    OPTS=""
+    if [ -n "$DRY_RUN" ]; then
+	OPTS="-a"
+    fi
+    tee $OPTS $HOME/.imsettings.log
+}
+
 USER_XINPUTRC="$HOME/.xinputrc"
 SYS_XINPUTRC="@XINPUTRC_PATH@/xinputrc"
 
@@ -172,6 +180,7 @@ IMSETTINGS_MODULE=${SHORT_DESC:-${XIM}}
 export IMSETTINGS_MODULE
 
 # NOTE: Please make sure the session bus is established before running this script.
+(
 if ! is_dbus_enabled; then
     echo "***"
     echo "*** No DBus session hasn't been established yet. giving up to deal with Input Method with imsettings."
@@ -200,3 +209,5 @@ else
 
     run_imsettings
 fi
+# redirect the output to $HOME/.imsettings.log too
+)|output

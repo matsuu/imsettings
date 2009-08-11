@@ -1,3 +1,17 @@
+2009-08-11  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xinput.sh.in.in: initialize the log file.
+
+	* src/factory.c (_process_info_new): Add a reference counter.
+	(_process_info_ref): new.
+	(_process_info_unref): new.
+	(_process_info_dup, _process_info_free): removed.
+	(_output_log): new.
+	(_log_handler): new.
+	(_logger_write_cb): new.
+	(_watch_im_status_cb): deal with the status properly.
+	(_start_process): logging the stdout and the stderr from IM.
+
 2009-08-10  Akira TAGOH  <tagoh@redhat.com>
 
 	* tests/rhbz_455363.c (test_issue): Fix a typo.
