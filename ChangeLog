@@ -1,5 +1,15 @@
 2009-08-12  Akira TAGOH  <tagoh@redhat.com>
 
+	* imsettings/imsettings-object.c (imsettings_object_dump): 
+	Fix memory leaks.
+
+	* src/monitor.c (imsettings_monitor_real_changed_xinputrc): likewise.
+	(_imsettings_monitor_start_for_xinputrc): likewise.
+
+	* src/factory.c (_output_log): likewise.
+	(_watch_im_status_cb): likewise.
+	(imsettings_manager_real_stop_im): likewise.
+
 	* configure.ac: bump to 0.107.0
 
 	* NEWS: update.

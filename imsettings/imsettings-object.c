@@ -348,6 +348,7 @@ imsettings_object_dump(IMSettingsObject *object)
 				g_printerr("Unable to dump a property `%s' of %s",
 					   prop_name,
 					   g_type_name(G_OBJECT_TYPE (object)));
+				g_free(pspecs);
 				return NULL;
 			}
 		} else {
@@ -400,6 +401,7 @@ imsettings_object_dump(IMSettingsObject *object)
 			    if (s) {
 				    len = strlen(s);
 				    g_data_output_stream_put_string(stream, s, NULL, NULL);
+				    g_free(s);
 			    }
 			    g_data_output_stream_put_byte(stream, 0, NULL, NULL);
 			    _pad4 (stream, len + 1);
@@ -441,6 +443,9 @@ imsettings_object_dump(IMSettingsObject *object)
 			    break;
 		}
 	}
+
+	g_free(pspecs);
+
 	if (n != n_properties) {
 		gpointer v;
 		guint32 np = n;

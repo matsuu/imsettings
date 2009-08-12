@@ -415,7 +415,7 @@ imsettings_monitor_real_changed_xinputrc(GFileMonitor      *fmon,
 		    for (; i < monitor->mon_xinputrc->len; i++) {
 			    imsettings_monitor_file_unref(g_ptr_array_index(monitor->mon_xinputrc, i));
 		    }
-		    monitor->mon_xinputrc->len = depth + 1;
+		    monitor->mon_xinputrc->len = depth;
 		    g_object_ref(file);
 		    _imsettings_monitor_start_for_xinputrc(monitor, file, depth, TRUE, &error);
 		    if (error) {
@@ -497,7 +497,7 @@ imsettings_monitor_real_changed_dot_xinputrc(GFileMonitor      *fmon,
 		    for (; i < monitor->mon_dot_xinputrc->len; i++) {
 			    imsettings_monitor_file_unref(g_ptr_array_index(monitor->mon_dot_xinputrc, i));
 		    }
-		    monitor->mon_dot_xinputrc->len = depth + 1;
+		    monitor->mon_dot_xinputrc->len = depth;
 		    g_object_ref(file);
 		    _imsettings_monitor_start_for_xinputrc(monitor, file, depth, FALSE, &error);
 		    if (error) {
@@ -641,7 +641,7 @@ _imsettings_monitor_start_for_xinputrc(IMSettingsMonitor  *monitor,
 					g_signal_connect(mon->monitor, "changed",
 							 G_CALLBACK (imsettings_monitor_real_changed_dot_xinputrc),
 							 monitor);
-				array->len = depth;
+				array->len = depth + 1;
 				g_ptr_array_index(array, depth) = imsettings_monitor_file_ref(mon);
 				if (is_system_default)
 					g_hash_table_insert(monitor->file_list_for_xinputrc,
@@ -695,7 +695,7 @@ _imsettings_monitor_start_for_xinputrc(IMSettingsMonitor  *monitor,
 				g_signal_connect(mon->monitor, "changed",
 						 G_CALLBACK (imsettings_monitor_real_changed_dot_xinputrc),
 						 monitor);
-			array->len = depth;
+			array->len = depth + 1;
 			g_ptr_array_index(array, depth) = imsettings_monitor_file_ref(mon);
 			if (is_system_default)
 				g_hash_table_insert(monitor->file_list_for_xinputrc,
@@ -954,32 +954,25 @@ imsettings_monitor_file_new(GFile         *file,
 }
 
 static IMSettingsMonitorFile *
-imsettings_monitor_file_ref(IMSettingsMonitorFile *file)
+imsettings_monitor_file_ref(IMSettingsMonitorFile *mon)
 {
-	gint old_ref;
+	g_return_val_if_fail (mon != NULL, NULL);
+	g_return_val_if_fail (mon->ref_count > 0, mon);
 
-	g_return_val_if_fail (file != NULL, NULL);
-	g_return_val_if_fail (file->ref_count > 0, NULL);
+	g_atomic_int_add(&mon->ref_count, 1);
 
-	old_ref = g_atomic_int_exchange_and_add(&file->ref_count, 1);
-
-	return file;
+	return mon;
 }
 
 static void
 imsettings_monitor_file_unref(gpointer p)
 {
 	IMSettingsMonitorFile *mon = p;
-	gint old_ref;
 
+	g_return_if_fail (mon != NULL);
 	g_return_if_fail (mon->ref_count > 0);
 
-  retry:
-	old_ref = g_atomic_int_get(&mon->ref_count);
-	if (old_ref > 1) {
-		if (!g_atomic_int_compare_and_exchange(&mon->ref_count, old_ref, old_ref - 1))
-			goto retry;
-	} else {
+	if (g_atomic_int_exchange_and_add(&mon->ref_count, -1) - 1 == 0) {
 		g_object_unref(mon->monitor);
 		g_object_unref(mon->file);
 		g_free(mon->filename);
@@ -1140,6 +1133,10 @@ imsettings_monitor_stop(IMSettingsMonitor *monitor)
 		imsettings_monitor_file_unref(g_ptr_array_index(monitor->mon_xinputrc, i));
 	}
 	monitor->mon_xinputrc->len = 0;
+	g_hash_table_remove_all(monitor->file_list_for_xinputrc);
+	g_hash_table_remove_all(monitor->file_list_for_dot_xinputrc);
+	g_hash_table_remove_all(monitor->im_info_from_name);
+	g_hash_table_remove_all(monitor->im_info_from_filename);
 }
 
 GPtrArray *

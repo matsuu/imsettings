@@ -277,6 +277,7 @@ _output_log(IMSettingsManagerPrivate *priv,
 	G_UNLOCK (logger);
 
 	g_free(logfile);
+	g_free(homedir);
 }
 
 static void
@@ -426,7 +427,9 @@ _watch_im_status_cb(GPid     pid,
 								 is_body ? N_("Main") : N_("AUX"), info->module);
 				g_critical(message);
 				_notify(manager, NOTIFY_URGENCY_CRITICAL, N_("Unable to keep Input Method running"), message, 0);
-					
+
+				g_free(message);
+
 				g_hash_table_remove(is_body ? priv->body2info : priv->aux2info, info->module);
 			} else {
 				GError *error = NULL;
@@ -1104,8 +1107,11 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 	     strcmp(p, module) == 0)) {
 		gchar *conffile = g_build_filename(XINPUT_PATH, IMSETTINGS_NONE_CONF XINPUT_SUFFIX, NULL);
 
-		if (update_xinputrc && !_update_symlink(priv, conffile, error))
+		if (update_xinputrc && !_update_symlink(priv, conffile, error)) {
+			g_free(conffile);
 			goto end;
+		}
+		g_free(conffile);
 	}
 	if (*error == NULL) {
 		if (force && strerr->len > 0) {
@@ -1127,6 +1133,7 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 
 	g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "Current IM is: none");
   end:
+	g_free(p);
 	g_free(homedir);
 	g_string_free(strerr, TRUE);
 	if (info)
