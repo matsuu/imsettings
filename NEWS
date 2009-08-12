@@ -1,3 +1,14 @@
+0.106.2 -> 0.107.0
+=====================
+* Bug Fixes:
+  * Fix memory leaks
+  * rhbz#497946: Pop up an error with libnotify.
+  * rhbz#514852: Fix the is_system_default duplication.
+* Features:
+  * rhbz#510666: Support immodule only configuration file.
+  * improve the process management without a pid file.
+  * log the output from IM to $HOME/.imsettings.log
+
 0.106.1 -> 0.106.2
 =====================
 * Bug Fixes:

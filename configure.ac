@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT([imsettings], 0.106.2, [http://code.google.com/p/imsettings/issues/entry])
+AC_INIT([imsettings], 0.107.0, [http://code.google.com/p/imsettings/issues/entry])
 
 . ./requires
 
@@ -84,7 +84,8 @@ dnl ======================================================================
 PKG_CHECK_MODULES(IMSETTINGS, dbus-1 >= $DBUS_REQUIRED
 			      dbus-glib-1 >= $DBUS_GLIB_REQUIRED
 			      gio-2.0 >= $GIO_REQUIRED)
-PKG_CHECK_MODULES(IMINFO, gthread-2.0)
+PKG_CHECK_MODULES(IMDAEMON, gtk+-2.0
+			    libnotify)
 PKG_CHECK_MODULES(X11, x11)
 PKG_CHECK_MODULES(CHECK, check >= $CHECK_REQUIRED,
 	[use_check="yes"],
