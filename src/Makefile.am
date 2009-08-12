@@ -48,10 +48,10 @@ im_settings_daemon_SOURCES =				\
 	$(NULL)
 im_settings_daemon_CFLAGS =				\
 	-DG_LOG_DOMAIN="\"IM-Settings-Daemon\""		\
-	$(X11_CFLAGS)					\
+	$(IMDAEMON_CFLAGS)				\
 	$(NULL)
 im_settings_daemon_LDADD =				\
-	$(X11_LIBS)					\
+	$(IMDAEMON_LIBS)				\
 	$(NULL)
 #
 servicedir = $(DBUS_SERVICE_DIR)

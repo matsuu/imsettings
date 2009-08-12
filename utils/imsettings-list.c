@@ -39,7 +39,6 @@ main(int    argc,
 	gchar *user_im, *system_im, *running_im;
 	gint i;
 	GError *error = NULL;
-	guint n_retry = 0;
 	GPtrArray *array;
 
 	setlocale(LC_ALL, "");
@@ -55,19 +54,9 @@ main(int    argc,
 	req = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
 	imsettings_request_set_locale(req, locale);
 
-  retry:
 	if (imsettings_request_get_version(req, NULL) != IMSETTINGS_SETTINGS_API_VERSION) {
-		if (n_retry > 0) {
-			g_printerr("Mismatch the version of imsettings.");
-			exit(1);
-		}
-		/* version is inconsistent. try to reload the process */
-		imsettings_request_reload(req, TRUE);
-		g_print("Waiting for reloading the process...\n");
-		/* XXX */
-		sleep(1);
-		n_retry++;
-		goto retry;
+		g_printerr(_("Mismatch the version of imsettings.\nRun imsettings-reload -f may resolves this issue but be aware that will ends up to restart Input Method too\n"));
+		exit(1);
 	}
 
 	if ((array = imsettings_request_get_info_objects(req, &error)) == NULL) {

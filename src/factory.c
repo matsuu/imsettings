@@ -37,8 +37,10 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
+#include <gtk/gtk.h>
 #include <X11/Xlib.h>
 #include <dbus/dbus-glib-lowlevel.h>
+#include <libnotify/notify.h>
 #include "monitor.h"
 #include "imsettings/imsettings-info-private.h"
 #include "imsettings/imsettings-observer.h"
@@ -74,16 +76,17 @@ struct _IMSettingsManager {
 	GLogFunc            old_log_handler;
 };
 struct _IMSettingsManagerPrivate {
-	IMSettingsRequest *gtk_req;
-	IMSettingsRequest *xim_req;
-	IMSettingsRequest *qt_req;
-	gchar             *display_name;
-	DBusConnection    *req_conn;
-	GSList            *im_running;
-	IMSettingsMonitor *monitor;
-	GHashTable        *pid2id;
-	GHashTable        *aux2info;
-	GHashTable        *body2info;
+	IMSettingsRequest  *gtk_req;
+	IMSettingsRequest  *xim_req;
+	IMSettingsRequest  *qt_req;
+	gchar              *display_name;
+	DBusConnection     *req_conn;
+	GSList             *im_running;
+	IMSettingsMonitor  *monitor;
+	GHashTable         *pid2id;
+	GHashTable         *aux2info;
+	GHashTable         *body2info;
+	NotifyNotification *notify;
 };
 struct ProcessInformation {
 	gchar             *module;
@@ -218,6 +221,26 @@ _get_pid_from_name(IMSettingsManagerPrivate *priv,
 }
 
 static void
+_notify(IMSettingsManager *manager,
+	NotifyUrgency      urgency,
+	const gchar       *summary,
+	const gchar       *body,
+	gint               timeout)
+{
+	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (manager);
+
+	notify_notification_set_urgency(priv->notify, urgency);
+	notify_notification_update(priv->notify,
+				   _(summary),
+				   _(body),
+				   NULL);
+	notify_notification_clear_actions(priv->notify);
+	notify_notification_set_timeout(priv->notify, timeout * 1000);
+	notify_notification_set_category(priv->notify, "x-imsettings-notice");
+	notify_notification_show(priv->notify, NULL);
+}
+
+static void
 _output_log(IMSettingsManagerPrivate *priv,
 	    const gchar              *buffer,
 	    gsize                     length)
@@ -311,6 +334,7 @@ _log_handler(const gchar    *log_domain,
 
 	g_print("%s", log->str);
 	_output_log(priv, log->str, log->len);
+
 	g_string_free(log, TRUE);
 }
 
@@ -394,7 +418,11 @@ _watch_im_status_cb(GPid     pid,
 				info->restart_counter++;
 			}
 			if (info->restart_counter >= MAXRESTART) {
-				g_critical("%s Input method process for %s rapidly died many times. giving up to bring it up.", is_body ? "Main" : "AUX", info->module);
+				gchar *message = g_strdup_printf(N_("Giving up to bring the process up because %s Input Method process for %s rapidly died many times. See .imsettings.log for more details."),
+								 is_body ? N_("Main") : N_("AUX"), info->module);
+				g_critical(message);
+				_notify(manager, NOTIFY_URGENCY_CRITICAL, N_("Unable to keep Input Method running"), message, 0);
+					
 				g_hash_table_remove(is_body ? priv->body2info : priv->aux2info, info->module);
 			} else {
 				GError *error = NULL;
@@ -807,6 +835,8 @@ imsettings_manager_real_finalize(GObject *object)
 		g_hash_table_destroy(priv->aux2info);
 	if (priv->body2info)
 		g_hash_table_destroy(priv->body2info);
+	if (priv->notify)
+		notify_notification_close(priv->notify, NULL);
 
 	if (G_OBJECT_CLASS (imsettings_manager_parent_class)->finalize)
 		G_OBJECT_CLASS (imsettings_manager_parent_class)->finalize(object);
@@ -969,6 +999,8 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 #endif
 	}
 
+	g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "Current IM is: %s", module);
+
 	retval = TRUE;
   end:
 	if (info)
@@ -987,8 +1019,7 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (imsettings);
 	IMSettingsInfo *info = NULL;
 	gchar *homedir = NULL;
-	const gchar *xinputfile = NULL;
-	const gchar *gtkimm, *xim;
+	const gchar *gtkimm, *xim, *aux_prog = NULL;
 	gchar *p = NULL;
 	gboolean retval = FALSE;
 	GString *strerr = g_string_new(NULL);
@@ -1018,32 +1049,36 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 	if (*error)
 		goto end;
 
-	xinputfile = imsettings_info_get_filename(info);
+	aux_prog = imsettings_info_get_aux_program(info);
 	pid = _get_pid_from_name(priv, FALSE, module);
 	/* kill an auxiliary program */
 	if (!_stop_process(priv, module, FALSE, error)) {
 		if (force) {
-			g_string_append_printf(strerr, "%s\n", (*error)->message);
+			if (aux_prog != NULL)
+				g_string_append_printf(strerr, "%s\n", (*error)->message);
 			g_error_free(*error);
 			*error = NULL;
 			g_hash_table_remove(priv->aux2info, module);
 			g_hash_table_remove(priv->pid2id, GINT_TO_POINTER (pid));
 		} else {
-			goto end;
+			if (aux_prog != NULL)
+				goto end;
 		}
 	}
 
-	pid = _get_pid_from_name(priv, TRUE, module);
-	/* kill a XIM server */
-	if (!_stop_process(priv, module, TRUE, error)) {
-		if (force) {
-			g_string_append_printf(strerr, "%s\n", (*error)->message);
-			g_error_free(*error);
-			*error = NULL;
-			g_hash_table_remove(priv->body2info, module);
-			g_hash_table_remove(priv->pid2id, GINT_TO_POINTER (pid));
-		} else {
-			goto end;
+	if (!imsettings_info_is_immodule_only(info)) {
+		pid = _get_pid_from_name(priv, TRUE, module);
+		/* kill a XIM server */
+		if (!_stop_process(priv, module, TRUE, error)) {
+			if (force) {
+				g_string_append_printf(strerr, "%s\n", (*error)->message);
+				g_error_free(*error);
+				*error = NULL;
+				g_hash_table_remove(priv->body2info, module);
+				g_hash_table_remove(priv->pid2id, GINT_TO_POINTER (pid));
+			} else {
+				goto end;
+			}
 		}
 	}
 
@@ -1079,6 +1114,8 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 		imsettings_request_send_signal_changed(priv->qt_req, "none");
 #endif
 	}
+
+	g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "Current IM is: none");
   end:
 	g_free(homedir);
 	g_string_free(strerr, TRUE);
@@ -1095,7 +1132,6 @@ imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (observer);
 	IMSettingsInfo *info = NULL;
 	gchar *module;
-	const gchar *xinputfile;
 	pid_t pid;
 
 	module = imsettings_manager_real_get_current_user_im(observer, error);
@@ -1120,7 +1156,6 @@ imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
 		if (imsettings_info_is_immodule_only(info)) {
 			goto end;
 		}
-		xinputfile = imsettings_info_get_filename(info);
 		pid = _get_pid_from_name(priv, TRUE, module);
 		if (pid == 0) {
 			g_free(module);
@@ -1218,6 +1253,10 @@ imsettings_manager_init(IMSettingsManager *manager)
 	priv->pid2id = g_hash_table_new(g_direct_hash, g_direct_equal);
 	priv->aux2info = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, _process_info_unref);
 	priv->body2info = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, _process_info_unref);
+
+	if (!notify_is_initted())
+		notify_init("im-settings-daemon");
+	priv->notify = notify_notification_new("_", "_", NULL, NULL);
 }
 
 static IMSettingsManager *

@@ -1,3 +1,20 @@
+2009-08-12  Akira TAGOH  <tagoh@redhat.com>
+
+	* utils/imsettings-list.c (main): don't restart the daemon
+	automatically.
+
+	* utils/imsettings-stop.c (main): likewise.
+
+	* utils/imsettings-start.c (main): likewise.
+
+	* utils/imsettings-restart.c (main): likewise.
+
+	* src/factory.c (_notify): notify an error through libnotify.
+	(imsettings_manager_real_stop_im): ignore an error to stop the aux
+	process if IM doesn't use it.
+	(imsettings_manager_real_stop_im): ignore an error to stop the xim
+	process if IM is immodule only.
+
 2009-08-11  Akira TAGOH  <tagoh@redhat.com>
 
 	* data/xinput.sh.in.in: initialize the log file.

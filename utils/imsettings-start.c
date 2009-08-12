@@ -39,17 +39,15 @@ main(int    argc,
 	IMSettingsRequest *req;
 	DBusConnection *connection;
 	gchar *locale, *module = NULL;
-	gboolean arg_no_update = FALSE, arg_no_restart = FALSE, arg_cond_start = FALSE, arg_quiet = FALSE;
+	gboolean arg_no_update = FALSE, arg_cond_start = FALSE, arg_quiet = FALSE;
 	GOptionContext *ctx = g_option_context_new(_("[Input Method name|xinput.conf]"));
 	GOptionEntry entries[] = {
 		{"no-update", 'n', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_no_update, N_("Do not update .xinputrc."), NULL},
-		{"no-restart", 0, G_OPTION_FLAG_NO_ARG|G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &arg_no_restart, N_("Do not restart the daemons at first."), NULL},
 		{"cond-start", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_cond_start, N_("Start Input Method if not yet running."), NULL},
 		{"quiet", 'q', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_quiet, N_("Shut up the extra messages."), NULL},
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};
 	GError *error = NULL;
-	guint n_retry = 0;
 	int retval = 0;
 
 #ifdef ENABLE_NLS
@@ -83,28 +81,11 @@ main(int    argc,
 	req = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
 	imsettings_request_set_locale(req, locale);
 
-	/* restart the daemons to be safe. */
-	if (!arg_no_restart) {
-		imsettings_request_reload(req, TRUE);
-		sleep(1);
-	}
-
-  retry:
 	if (imsettings_request_get_version(req, NULL) != IMSETTINGS_SETTINGS_API_VERSION) {
-		if (n_retry > 0) {
-			g_printerr(_("Mismatch the version of imsettings.\n"));
-			retval = 1;
-			goto end;
-		}
-		/* version is inconsistent. try to reload the process */
-		imsettings_request_reload(req, TRUE);
-		g_print(_("Waiting for reloading the process...\n"));
-		/* XXX */
-		sleep(1);
-		n_retry++;
-		goto retry;
+		g_printerr(_("Mismatch the version of imsettings.\nRun imsettings-reload -f may resolves this issue but be aware that will ends up to restart Input Method too\n"));
+		retval = 1;
+		goto end;
 	}
-	n_retry = 0;
 
 	if (argc < 2) {
 		const gchar *env = g_getenv("IMSETTINGS_MODULE");
