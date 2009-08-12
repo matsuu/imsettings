@@ -87,6 +87,7 @@ struct _IMSettingsManagerPrivate {
 	GHashTable         *aux2info;
 	GHashTable         *body2info;
 	NotifyNotification *notify;
+	gboolean            enable_logging;
 };
 struct ProcessInformation {
 	gchar             *module;
@@ -108,6 +109,7 @@ enum {
 	PROP_XINPUTRCDIR,
 	PROP_XINPUTDIR,
 	PROP_HOMEDIR,
+	PROP_LOGGING,
 	LAST_PROP
 };
 
@@ -248,6 +250,8 @@ _output_log(IMSettingsManagerPrivate *priv,
 	FILE *fp;
 	gchar *logfile, *homedir = NULL;
 
+	if (!priv->enable_logging)
+		return;
 	if (length < 0) {
 		length = strlen(buffer);
 	}
@@ -766,6 +770,9 @@ imsettings_manager_real_set_property(GObject      *object,
 		    p = g_value_get_string(value);
 		    g_object_set(priv->monitor, "homedir", p, NULL);
 		    break;
+	    case PROP_LOGGING:
+		    priv->enable_logging = g_value_get_boolean(value);
+		    break;
 	    default:
 		    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		    break;
@@ -796,6 +803,9 @@ imsettings_manager_real_get_property(GObject    *object,
 	    case PROP_HOMEDIR:
 		    g_object_get(priv->monitor, "homedir", &p, NULL);
 		    g_value_set_string(value, p);
+		    break;
+	    case PROP_LOGGING:
+		    g_value_set_boolean(value, priv->enable_logging);
 		    break;
 	    default:
 		    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -1237,6 +1247,12 @@ imsettings_manager_class_init(IMSettingsManagerClass *klass)
 							    _("home directory"),
 							    NULL,
 							    G_PARAM_READWRITE));
+	g_object_class_install_property(object_class, PROP_LOGGING,
+					g_param_spec_boolean("logging",
+							     _("logging"),
+							     _("A flag if logging facility is enabled or not."),
+							     TRUE,
+							     G_PARAM_READWRITE));
 }
 
 static void
@@ -1253,6 +1269,7 @@ imsettings_manager_init(IMSettingsManager *manager)
 	priv->pid2id = g_hash_table_new(g_direct_hash, g_direct_equal);
 	priv->aux2info = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, _process_info_unref);
 	priv->body2info = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, _process_info_unref);
+	priv->enable_logging = TRUE;
 
 	if (!notify_is_initted())
 		notify_init("im-settings-daemon");
@@ -1264,7 +1281,8 @@ imsettings_manager_new(DBusGConnection *connection,
 		       const gchar     *xinputrcdir,
 		       const gchar     *xinputdir,
 		       const gchar     *homedir,
-		       gboolean         replace)
+		       gboolean         replace,
+		       gboolean         is_being_logged)
 {
 	IMSettingsManager *retval;
 
@@ -1273,6 +1291,7 @@ imsettings_manager_new(DBusGConnection *connection,
 	retval = IMSETTINGS_MANAGER (g_object_new(IMSETTINGS_TYPE_MANAGER,
 						  "replace", replace,
 						  "connection", connection,
+						  "logging", is_being_logged,
 						  NULL));
 	if (xinputrcdir)
 		g_object_set(G_OBJECT (retval),
@@ -1321,7 +1340,7 @@ main(int    argc,
 {
 	GError *error = NULL;
 	IMSettingsManager *manager;
-	gboolean arg_replace = FALSE;
+	gboolean arg_replace = FALSE, arg_no_logfile = FALSE;
 	gchar *arg_display_name = NULL, *display_name = NULL;
 	gchar *arg_xinputrcdir = NULL, *arg_xinputdir = NULL, *arg_homedir = NULL;
 	GOptionContext *ctx = g_option_context_new(NULL);
@@ -1335,6 +1354,7 @@ main(int    argc,
 		{"xinputrcdir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_xinputrcdir, N_("A directory where puts the system-wide xinputrc puts on (debugging only)"), N_("DIR")},
 		{"xinputdir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_xinputdir, N_("A directory where puts the IM configurations puts on (debugging only)"), N_("DIR")},
 		{"homedir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_homedir, N_("A home directory (debugging only)"), N_("DIR")},
+		{"no-logfile", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_no_logfile, N_("Do not create a log file.")},
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};
 	DBusGConnection *gconn;
@@ -1378,7 +1398,8 @@ main(int    argc,
 					 arg_xinputrcdir,
 					 arg_xinputdir,
 					 arg_homedir,
-					 arg_replace);
+					 arg_replace,
+					 !arg_no_logfile);
 	if (manager == NULL) {
 		g_print("Failed to create an instance for the settings daemon.\n");
 		exit(1);

@@ -1,5 +1,7 @@
 2009-08-12  Akira TAGOH  <tagoh@redhat.com>
 
+	* src/factory.c (main): Add a --no-logfile option for testing.
+
 	* utils/imsettings-list.c (main): don't restart the daemon
 	automatically.
 

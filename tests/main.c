@@ -138,7 +138,7 @@ imsettings_test_restart_daemons_full(const gchar *xinputrcdir,
 		p = g_strdup(getenv("IMSETTINGS_DAEMON"));
 	}
 
-	s = g_strdup_printf("%s --replace --xinputrcdir=%s --xinputdir=%s --homedir=%s",
+	s = g_strdup_printf("%s --replace --xinputrcdir=%s --xinputdir=%s --homedir=%s --no-logfile",
 			    p, xxinputrcdir, xxinputdir, xhomedir);
 	g_print("%s\n", s);
 
