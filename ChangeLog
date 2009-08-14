@@ -1,3 +1,9 @@
+2009-08-14  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: bump to 0.107.1.
+
+	* NEWS: update.
+
 2009-08-12  Akira TAGOH  <tagoh@redhat.com>
 
 	* imsettings/imsettings-object.c (imsettings_object_dump): 

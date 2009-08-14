@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-12 19:03+0900\n"
+"POT-Creation-Date: 2009-08-14 15:28+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -220,12 +220,12 @@ msgid "Child widget to appear next to the menu text"
 msgstr ""
 
 #: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:699
-#: ../src/factory.c:1348
+#: ../src/factory.c:1355
 msgid "Replace the running settings daemon with new instance."
 msgstr ""
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:1380 ../utils/imsettings-reload.c:63
+#: ../src/factory.c:1387 ../utils/imsettings-reload.c:63
 #: ../utils/imsettings-restart.c:70 ../utils/imsettings-start.c:71
 #: ../utils/imsettings-stop.c:69
 msgid "Unknown error in parsing the command lines."
@@ -252,11 +252,11 @@ msgstr ""
 msgid "Request to send a key event synchronously"
 msgstr ""
 
-#: ../backends/xim/main.c:142 ../src/factory.c:1349
+#: ../backends/xim/main.c:142 ../src/factory.c:1356
 msgid "X display to use"
 msgstr ""
 
-#: ../backends/xim/main.c:142 ../src/factory.c:1349
+#: ../backends/xim/main.c:142 ../src/factory.c:1356
 msgid "DISPLAY"
 msgstr ""
 
@@ -488,145 +488,145 @@ msgid ""
 "  %s"
 msgstr ""
 
-#: ../src/factory.c:425
+#: ../src/factory.c:426
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
 "rapidly died many times. See .imsettings.log for more details."
 msgstr ""
 
-#: ../src/factory.c:426
+#: ../src/factory.c:427
 msgid "Main"
 msgstr ""
 
-#: ../src/factory.c:426
+#: ../src/factory.c:427
 msgid "AUX"
 msgstr ""
 
-#: ../src/factory.c:428
+#: ../src/factory.c:429
 msgid "Unable to keep Input Method running"
 msgstr ""
 
-#: ../src/factory.c:598
+#: ../src/factory.c:601
 #, c-format
 msgid "No such Input Method is running: %s"
 msgstr ""
 
-#: ../src/factory.c:612
+#: ../src/factory.c:615
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr ""
 
-#: ../src/factory.c:639 ../src/factory.c:1099
+#: ../src/factory.c:642 ../src/factory.c:1102
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr ""
 
-#: ../src/factory.c:656
+#: ../src/factory.c:659
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr ""
 
-#: ../src/factory.c:668
+#: ../src/factory.c:671
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr ""
 
-#: ../src/factory.c:677
+#: ../src/factory.c:680
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr ""
 
-#: ../src/factory.c:688
+#: ../src/factory.c:691
 #, c-format
 msgid "Failed to make a symlink: %s"
 msgstr ""
 
-#: ../src/factory.c:874 ../src/factory.c:913
+#: ../src/factory.c:877 ../src/factory.c:916
 #, c-format
 msgid "No input methods available on your system."
 msgstr ""
 
-#: ../src/factory.c:960 ../src/factory.c:1157
+#: ../src/factory.c:963 ../src/factory.c:1164
 #, c-format
 msgid ""
 "No such input method on your system: %s\n"
 "  Details: %s"
 msgstr ""
 
-#: ../src/factory.c:980
+#: ../src/factory.c:983
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr ""
 
-#: ../src/factory.c:1228
+#: ../src/factory.c:1235
 msgid "X display name"
 msgstr ""
 
-#: ../src/factory.c:1229
+#: ../src/factory.c:1236
 msgid "X display name to use"
 msgstr ""
 
-#: ../src/factory.c:1234 ../src/monitor.c:237
+#: ../src/factory.c:1241 ../src/monitor.c:237
 msgid "xinputrc directory"
 msgstr ""
 
-#: ../src/factory.c:1235
+#: ../src/factory.c:1242
 msgid "A directory where puts the system wide xinputrc on."
 msgstr ""
 
-#: ../src/factory.c:1240 ../src/monitor.c:243
+#: ../src/factory.c:1247 ../src/monitor.c:243
 msgid "xinput directory"
 msgstr ""
 
-#: ../src/factory.c:1241
+#: ../src/factory.c:1248
 msgid "A directory where puts the IM configurations on."
 msgstr ""
 
-#: ../src/factory.c:1246 ../src/factory.c:1247 ../src/monitor.c:249
+#: ../src/factory.c:1253 ../src/factory.c:1254 ../src/monitor.c:249
 #: ../src/monitor.c:250
 msgid "home directory"
 msgstr ""
 
-#: ../src/factory.c:1252
+#: ../src/factory.c:1259
 msgid "logging"
 msgstr ""
 
-#: ../src/factory.c:1253
+#: ../src/factory.c:1260
 msgid "A flag if logging facility is enabled or not."
 msgstr ""
 
 #. FIXME
-#: ../src/factory.c:1352
+#: ../src/factory.c:1359
 msgid "X screen to use"
 msgstr ""
 
-#: ../src/factory.c:1352
+#: ../src/factory.c:1359
 msgid "SCREEN"
 msgstr ""
 
-#: ../src/factory.c:1354
+#: ../src/factory.c:1361
 msgid ""
 "A directory where puts the system-wide xinputrc puts on (debugging only)"
 msgstr ""
 
-#: ../src/factory.c:1354 ../src/factory.c:1355 ../src/factory.c:1356
+#: ../src/factory.c:1361 ../src/factory.c:1362 ../src/factory.c:1363
 msgid "DIR"
 msgstr ""
 
-#: ../src/factory.c:1355
+#: ../src/factory.c:1362
 msgid "A directory where puts the IM configurations puts on (debugging only)"
 msgstr ""
 
-#: ../src/factory.c:1356
+#: ../src/factory.c:1363
 msgid "A home directory (debugging only)"
 msgstr ""
 
-#: ../src/factory.c:1357
+#: ../src/factory.c:1364
 msgid "Do not create a log file."
 msgstr ""
 
-#: ../src/factory.c:1388
+#: ../src/factory.c:1395
 #, c-format
 msgid "Failed to open a X display."
 msgstr ""
@@ -644,12 +644,12 @@ msgstr ""
 msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
 msgstr ""
 
-#: ../src/monitor.c:1063
+#: ../src/monitor.c:1056
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr ""
 
-#: ../src/monitor.c:1261
+#: ../src/monitor.c:1258
 #, c-format
 msgid "No system default input method."
 msgstr ""
