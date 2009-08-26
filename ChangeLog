@@ -1,3 +1,7 @@
+2009-08-26  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xinput.sh.in.in: Apply the environment variables properly.
+
 2009-08-14  Akira TAGOH  <tagoh@redhat.com>
 
 	* configure.ac: bump to 0.107.1.

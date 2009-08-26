@@ -10,6 +10,17 @@
 #
 # X Input method setup script
 
+function log_init() {
+    if [ ! -n "$DRY_RUN" ]; then
+	rm -rf $HOME/.imsettings.log
+	touch $HOME/.imsettings.log
+    fi
+}
+
+function log() {
+    echo $* >> $HOME/.imsettings.log
+}
+
 function is_dbus_enabled() {
     [ -n "$DBUS_SESSION_BUS_ADDRESS" ]
 }
@@ -73,7 +84,7 @@ function setup_xim() {
 function run_imsettings() {
     print_info
     if [ -n "$DRY_RUN" ]; then
-	echo "*** DRY RUN MODE: running IM through imsettings"
+	log "*** DRY RUN MODE: running IM through imsettings"
     else
 	if [ -n "$IMSETTINGS_INTEGRATE_DESKTOP" -a "x$IMSETTINGS_INTEGRATE_DESKTOP" = "xno" ]; then
 	    which imsettings-start > /dev/null 2>&1 && LANG="$tmplang" imsettings-start -n "$IMSETTINGS_MODULE" || :
@@ -88,54 +99,46 @@ function run_imsettings() {
 function run_xim() {
     print_info
     if [ -n "$DRY_RUN" ]; then
-	echo "*** DRY RUN MODE: running IM without imsettings"
+	log "*** DRY RUN MODE: running IM without imsettings"
     else
 	DISABLE_IMSETTINGS=true
 	export DISABLE_IMSETTINGS
 
 	# execute XIM_PROGRAM
-	[ -n "$XIM_PROGRAM" ] && which "$XIM_PROGRAM" > /dev/null 2>&1 && LANG="$tmplang" "$XIM_PROGRAM" $XIM_ARGS &
+	[ -n "$XIM_PROGRAM" ] && which "$XIM_PROGRAM" > /dev/null 2>&1 && LANG="$tmplang" "$XIM_PROGRAM" $XIM_ARGS > $HOME/.imsettings.log 2>&1 &
     fi
 }
 
 function print_result() {
     $1
     if [ $? -eq 0 ]; then
-	echo yes
+	log yes
     else
-	echo no
+	log no
     fi
 }
 
 function print_info() {
-    echo "imsettings information"
-    echo "=========================="
-    echo -n "Is DBus enabled: "
+    log "imsettings information"
+    log "=========================="
+    log -n "Is DBus enabled: "
     print_result is_dbus_enabled
-    echo -n "Is imsettings enabled: "
+    log -n "Is imsettings enabled: "
     print_result is_imsettings_enabled
-    echo -n "Is GTK+ supported: "
+    log -n "Is GTK+ supported: "
     print_result is_gtk_supported
-    echo -n "Is Qt supported: "
+    log -n "Is Qt supported: "
     print_result is_qt_supported
-    echo "DESKTOP_SESSION: $DESKTOP_SESSION"
-    echo "DISABLE_IMSETTINGS: $DISABLE_IMSETTINGS"
-    echo "IMSETTINGS_DISABLE_DESKTOP_CHECK: $IMSETTINGS_DISABLE_DESKTOP_CHECK"
-    echo "DBUS_SESSION_BUS_ADDRESS: $DBUS_SESSION_BUS_ADDRESS"
-    echo "GTK_IM_MODULE: $GTK_IM_MODULE"
-    echo "QT_IM_MODULE: $QT_IM_MODULE"
-    echo "XMODIFIERS: $XMODIFIERS"
-    echo "IMSETTINGS_MODULE: $IMSETTINGS_MODULE"
-    echo "IMSETTINGS_INTEGRATE_DESKTOP: $IMSETTINGS_INTEGRATE_DESKTOP"
-    echo ""
-}
-
-function output() {
-    OPTS=""
-    if [ -n "$DRY_RUN" ]; then
-	OPTS="-a"
-    fi
-    tee $OPTS $HOME/.imsettings.log
+    log "DESKTOP_SESSION: $DESKTOP_SESSION"
+    log "DISABLE_IMSETTINGS: $DISABLE_IMSETTINGS"
+    log "IMSETTINGS_DISABLE_DESKTOP_CHECK: $IMSETTINGS_DISABLE_DESKTOP_CHECK"
+    log "DBUS_SESSION_BUS_ADDRESS: $DBUS_SESSION_BUS_ADDRESS"
+    log "GTK_IM_MODULE: $GTK_IM_MODULE"
+    log "QT_IM_MODULE: $QT_IM_MODULE"
+    log "XMODIFIERS: $XMODIFIERS"
+    log "IMSETTINGS_MODULE: $IMSETTINGS_MODULE"
+    log "IMSETTINGS_INTEGRATE_DESKTOP: $IMSETTINGS_INTEGRATE_DESKTOP"
+    log ""
 }
 
 USER_XINPUTRC="$HOME/.xinputrc"
@@ -179,35 +182,26 @@ IMSETTINGS_MODULE=${SHORT_DESC:-${XIM}}
 [ -z "$IMSETTINGS_MODULE" ] && IMSETTINGS_MODULE="none"
 export IMSETTINGS_MODULE
 
-# NOTE: Please make sure the session bus is established before running this script.
-(
-if ! is_dbus_enabled; then
-    echo "***"
-    echo "*** No DBus session hasn't been established yet. giving up to deal with Input Method with imsettings."
-    echo "***"
+##
+log_init
+setup_gtk_immodule
+setup_qt_immodule
+setup_xim
 
-    setup_gtk_immodule
-    setup_qt_immodule
-    setup_xim
+# NOTE: Please make sure the session bus is established before running this script.
+if ! is_dbus_enabled; then
+    log "***"
+    log "*** No DBus session hasn't been established yet. giving up to deal with Input Method with imsettings."
+    log "***"
 
     run_xim
 elif ! is_imsettings_enabled; then
-    echo "***"
-    echo "*** imsettings is explicitly disabled."
-    echo "***"
-
-    setup_gtk_immodule
-    setup_qt_immodule
-    setup_xim
+    log "***"
+    log "*** imsettings is explicitly disabled."
+    log "***"
 
     run_xim
 else
     # Yes, we are in the dbus session
-    setup_gtk_immodule
-    setup_qt_immodule
-    setup_xim
-
     run_imsettings
 fi
-# redirect the output to $HOME/.imsettings.log too
-)|output
