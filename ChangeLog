@@ -1,5 +1,9 @@
 2009-08-27  Akira TAGOH  <tagoh@redhat.com>
 
+	* configure.ac: bump to 0.107.2.
+
+	* NEWS: update.
+
 	* src/factory.c (disconnected_cb): exit with the disconnect signal
 	properly.
 

@@ -1,3 +1,12 @@
+0.107.1 ->
+=====================
+* Bug Fixes:
+  * Apply the environment variables properly.
+  * rhbz#518970: Stop Input Method process after the desktop session.
+* Translation updated:
+  * Brazilian Portuguese
+  * Japanese
+
 0.107.0 -> 0.107.1
 =====================
 * Bug Fixes:
