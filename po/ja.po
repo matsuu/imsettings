@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: im-chooser ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-08-12 19:03+0900\n"
-"PO-Revision-Date: 2009-04-07 19:50+0900\n"
+"PO-Revision-Date: 2009-08-27 10:12+0900\n"
 "Last-Translator: Akira TAGOH <tagoh@redhat.com>\n"
 "Language-Team: Japanese <fedora-trasn-ja@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -523,25 +523,24 @@ msgstr ""
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
 "rapidly died many times. See .imsettings.log for more details."
-msgstr ""
+msgstr "%2$sの%1$s入力メソッドプロセスが何度もすぐに停止するため、プロセスの起動を止めました。詳しくは.imsettings.logを参照してください。"
 
 #: ../src/factory.c:426
 msgid "Main"
-msgstr ""
+msgstr "メイン"
 
 #: ../src/factory.c:426
 msgid "AUX"
-msgstr ""
+msgstr "補助"
 
 #: ../src/factory.c:428
-#, fuzzy
 msgid "Unable to keep Input Method running"
-msgstr "入力メソッド情報の取得が出来ませんでした"
+msgstr "入力メソッドを起動出来ませんでした"
 
 #: ../src/factory.c:598
-#, fuzzy, c-format
+#, c-format
 msgid "No such Input Method is running: %s"
-msgstr "使用中のシステム上にそのような入力メソッドはありません: %s"
+msgstr "そのような入力メソッドは動作していません: %s"
 
 #: ../src/factory.c:612
 #, c-format
@@ -623,11 +622,11 @@ msgstr "ホームディレクトリ"
 
 #: ../src/factory.c:1252
 msgid "logging"
-msgstr ""
+msgstr "ロギング"
 
 #: ../src/factory.c:1253
 msgid "A flag if logging facility is enabled or not."
-msgstr ""
+msgstr "ロギング設備を有効にするかどうかのフラグ"
 
 #. FIXME
 #: ../src/factory.c:1352
@@ -703,6 +702,8 @@ msgid ""
 "Run imsettings-reload -f may resolves this issue but be aware that will ends "
 "up to restart Input Method too\n"
 msgstr ""
+"imsettingsのバージョンが一致しません。\n"
+"imsettings-reload -fを実行してこの問題を解決してください。ただし入力メソッドも再起動してしまうことをご承知ください。\n"
 
 #: ../utils/imsettings-info.c:77 ../utils/imsettings-restart.c:98
 #: ../utils/imsettings-stop.c:97
