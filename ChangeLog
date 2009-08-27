@@ -1,3 +1,11 @@
+2009-08-27  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (disconnected_cb): exit with the disconnect signal
+	properly.
+
+	* imsettings/imsettings-observer.c (imsettings_observer_setup):
+	Set a flag to not exit with the disconnect signal.
+
 2009-08-26  Akira TAGOH  <tagoh@redhat.com>
 
 	* data/xinput.sh.in.in: Apply the environment variables properly.

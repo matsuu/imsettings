@@ -38,7 +38,6 @@
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
-#include <X11/Xlib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 #include <libnotify/notify.h>
 #include "monitor.h"
@@ -79,7 +78,6 @@ struct _IMSettingsManagerPrivate {
 	IMSettingsRequest  *gtk_req;
 	IMSettingsRequest  *xim_req;
 	IMSettingsRequest  *qt_req;
-	gchar              *display_name;
 	DBusConnection     *req_conn;
 	GSList             *im_running;
 	IMSettingsMonitor  *monitor;
@@ -105,7 +103,6 @@ struct ProcessInformation {
 
 enum {
 	PROP_0,
-	PROP_DISPLAY_NAME,
 	PROP_XINPUTRCDIR,
 	PROP_XINPUTDIR,
 	PROP_HOMEDIR,
@@ -466,11 +463,17 @@ _stop_all_processes(IMSettingsManager *manager)
 	g_hash_table_iter_init(&iter, priv->aux2info);
 	while (g_hash_table_iter_next(&iter, &key, &val)) {
 		info = val;
+		g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
+		      "Stopping %s Input Method process for %s...",
+		      "AUX", (gchar *)key);
 		kill(-info->pid, SIGTERM);
 	}
 	g_hash_table_iter_init(&iter, priv->body2info);
 	while (g_hash_table_iter_next(&iter, &key, &val)) {
 		info = val;
+		g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
+		      "Stopping %s Input Method process for %s...",
+		      "Main", (gchar *)key);
 		kill(-info->pid, SIGTERM);
 	}
 }
@@ -702,36 +705,10 @@ _update_symlink(IMSettingsManagerPrivate  *priv,
 	return (*error == NULL);
 }
 
-static gboolean
-_reconnect_dbus_cb(gpointer data)
-{
-	IMSettingsManager *manager = IMSETTINGS_MANAGER (data);
-	DBusGConnection *gconn;
-	DBusConnection *conn;
-
-	gconn = dbus_g_bus_get(DBUS_BUS_SESSION, NULL);
-	if (gconn == NULL)
-		return TRUE;
-
-	conn = dbus_g_connection_get_connection(gconn);
-	if (!dbus_connection_get_is_connected(conn)) {
-		dbus_g_connection_unref(gconn);
-		return TRUE;
-	}
-
-	g_object_set(manager, "connection", gconn, NULL);
-	if (!imsettings_observer_setup(IMSETTINGS_OBSERVER (manager), IMSETTINGS_SERVICE_DBUS)) {
-		g_print("Failed to setup the settings daemon.\n");
-		exit(1);
-	}
-
-	return FALSE;
-}
-
 static void
 disconnected_cb(IMSettingsManager *manager)
 {
-	g_timeout_add_seconds(RECONNECT_INTERVAL, _reconnect_dbus_cb, manager);
+	g_main_loop_quit(loop);
 }
 
 static void
@@ -757,10 +734,6 @@ imsettings_manager_real_set_property(GObject      *object,
 	const gchar *p;
 
 	switch (prop_id) {
-	    case PROP_DISPLAY_NAME:
-		    g_free(priv->display_name);
-		    priv->display_name = g_strdup(g_value_get_string(value));
-		    break;
 	    case PROP_XINPUTRCDIR:
 		    p = g_value_get_string(value);
 		    g_object_set(priv->monitor, "xinputrcdir", p, NULL);
@@ -792,9 +765,6 @@ imsettings_manager_real_get_property(GObject    *object,
 	gchar *p = NULL;
 
 	switch (prop_id) {
-	    case PROP_DISPLAY_NAME:
-		    g_value_set_string(value, priv->display_name);
-		    break;
 	    case PROP_XINPUTRCDIR:
 		    g_object_get(priv->monitor, "xinputrcdir", &p, NULL);
 		    g_value_set_string(value, p);
@@ -839,7 +809,6 @@ imsettings_manager_real_finalize(GObject *object)
 	dbus_connection_unref(priv->req_conn);
 	if (priv->monitor)
 		g_object_unref(priv->monitor);
-	g_free(priv->display_name);
 	if (priv->im_running)
 		g_slist_free(priv->im_running);
 	if (priv->pid2id)
@@ -1230,12 +1199,6 @@ imsettings_manager_class_init(IMSettingsManagerClass *klass)
 	observer_class->info_objects_free     = imsettings_manager_real_info_objects_free;
 
 	/* properties */
-	g_object_class_install_property(object_class, PROP_DISPLAY_NAME,
-					g_param_spec_string("display_name",
-							    _("X display name"),
-							    _("X display name to use"),
-							    NULL,
-							    G_PARAM_READWRITE));
 	g_object_class_install_property(object_class, PROP_XINPUTRCDIR,
 					g_param_spec_string("xinputrcdir",
 							    _("xinputrc directory"),
@@ -1348,16 +1311,10 @@ main(int    argc,
 	GError *error = NULL;
 	IMSettingsManager *manager;
 	gboolean arg_replace = FALSE, arg_no_logfile = FALSE;
-	gchar *arg_display_name = NULL, *display_name = NULL;
 	gchar *arg_xinputrcdir = NULL, *arg_xinputdir = NULL, *arg_homedir = NULL;
 	GOptionContext *ctx = g_option_context_new(NULL);
 	GOptionEntry entries[] = {
 		{"replace", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_replace, N_("Replace the running settings daemon with new instance."), NULL},
-		{"display", 0, G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_STRING, &arg_display_name, N_("X display to use"), N_("DISPLAY")},
-#if 0
-		/* FIXME */
-		{"screen", 0, 0, G_OPTION_ARG_INT, &arg_screen, N_("X screen to use"), N_("SCREEN")},
-#endif
 		{"xinputrcdir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_xinputrcdir, N_("A directory where puts the system-wide xinputrc puts on (debugging only)"), N_("DIR")},
 		{"xinputdir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_xinputdir, N_("A directory where puts the IM configurations puts on (debugging only)"), N_("DIR")},
 		{"homedir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_homedir, N_("A home directory (debugging only)"), N_("DIR")},
@@ -1365,7 +1322,6 @@ main(int    argc,
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};
 	DBusGConnection *gconn;
-	Display *display;
 	struct sigaction sa;
 
 #ifdef ENABLE_NLS
@@ -1390,16 +1346,6 @@ main(int    argc,
 	}
 	g_option_context_free(ctx);
 
-	display = XOpenDisplay(arg_display_name);
-	if (display == NULL) {
-		g_printerr(_("Failed to open a X display."));
-		exit(1);
-	}
-	if (display_name == NULL)
-		display_name = g_strdup(DisplayString(display));
-
-	XCloseDisplay(display);
-
 	gconn = dbus_g_bus_get(DBUS_BUS_SESSION, NULL);
 	manager = imsettings_manager_new(gconn,
 					 arg_xinputrcdir,
@@ -1422,7 +1368,6 @@ main(int    argc,
 
 	imsettings_manager_stop_monitor(manager);
 	imsettings_manager_start_monitor(manager);
-	g_object_set(G_OBJECT (manager), "display_name", display_name, NULL);
 
 	g_signal_connect(manager, "disconnected",
 			 G_CALLBACK (disconnected_cb),
@@ -1443,7 +1388,6 @@ main(int    argc,
 	g_print("exiting from the loop\n");
 
 	g_main_loop_unref(loop);
-	g_free(display_name);
 	g_object_unref(manager);
 	dbus_g_connection_unref(gconn);
 

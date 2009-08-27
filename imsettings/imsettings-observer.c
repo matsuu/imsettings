@@ -843,5 +843,7 @@ imsettings_observer_setup(IMSettingsObserver *imsettings,
 	dbus_g_connection_register_g_object(priv->connection, path, G_OBJECT (imsettings));
 	g_free(path);
 
+	dbus_connection_set_exit_on_disconnect(conn, FALSE);
+
 	return TRUE;
 }
