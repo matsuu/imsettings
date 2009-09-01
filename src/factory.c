@@ -97,6 +97,8 @@ struct ProcessInformation {
 	gint               ref_count;
 	GIOChannel        *stdout;
 	GIOChannel        *stderr;
+	guint              oid;
+	guint              eid;
 	IMSettingsManager *manager;
 };
 
@@ -116,6 +118,14 @@ static gboolean  imsettings_manager_real_start_im        (IMSettingsObserver  *i
                                                           const gchar         *module,
                                                           gboolean             update_xinputrc,
                                                           GError             **error);
+static gboolean  _imsettings_manager_start_im_aux        (IMSettingsObserver  *imsettings,
+							  const char          *lang,
+							  const char          *module,
+							  GError             **error);
+static gboolean  _imsettings_manager_start_im_main       (IMSettingsObserver  *imsettings,
+							  const char          *lang,
+							  const char          *module,
+							  GError             **error);
 static gchar    *imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
                                                           GError             **error);
 static void      imsettings_manager_start_monitor        (IMSettingsManager   *manager);
@@ -158,6 +168,9 @@ _process_info_unref(gpointer data)
 		g_free(info->lang);
 		g_io_channel_unref(info->stdout);
 		g_io_channel_unref(info->stderr);
+		g_source_remove(info->oid);
+		g_source_remove(info->eid);
+		g_source_remove(info->id);
 
 		g_free(info);
 	}
@@ -352,11 +365,11 @@ _logger_write_cb(GIOChannel   *channel,
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (info->manager);
 	GString *string = g_string_new(NULL);
 
-	g_io_channel_read_to_end(channel, &buffer, &len, &error);
+	g_io_channel_read_line(channel, &buffer, &len, NULL, &error);
 	if (error) {
 		g_warning("Failed to read the log from IM: %s", error->message);
 
-		return TRUE;
+		return FALSE;
 	}
 	g_string_append_printf(string, "%s[%lu]: %s", info->module, (gulong)info->pid, buffer);
 	_output_log(priv, string->str, string->len);
@@ -435,7 +448,15 @@ _watch_im_status_cb(GPid     pid,
 				module = g_strdup(info->module);
 				lang = g_strdup(info->lang);
 				g_warning("%s Input Method process for %s died with %s, but unexpectedly. restarting...", is_body ? "Main" : "AUX", info->module, status_message->str);
-				imsettings_manager_real_start_im(IMSETTINGS_OBSERVER (manager), lang, module, FALSE, &error);
+				if (is_body)
+					_imsettings_manager_start_im_main(IMSETTINGS_OBSERVER (manager), lang, module, &error);
+				else
+					_imsettings_manager_start_im_aux(IMSETTINGS_OBSERVER (manager), lang, module, &error);
+				if (error != NULL) {
+					_notify(manager, NOTIFY_URGENCY_CRITICAL, N_("Unable to keep Input Method running"), error->message, 0);
+					g_error_free(error);
+				}
+
 				g_free(lang);
 				g_free(module);
 			}
@@ -551,14 +572,19 @@ _start_process(IMSettingsManager  *manager,
 				g_hash_table_remove(hash, identity);
 				g_io_channel_unref(info->stdout);
 				g_io_channel_unref(info->stderr);
+				g_source_remove(info->id);
+				g_source_remove(info->oid);
+				g_source_remove(info->eid);
 			}
 			info->pid = pid;
 			info->stdout = g_io_channel_unix_new(ofd);
 			info->stderr = g_io_channel_unix_new(efd);
+			g_io_channel_set_close_on_unref(info->stdout, TRUE);
+			g_io_channel_set_close_on_unref(info->stderr, TRUE);
 			info->manager = manager;
 
-			g_io_add_watch(info->stdout, G_IO_IN, _logger_write_cb, info);
-			g_io_add_watch(info->stderr, G_IO_IN, _logger_write_cb, info);
+			info->oid = g_io_add_watch(info->stdout, G_IO_IN, _logger_write_cb, info);
+			info->eid = g_io_add_watch(info->stderr, G_IO_IN, _logger_write_cb, info);
 			
 			g_get_current_time(&info->started_time);
 			g_hash_table_insert(hash, module, info);
@@ -916,8 +942,6 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 {
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (imsettings);
 	const gchar *imm = NULL, *xinputfile = NULL;
-	const gchar *aux_prog = NULL, *aux_args = NULL;
-	const gchar *xim_prog = NULL, *xim_args = NULL;
 	gboolean retval = FALSE;
 	IMSettingsInfo *info = NULL;
 
@@ -935,27 +959,11 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 		goto end;
 	}
 	xinputfile = imsettings_info_get_filename(info);
-	aux_prog = imsettings_info_get_aux_program(info);
-	aux_args = imsettings_info_get_aux_args(info);
-	if (aux_prog) {
-		/* bring up an auxiliary program */
-		if (!_start_process(IMSETTINGS_MANAGER (imsettings), module, aux_prog, aux_args, FALSE, lang, error))
-			goto end;
-	}
 
-	/* hack to allow starting none.conf and immodule only conf */
-	if (strcmp(module, "none") != 0 && !imsettings_info_is_immodule_only(info)) {
-		xim_prog = imsettings_info_get_xim_program(info);
-		xim_args = imsettings_info_get_xim_args(info);
-		if (xim_prog == NULL) {
-			g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_INVALID_IMM,
-				    _("No XIM server is available in %s"), module);
-			goto end;
-		}
-		/* bring up a XIM server */
-		if (!_start_process(IMSETTINGS_MANAGER (imsettings), module, xim_prog, xim_args, TRUE, lang, error))
-			goto end;
-	}
+	if (!_imsettings_manager_start_im_aux(imsettings, lang, module, error))
+		goto end;
+	if (!_imsettings_manager_start_im_main(imsettings, lang, module, error))
+		goto end;
 
 	/* FIXME: We need to take care of imsettings per X screens?
 	 */
@@ -983,6 +991,88 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 
 	g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "Current IM is: %s", module);
 
+	retval = TRUE;
+  end:
+	if (info)
+		g_object_unref(info);
+
+	return retval;
+}
+
+static gboolean
+_imsettings_manager_start_im_aux(IMSettingsObserver  *imsettings,
+				 const char          *lang,
+				 const char          *module,
+				 GError             **error)
+{
+	const gchar *aux_prog = NULL, *aux_args = NULL;
+	IMSettingsInfo *info = NULL;
+	gboolean retval = FALSE;
+
+	info = imsettings_manager_real_get_info_object(imsettings, lang, module, error);
+	if (*error) {
+		gchar *p = g_strdup((*error)->message);
+
+		g_clear_error(error);
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_IM_NOT_FOUND,
+			    _("No such input method on your system: %s\n  Details: %s"),
+			    module, p);
+		g_free(p);
+		goto end;
+	}
+	aux_prog = imsettings_info_get_aux_program(info);
+	aux_args = imsettings_info_get_aux_args(info);
+	if (aux_prog) {
+		/* bring up an auxiliary program */
+		g_print("Starting AUX process for %s...", module);
+
+		if (!_start_process(IMSETTINGS_MANAGER (imsettings), module, aux_prog, aux_args, FALSE, lang, error))
+			goto end;
+	}
+	retval = TRUE;
+  end:
+	if (info)
+		g_object_unref(info);
+
+	return retval;
+}
+
+static gboolean
+_imsettings_manager_start_im_main(IMSettingsObserver  *imsettings,
+				  const char          *lang,
+				  const char          *module,
+				  GError             **error)
+{
+	const gchar *xim_prog = NULL, *xim_args = NULL;
+	gboolean retval = FALSE;
+	IMSettingsInfo *info = NULL;
+
+	info = imsettings_manager_real_get_info_object(imsettings, lang, module, error);
+	if (*error) {
+		gchar *p = g_strdup((*error)->message);
+
+		g_clear_error(error);
+		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_IM_NOT_FOUND,
+			    _("No such input method on your system: %s\n  Details: %s"),
+			    module, p);
+		g_free(p);
+		goto end;
+	}
+	/* hack to allow starting none.conf and immodule only conf */
+	if (strcmp(module, "none") != 0 && !imsettings_info_is_immodule_only(info)) {
+		xim_prog = imsettings_info_get_xim_program(info);
+		xim_args = imsettings_info_get_xim_args(info);
+		if (xim_prog == NULL) {
+			g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_INVALID_IMM,
+				    _("No XIM server is available in %s"), module);
+			goto end;
+		}
+		/* bring up a XIM server */
+		g_print("Starting Main process for %s...", module);
+
+		if (!_start_process(IMSETTINGS_MANAGER (imsettings), module, xim_prog, xim_args, TRUE, lang, error))
+			goto end;
+	}
 	retval = TRUE;
   end:
 	if (info)

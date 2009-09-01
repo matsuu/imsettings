@@ -1,3 +1,11 @@
+2009-09-01  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (_process_info_unref): stop watching fd.
+	(_logger_write_cb): avoid getting stuck to wait for read data.
+	(_watch_im_status_cb): avoid restarting the unnecessary process.
+	(_imsettings_manager_start_im_aux): new.
+	(_imsettings_manager_start_im_main): new.
+
 2009-08-27  Akira TAGOH  <tagoh@redhat.com>
 
 	* configure.ac: bump to 0.107.2.
