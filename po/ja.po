@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-12 19:03+0900\n"
+"POT-Creation-Date: 2009-09-01 22:26+0900\n"
 "PO-Revision-Date: 2009-08-27 10:12+0900\n"
 "Last-Translator: Akira TAGOH <tagoh@redhat.com>\n"
 "Language-Team: Japanese <fedora-trasn-ja@redhat.com>\n"
@@ -246,12 +246,12 @@ msgid "Child widget to appear next to the menu text"
 msgstr "メニューテキストのとなりに表示される子ウィジェット"
 
 #: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:699
-#: ../src/factory.c:1348
+#: ../src/factory.c:1407
 msgid "Replace the running settings daemon with new instance."
 msgstr "実行中の設定デーモンを新規のインスタンスで入れ替える"
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:1380 ../utils/imsettings-reload.c:63
+#: ../src/factory.c:1433 ../utils/imsettings-reload.c:63
 #: ../utils/imsettings-restart.c:70 ../utils/imsettings-start.c:71
 #: ../utils/imsettings-stop.c:69
 msgid "Unknown error in parsing the command lines."
@@ -278,11 +278,11 @@ msgstr "同期"
 msgid "Request to send a key event synchronously"
 msgstr "キーイベントを同期で送信することを要求する"
 
-#: ../backends/xim/main.c:142 ../src/factory.c:1349
+#: ../backends/xim/main.c:142
 msgid "X display to use"
 msgstr "使用する X ディスプレイ"
 
-#: ../backends/xim/main.c:142 ../src/factory.c:1349
+#: ../backends/xim/main.c:142
 msgid "DISPLAY"
 msgstr "DISPLAY"
 
@@ -518,66 +518,69 @@ msgstr ""
 "メソッド %s' の呼出に失敗しました :\n"
 "  %s"
 
-#: ../src/factory.c:425
+#: ../src/factory.c:436
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
 "rapidly died many times. See .imsettings.log for more details."
-msgstr "%2$sの%1$s入力メソッドプロセスが何度もすぐに停止するため、プロセスの起動を止めました。詳しくは.imsettings.logを参照してください。"
+msgstr ""
+"%2$sの%1$s入力メソッドプロセスが何度もすぐに停止するため、プロセスの起動を止"
+"めました。詳しくは.imsettings.logを参照してください。"
 
-#: ../src/factory.c:426
+#: ../src/factory.c:437
 msgid "Main"
 msgstr "メイン"
 
-#: ../src/factory.c:426
+#: ../src/factory.c:437
 msgid "AUX"
 msgstr "補助"
 
-#: ../src/factory.c:428
+#: ../src/factory.c:439 ../src/factory.c:456
 msgid "Unable to keep Input Method running"
 msgstr "入力メソッドを起動出来ませんでした"
 
-#: ../src/factory.c:598
+#: ../src/factory.c:630
 #, c-format
 msgid "No such Input Method is running: %s"
 msgstr "そのような入力メソッドは動作していません: %s"
 
-#: ../src/factory.c:612
+#: ../src/factory.c:644
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "%s プロセスに信号を正しく送信出来ませんでした。"
 
-#: ../src/factory.c:639 ../src/factory.c:1099
+#: ../src/factory.c:671 ../src/factory.c:1161
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr "ホームディレクトリの場所確保に失敗しました。"
 
-#: ../src/factory.c:656
+#: ../src/factory.c:688
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "バックアップファイルの復元に失敗しました: %s"
 
-#: ../src/factory.c:668
+#: ../src/factory.c:700
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "バックアップファイルの作成に失敗しました: %s"
 
-#: ../src/factory.c:677
+#: ../src/factory.c:709
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "xinputrc ファイルの削除に失敗しました: %s"
 
-#: ../src/factory.c:688
+#: ../src/factory.c:720
 #, c-format
 msgid "Failed to make a symlink: %s"
 msgstr "symlink するのに失敗しました: %s"
 
-#: ../src/factory.c:874 ../src/factory.c:913
+#: ../src/factory.c:872 ../src/factory.c:911
 #, c-format
 msgid "No input methods available on your system."
 msgstr "使用中のシステム上には入力メソッドがありません。"
 
-#: ../src/factory.c:960 ../src/factory.c:1157
+#: ../src/factory.c:956 ../src/factory.c:1018 ../src/factory.c:1056
+#: ../src/factory.c:1223
 #, c-format
 msgid ""
 "No such input method on your system: %s\n"
@@ -586,83 +589,61 @@ msgstr ""
 "使用中のシステム上にそのような入力メソッドはありません: %s\n"
 "  詳細: %s"
 
-#: ../src/factory.c:980
+#: ../src/factory.c:1067
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr "%s では XIM サーバーが使用できません。"
 
-#: ../src/factory.c:1228
-msgid "X display name"
-msgstr "X ディスプレイ名"
-
-#: ../src/factory.c:1229
-msgid "X display name to use"
-msgstr "使用する X ディスプレイ名"
-
-#: ../src/factory.c:1234 ../src/monitor.c:237
+#: ../src/factory.c:1294 ../src/monitor.c:237
 msgid "xinputrc directory"
 msgstr "xinputrcディレクトリ"
 
-#: ../src/factory.c:1235
+#: ../src/factory.c:1295
 msgid "A directory where puts the system wide xinputrc on."
 msgstr "システムのxinputrcが置かれているディレクトリ"
 
-#: ../src/factory.c:1240 ../src/monitor.c:243
+#: ../src/factory.c:1300 ../src/monitor.c:243
 msgid "xinput directory"
 msgstr "xinputディレクトリ"
 
-#: ../src/factory.c:1241
+#: ../src/factory.c:1301
 msgid "A directory where puts the IM configurations on."
 msgstr "IM設定が置かれているディレクトリ"
 
-#: ../src/factory.c:1246 ../src/factory.c:1247 ../src/monitor.c:249
+#: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
 #: ../src/monitor.c:250
 msgid "home directory"
 msgstr "ホームディレクトリ"
 
-#: ../src/factory.c:1252
+#: ../src/factory.c:1312
 msgid "logging"
 msgstr "ロギング"
 
-#: ../src/factory.c:1253
+#: ../src/factory.c:1313
 msgid "A flag if logging facility is enabled or not."
 msgstr "ロギング設備を有効にするかどうかのフラグ"
 
-#. FIXME
-#: ../src/factory.c:1352
-msgid "X screen to use"
-msgstr "使用する X 画面"
-
-#: ../src/factory.c:1352
-msgid "SCREEN"
-msgstr "SCREEN"
-
-#: ../src/factory.c:1354
+#: ../src/factory.c:1408
 msgid ""
 "A directory where puts the system-wide xinputrc puts on (debugging only)"
 msgstr "システムのxinputrcが置かれているディレクトリ (デバッグ専用)"
 
-#: ../src/factory.c:1354 ../src/factory.c:1355 ../src/factory.c:1356
+#: ../src/factory.c:1408 ../src/factory.c:1409 ../src/factory.c:1410
 msgid "DIR"
 msgstr "DIR"
 
-#: ../src/factory.c:1355
+#: ../src/factory.c:1409
 msgid "A directory where puts the IM configurations puts on (debugging only)"
 msgstr "IM設定が置かれているディレクトリ (デバッグ専用)"
 
-#: ../src/factory.c:1356
+#: ../src/factory.c:1410
 msgid "A home directory (debugging only)"
 msgstr "ホームディレクトリ (デバッグ専用)"
 
-#: ../src/factory.c:1357
+#: ../src/factory.c:1411
 #, fuzzy
 msgid "Do not create a log file."
 msgstr "はじめにデーモンを再起動しない"
-
-#: ../src/factory.c:1388
-#, c-format
-msgid "Failed to open a X display."
-msgstr "X ディスプレイを開くのに失敗しました"
 
 #: ../src/monitor.c:238
 msgid "A place to store xinputrc file"
@@ -677,12 +658,12 @@ msgstr "xinput 設定ファイルを保存する場所"
 msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
 msgstr "%s. SHORT_DESC からの複製エントリ `%s' は特有でなければなりません。"
 
-#: ../src/monitor.c:1063
+#: ../src/monitor.c:1056
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "使用中のシステム上にそのような入力メソッドはありません: %s"
 
-#: ../src/monitor.c:1261
+#: ../src/monitor.c:1258
 #, c-format
 msgid "No system default input method."
 msgstr "システムデフォルトの入力メソッドがありません"
@@ -703,7 +684,8 @@ msgid ""
 "up to restart Input Method too\n"
 msgstr ""
 "imsettingsのバージョンが一致しません。\n"
-"imsettings-reload -fを実行してこの問題を解決してください。ただし入力メソッドも再起動してしまうことをご承知ください。\n"
+"imsettings-reload -fを実行してこの問題を解決してください。ただし入力メソッド"
+"も再起動してしまうことをご承知ください。\n"
 
 #: ../utils/imsettings-info.c:77 ../utils/imsettings-restart.c:98
 #: ../utils/imsettings-stop.c:97
@@ -799,6 +781,21 @@ msgstr "エラーに関わらず強制的に IM プロセスを停止する"
 #, c-format
 msgid "Stopped %s\n"
 msgstr "%s は停止しました\n"
+
+#~ msgid "X display name"
+#~ msgstr "X ディスプレイ名"
+
+#~ msgid "X display name to use"
+#~ msgstr "使用する X ディスプレイ名"
+
+#~ msgid "X screen to use"
+#~ msgstr "使用する X 画面"
+
+#~ msgid "SCREEN"
+#~ msgstr "SCREEN"
+
+#~ msgid "Failed to open a X display."
+#~ msgstr "X ディスプレイを開くのに失敗しました"
 
 #~ msgid "Failed to remove a pidfile: %s"
 #~ msgstr "pidfile の削除に失敗しました: %s"

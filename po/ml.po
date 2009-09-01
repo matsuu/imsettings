@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser.trunk.ml\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-12 19:03+0900\n"
+"POT-Creation-Date: 2009-09-01 22:26+0900\n"
 "PO-Revision-Date: 2008-04-16 09:01+0530\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -232,12 +232,12 @@ msgid "Child widget to appear next to the menu text"
 msgstr ""
 
 #: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:699
-#: ../src/factory.c:1348
+#: ../src/factory.c:1407
 msgid "Replace the running settings daemon with new instance."
 msgstr "പ്രവര്‍ത്തനത്തിലുള്ള ക്രമികരണങ്ങളുടെ ഡെണിനെ പുതിയ ഇന്‍സ്റ്റന്‍സ് ഉപയോഗിച്ച് മാറ്റുക."
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:1380 ../utils/imsettings-reload.c:63
+#: ../src/factory.c:1433 ../utils/imsettings-reload.c:63
 #: ../utils/imsettings-restart.c:70 ../utils/imsettings-start.c:71
 #: ../utils/imsettings-stop.c:69
 msgid "Unknown error in parsing the command lines."
@@ -265,11 +265,11 @@ msgstr ""
 msgid "Request to send a key event synchronously"
 msgstr ""
 
-#: ../backends/xim/main.c:142 ../src/factory.c:1349
+#: ../backends/xim/main.c:142
 msgid "X display to use"
 msgstr "ഉപയോഗിക്കുന്നതിനുള്ള എക്സ് ഡിസ്പ്ലെ"
 
-#: ../backends/xim/main.c:142 ../src/factory.c:1349
+#: ../backends/xim/main.c:142
 msgid "DISPLAY"
 msgstr "DISPLAY"
 
@@ -508,149 +508,128 @@ msgstr ""
 "`%s' എന്ന രീതി ആരംഭിക്കുന്നതില്‍ പരാജയപ്പെട്ടു:\n"
 "  %s"
 
-#: ../src/factory.c:425
+#: ../src/factory.c:436
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
 "rapidly died many times. See .imsettings.log for more details."
 msgstr ""
 
-#: ../src/factory.c:426
+#: ../src/factory.c:437
 msgid "Main"
 msgstr ""
 
-#: ../src/factory.c:426
+#: ../src/factory.c:437
 msgid "AUX"
 msgstr ""
 
-#: ../src/factory.c:428
+#: ../src/factory.c:439 ../src/factory.c:456
 #, fuzzy
 msgid "Unable to keep Input Method running"
 msgstr "ഇന്‍പുട്ട് രീതി ആരംഭിക്കുന്നു - %s"
 
-#: ../src/factory.c:598
+#: ../src/factory.c:630
 #, fuzzy, c-format
 msgid "No such Input Method is running: %s"
 msgstr "നിങ്ങളുടെ സിസ്റ്റമില്‍ അത്തരം ഒരു ഇന്‍പുട്ട് രീതിയില്ല: %s"
 
-#: ../src/factory.c:612
+#: ../src/factory.c:644
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "വിജയകരമായി %s പ്രക്രിയയിലേക്ക് ഒരു സിഗ്നല്‍ അയയ്ക്കുവാന്‍ സാധ്യമായില്ല."
 
-#: ../src/factory.c:639 ../src/factory.c:1099
+#: ../src/factory.c:671 ../src/factory.c:1161
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr "ഹോം ഡയറക്ടറിയില്‍ ഒരു സ്ഥലം ലഭിക്കുന്നതില്‍ പരാജയപ്പെട്ടു."
 
-#: ../src/factory.c:656
+#: ../src/factory.c:688
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "ബാക്കപ്പ് ഫയല്‍ തിരികെ ലഭ്യമാക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
 
-#: ../src/factory.c:668
+#: ../src/factory.c:700
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "ഒരു ബാക്കപ്പ് ഫയല്‍ ഉണ്ടാക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
 
-#: ../src/factory.c:677
+#: ../src/factory.c:709
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "ഒരു .xinputrc ഫയല്‍ നീക്കം ചെയ്യുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
 
-#: ../src/factory.c:688
+#: ../src/factory.c:720
 #, c-format
 msgid "Failed to make a symlink: %s"
 msgstr "ഒരു സിംലിങ്ക് ഉണ്ടാക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
 
-#: ../src/factory.c:874 ../src/factory.c:913
+#: ../src/factory.c:872 ../src/factory.c:911
 #, c-format
 msgid "No input methods available on your system."
 msgstr "നിങ്ങളുടെ സിസ്റ്റമില്‍ ഒരു ഇന്‍പുട്ട് രീതിയും ലഭ്യമല്ല."
 
-#: ../src/factory.c:960 ../src/factory.c:1157
+#: ../src/factory.c:956 ../src/factory.c:1018 ../src/factory.c:1056
+#: ../src/factory.c:1223
 #, fuzzy, c-format
 msgid ""
 "No such input method on your system: %s\n"
 "  Details: %s"
 msgstr "നിങ്ങളുടെ സിസ്റ്റമില്‍ അത്തരം ഒരു ഇന്‍പുട്ട് രീതിയില്ല: %s"
 
-#: ../src/factory.c:980
+#: ../src/factory.c:1067
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr "%s-ല്‍ ഒരു XIM സര്‍വറും ലഭ്യമല്ല"
 
-#: ../src/factory.c:1228
-msgid "X display name"
-msgstr "എക്സ് ഡിസ്പ്ലെ നാമം"
-
-#: ../src/factory.c:1229
-msgid "X display name to use"
-msgstr "ഉപയോഗിക്കുന്നതിനുള്ള എക്സ് ഡിസ്പ്ലെ നാമം."
-
-#: ../src/factory.c:1234 ../src/monitor.c:237
+#: ../src/factory.c:1294 ../src/monitor.c:237
 msgid "xinputrc directory"
 msgstr ""
 
-#: ../src/factory.c:1235
+#: ../src/factory.c:1295
 msgid "A directory where puts the system wide xinputrc on."
 msgstr ""
 
-#: ../src/factory.c:1240 ../src/monitor.c:243
+#: ../src/factory.c:1300 ../src/monitor.c:243
 msgid "xinput directory"
 msgstr ""
 
-#: ../src/factory.c:1241
+#: ../src/factory.c:1301
 msgid "A directory where puts the IM configurations on."
 msgstr ""
 
-#: ../src/factory.c:1246 ../src/factory.c:1247 ../src/monitor.c:249
+#: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
 #: ../src/monitor.c:250
 msgid "home directory"
 msgstr ""
 
-#: ../src/factory.c:1252
+#: ../src/factory.c:1312
 msgid "logging"
 msgstr ""
 
-#: ../src/factory.c:1253
+#: ../src/factory.c:1313
 msgid "A flag if logging facility is enabled or not."
 msgstr ""
 
-#. FIXME
-#: ../src/factory.c:1352
-msgid "X screen to use"
-msgstr "ഉപയോഗിക്കുന്നതിനുള്ള എക്സ് സ്ക്രീന്‍"
-
-#: ../src/factory.c:1352
-msgid "SCREEN"
-msgstr "SCREEN"
-
-#: ../src/factory.c:1354
+#: ../src/factory.c:1408
 msgid ""
 "A directory where puts the system-wide xinputrc puts on (debugging only)"
 msgstr ""
 
-#: ../src/factory.c:1354 ../src/factory.c:1355 ../src/factory.c:1356
+#: ../src/factory.c:1408 ../src/factory.c:1409 ../src/factory.c:1410
 msgid "DIR"
 msgstr ""
 
-#: ../src/factory.c:1355
+#: ../src/factory.c:1409
 msgid "A directory where puts the IM configurations puts on (debugging only)"
 msgstr ""
 
-#: ../src/factory.c:1356
+#: ../src/factory.c:1410
 msgid "A home directory (debugging only)"
 msgstr ""
 
-#: ../src/factory.c:1357
+#: ../src/factory.c:1411
 msgid "Do not create a log file."
 msgstr ""
-
-#: ../src/factory.c:1388
-#, c-format
-msgid "Failed to open a X display."
-msgstr "എക്സ് ഡിസ്പ്ലെ തുറക്കുന്നതില്‍ പരാജയം."
 
 #: ../src/monitor.c:238
 #, fuzzy
@@ -666,12 +645,12 @@ msgstr ""
 msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
 msgstr "`%s' എന്ന് ആവര്‍ത്തിക്കുന്നു, %s-ല്‍. SHORT_DESC ഒന്നേ പാടുള്ളൂ."
 
-#: ../src/monitor.c:1063
+#: ../src/monitor.c:1056
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "നിങ്ങളുടെ സിസ്റ്റമില്‍ അത്തരം ഒരു ഇന്‍പുട്ട് രീതിയില്ല: %s"
 
-#: ../src/monitor.c:1261
+#: ../src/monitor.c:1258
 #, c-format
 msgid "No system default input method."
 msgstr ""
@@ -786,6 +765,21 @@ msgstr "പിശകുകളുണ്ടേലും ഐഎം പ്രക്�
 #, c-format
 msgid "Stopped %s\n"
 msgstr "%s നിര്‍ത്തിയിരിക്കുന്നു\n"
+
+#~ msgid "X display name"
+#~ msgstr "എക്സ് ഡിസ്പ്ലെ നാമം"
+
+#~ msgid "X display name to use"
+#~ msgstr "ഉപയോഗിക്കുന്നതിനുള്ള എക്സ് ഡിസ്പ്ലെ നാമം."
+
+#~ msgid "X screen to use"
+#~ msgstr "ഉപയോഗിക്കുന്നതിനുള്ള എക്സ് സ്ക്രീന്‍"
+
+#~ msgid "SCREEN"
+#~ msgstr "SCREEN"
+
+#~ msgid "Failed to open a X display."
+#~ msgstr "എക്സ് ഡിസ്പ്ലെ തുറക്കുന്നതില്‍ പരാജയം."
 
 #~ msgid "Failed to remove a pidfile: %s"
 #~ msgstr "ഒരു pidfile നീക്കം ചെയ്യുന്നതില്‍ പരാജയപ്പെട്ടു: %s"

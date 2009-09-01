@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-27 10:14+0900\n"
+"POT-Creation-Date: 2009-09-01 22:26+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -220,12 +220,12 @@ msgid "Child widget to appear next to the menu text"
 msgstr ""
 
 #: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:699
-#: ../src/factory.c:1317
+#: ../src/factory.c:1407
 msgid "Replace the running settings daemon with new instance."
 msgstr ""
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:1343 ../utils/imsettings-reload.c:63
+#: ../src/factory.c:1433 ../utils/imsettings-reload.c:63
 #: ../utils/imsettings-restart.c:70 ../utils/imsettings-start.c:71
 #: ../utils/imsettings-stop.c:69
 msgid "Unknown error in parsing the command lines."
@@ -488,124 +488,125 @@ msgid ""
 "  %s"
 msgstr ""
 
-#: ../src/factory.c:423
+#: ../src/factory.c:436
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
 "rapidly died many times. See .imsettings.log for more details."
 msgstr ""
 
-#: ../src/factory.c:424
+#: ../src/factory.c:437
 msgid "Main"
 msgstr ""
 
-#: ../src/factory.c:424
+#: ../src/factory.c:437
 msgid "AUX"
 msgstr ""
 
-#: ../src/factory.c:426
+#: ../src/factory.c:439 ../src/factory.c:456
 msgid "Unable to keep Input Method running"
 msgstr ""
 
-#: ../src/factory.c:604
+#: ../src/factory.c:630
 #, c-format
 msgid "No such Input Method is running: %s"
 msgstr ""
 
-#: ../src/factory.c:618
+#: ../src/factory.c:644
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr ""
 
-#: ../src/factory.c:645 ../src/factory.c:1071
+#: ../src/factory.c:671 ../src/factory.c:1161
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr ""
 
-#: ../src/factory.c:662
+#: ../src/factory.c:688
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr ""
 
-#: ../src/factory.c:674
+#: ../src/factory.c:700
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr ""
 
-#: ../src/factory.c:683
+#: ../src/factory.c:709
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr ""
 
-#: ../src/factory.c:694
+#: ../src/factory.c:720
 #, c-format
 msgid "Failed to make a symlink: %s"
 msgstr ""
 
-#: ../src/factory.c:846 ../src/factory.c:885
+#: ../src/factory.c:872 ../src/factory.c:911
 #, c-format
 msgid "No input methods available on your system."
 msgstr ""
 
-#: ../src/factory.c:932 ../src/factory.c:1133
+#: ../src/factory.c:956 ../src/factory.c:1018 ../src/factory.c:1056
+#: ../src/factory.c:1223
 #, c-format
 msgid ""
 "No such input method on your system: %s\n"
 "  Details: %s"
 msgstr ""
 
-#: ../src/factory.c:952
+#: ../src/factory.c:1067
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr ""
 
-#: ../src/factory.c:1204 ../src/monitor.c:237
+#: ../src/factory.c:1294 ../src/monitor.c:237
 msgid "xinputrc directory"
 msgstr ""
 
-#: ../src/factory.c:1205
+#: ../src/factory.c:1295
 msgid "A directory where puts the system wide xinputrc on."
 msgstr ""
 
-#: ../src/factory.c:1210 ../src/monitor.c:243
+#: ../src/factory.c:1300 ../src/monitor.c:243
 msgid "xinput directory"
 msgstr ""
 
-#: ../src/factory.c:1211
+#: ../src/factory.c:1301
 msgid "A directory where puts the IM configurations on."
 msgstr ""
 
-#: ../src/factory.c:1216 ../src/factory.c:1217 ../src/monitor.c:249
+#: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
 #: ../src/monitor.c:250
 msgid "home directory"
 msgstr ""
 
-#: ../src/factory.c:1222
+#: ../src/factory.c:1312
 msgid "logging"
 msgstr ""
 
-#: ../src/factory.c:1223
+#: ../src/factory.c:1313
 msgid "A flag if logging facility is enabled or not."
 msgstr ""
 
-#: ../src/factory.c:1318
+#: ../src/factory.c:1408
 msgid ""
 "A directory where puts the system-wide xinputrc puts on (debugging only)"
 msgstr ""
 
-#: ../src/factory.c:1318 ../src/factory.c:1319 ../src/factory.c:1320
+#: ../src/factory.c:1408 ../src/factory.c:1409 ../src/factory.c:1410
 msgid "DIR"
 msgstr ""
 
-#: ../src/factory.c:1319
+#: ../src/factory.c:1409
 msgid "A directory where puts the IM configurations puts on (debugging only)"
 msgstr ""
 
-#: ../src/factory.c:1320
+#: ../src/factory.c:1410
 msgid "A home directory (debugging only)"
 msgstr ""
 
-#: ../src/factory.c:1321
+#: ../src/factory.c:1411
 msgid "Do not create a log file."
 msgstr ""
 
