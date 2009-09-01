@@ -1,4 +1,10 @@
-0.107.1 ->
+0.107.2 -> 0.107.3
+=====================
+* Bug Fixes:
+  * Fix taking CPU load after switching IM.
+  * Fix the daemon becomes no responses with starting some IM.
+
+0.107.1 -> 0.107.2
 =====================
 * Bug Fixes:
   * Apply the environment variables properly.

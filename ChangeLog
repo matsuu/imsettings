@@ -1,5 +1,9 @@
 2009-09-01  Akira TAGOH  <tagoh@redhat.com>
 
+	* configure.ac: bump to 0.107.3.
+
+	* NEWS: update.
+
 	* src/factory.c (_process_info_unref): stop watching fd.
 	(_logger_write_cb): avoid getting stuck to wait for read data.
 	(_watch_im_status_cb): avoid restarting the unnecessary process.
