@@ -844,7 +844,7 @@ imsettings_manager_real_finalize(GObject *object)
 	if (priv->body2info)
 		g_hash_table_destroy(priv->body2info);
 	if (priv->notify)
-		notify_notification_close(priv->notify, NULL);
+		g_object_unref(priv->notify);
 
 	if (G_OBJECT_CLASS (imsettings_manager_parent_class)->finalize)
 		G_OBJECT_CLASS (imsettings_manager_parent_class)->finalize(object);
