@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: imsettings.trunk.ta\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-09-10 17:02+0900\n"
-"PO-Revision-Date: 2009-09-10 17:29+0900\n"
+"PO-Revision-Date: 2009-09-10 15:55+0530\n"
 "Last-Translator: I. Felix <ifelix@redhat.com>\n"
 "Language-Team: Tamil <fedora-trans-ta@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -19,6 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\\n\n"
+"\n"
 "\n"
 "\n"
 "\n"
@@ -46,13 +47,12 @@ msgid "Enable this when accelerator keys etc doesn't work"
 msgstr "முடுக்க விசைகள் வேலை செய்யவில்லையெனில் இதனை செயல்படுத்து"
 
 #: ../applet/imsettings-applet.schemas.in.h:3
-#, fuzzy
 msgid ""
 "If \"true\", all messages will be delivered through libnotify, otherwise "
 "only error and warning messages."
 msgstr ""
-"தவறு எனில், பிழை மற்றும் எச்சரிக்கை செய்திகள் தவிர அனைத்து தகவல்களும் libnotify வழியாக "
-"வழங்கப்படும்."
+"\"சரி\" எனில், பிழை மற்றும் எச்சரிக்கை செய்திகள் தவிர அனைத்து தகவல்களும் libnotify "
+"வழியாக வழங்கப்படும்."
 
 #: ../applet/imsettings-applet.schemas.in.h:4
 msgid "If true, the icon will be displayed at the systray."
@@ -94,7 +94,6 @@ msgid "No detailed information"
 msgstr "விரிவாக தகவல் இல்லை"
 
 #: ../applet/main.c:151
-#, fuzzy
 msgid "Version-mismatch of im-settings-daemon"
 msgstr "im-settings-daemonஇன் பொருந்தாத பதிப்பு"
 
@@ -207,15 +206,13 @@ msgstr ""
 #. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
 #: ../applet/main.c:986
-#, fuzzy
 msgid "Left-click on the icon to connect to/disconnect from Input Method."
-msgstr "உள்ளீடு முறையிலிருந்து இணைக்க/துண்டிக்க சினத்தில் இடது சொடுக்கவும்."
+msgstr "உள்ளீடு முறையிலிருந்து இணைக்க/துண்டிக்க சின்னத்தில் இடது சொடுக்கவும்."
 
 #. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
 #. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
 #: ../applet/main.c:990
-#, fuzzy
 msgid ""
 "\n"
 "Right-click to show up the Input Method menu."
@@ -226,14 +223,14 @@ msgstr ""
 #. One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
 #.
 #: ../applet/main.c:994
-#, c-format, fuzzy
+#, c-format
 msgid "Please %s%s"
 msgstr "தயவு செய்து %s%s"
 
 #. Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
 #.
 #: ../applet/main.c:998
-#, c-format, fuzzy
+#, c-format
 msgid "Please press %s or %s%s"
 msgstr "%s அல்லது %s%sஐ அழுத்து"
 
@@ -320,7 +317,6 @@ msgid "XIM server name"
 msgstr "XIM சேவையக பெயர்"
 
 #: ../backends/xim/proxy.c:2969
-#, fuzzy
 msgid "The name of XIM server for the connection"
 msgstr "இணைக்க வேண்டிய XIM சேவையக பெயர்"
 
@@ -609,7 +605,6 @@ msgid "xinputrc directory"
 msgstr "xinputrc அடைவு"
 
 #: ../src/factory.c:1295
-#, fuzzy
 msgid "The name of the directory for the system wide xinputrc file."
 msgstr "ஒரு அடைவு கணினி பரந்த xinputrc ஆன் வைத்திருத்தல்."
 
@@ -618,7 +613,6 @@ msgid "xinput directory"
 msgstr "xinput அடைவு"
 
 #: ../src/factory.c:1301
-#, fuzzy
 msgid "The name of the directory for IM configurations."
 msgstr "ஒரு அடைவு கணினி பரந்த IM கட்டமைப்புகளை ஆன் வைத்திருத்தல்."
 
@@ -636,7 +630,6 @@ msgid "A flag if logging facility is enabled or not."
 msgstr "பதிவு செய்தல் வசதி செயல்படுத்தப்பட்டால் அல்லது இல்லையெனில் ஒரு கொடி"
 
 #: ../src/factory.c:1408
-#, fuzzy
 msgid ""
 "Specify the name of the directory of the system-wide xinputrc file (for "
 "debugging only)"
@@ -647,7 +640,6 @@ msgid "DIR"
 msgstr "DIR"
 
 #: ../src/factory.c:1409
-#, fuzzy
 msgid ""
 "Specify the name of the directory for IM configurations (for debugging only)"
 msgstr "ஒரு அடைவு IM கட்டமைப்புகள் இருக்கும் (பிழைத்திருத்தத்திற்கு மட்டும்)"
@@ -692,7 +684,7 @@ msgstr "ஒரு அமர்வு பஸ்ஸை பெற முடிய�
 #: ../utils/imsettings-info.c:61 ../utils/imsettings-list.c:58
 #: ../utils/imsettings-restart.c:84 ../utils/imsettings-start.c:85
 #: ../utils/imsettings-stop.c:83
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
 "Running \"imsettings-reload -f\" may help but it will restart the Input "
@@ -792,31 +784,3 @@ msgstr "ஏதாவது பிழைகள் வந்தால் IM செ
 #, c-format
 msgid "Stopped %s\n"
 msgstr "%s நிறுத்தப்பட்டது\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "You are running under the different version of imsettings.\n"
-#~ "Try imsettings-reload -f. that may resolves this issue but note that it "
-#~ "will causes restarting Input Method\n"
-#~ msgstr ""
-#~ "imsettingsஇன் பொருந்தாத பதிப்பு.\n"
-#~ "imsettings-reload -f ஐ இயக்கினால் இந்த சிக்கலை தீர்க்கும் ஆனால் உள்ளீடு முறைமையை "
-#~ "மீண்டும் துவக்க கவனமாக இருக்க வேண்டும்\n"
-
-#~ msgid "A XIM server name"
-#~ msgstr "ஒரு XIM சேவையக பெயர்"
-
-#, fuzzy
-#~ msgid ""
-#~ "When this option is enabled, all of key events will be sent to Input "
-#~ "Method synchronously.  This might affects a performance."
-#~ msgstr ""
-#~ "இந்த விருப்பம் செயல்படுத்தப்பட்டால் அனைத்து விசை நிகழ்வும் உள்ளீடு முறைக்கு "
-#~ "ஒத்திசைக்கப்படும். இது செயல்திறனை பாதிக்கும்."
-
-#~ msgid ""
-#~ "When this option is enabled, all of key events will be sent to Input "
-#~ "Method synchronously. this might affects a performance."
-#~ msgstr ""
-#~ "இந்த விருப்பம் செயல்படுத்தப்பட்டால் அனைத்து விசை நிகழ்வுகளும் உள்ளீடு முறைமை "
-#~ "ஒத்திசைவுக்கு அனுப்பப்படும். இது செயல்திறனை பாதிக்கும்."
