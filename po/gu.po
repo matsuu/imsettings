@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: imsettings.trunk.gu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-09-10 17:02+0900\n"
-"PO-Revision-Date: 2009-09-03 13:13+0530\n"
+"PO-Revision-Date: 2009-09-10 17:23+0900\n"
 "Last-Translator: Sweta Kothari <swkothar@redhat.com>\n"
 "Language-Team: Gujarati\n"
 "MIME-Version: 1.0\n"
@@ -201,6 +201,7 @@ msgstr ""
 #. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
 #: ../applet/main.c:986
+#, fuzzy
 msgid "Left-click on the icon to connect to/disconnect from Input Method."
 msgstr "ઈનપુટ પદ્ધતિ માંથી જોડાવા માટે/જોડાણ તોડવા માટે ચિહ્ન પર ડાબી-ક્લિક કરો."
 
@@ -208,6 +209,7 @@ msgstr "ઈનપુટ પદ્ધતિ માંથી જોડાવા �
 #. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
 #: ../applet/main.c:990
+#, fuzzy
 msgid ""
 "\n"
 "Right-click to show up the Input Method menu."
@@ -218,14 +220,14 @@ msgstr ""
 #. One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
 #.
 #: ../applet/main.c:994
-#, c-format
+#, c-format, fuzzy
 msgid "Please %s%s"
 msgstr "મહેરબાની કરીને %s%s"
 
 #. Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
 #.
 #: ../applet/main.c:998
-#, c-format
+#, c-format, fuzzy
 msgid "Please press %s or %s%s"
 msgstr "મહેરબાની કરીને %s અથવા %s%s ને દબાવો"
 
