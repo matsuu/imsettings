@@ -148,7 +148,7 @@ _check_version(IMApplet *applet)
 						      error ? error->message : N_("No detailed information"));
 
 			g_printerr("%s\n", body);
-			notify_notification(applet, NOTIFY_URGENCY_CRITICAL, N_("Mismatch the version of im-settings-daemon"), body, 5);
+			notify_notification(applet, NOTIFY_URGENCY_CRITICAL, N_("Version-mismatch of im-settings-daemon"), body, 5);
 			g_free(body);
 			if (error)
 				g_error_free(error);
@@ -711,7 +711,7 @@ _preference_activated(GtkMenuItem *item,
 				 G_CALLBACK (_preference_sync_toggled), applet);
 		tooltips_sync = gtk_tooltips_new();
 		gtk_tooltips_set_tip(tooltips_sync, applet->checkbox_sync,
-				     _("When this option is enabled, all of key events will be sent to Input Method synchronously. this might affects a performance."),
+				     _("When this option is enabled, all of key events will be sent to Input Method synchronously. This might affects a performance."),
 				     "");
 #endif /* ENABLE_XIM */
 
@@ -980,15 +980,21 @@ _delay_notify(gpointer data)
 	}
 	key = _get_acceleration_key(applet);
 	escaped_key = g_markup_escape_text(key, -1);
-	/* This may looks like "Please press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-	 * or "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-	 * with the combinations of the following 4 translations as a result.
-	 */
+	/* This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+	   or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
+	*/
 	notice1 = g_strdup(_("Left-click on the icon to connect to/disconnect from Input Method."));
+	/* This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+	   or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
+	*/
 	notice2 = g_strdup(_("\nRight-click to show up the Input Method menu."));
 	if (strcmp(key, "disabled") == 0) {
+		/* One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+		 */
 		body = g_strdup_printf(_("Please %s%s"), notice1, notice2);
 	} else {
+		/* Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+		 */
 		body = g_strdup_printf(_("Please press %s or %s%s"),
 				       escaped_key, notice1, notice2);
 	}

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-01 22:26+0900\n"
+"POT-Creation-Date: 2009-09-10 17:02+0900\n"
 "PO-Revision-Date: 2007-03-05 00:29+0400\n"
 "Last-Translator: George Machitidze <giomac@gmail.com>\n"
 "Language-Team: Georgian <guiasher@mes.gov.ge>\n"
@@ -33,8 +33,8 @@ msgstr ""
 
 #: ../applet/imsettings-applet.schemas.in.h:3
 msgid ""
-"If false, all of informations will not delivered through libnotify, except "
-"error and warning messages."
+"If \"true\", all messages will be delivered through libnotify, otherwise "
+"only error and warning messages."
 msgstr ""
 
 #: ../applet/imsettings-applet.schemas.in.h:4
@@ -55,7 +55,7 @@ msgid ""
 "keybinding for this."
 msgstr ""
 
-#: ../applet/imsettings-applet.schemas.in.h:7
+#: ../applet/imsettings-applet.schemas.in.h:7 ../applet/main.c:714
 msgid ""
 "When this option is enabled, all of key events will be sent to Input Method "
 "synchronously. This might affects a performance."
@@ -70,7 +70,7 @@ msgid "No detailed information"
 msgstr ""
 
 #: ../applet/main.c:151
-msgid "Mismatch the version of im-settings-daemon"
+msgid "Version-mismatch of im-settings-daemon"
 msgstr ""
 
 #: ../applet/main.c:178 ../applet/main.c:258
@@ -139,12 +139,6 @@ msgstr ""
 msgid "_Enable this when accelerator keys etc doesn't work"
 msgstr ""
 
-#: ../applet/main.c:714
-msgid ""
-"When this option is enabled, all of key events will be sent to Input Method "
-"synchronously. this might affects a performance."
-msgstr ""
-
 #: ../applet/main.c:723
 msgid "<b>Trigger key:</b>"
 msgstr ""
@@ -178,39 +172,45 @@ msgid ""
 "the right click first."
 msgstr ""
 
-#. This may looks like "Please press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * or "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * with the combinations of the following 4 translations as a result.
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
-#: ../applet/main.c:987
+#: ../applet/main.c:986
 msgid "Left-click on the icon to connect to/disconnect from Input Method."
 msgstr ""
 
-#: ../applet/main.c:988
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
+#.
+#: ../applet/main.c:990
 msgid ""
 "\n"
 "Right-click to show up the Input Method menu."
 msgstr ""
 
-#: ../applet/main.c:990
+#. One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:994
 #, c-format
 msgid "Please %s%s"
 msgstr ""
 
-#: ../applet/main.c:992
+#. Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:998
 #, c-format
 msgid "Please press %s or %s%s"
 msgstr ""
 
-#: ../applet/main.c:996
+#: ../applet/main.c:1002
 msgid "Tips"
 msgstr ""
 
-#: ../applet/main.c:1002
+#: ../applet/main.c:1008
 msgid "Do not show notifications again"
 msgstr ""
 
-#: ../applet/main.c:1048
+#: ../applet/main.c:1054
 msgid "Unable to take an ownership for XIM server"
 msgstr ""
 
@@ -280,12 +280,12 @@ msgstr ""
 msgid "XIM"
 msgstr ""
 
-#: ../backends/xim/proxy.c:2968
-msgid "A XIM server name"
+#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:681
+msgid "XIM server name"
 msgstr ""
 
 #: ../backends/xim/proxy.c:2969
-msgid "A XIM server name would connects to"
+msgid "The name of XIM server for the connection"
 msgstr ""
 
 #: ../backends/xim/proxy.c:2974
@@ -342,10 +342,6 @@ msgstr ""
 
 #: ../imsettings/imsettings-info.c:680
 msgid "XIM name"
-msgstr ""
-
-#: ../imsettings/imsettings-info.c:681
-msgid "XIM server name"
 msgstr ""
 
 #: ../imsettings/imsettings-info.c:686
@@ -570,7 +566,7 @@ msgid "xinputrc directory"
 msgstr ""
 
 #: ../src/factory.c:1295
-msgid "A directory where puts the system wide xinputrc on."
+msgid "The name of the directory for the system wide xinputrc file."
 msgstr ""
 
 #: ../src/factory.c:1300 ../src/monitor.c:243
@@ -578,7 +574,7 @@ msgid "xinput directory"
 msgstr ""
 
 #: ../src/factory.c:1301
-msgid "A directory where puts the IM configurations on."
+msgid "The name of the directory for IM configurations."
 msgstr ""
 
 #: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
@@ -596,7 +592,8 @@ msgstr ""
 
 #: ../src/factory.c:1408
 msgid ""
-"A directory where puts the system-wide xinputrc puts on (debugging only)"
+"Specify the name of the directory of the system-wide xinputrc file (for "
+"debugging only)"
 msgstr ""
 
 #: ../src/factory.c:1408 ../src/factory.c:1409 ../src/factory.c:1410
@@ -604,7 +601,8 @@ msgid "DIR"
 msgstr ""
 
 #: ../src/factory.c:1409
-msgid "A directory where puts the IM configurations puts on (debugging only)"
+msgid ""
+"Specify the name of the directory for IM configurations (for debugging only)"
 msgstr ""
 
 #: ../src/factory.c:1410
@@ -649,9 +647,9 @@ msgstr "შეყვანის მეთოდი"
 #: ../utils/imsettings-stop.c:83
 #, c-format
 msgid ""
-"Mismatch the version of imsettings.\n"
-"Run imsettings-reload -f may resolves this issue but be aware that will ends "
-"up to restart Input Method too\n"
+"Currently a different version of imsettings is running.\n"
+"Running \"imsettings-reload -f\" may help but it will restart the Input "
+"Method\n"
 msgstr ""
 
 #: ../utils/imsettings-info.c:77 ../utils/imsettings-restart.c:98

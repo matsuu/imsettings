@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser.trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-01 22:26+0900\n"
+"POT-Creation-Date: 2009-09-10 17:02+0900\n"
 "PO-Revision-Date: 2009-08-15 16:11-0300\n"
 "Last-Translator: Vitor Vilas Boas <vitor@vitorvilasboas.com.br>\n"
 "Language-Team: Brazilian Portuguese <fedora-docs-br@redhat.com>\n"
@@ -40,9 +40,10 @@ msgid "Enable this when accelerator keys etc doesn't work"
 msgstr "Habilite isto quando a tecla de aceleração etc não estiver funcionando"
 
 #: ../applet/imsettings-applet.schemas.in.h:3
+#, fuzzy
 msgid ""
-"If false, all of informations will not delivered through libnotify, except "
-"error and warning messages."
+"If \"true\", all messages will be delivered through libnotify, otherwise "
+"only error and warning messages."
 msgstr ""
 "Se falso, todas as informações não serão entregues através da libnotify, "
 "exceto mensagens de aviso e erro."
@@ -70,7 +71,7 @@ msgstr ""
 "como \"&lt;Ctl&gt;\" and \"&lt;Ctrl&gt;\". Se você definir a opção para a "
 "string especial \"disabled\", então não haverá atalho para isso."
 
-#: ../applet/imsettings-applet.schemas.in.h:7
+#: ../applet/imsettings-applet.schemas.in.h:7 ../applet/main.c:714
 msgid ""
 "When this option is enabled, all of key events will be sent to Input Method "
 "synchronously. This might affects a performance."
@@ -87,7 +88,8 @@ msgid "No detailed information"
 msgstr "Nenhuma informação detalhada"
 
 #: ../applet/main.c:151
-msgid "Mismatch the version of im-settings-daemon"
+#, fuzzy
+msgid "Version-mismatch of im-settings-daemon"
 msgstr "Não coincide com a versão do im-settings-daemon"
 
 #: ../applet/main.c:178 ../applet/main.c:258
@@ -160,14 +162,6 @@ msgid "_Enable this when accelerator keys etc doesn't work"
 msgstr ""
 "_Habilite isto quando as teclas de aceleração etc não estiverem funcionando"
 
-#: ../applet/main.c:714
-msgid ""
-"When this option is enabled, all of key events will be sent to Input Method "
-"synchronously. this might affects a performance."
-msgstr ""
-"Quando esta opção estiver habilitada, todas teclas de evento serão enviadas "
-"para o método de entrada sincronamente. Isso poderá afetar o desempenho."
-
 #: ../applet/main.c:723
 msgid "<b>Trigger key:</b>"
 msgstr "<b>Tecla de acionamento:</b>"
@@ -207,17 +201,19 @@ msgstr ""
 "funcione, é necessário configurá-lo com o im-chooser ou selecionar um a "
 "partir do menu que aparece ao clicar com o botão direito."
 
-#. This may looks like "Please press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * or "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * with the combinations of the following 4 translations as a result.
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
-#: ../applet/main.c:987
+#: ../applet/main.c:986
 msgid "Left-click on the icon to connect to/disconnect from Input Method."
 msgstr ""
 "Clique como o botão esquerdo no ícone para de conectar/desconectar de um "
 "método de entrada."
 
-#: ../applet/main.c:988
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
+#.
+#: ../applet/main.c:990
 msgid ""
 "\n"
 "Right-click to show up the Input Method menu."
@@ -225,25 +221,29 @@ msgstr ""
 "\n"
 "Clique com o botão direito para mostrar o menu do método de entrada."
 
-#: ../applet/main.c:990
+#. One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:994
 #, c-format
 msgid "Please %s%s"
 msgstr "Por favor %s%s"
 
-#: ../applet/main.c:992
+#. Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:998
 #, c-format
 msgid "Please press %s or %s%s"
 msgstr "Por favor pressione %s ou %s%s"
 
-#: ../applet/main.c:996
+#: ../applet/main.c:1002
 msgid "Tips"
 msgstr "Dicas"
 
-#: ../applet/main.c:1002
+#: ../applet/main.c:1008
 msgid "Do not show notifications again"
 msgstr "Não mostrar as notificações novamente"
 
-#: ../applet/main.c:1048
+#: ../applet/main.c:1054
 msgid "Unable to take an ownership for XIM server"
 msgstr "Não é possível ter um dono para o servidor XIM"
 
@@ -315,12 +315,13 @@ msgstr "A quem o servidor XIM conecta-se, somente para propósitos de depuraçã
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2968
-msgid "A XIM server name"
+#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:681
+msgid "XIM server name"
 msgstr "Nome do servidor XIM"
 
 #: ../backends/xim/proxy.c:2969
-msgid "A XIM server name would connects to"
+#, fuzzy
+msgid "The name of XIM server for the connection"
 msgstr "Um nome de servidor XIM ao qual ele conectaria"
 
 #: ../backends/xim/proxy.c:2974
@@ -378,10 +379,6 @@ msgstr "Um nome de módulo usado pela Qt"
 #: ../imsettings/imsettings-info.c:680
 msgid "XIM name"
 msgstr "Nome XIM"
-
-#: ../imsettings/imsettings-info.c:681
-msgid "XIM server name"
-msgstr "Nome do servidor XIM"
 
 #: ../imsettings/imsettings-info.c:686
 msgid "Ignore flag"
@@ -613,7 +610,8 @@ msgid "xinputrc directory"
 msgstr "Diretório do xinputrc"
 
 #: ../src/factory.c:1295
-msgid "A directory where puts the system wide xinputrc on."
+#, fuzzy
+msgid "The name of the directory for the system wide xinputrc file."
 msgstr "Um diretório onde o xinputrc para todo o sistema é colocado."
 
 #: ../src/factory.c:1300 ../src/monitor.c:243
@@ -621,7 +619,8 @@ msgid "xinput directory"
 msgstr "Diretório do xinput"
 
 #: ../src/factory.c:1301
-msgid "A directory where puts the IM configurations on."
+#, fuzzy
+msgid "The name of the directory for IM configurations."
 msgstr "Diretório onde as configurações do ME são armazenadas."
 
 #: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
@@ -638,8 +637,10 @@ msgid "A flag if logging facility is enabled or not."
 msgstr "Indica se o log está habilitado ou não."
 
 #: ../src/factory.c:1408
+#, fuzzy
 msgid ""
-"A directory where puts the system-wide xinputrc puts on (debugging only)"
+"Specify the name of the directory of the system-wide xinputrc file (for "
+"debugging only)"
 msgstr ""
 "Um diretório onde o xinputrc para todo o sistema é colocado (somente para "
 "depuração)"
@@ -649,7 +650,9 @@ msgid "DIR"
 msgstr "DIR"
 
 #: ../src/factory.c:1409
-msgid "A directory where puts the IM configurations puts on (debugging only)"
+#, fuzzy
+msgid ""
+"Specify the name of the directory for IM configurations (for debugging only)"
 msgstr ""
 "Um diretório onde serão colocadas as configurações do ME (somente para "
 "depuração)"
@@ -694,11 +697,11 @@ msgstr "Falha ao obter um barramento de sessão.\n"
 #: ../utils/imsettings-info.c:61 ../utils/imsettings-list.c:58
 #: ../utils/imsettings-restart.c:84 ../utils/imsettings-start.c:85
 #: ../utils/imsettings-stop.c:83
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Mismatch the version of imsettings.\n"
-"Run imsettings-reload -f may resolves this issue but be aware that will ends "
-"up to restart Input Method too\n"
+"Currently a different version of imsettings is running.\n"
+"Running \"imsettings-reload -f\" may help but it will restart the Input "
+"Method\n"
 msgstr ""
 "A versão do imsettings não confere.\n"
 "A execução do imsettings-reload -f pode resolver este problema, mas esteja "
@@ -797,6 +800,35 @@ msgstr "Força a parada do processo do ME independente de quaisquer erros."
 #, c-format
 msgid "Stopped %s\n"
 msgstr "%s parado\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "You are running under the different version of imsettings.\n"
+#~ "Try imsettings-reload -f. that may resolves this issue but note that it "
+#~ "will causes restarting Input Method\n"
+#~ msgstr ""
+#~ "A versão do imsettings não confere.\n"
+#~ "A execução do imsettings-reload -f pode resolver este problema, mas "
+#~ "esteja ciente de que isso reiniciará método de entrada também\n"
+
+#~ msgid "A XIM server name"
+#~ msgstr "Nome do servidor XIM"
+
+#, fuzzy
+#~ msgid ""
+#~ "When this option is enabled, all of key events will be sent to Input "
+#~ "Method synchronously.  This might affects a performance."
+#~ msgstr ""
+#~ "Quando esta opção estiver ativada, todos teclas de evento serão enviadas "
+#~ "para o método de entrada sincronamente. Isso pode afetar o desempenho."
+
+#~ msgid ""
+#~ "When this option is enabled, all of key events will be sent to Input "
+#~ "Method synchronously. this might affects a performance."
+#~ msgstr ""
+#~ "Quando esta opção estiver habilitada, todas teclas de evento serão "
+#~ "enviadas para o método de entrada sincronamente. Isso poderá afetar o "
+#~ "desempenho."
 
 #~ msgid "X display name"
 #~ msgstr "Nome da tela do X"

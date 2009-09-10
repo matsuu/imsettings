@@ -1292,13 +1292,13 @@ imsettings_manager_class_init(IMSettingsManagerClass *klass)
 	g_object_class_install_property(object_class, PROP_XINPUTRCDIR,
 					g_param_spec_string("xinputrcdir",
 							    _("xinputrc directory"),
-							    _("A directory where puts the system wide xinputrc on."),
+							    _("The name of the directory for the system wide xinputrc file."),
 							    NULL,
 							    G_PARAM_READWRITE));
 	g_object_class_install_property(object_class, PROP_XINPUTDIR,
 					g_param_spec_string("xinputdir",
 							    _("xinput directory"),
-							    _("A directory where puts the IM configurations on."),
+							    _("The name of the directory for IM configurations."),
 							    NULL,
 							    G_PARAM_READWRITE));
 	g_object_class_install_property(object_class, PROP_HOMEDIR,
@@ -1405,8 +1405,8 @@ main(int    argc,
 	GOptionContext *ctx = g_option_context_new(NULL);
 	GOptionEntry entries[] = {
 		{"replace", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_replace, N_("Replace the running settings daemon with new instance."), NULL},
-		{"xinputrcdir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_xinputrcdir, N_("A directory where puts the system-wide xinputrc puts on (debugging only)"), N_("DIR")},
-		{"xinputdir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_xinputdir, N_("A directory where puts the IM configurations puts on (debugging only)"), N_("DIR")},
+		{"xinputrcdir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_xinputrcdir, N_("Specify the name of the directory of the system-wide xinputrc file (for debugging only)"), N_("DIR")},
+		{"xinputdir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_xinputdir, N_("Specify the name of the directory for IM configurations (for debugging only)"), N_("DIR")},
 		{"homedir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_homedir, N_("A home directory (debugging only)"), N_("DIR")},
 		{"no-logfile", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_no_logfile, N_("Do not create a log file.")},
 		{NULL, 0, 0, 0, NULL, NULL, NULL}

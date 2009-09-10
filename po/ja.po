@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-01 22:26+0900\n"
+"POT-Creation-Date: 2009-09-10 17:02+0900\n"
 "PO-Revision-Date: 2009-09-08 10:31+0900\n"
 "Last-Translator: Akira TAGOH <tagoh@redhat.com>\n"
 "Language-Team: Japanese <fedora-trasn-ja@redhat.com>\n"
@@ -34,9 +34,10 @@ msgid "Enable this when accelerator keys etc doesn't work"
 msgstr "アクセラレータキーが動かない場合に有功にする"
 
 #: ../applet/imsettings-applet.schemas.in.h:3
+#, fuzzy
 msgid ""
-"If false, all of informations will not delivered through libnotify, except "
-"error and warning messages."
+"If \"true\", all messages will be delivered through libnotify, otherwise "
+"only error and warning messages."
 msgstr ""
 "もしfalseなら、エラーや警告メッセージを除いて、すべての情報はlibnotifyへ配信"
 "されません。"
@@ -64,7 +65,7 @@ msgstr ""
 "\"のような省略形も許可します。このオプションに、特別な文字\"disabled\"をセッ"
 "トすると、このキーバインドは無効になります。"
 
-#: ../applet/imsettings-applet.schemas.in.h:7
+#: ../applet/imsettings-applet.schemas.in.h:7 ../applet/main.c:714
 msgid ""
 "When this option is enabled, all of key events will be sent to Input Method "
 "synchronously. This might affects a performance."
@@ -81,7 +82,8 @@ msgid "No detailed information"
 msgstr "詳細の情報がありません"
 
 #: ../applet/main.c:151
-msgid "Mismatch the version of im-settings-daemon"
+#, fuzzy
+msgid "Version-mismatch of im-settings-daemon"
 msgstr "im-settings-daemonのバージョンが一致しません"
 
 #: ../applet/main.c:178 ../applet/main.c:258
@@ -152,14 +154,6 @@ msgstr "ステータスアイコンを表示(_S)"
 msgid "_Enable this when accelerator keys etc doesn't work"
 msgstr "アクセラレーションキーなどが動かない場合にこれを有功にする(_E)"
 
-#: ../applet/main.c:714
-msgid ""
-"When this option is enabled, all of key events will be sent to Input Method "
-"synchronously. this might affects a performance."
-msgstr ""
-"このオプションが有効な時、すべてのキーイベントは同期で入力メソッドへ送られま"
-"す。これはパフォーマンスに影響を与えるかもしれません。"
-
 #: ../applet/main.c:723
 msgid "<b>Trigger key:</b>"
 msgstr "<b>トリガーキー:</b>"
@@ -199,15 +193,17 @@ msgstr ""
 "にim-chooserで設定するか、右クリックで表示されるメニューより選択してくださ"
 "い。"
 
-#. This may looks like "Please press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * or "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * with the combinations of the following 4 translations as a result.
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
-#: ../applet/main.c:987
+#: ../applet/main.c:986
 msgid "Left-click on the icon to connect to/disconnect from Input Method."
 msgstr "入力メソッドへ接続/切断するためにアイコンを左クリック"
 
-#: ../applet/main.c:988
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
+#.
+#: ../applet/main.c:990
 msgid ""
 "\n"
 "Right-click to show up the Input Method menu."
@@ -215,25 +211,29 @@ msgstr ""
 "\n"
 "入力メソッドメニューを表示するには右クリックをしてください"
 
-#: ../applet/main.c:990
+#. One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:994
 #, c-format
 msgid "Please %s%s"
 msgstr "%sしてください。%s"
 
-#: ../applet/main.c:992
+#. Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:998
 #, c-format
 msgid "Please press %s or %s%s"
 msgstr "%2$sするか、%1$sを押してください。%3$s"
 
-#: ../applet/main.c:996
+#: ../applet/main.c:1002
 msgid "Tips"
 msgstr "ヒント"
 
-#: ../applet/main.c:1002
+#: ../applet/main.c:1008
 msgid "Do not show notifications again"
 msgstr "次回通知を表示しない"
 
-#: ../applet/main.c:1048
+#: ../applet/main.c:1054
 msgid "Unable to take an ownership for XIM server"
 msgstr "XIMサーバの所有権を取得出来ませんでした"
 
@@ -302,12 +302,13 @@ msgstr "接続するXIMサーバー (デバッグ目的専用)"
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2968
-msgid "A XIM server name"
+#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:681
+msgid "XIM server name"
 msgstr "XIM サーバー名"
 
 #: ../backends/xim/proxy.c:2969
-msgid "A XIM server name would connects to"
+#, fuzzy
+msgid "The name of XIM server for the connection"
 msgstr "接続したいXIMサーバ名"
 
 #: ../backends/xim/proxy.c:2974
@@ -365,10 +366,6 @@ msgstr "Qt 用に使用されるモジュール名"
 #: ../imsettings/imsettings-info.c:680
 msgid "XIM name"
 msgstr "XIM 名"
-
-#: ../imsettings/imsettings-info.c:681
-msgid "XIM server name"
-msgstr "XIM サーバー名"
 
 #: ../imsettings/imsettings-info.c:686
 msgid "Ignore flag"
@@ -599,7 +596,8 @@ msgid "xinputrc directory"
 msgstr "xinputrcディレクトリ"
 
 #: ../src/factory.c:1295
-msgid "A directory where puts the system wide xinputrc on."
+#, fuzzy
+msgid "The name of the directory for the system wide xinputrc file."
 msgstr "システムのxinputrcが置かれているディレクトリ"
 
 #: ../src/factory.c:1300 ../src/monitor.c:243
@@ -607,7 +605,8 @@ msgid "xinput directory"
 msgstr "xinputディレクトリ"
 
 #: ../src/factory.c:1301
-msgid "A directory where puts the IM configurations on."
+#, fuzzy
+msgid "The name of the directory for IM configurations."
 msgstr "IM設定が置かれているディレクトリ"
 
 #: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
@@ -624,8 +623,10 @@ msgid "A flag if logging facility is enabled or not."
 msgstr "ロギング設備を有効にするかどうかのフラグ"
 
 #: ../src/factory.c:1408
+#, fuzzy
 msgid ""
-"A directory where puts the system-wide xinputrc puts on (debugging only)"
+"Specify the name of the directory of the system-wide xinputrc file (for "
+"debugging only)"
 msgstr "システムのxinputrcが置かれているディレクトリ (デバッグ専用)"
 
 #: ../src/factory.c:1408 ../src/factory.c:1409 ../src/factory.c:1410
@@ -633,7 +634,9 @@ msgid "DIR"
 msgstr "DIR"
 
 #: ../src/factory.c:1409
-msgid "A directory where puts the IM configurations puts on (debugging only)"
+#, fuzzy
+msgid ""
+"Specify the name of the directory for IM configurations (for debugging only)"
 msgstr "IM設定が置かれているディレクトリ (デバッグ専用)"
 
 #: ../src/factory.c:1410
@@ -676,11 +679,11 @@ msgstr "セッションバスの取得に失敗しました\n"
 #: ../utils/imsettings-info.c:61 ../utils/imsettings-list.c:58
 #: ../utils/imsettings-restart.c:84 ../utils/imsettings-start.c:85
 #: ../utils/imsettings-stop.c:83
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Mismatch the version of imsettings.\n"
-"Run imsettings-reload -f may resolves this issue but be aware that will ends "
-"up to restart Input Method too\n"
+"Currently a different version of imsettings is running.\n"
+"Running \"imsettings-reload -f\" may help but it will restart the Input "
+"Method\n"
 msgstr ""
 "imsettingsのバージョンが一致しません。\n"
 "imsettings-reload -fを実行してこの問題を解決してください。ただし入力メソッド"
@@ -780,6 +783,34 @@ msgstr "エラーに関わらず強制的に IM プロセスを停止する"
 #, c-format
 msgid "Stopped %s\n"
 msgstr "%s は停止しました\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "You are running under the different version of imsettings.\n"
+#~ "Try imsettings-reload -f. that may resolves this issue but note that it "
+#~ "will causes restarting Input Method\n"
+#~ msgstr ""
+#~ "imsettingsのバージョンが一致しません。\n"
+#~ "imsettings-reload -fを実行してこの問題を解決してください。ただし入力メソッ"
+#~ "ドも再起動してしまうことをご承知ください。\n"
+
+#~ msgid "A XIM server name"
+#~ msgstr "XIM サーバー名"
+
+#, fuzzy
+#~ msgid ""
+#~ "When this option is enabled, all of key events will be sent to Input "
+#~ "Method synchronously.  This might affects a performance."
+#~ msgstr ""
+#~ "このオプションが有効な時、すべてのキーイベントは入力メソッドへ同期で送られ"
+#~ "ます。これはパフォーマンスに影響を与えるかもしれません。"
+
+#~ msgid ""
+#~ "When this option is enabled, all of key events will be sent to Input "
+#~ "Method synchronously. this might affects a performance."
+#~ msgstr ""
+#~ "このオプションが有効な時、すべてのキーイベントは同期で入力メソッドへ送られ"
+#~ "ます。これはパフォーマンスに影響を与えるかもしれません。"
 
 #~ msgid "X display name"
 #~ msgstr "X ディスプレイ名"

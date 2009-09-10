@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-01 22:26+0900\n"
+"POT-Creation-Date: 2009-09-10 17:02+0900\n"
 "PO-Revision-Date: 2009-09-07 17:00+1000\n"
 "Last-Translator: Eunju Kim <eukim@redhat.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -33,10 +33,13 @@ msgid "Enable this when accelerator keys etc doesn't work"
 msgstr "가속키가 작동하지 않는 경우 이를 활성화 "
 
 #: ../applet/imsettings-applet.schemas.in.h:3
+#, fuzzy
 msgid ""
-"If false, all of informations will not delivered through libnotify, except "
-"error and warning messages."
-msgstr "거짓 (false)이면, 오류 및 경고 메시지를 제외한 모든 정보는 libnotify를 통해 전송되지 않습니다.  "
+"If \"true\", all messages will be delivered through libnotify, otherwise "
+"only error and warning messages."
+msgstr ""
+"거짓 (false)이면, 오류 및 경고 메시지를 제외한 모든 정보는 libnotify를 통해 "
+"전송되지 않습니다.  "
 
 #: ../applet/imsettings-applet.schemas.in.h:4
 msgid "If true, the icon will be displayed at the systray."
@@ -55,14 +58,19 @@ msgid ""
 "set the option to the special string \"disabled\", then there will be no "
 "keybinding for this."
 msgstr ""
-"입력 방식에 연결 또는 연결 해제하는 키 바인딩. \"&lt;Control&gt;a\" 또는 \"&lt;Shift&gt;&lt;"
-"Alt&gt;F1\" 같은 형식을 사용할 수 있습니다. 구문 분석은 자유롭고 대소문자, \"&lt;Ctl&gt;\" 및 \"&lt;Ctrl&gt;\" 같은 약어를 허용합니다. 특수 문자 \"disabled\"에 이 옵션을 설정하면 이에 대한 키 바인딩은 사용할 수 없습니다.     "
+"입력 방식에 연결 또는 연결 해제하는 키 바인딩. \"&lt;Control&gt;a\" 또는 "
+"\"&lt;Shift&gt;&lt;Alt&gt;F1\" 같은 형식을 사용할 수 있습니다. 구문 분석은 자"
+"유롭고 대소문자, \"&lt;Ctl&gt;\" 및 \"&lt;Ctrl&gt;\" 같은 약어를 허용합니다. "
+"특수 문자 \"disabled\"에 이 옵션을 설정하면 이에 대한 키 바인딩은 사용할 수 "
+"없습니다.     "
 
-#: ../applet/imsettings-applet.schemas.in.h:7
+#: ../applet/imsettings-applet.schemas.in.h:7 ../applet/main.c:714
 msgid ""
 "When this option is enabled, all of key events will be sent to Input Method "
 "synchronously. This might affects a performance."
-msgstr "이 옵션이 활성화되면, 모든 키 이벤트는 입력 방식에 동기식으로 전송됩니다. 이는 성능에 영향을 미칠 수 도 있습니다.       "
+msgstr ""
+"이 옵션이 활성화되면, 모든 키 이벤트는 입력 방식에 동기식으로 전송됩니다. 이"
+"는 성능에 영향을 미칠 수 도 있습니다.       "
 
 #: ../applet/imsettings-applet.schemas.in.h:8
 msgid "Whether to notify informations with libnotify"
@@ -73,7 +81,8 @@ msgid "No detailed information"
 msgstr "상세 정보가 없음  "
 
 #: ../applet/main.c:151
-msgid "Mismatch the version of im-settings-daemon"
+#, fuzzy
+msgid "Version-mismatch of im-settings-daemon"
 msgstr "im-settings-daemon 버전이 일치하지 않습니다  "
 
 #: ../applet/main.c:178 ../applet/main.c:258
@@ -85,7 +94,9 @@ msgstr "%s 시작 불가능  "
 msgid ""
 " and the default Input Method has been changed. if you need to change that "
 "to anything else, please use im-chooser."
-msgstr "기본 입력 방식이 변경되었습니다. 다른 입력 방식으로 변경해야 할 경우, im-chooser를 사용하십시오.   "
+msgstr ""
+"기본 입력 방식이 변경되었습니다. 다른 입력 방식으로 변경해야 할 경우, im-"
+"chooser를 사용하십시오.   "
 
 #: ../applet/main.c:198
 #, c-format
@@ -142,12 +153,6 @@ msgstr "상태 아이콘을 표시(_S)  "
 msgid "_Enable this when accelerator keys etc doesn't work"
 msgstr "가속키 등이 작동하지 않을 경우 이를 활성화(_E)       "
 
-#: ../applet/main.c:714
-msgid ""
-"When this option is enabled, all of key events will be sent to Input Method "
-"synchronously. this might affects a performance."
-msgstr "이 옵션이 활성화되면, 모든 키 이벤트는 입력 방식에 동기식으로 전송됩니다. 이는 성능에 영향을 미칠 수 도 있습니다.         "
-
 #: ../applet/main.c:723
 msgid "<b>Trigger key:</b>"
 msgstr "<b>트리거 키:</b>  "
@@ -160,7 +165,9 @@ msgstr "키 가져오기(_G)  "
 msgid ""
 "Please click Grab key button and press the key combinations you want to "
 "assign for the acceleration key. Press Backspace key to disable this feature."
-msgstr "키 가져오기 버튼을 클릭하고 가속키에 할당할 키 조합을 누르십시오. 이 기능을 해제하려면 Backspace 키를 누르십시오.   "
+msgstr ""
+"키 가져오기 버튼을 클릭하고 가속키에 할당할 키 조합을 누르십시오. 이 기능을 "
+"해제하려면 Backspace 키를 누르십시오.   "
 
 #: ../applet/main.c:826
 msgid "Disconnect"
@@ -179,17 +186,21 @@ msgid ""
 "The default Input Method isn't yet configured. To get this working, you need "
 "to set up that on im-chooser or select one from the menu which appears by "
 "the right click first."
-msgstr "기본 입력 방식이 설정되지 않았습니다. 이를 작동시키기 위해서는 im-chooser에서 설정하거나 오른쪽 클릭하여 나타나는 메뉴에서 선택하십시오.  "
+msgstr ""
+"기본 입력 방식이 설정되지 않았습니다. 이를 작동시키기 위해서는 im-chooser에"
+"서 설정하거나 오른쪽 클릭하여 나타나는 메뉴에서 선택하십시오.  "
 
-#. This may looks like "Please press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * or "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * with the combinations of the following 4 translations as a result.
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
-#: ../applet/main.c:987
+#: ../applet/main.c:986
 msgid "Left-click on the icon to connect to/disconnect from Input Method."
 msgstr "입력 방식에서 연결/연결 해제하려면 아이콘에서 왼쪽 클릭   "
 
-#: ../applet/main.c:988
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
+#.
+#: ../applet/main.c:990
 msgid ""
 "\n"
 "Right-click to show up the Input Method menu."
@@ -197,25 +208,29 @@ msgstr ""
 "\n"
 "입력 방식 메뉴를 표시하려면 오른쪽 클릭   "
 
-#: ../applet/main.c:990
+#. One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:994
 #, c-format
 msgid "Please %s%s"
 msgstr "%s%s 하십시오  "
 
-#: ../applet/main.c:992
+#. Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:998
 #, c-format
 msgid "Please press %s or %s%s"
 msgstr "%s 또는 %s%s을(를) 누르십시오  "
 
-#: ../applet/main.c:996
+#: ../applet/main.c:1002
 msgid "Tips"
 msgstr "정보  "
 
-#: ../applet/main.c:1002
+#: ../applet/main.c:1008
 msgid "Do not show notifications again"
 msgstr "통지를 다시 표시하지 않음       "
 
-#: ../applet/main.c:1048
+#: ../applet/main.c:1054
 msgid "Unable to take an ownership for XIM server"
 msgstr "XIM 서버에 대한 소유권을 갖을 수 없음  "
 
@@ -248,8 +263,11 @@ msgid "Helper application for imsettings"
 msgstr "imsettings 용 도움말 응용 프로그램  "
 
 #: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid "Helper application that delivers GTK+ immodule name between GConf and Xfconf"
-msgstr "GConf와 Xfconf 사이에서 GTK+ immodule 이름을 전송하는 도움말 응용 프로그램       "
+msgid ""
+"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
+msgstr ""
+"GConf와 Xfconf 사이에서 GTK+ immodule 이름을 전송하는 도움말 응용 프로그"
+"램       "
 
 #: ../backends/xim/loopback.c:223
 msgid "Synchronous"
@@ -283,12 +301,13 @@ msgstr "XIM 서버 연결 (디버깅 목적 전용)  "
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2968
-msgid "A XIM server name"
-msgstr "XIM 서버 이름  "
+#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:681
+msgid "XIM server name"
+msgstr "XIM 서버 이름 "
 
 #: ../backends/xim/proxy.c:2969
-msgid "A XIM server name would connects to"
+#, fuzzy
+msgid "The name of XIM server for the connection"
 msgstr "연결 하려는 XIM 서버 이름  "
 
 #: ../backends/xim/proxy.c:2974
@@ -346,10 +365,6 @@ msgstr "Qt 용으로 사용할 모듈 이름 "
 #: ../imsettings/imsettings-info.c:680
 msgid "XIM name"
 msgstr "XIM 이름 "
-
-#: ../imsettings/imsettings-info.c:681
-msgid "XIM server name"
-msgstr "XIM 서버 이름 "
 
 #: ../imsettings/imsettings-info.c:686
 msgid "Ignore flag"
@@ -504,7 +519,9 @@ msgstr ""
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
 "rapidly died many times. See .imsettings.log for more details."
-msgstr "%s의 %s 입력 방식 프로세스가 계속 중지되어 프로세스 시작을 포기합니다. 자세한 내용은 .imsettings.log를 참조하십시오.  "
+msgstr ""
+"%s의 %s 입력 방식 프로세스가 계속 중지되어 프로세스 시작을 포기합니다. 자세"
+"한 내용은 .imsettings.log를 참조하십시오.  "
 
 #: ../src/factory.c:437
 msgid "Main"
@@ -578,7 +595,8 @@ msgid "xinputrc directory"
 msgstr "xinputrc 디렉토리  "
 
 #: ../src/factory.c:1295
-msgid "A directory where puts the system wide xinputrc on."
+#, fuzzy
+msgid "The name of the directory for the system wide xinputrc file."
 msgstr "시스템 전역 xinputrc이 있는 디렉토리  "
 
 #: ../src/factory.c:1300 ../src/monitor.c:243
@@ -586,7 +604,8 @@ msgid "xinput directory"
 msgstr "xinput 디렉토리  "
 
 #: ../src/factory.c:1301
-msgid "A directory where puts the IM configurations on."
+#, fuzzy
+msgid "The name of the directory for IM configurations."
 msgstr "IM 설정이 있는 디렉토리  "
 
 #: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
@@ -603,7 +622,10 @@ msgid "A flag if logging facility is enabled or not."
 msgstr "로깅 기능이 활성화되었는지의 여부에 대한 플래그  "
 
 #: ../src/factory.c:1408
-msgid "A directory where puts the system-wide xinputrc puts on (debugging only)"
+#, fuzzy
+msgid ""
+"Specify the name of the directory of the system-wide xinputrc file (for "
+"debugging only)"
 msgstr "시스템 전역 xinputrc이 있는 디렉토리 (디버깅 전용)  "
 
 #: ../src/factory.c:1408 ../src/factory.c:1409 ../src/factory.c:1410
@@ -611,7 +633,9 @@ msgid "DIR"
 msgstr "DIR"
 
 #: ../src/factory.c:1409
-msgid "A directory where puts the IM configurations puts on (debugging only)"
+#, fuzzy
+msgid ""
+"Specify the name of the directory for IM configurations (for debugging only)"
 msgstr "IM 설정이 있는 디렉토리 (디버깅 전용)  "
 
 #: ../src/factory.c:1410
@@ -654,14 +678,15 @@ msgstr "세션 버스 가져오기 실패.\n"
 #: ../utils/imsettings-info.c:61 ../utils/imsettings-list.c:58
 #: ../utils/imsettings-restart.c:84 ../utils/imsettings-start.c:85
 #: ../utils/imsettings-stop.c:83
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Mismatch the version of imsettings.\n"
-"Run imsettings-reload -f may resolves this issue but be aware that will ends "
-"up to restart Input Method too\n"
+"Currently a different version of imsettings is running.\n"
+"Running \"imsettings-reload -f\" may help but it will restart the Input "
+"Method\n"
 msgstr ""
 "imsettings 버전이 일치하지 않음.\n"
-"imsettings-reload -f를 실행하면 이 문제를 해결할 수 있지만 입력 방식을 다시 시작할 수 없게 될 수 있으므로 주의합니다\n"
+"imsettings-reload -f를 실행하면 이 문제를 해결할 수 있지만 입력 방식을 다시 "
+"시작할 수 없게 될 수 있으므로 주의합니다\n"
 
 #: ../utils/imsettings-info.c:77 ../utils/imsettings-restart.c:98
 #: ../utils/imsettings-stop.c:97
@@ -669,7 +694,9 @@ msgstr ""
 msgid ""
 "No Input Method running. please specify Input Method name explicitly if "
 "necessary.\n"
-msgstr "입력 방식이 실행되고 있지 않음. 필요할 경우 입력 방식 이름을 지정해 주십시오.\n"
+msgstr ""
+"입력 방식이 실행되고 있지 않음. 필요할 경우 입력 방식 이름을 지정해 주십시"
+"오.\n"
 
 #: ../utils/imsettings-info.c:86
 #, c-format
@@ -754,3 +781,30 @@ msgstr "오류와 관계없이 강제로 IM 프로세스를 중지함.  "
 msgid "Stopped %s\n"
 msgstr "중지됨 %s\n"
 
+#, fuzzy
+#~ msgid ""
+#~ "You are running under the different version of imsettings.\n"
+#~ "Try imsettings-reload -f. that may resolves this issue but note that it "
+#~ "will causes restarting Input Method\n"
+#~ msgstr ""
+#~ "imsettings 버전이 일치하지 않음.\n"
+#~ "imsettings-reload -f를 실행하면 이 문제를 해결할 수 있지만 입력 방식을 다"
+#~ "시 시작할 수 없게 될 수 있으므로 주의합니다\n"
+
+#~ msgid "A XIM server name"
+#~ msgstr "XIM 서버 이름  "
+
+#, fuzzy
+#~ msgid ""
+#~ "When this option is enabled, all of key events will be sent to Input "
+#~ "Method synchronously.  This might affects a performance."
+#~ msgstr ""
+#~ "이 옵션이 활성화되면, 모든 키 이벤트는 입력 방식에 동기식으로 전송됩니다. "
+#~ "이는 성능에 영향을 미칠 수 도 있습니다.       "
+
+#~ msgid ""
+#~ "When this option is enabled, all of key events will be sent to Input "
+#~ "Method synchronously. this might affects a performance."
+#~ msgstr ""
+#~ "이 옵션이 활성화되면, 모든 키 이벤트는 입력 방식에 동기식으로 전송됩니다. "
+#~ "이는 성능에 영향을 미칠 수 도 있습니다.         "

@@ -82,7 +82,7 @@ main(int    argc,
 	imsettings_request_set_locale(req, locale);
 
 	if (imsettings_request_get_version(req, NULL) != IMSETTINGS_SETTINGS_API_VERSION) {
-		g_printerr(_("Mismatch the version of imsettings.\nRun imsettings-reload -f may resolves this issue but be aware that will ends up to restart Input Method too\n"));
+		g_printerr(_("Currently a different version of imsettings is running.\nRunning \"imsettings-reload -f\" may help but it will restart the Input Method\n"));
 		retval = 1;
 		goto end;
 	}

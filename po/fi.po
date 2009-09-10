@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser 0.3.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-01 22:26+0900\n"
+"POT-Creation-Date: 2009-09-10 17:02+0900\n"
 "PO-Revision-Date: 2008-04-06 13:23+0300\n"
 "Last-Translator: Ville-Pekka Vainio <vpivaini@cs.helsinki.fi>\n"
 "Language-Team: Finnish <laatu@lokalisointi.org>\n"
@@ -31,8 +31,8 @@ msgstr ""
 
 #: ../applet/imsettings-applet.schemas.in.h:3
 msgid ""
-"If false, all of informations will not delivered through libnotify, except "
-"error and warning messages."
+"If \"true\", all messages will be delivered through libnotify, otherwise "
+"only error and warning messages."
 msgstr ""
 
 #: ../applet/imsettings-applet.schemas.in.h:4
@@ -53,7 +53,7 @@ msgid ""
 "keybinding for this."
 msgstr ""
 
-#: ../applet/imsettings-applet.schemas.in.h:7
+#: ../applet/imsettings-applet.schemas.in.h:7 ../applet/main.c:714
 msgid ""
 "When this option is enabled, all of key events will be sent to Input Method "
 "synchronously. This might affects a performance."
@@ -68,7 +68,7 @@ msgid "No detailed information"
 msgstr ""
 
 #: ../applet/main.c:151
-msgid "Mismatch the version of im-settings-daemon"
+msgid "Version-mismatch of im-settings-daemon"
 msgstr ""
 
 #: ../applet/main.c:178 ../applet/main.c:258
@@ -138,12 +138,6 @@ msgstr ""
 msgid "_Enable this when accelerator keys etc doesn't work"
 msgstr ""
 
-#: ../applet/main.c:714
-msgid ""
-"When this option is enabled, all of key events will be sent to Input Method "
-"synchronously. this might affects a performance."
-msgstr ""
-
 #: ../applet/main.c:723
 msgid "<b>Trigger key:</b>"
 msgstr ""
@@ -180,41 +174,47 @@ msgid ""
 "the right click first."
 msgstr ""
 
-#. This may looks like "Please press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * or "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * with the combinations of the following 4 translations as a result.
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
-#: ../applet/main.c:987
+#: ../applet/main.c:986
 #, fuzzy
 msgid "Left-click on the icon to connect to/disconnect from Input Method."
 msgstr "Syöttömenetelmän käynnistäminen epäonnistui"
 
-#: ../applet/main.c:988
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
+#.
+#: ../applet/main.c:990
 #, fuzzy
 msgid ""
 "\n"
 "Right-click to show up the Input Method menu."
 msgstr "Syöttömenetelmän käynnistäminen epäonnistui"
 
-#: ../applet/main.c:990
+#. One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:994
 #, c-format
 msgid "Please %s%s"
 msgstr ""
 
-#: ../applet/main.c:992
+#. Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:998
 #, c-format
 msgid "Please press %s or %s%s"
 msgstr ""
 
-#: ../applet/main.c:996
+#: ../applet/main.c:1002
 msgid "Tips"
 msgstr ""
 
-#: ../applet/main.c:1002
+#: ../applet/main.c:1008
 msgid "Do not show notifications again"
 msgstr ""
 
-#: ../applet/main.c:1048
+#: ../applet/main.c:1054
 msgid "Unable to take an ownership for XIM server"
 msgstr ""
 
@@ -285,14 +285,13 @@ msgstr ""
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2968
-#, fuzzy
-msgid "A XIM server name"
+#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:681
+msgid "XIM server name"
 msgstr "XIM-palvelimen nimi"
 
 #: ../backends/xim/proxy.c:2969
 #, fuzzy
-msgid "A XIM server name would connects to"
+msgid "The name of XIM server for the connection"
 msgstr "Suoritettavan XIM-palvelinohjelman nimi"
 
 #: ../backends/xim/proxy.c:2974
@@ -350,10 +349,6 @@ msgstr "Qt:n käyttämän moduulin nimi"
 #: ../imsettings/imsettings-info.c:680
 msgid "XIM name"
 msgstr "XIM-nimi"
-
-#: ../imsettings/imsettings-info.c:681
-msgid "XIM server name"
-msgstr "XIM-palvelimen nimi"
 
 #: ../imsettings/imsettings-info.c:686
 msgid "Ignore flag"
@@ -585,7 +580,7 @@ msgid "xinputrc directory"
 msgstr ""
 
 #: ../src/factory.c:1295
-msgid "A directory where puts the system wide xinputrc on."
+msgid "The name of the directory for the system wide xinputrc file."
 msgstr ""
 
 #: ../src/factory.c:1300 ../src/monitor.c:243
@@ -593,8 +588,9 @@ msgid "xinput directory"
 msgstr ""
 
 #: ../src/factory.c:1301
-msgid "A directory where puts the IM configurations on."
-msgstr ""
+#, fuzzy
+msgid "The name of the directory for IM configurations."
+msgstr "Syöttömenetelmätietoihin viittaavan tiedoston nimi."
 
 #: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
 #: ../src/monitor.c:250
@@ -611,7 +607,8 @@ msgstr ""
 
 #: ../src/factory.c:1408
 msgid ""
-"A directory where puts the system-wide xinputrc puts on (debugging only)"
+"Specify the name of the directory of the system-wide xinputrc file (for "
+"debugging only)"
 msgstr ""
 
 #: ../src/factory.c:1408 ../src/factory.c:1409 ../src/factory.c:1410
@@ -619,8 +616,10 @@ msgid "DIR"
 msgstr ""
 
 #: ../src/factory.c:1409
-msgid "A directory where puts the IM configurations puts on (debugging only)"
-msgstr ""
+#, fuzzy
+msgid ""
+"Specify the name of the directory for IM configurations (for debugging only)"
+msgstr "Syöttömenetelmätietoihin viittaavan tiedoston nimi."
 
 #: ../src/factory.c:1410
 msgid "A home directory (debugging only)"
@@ -665,9 +664,9 @@ msgstr "Symbolisen linkin tekeminen epäonnistui: %s"
 #: ../utils/imsettings-stop.c:83
 #, c-format
 msgid ""
-"Mismatch the version of imsettings.\n"
-"Run imsettings-reload -f may resolves this issue but be aware that will ends "
-"up to restart Input Method too\n"
+"Currently a different version of imsettings is running.\n"
+"Running \"imsettings-reload -f\" may help but it will restart the Input "
+"Method\n"
 msgstr ""
 
 #: ../utils/imsettings-info.c:77 ../utils/imsettings-restart.c:98
@@ -769,6 +768,10 @@ msgstr ""
 #, c-format
 msgid "Stopped %s\n"
 msgstr "Pysäytettiin %s\n"
+
+#, fuzzy
+#~ msgid "A XIM server name"
+#~ msgstr "XIM-palvelimen nimi"
 
 #~ msgid "X display name"
 #~ msgstr "X-näytön nimi"

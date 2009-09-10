@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.trunk.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-01 22:26+0900\n"
+"POT-Creation-Date: 2009-09-10 17:02+0900\n"
 "PO-Revision-Date: 2009-09-03 13:13+0530\n"
 "Last-Translator: Sweta Kothari <swkothar@redhat.com>\n"
 "Language-Team: Gujarati\n"
@@ -40,10 +40,13 @@ msgid "Enable this when accelerator keys etc doesn't work"
 msgstr "જ્યારે પ્રવેગકીય કીઓ વગેરે કામ કરતુ ન હોય ત્યારે આને સક્રિય કરોે"
 
 #: ../applet/imsettings-applet.schemas.in.h:3
+#, fuzzy
 msgid ""
-"If false, all of informations will not delivered through libnotify, except "
-"error and warning messages."
-msgstr "જો false હોય તો, જાણકારીઓની બધી libnotify મારફતે મોકલેલ છે, ભૂલ અને ચેતવણી સંદેશાઓ સિવાય."
+"If \"true\", all messages will be delivered through libnotify, otherwise "
+"only error and warning messages."
+msgstr ""
+"જો false હોય તો, જાણકારીઓની બધી libnotify મારફતે મોકલેલ છે, ભૂલ અને ચેતવણી સંદેશાઓ "
+"સિવાય."
 
 #: ../applet/imsettings-applet.schemas.in.h:4
 msgid "If true, the icon will be displayed at the systray."
@@ -62,19 +65,19 @@ msgid ""
 "set the option to the special string \"disabled\", then there will be no "
 "keybinding for this."
 msgstr ""
-"કિબાઇડીંગ કે જે ઇનપુટ પદ્દતિને જોડે છે અથવા ઇનપુટ પદ્દતિમાંથી જોડાણ તોડે છે. બંધારણ "
-"આવુ દેખાય છે \"&lt;Control&gt;a\" or \"&lt;Shift&gt;&lt;"
-"Alt&gt;F1\". પાર્સર યોગ્ય રીતે નબળુ છે અને નાનાં અથવા મોટા અક્ષરોને પરવાનગી આપે છે, "
-"અને સંક્ષિપ્તો જેવા કે \"&lt;Ctl&gt;\" and \"&lt;Ctrl&gt;\". જો ચોક્કસ શબ્દમાળા "
-"\"disabled\" માટે વિક્લ્પને સુયોજિત કરો તો, પછી આ માટે કોઇ કિબાઇડીંગ હશે નહિં."
+"કિબાઇડીંગ કે જે ઇનપુટ પદ્દતિને જોડે છે અથવા ઇનપુટ પદ્દતિમાંથી જોડાણ તોડે છે. બંધારણ આવુ "
+"દેખાય છે \"&lt;Control&gt;a\" or \"&lt;Shift&gt;&lt;Alt&gt;F1\". પાર્સર યોગ્ય "
+"રીતે નબળુ છે અને નાનાં અથવા મોટા અક્ષરોને પરવાનગી આપે છે, અને સંક્ષિપ્તો જેવા કે \"&lt;"
+"Ctl&gt;\" and \"&lt;Ctrl&gt;\". જો ચોક્કસ શબ્દમાળા \"disabled\" માટે વિક્લ્પને "
+"સુયોજિત કરો તો, પછી આ માટે કોઇ કિબાઇડીંગ હશે નહિં."
 
-#: ../applet/imsettings-applet.schemas.in.h:7
+#: ../applet/imsettings-applet.schemas.in.h:7 ../applet/main.c:714
 msgid ""
 "When this option is enabled, all of key events will be sent to Input Method "
 "synchronously. This might affects a performance."
 msgstr ""
-"જ્યારે આ વિકલ્પ સક્રિય થયેલ હોય તો, બધી કી ઘટનાઓ ઇનપુટ પદ્દતિમાં સુમેળ રીતે મોકલાશે. "
-"આ પ્રભાવને અસર કરી શકે છે."
+"જ્યારે આ વિકલ્પ સક્રિય થયેલ હોય તો, બધી કી ઘટનાઓ ઇનપુટ પદ્દતિમાં સુમેળ રીતે મોકલાશે. આ "
+"પ્રભાવને અસર કરી શકે છે."
 
 #: ../applet/imsettings-applet.schemas.in.h:8
 msgid "Whether to notify informations with libnotify"
@@ -85,7 +88,8 @@ msgid "No detailed information"
 msgstr "વિગત થયેલ જાણકારી નથી"
 
 #: ../applet/main.c:151
-msgid "Mismatch the version of im-settings-daemon"
+#, fuzzy
+msgid "Version-mismatch of im-settings-daemon"
 msgstr "im-settings-daemon ની આવૃત્તિને બંધબેસાડો નહિં"
 
 #: ../applet/main.c:178 ../applet/main.c:258
@@ -156,14 +160,6 @@ msgstr "પરિસ્થિતિ ચિહ્નને બતાવો (_S)"
 msgid "_Enable this when accelerator keys etc doesn't work"
 msgstr "જ્યારે પ્રવેગીય કીઓ વગેરે કામ કરતુ ન હોય તો આ ને સક્રિય કરો (_E)"
 
-#: ../applet/main.c:714
-msgid ""
-"When this option is enabled, all of key events will be sent to Input Method "
-"synchronously. this might affects a performance."
-msgstr ""
-"જ્યારે આ વિકલ્પ સક્રિય થયેલ હોય તો, કી ઘટનાઓની બધી ઇનપુટ પદ્દતિ સુમેળ રીતે મોકલશે. "
-"આ પ્રભાવ ને અસર કરી શકે છે."
-
 #: ../applet/main.c:723
 msgid "<b>Trigger key:</b>"
 msgstr "<b>ટ્રીગર કી:</b>"
@@ -177,8 +173,8 @@ msgid ""
 "Please click Grab key button and press the key combinations you want to "
 "assign for the acceleration key. Press Backspace key to disable this feature."
 msgstr ""
-"મહેરબાની કરીને Grab કી બટન પર ક્લિક કરો અને કી સંયોજનોને દબાવો તમે પ્રવેગીય કી માટે "
-"તમે સોંપવા ઇચ્છતા હોય તો. આ ગુણધર્મને નિષ્ક્રિય કરવા માટે Backspace કી ને દબાવો."
+"મહેરબાની કરીને Grab કી બટન પર ક્લિક કરો અને કી સંયોજનોને દબાવો તમે પ્રવેગીય કી માટે તમે "
+"સોંપવા ઇચ્છતા હોય તો. આ ગુણધર્મને નિષ્ક્રિય કરવા માટે Backspace કી ને દબાવો."
 
 #: ../applet/main.c:826
 msgid "Disconnect"
@@ -198,18 +194,20 @@ msgid ""
 "to set up that on im-chooser or select one from the menu which appears by "
 "the right click first."
 msgstr ""
-"મૂળભૂત ઇનપુટ પદ્દતિ હજુ રૂપરેખાંકિત થયેલ નથી. આ કામ મેળવવા માટે, im-chooser પર સુયોજિત કરવાની "
-"જરૂર પડશે અથવા મેનુ માંથી એકને પસંદ કરો પહેલાં જમણી ક્લિક વડે દેખાય છે."
+"મૂળભૂત ઇનપુટ પદ્દતિ હજુ રૂપરેખાંકિત થયેલ નથી. આ કામ મેળવવા માટે, im-chooser પર સુયોજિત "
+"કરવાની જરૂર પડશે અથવા મેનુ માંથી એકને પસંદ કરો પહેલાં જમણી ક્લિક વડે દેખાય છે."
 
-#. This may looks like "Please press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * or "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * with the combinations of the following 4 translations as a result.
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
-#: ../applet/main.c:987
+#: ../applet/main.c:986
 msgid "Left-click on the icon to connect to/disconnect from Input Method."
 msgstr "ઈનપુટ પદ્ધતિ માંથી જોડાવા માટે/જોડાણ તોડવા માટે ચિહ્ન પર ડાબી-ક્લિક કરો."
 
-#: ../applet/main.c:988
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
+#.
+#: ../applet/main.c:990
 msgid ""
 "\n"
 "Right-click to show up the Input Method menu."
@@ -217,25 +215,29 @@ msgstr ""
 "\n"
 "ઈનપુટ પદ્ધતિ મેનુ ને બતાવવા માટે જમણી ક્લિક કરો."
 
-#: ../applet/main.c:990
+#. One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:994
 #, c-format
 msgid "Please %s%s"
 msgstr "મહેરબાની કરીને %s%s"
 
-#: ../applet/main.c:992
+#. Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:998
 #, c-format
 msgid "Please press %s or %s%s"
 msgstr "મહેરબાની કરીને %s અથવા %s%s ને દબાવો"
 
-#: ../applet/main.c:996
+#: ../applet/main.c:1002
 msgid "Tips"
 msgstr "મદદો"
 
-#: ../applet/main.c:1002
+#: ../applet/main.c:1008
 msgid "Do not show notifications again"
 msgstr "ફરીથી સૂચનાઓને બતાવો નહિં"
 
-#: ../applet/main.c:1048
+#: ../applet/main.c:1054
 msgid "Unable to take an ownership for XIM server"
 msgstr "XIM સર્વર માટે માલિકી લેવામાં અસમર્થ"
 
@@ -268,7 +270,8 @@ msgid "Helper application for imsettings"
 msgstr "imsettings માટે મદદકર્તા કાર્યક્રમ"
 
 #: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid "Helper application that delivers GTK+ immodule name between GConf and Xfconf"
+msgid ""
+"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
 msgstr "મદદકાર કાર્યક્રમ કે જે GConf અને Xfconf વચ્ચે GTK+ immodule નામને સોંપે છે"
 
 #: ../backends/xim/loopback.c:223
@@ -303,12 +306,13 @@ msgstr "XIM સર્વર માત્ર ડિબગીંગ હેતુ �
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2968
-msgid "A XIM server name"
+#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:681
+msgid "XIM server name"
 msgstr "XIM સર્વર નામ"
 
 #: ../backends/xim/proxy.c:2969
-msgid "A XIM server name would connects to"
+#, fuzzy
+msgid "The name of XIM server for the connection"
 msgstr "A XIM સર્વર નામ તેનાં સાથે જોડાય છે"
 
 #: ../backends/xim/proxy.c:2974
@@ -366,10 +370,6 @@ msgstr "Qt માટે વપરાતું મોડ્યુલ નામ"
 #: ../imsettings/imsettings-info.c:680
 msgid "XIM name"
 msgstr "XIM નામ"
-
-#: ../imsettings/imsettings-info.c:681
-msgid "XIM server name"
-msgstr "XIM સર્વર નામ"
 
 #: ../imsettings/imsettings-info.c:686
 msgid "Ignore flag"
@@ -525,8 +525,8 @@ msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
 "rapidly died many times. See .imsettings.log for more details."
 msgstr ""
-"પ્રક્રિયાને ઉપર લાવવા માટે છોડી રહ્યા છે કારણ કે %s ઇનપુટ પદ્દતિ %s માટે ઝડપથા ઘણા સમયોથી મરેલ છે. "
-"વધારે વિગતો માટે .imsettings.log  ને જુઓ."
+"પ્રક્રિયાને ઉપર લાવવા માટે છોડી રહ્યા છે કારણ કે %s ઇનપુટ પદ્દતિ %s માટે ઝડપથા ઘણા "
+"સમયોથી મરેલ છે. વધારે વિગતો માટે .imsettings.log  ને જુઓ."
 
 #: ../src/factory.c:437
 msgid "Main"
@@ -600,7 +600,8 @@ msgid "xinputrc directory"
 msgstr "xinputrc ડિરેક્ટરી"
 
 #: ../src/factory.c:1295
-msgid "A directory where puts the system wide xinputrc on."
+#, fuzzy
+msgid "The name of the directory for the system wide xinputrc file."
 msgstr "ડિરેક્ટરી જ્યાં તેની પર system wide xinputrc મૂકે છે."
 
 #: ../src/factory.c:1300 ../src/monitor.c:243
@@ -608,7 +609,8 @@ msgid "xinput directory"
 msgstr "xinput ડિરેક્ટરી"
 
 #: ../src/factory.c:1301
-msgid "A directory where puts the IM configurations on."
+#, fuzzy
+msgid "The name of the directory for IM configurations."
 msgstr "ડિરેક્ટરી જ્યાં તેની પર IM રૂપરેખાંકનો મૂકે છે."
 
 #: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
@@ -625,7 +627,10 @@ msgid "A flag if logging facility is enabled or not."
 msgstr "ફ્લેગ જો લોગીંગ સુવિધા સક્રિય થયેલ છે કે નહિં."
 
 #: ../src/factory.c:1408
-msgid "A directory where puts the system-wide xinputrc puts on (debugging only)"
+#, fuzzy
+msgid ""
+"Specify the name of the directory of the system-wide xinputrc file (for "
+"debugging only)"
 msgstr "ડિરેક્ટરી જ્યાં તેની પર system-wide xinputrc મૂકે છે (ડિબગીંગ ફક્ત)"
 
 #: ../src/factory.c:1408 ../src/factory.c:1409 ../src/factory.c:1410
@@ -633,7 +638,9 @@ msgid "DIR"
 msgstr "DIR"
 
 #: ../src/factory.c:1409
-msgid "A directory where puts the IM configurations puts on (debugging only)"
+#, fuzzy
+msgid ""
+"Specify the name of the directory for IM configurations (for debugging only)"
 msgstr "ડિરેક્ટરી જ્યાં તેની પર IM રૂપરેખાંકનોને મૂકે છે (ડિબગીંગ ફક્ત)"
 
 #: ../src/factory.c:1410
@@ -676,15 +683,15 @@ msgstr "સત્ર બસ ને મેળવવામાં નિષ્ફ�
 #: ../utils/imsettings-info.c:61 ../utils/imsettings-list.c:58
 #: ../utils/imsettings-restart.c:84 ../utils/imsettings-start.c:85
 #: ../utils/imsettings-stop.c:83
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Mismatch the version of imsettings.\n"
-"Run imsettings-reload -f may resolves this issue but be aware that will ends "
-"up to restart Input Method too\n"
+"Currently a different version of imsettings is running.\n"
+"Running \"imsettings-reload -f\" may help but it will restart the Input "
+"Method\n"
 msgstr ""
 "imsettings ની આવુત્તિને બંધબેસાડો નહિં.\n"
-"imsettings-reload -f ને ચલાવો જેથી એ આ સમસ્યાને સુધારી શકાય છે પરંતુ સંભાળો કે જે "
-"ઇનપુટ પદ્દતિને પણ પુન:શરૂ કરવા માટે અંત કરશે\n"
+"imsettings-reload -f ને ચલાવો જેથી એ આ સમસ્યાને સુધારી શકાય છે પરંતુ સંભાળો કે જે ઇનપુટ "
+"પદ્દતિને પણ પુન:શરૂ કરવા માટે અંત કરશે\n"
 
 #: ../utils/imsettings-info.c:77 ../utils/imsettings-restart.c:98
 #: ../utils/imsettings-stop.c:97
@@ -779,3 +786,30 @@ msgstr "IM પ્રક્રિયાને કોઈપણ ભૂલો સં
 msgid "Stopped %s\n"
 msgstr "%s અટકાવાઈ\n"
 
+#, fuzzy
+#~ msgid ""
+#~ "You are running under the different version of imsettings.\n"
+#~ "Try imsettings-reload -f. that may resolves this issue but note that it "
+#~ "will causes restarting Input Method\n"
+#~ msgstr ""
+#~ "imsettings ની આવુત્તિને બંધબેસાડો નહિં.\n"
+#~ "imsettings-reload -f ને ચલાવો જેથી એ આ સમસ્યાને સુધારી શકાય છે પરંતુ સંભાળો કે જે "
+#~ "ઇનપુટ પદ્દતિને પણ પુન:શરૂ કરવા માટે અંત કરશે\n"
+
+#~ msgid "A XIM server name"
+#~ msgstr "XIM સર્વર નામ"
+
+#, fuzzy
+#~ msgid ""
+#~ "When this option is enabled, all of key events will be sent to Input "
+#~ "Method synchronously.  This might affects a performance."
+#~ msgstr ""
+#~ "જ્યારે આ વિકલ્પ સક્રિય થયેલ હોય તો, બધી કી ઘટનાઓ ઇનપુટ પદ્દતિમાં સુમેળ રીતે મોકલાશે. "
+#~ "આ પ્રભાવને અસર કરી શકે છે."
+
+#~ msgid ""
+#~ "When this option is enabled, all of key events will be sent to Input "
+#~ "Method synchronously. this might affects a performance."
+#~ msgstr ""
+#~ "જ્યારે આ વિકલ્પ સક્રિય થયેલ હોય તો, કી ઘટનાઓની બધી ઇનપુટ પદ્દતિ સુમેળ રીતે મોકલશે. આ "
+#~ "પ્રભાવ ને અસર કરી શકે છે."

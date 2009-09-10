@@ -2965,8 +2965,8 @@ xim_proxy_class_init(XimProxyClass *klass)
 	/* properties */
 	g_object_class_install_property(object_class, PROP_CONNECT_TO,
 					g_param_spec_string("connect_to",
-							    _("A XIM server name"),
-							    _("A XIM server name would connects to"),
+							    _("XIM server name"),
+							    _("The name of XIM server for the connection"),
 							    NULL,
 							    G_PARAM_READWRITE));
 	g_object_class_install_property(object_class, PROP_CLIENT_PROTO_SIGNALS,

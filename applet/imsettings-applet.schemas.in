@@ -10,7 +10,7 @@
       <locale name="C">
 	<short>Whether to notify informations with libnotify</short>
 	<long>
-	  If false, all of informations will not delivered through libnotify, except error and warning messages.
+	  If "true", all messages will be delivered through libnotify, otherwise only error and warning messages.
 	</long>
       </locale>
     </schema>

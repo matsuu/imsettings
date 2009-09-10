@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-01 22:26+0900\n"
+"POT-Creation-Date: 2009-09-10 17:02+0900\n"
 "PO-Revision-Date: 2009-09-04 13:08+0530\n"
 "Last-Translator: Rajesh Ranjan <rajesh672@gmail.com>\n"
 "Language-Team: Hindi <hindi.sf.net>\n"
@@ -18,7 +18,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"\n"
 "\n"
 "\n"
 "\n"
@@ -38,10 +39,13 @@ msgid "Enable this when accelerator keys etc doesn't work"
 msgstr "इस सक्रिय करें जब त्वरक कुंजी आदि काम नहीं करता है"
 
 #: ../applet/imsettings-applet.schemas.in.h:3
+#, fuzzy
 msgid ""
-"If false, all of informations will not delivered through libnotify, except "
-"error and warning messages."
-msgstr "यदि गलत है, सभी सूचनाएँ libnotify के द्वारा नहीं दी जाएगी, सिवाय त्रुटि या चेतावनी संदेश के."
+"If \"true\", all messages will be delivered through libnotify, otherwise "
+"only error and warning messages."
+msgstr ""
+"यदि गलत है, सभी सूचनाएँ libnotify के द्वारा नहीं दी जाएगी, सिवाय त्रुटि या चेतावनी "
+"संदेश के."
 
 #: ../applet/imsettings-applet.schemas.in.h:4
 msgid "If true, the icon will be displayed at the systray."
@@ -60,15 +64,19 @@ msgid ""
 "set the option to the special string \"disabled\", then there will be no "
 "keybinding for this."
 msgstr ""
-"कीबाइंडिंग जो इनपुट विधि से कनेक्ट या डिसकनेक्ट करता है. प्रारूप \"&lt;Control&gt;a\" या \"&lt;Shift&gt;&lt;"
-"Alt&gt;F1\" की तरह दिखेगा. विश्लेषक उदार है और छोटे और बड़े अक्षर की छूट देता है, "
-"और साथ ही संक्षिप्ताक्षर जैसे \"&lt;Ctl&gt;\" और \"&lt;Ctrl&gt;\". यदि आप विशेष स्ट्रिंग \"disabled\" में विकल्प सेट करते हैं, तब इसके लिए कोई कीबाइंडिंग नहीं होगा."
+"कीबाइंडिंग जो इनपुट विधि से कनेक्ट या डिसकनेक्ट करता है. प्रारूप \"&lt;Control&gt;a\" "
+"या \"&lt;Shift&gt;&lt;Alt&gt;F1\" की तरह दिखेगा. विश्लेषक उदार है और छोटे और बड़े "
+"अक्षर की छूट देता है, और साथ ही संक्षिप्ताक्षर जैसे \"&lt;Ctl&gt;\" और \"&lt;Ctrl&gt;"
+"\". यदि आप विशेष स्ट्रिंग \"disabled\" में विकल्प सेट करते हैं, तब इसके लिए कोई कीबाइंडिंग "
+"नहीं होगा."
 
-#: ../applet/imsettings-applet.schemas.in.h:7
+#: ../applet/imsettings-applet.schemas.in.h:7 ../applet/main.c:714
 msgid ""
 "When this option is enabled, all of key events will be sent to Input Method "
 "synchronously. This might affects a performance."
-msgstr "जब यह विकल्प सक्रिय है, सभी कुंजी घटनाएँ इनपुट विधि को भेजी जाएँगी. यह प्रदर्शन को प्रभावित कर सकता है."
+msgstr ""
+"जब यह विकल्प सक्रिय है, सभी कुंजी घटनाएँ इनपुट विधि को भेजी जाएँगी. यह प्रदर्शन को "
+"प्रभावित कर सकता है."
 
 #: ../applet/imsettings-applet.schemas.in.h:8
 msgid "Whether to notify informations with libnotify"
@@ -79,7 +87,8 @@ msgid "No detailed information"
 msgstr "कोई विस्तृत विवरण नहीं"
 
 #: ../applet/main.c:151
-msgid "Mismatch the version of im-settings-daemon"
+#, fuzzy
+msgid "Version-mismatch of im-settings-daemon"
 msgstr "im-settings-daemon के संस्करण बेमेल"
 
 #: ../applet/main.c:178 ../applet/main.c:258
@@ -91,7 +100,9 @@ msgstr "%s आरंभ करने में विफल"
 msgid ""
 " and the default Input Method has been changed. if you need to change that "
 "to anything else, please use im-chooser."
-msgstr " और तयशुदा इनपुट विधि को बदला गया है. यदि आफ उसे बदलना चाहते हैं किसी दूसरे में, कृपया im-chooser का प्रयोग करें."
+msgstr ""
+" और तयशुदा इनपुट विधि को बदला गया है. यदि आफ उसे बदलना चाहते हैं किसी दूसरे में, कृपया "
+"im-chooser का प्रयोग करें."
 
 #: ../applet/main.c:198
 #, c-format
@@ -148,12 +159,6 @@ msgstr "स्थिति प्रतीक दिखाएँ (_S)"
 msgid "_Enable this when accelerator keys etc doesn't work"
 msgstr "इसे सक्रिय करें जब त्वरण कुंजी आदि ठीक से काम नहीं करता है (_E)"
 
-#: ../applet/main.c:714
-msgid ""
-"When this option is enabled, all of key events will be sent to Input Method "
-"synchronously. this might affects a performance."
-msgstr "जब यह विकल्प सक्रिय किया जाता है, सभी कुंजी घटनाएँ इनपुट विधि को तुल्यकालित रूप से भेजी जाएँगी. यह प्रदर्शन को प्रभावित कर सकता है."
-
 #: ../applet/main.c:723
 msgid "<b>Trigger key:</b>"
 msgstr "<b>ट्रिगर कुंजी:</b>"
@@ -166,7 +171,9 @@ msgstr "कुंजी पकड़ें (_G)"
 msgid ""
 "Please click Grab key button and press the key combinations you want to "
 "assign for the acceleration key. Press Backspace key to disable this feature."
-msgstr "कृपया ग्रैब कुंजी बटन को क्लिक करें और उन कुंजी युग्मों को दबाएँ जिसे आप त्वरण कुंजी के लिए नियत करना चाहते हैं. इस फीचर को निष्क्रिय करने के लिए Backspace कुंजी दबाएँ."
+msgstr ""
+"कृपया ग्रैब कुंजी बटन को क्लिक करें और उन कुंजी युग्मों को दबाएँ जिसे आप त्वरण कुंजी के लिए "
+"नियत करना चाहते हैं. इस फीचर को निष्क्रिय करने के लिए Backspace कुंजी दबाएँ."
 
 #: ../applet/main.c:826
 msgid "Disconnect"
@@ -185,17 +192,21 @@ msgid ""
 "The default Input Method isn't yet configured. To get this working, you need "
 "to set up that on im-chooser or select one from the menu which appears by "
 "the right click first."
-msgstr "तयशुदा इनपुट विधि अबतक विन्यस्त नहीं है. इसे कार्यशील करने के लिए, आपको उसे im-chooser पर सेटअप करने की जरूरत है मेन्यू से जो कि दाहिना क्लिक पहले करें."
+msgstr ""
+"तयशुदा इनपुट विधि अबतक विन्यस्त नहीं है. इसे कार्यशील करने के लिए, आपको उसे im-chooser "
+"पर सेटअप करने की जरूरत है मेन्यू से जो कि दाहिना क्लिक पहले करें."
 
-#. This may looks like "Please press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * or "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * with the combinations of the following 4 translations as a result.
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
-#: ../applet/main.c:987
+#: ../applet/main.c:986
 msgid "Left-click on the icon to connect to/disconnect from Input Method."
 msgstr "प्रतीक पर बायां क्लिक करें इनपुट विधि से कनेक्ट या डिसकनेक्ट करने के लिए."
 
-#: ../applet/main.c:988
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
+#.
+#: ../applet/main.c:990
 msgid ""
 "\n"
 "Right-click to show up the Input Method menu."
@@ -203,25 +214,29 @@ msgstr ""
 "\n"
 "इनपुट विधि मेन्यू में दिखाने के लिए दाहिना क्लिक करें."
 
-#: ../applet/main.c:990
+#. One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:994
 #, c-format
 msgid "Please %s%s"
 msgstr "कृपया %s%s"
 
-#: ../applet/main.c:992
+#. Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:998
 #, c-format
 msgid "Please press %s or %s%s"
 msgstr "कृपया दबाएँ %s या %s%s"
 
-#: ../applet/main.c:996
+#: ../applet/main.c:1002
 msgid "Tips"
 msgstr "संकेत"
 
-#: ../applet/main.c:1002
+#: ../applet/main.c:1008
 msgid "Do not show notifications again"
 msgstr "अधिसूचना फिर मत दिखाएँ"
 
-#: ../applet/main.c:1048
+#: ../applet/main.c:1054
 msgid "Unable to take an ownership for XIM server"
 msgstr "XIM सर्वर के लिए स्वामित्व लेने में असमर्थ"
 
@@ -254,7 +269,8 @@ msgid "Helper application for imsettings"
 msgstr "imsettings के लिए मददगार अनुप्रयोग"
 
 #: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid "Helper application that delivers GTK+ immodule name between GConf and Xfconf"
+msgid ""
+"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
 msgstr "मददगार अनुप्रयोग जो GTK+ immodule नाम को GConf और Xfconf के बीच देता है"
 
 #: ../backends/xim/loopback.c:223
@@ -289,12 +305,13 @@ msgstr "XIM सर्वर इसमें कनेक्ट करता ह�
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2968
-msgid "A XIM server name"
+#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:681
+msgid "XIM server name"
 msgstr "XIM सर्वर नाम"
 
 #: ../backends/xim/proxy.c:2969
-msgid "A XIM server name would connects to"
+#, fuzzy
+msgid "The name of XIM server for the connection"
 msgstr "XIM सर्वर नाम इससे कनेक्ट करेगा"
 
 #: ../backends/xim/proxy.c:2974
@@ -352,10 +369,6 @@ msgstr "Qt के लिए प्रयुक्त मॉड्यूलना
 #: ../imsettings/imsettings-info.c:680
 msgid "XIM name"
 msgstr "XIM नाम"
-
-#: ../imsettings/imsettings-info.c:681
-msgid "XIM server name"
-msgstr "XIM सर्वर नाम"
 
 #: ../imsettings/imsettings-info.c:686
 msgid "Ignore flag"
@@ -511,8 +524,8 @@ msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
 "rapidly died many times. See .imsettings.log for more details."
 msgstr ""
-"प्रक्रिया को फिर लाने के लिए छोड़ रहा है क्योंकि %s इनपुट विधि प्रक्रिया %s "
-"के लिए कई बार जल्दी जल्दी खत्म हो गई. .imsettings.log अधिक विवरण के लिए देखें."
+"प्रक्रिया को फिर लाने के लिए छोड़ रहा है क्योंकि %s इनपुट विधि प्रक्रिया %s के लिए कई "
+"बार जल्दी जल्दी खत्म हो गई. .imsettings.log अधिक विवरण के लिए देखें."
 
 #: ../src/factory.c:437
 msgid "Main"
@@ -586,7 +599,8 @@ msgid "xinputrc directory"
 msgstr "xinputrc निर्देशिका"
 
 #: ../src/factory.c:1295
-msgid "A directory where puts the system wide xinputrc on."
+#, fuzzy
+msgid "The name of the directory for the system wide xinputrc file."
 msgstr "निर्देशिका जहाँ तंत्र स्तरीय xinputrc को चालू रखा जाता है."
 
 #: ../src/factory.c:1300 ../src/monitor.c:243
@@ -594,7 +608,8 @@ msgid "xinput directory"
 msgstr "xinput निर्देशिका"
 
 #: ../src/factory.c:1301
-msgid "A directory where puts the IM configurations on."
+#, fuzzy
+msgid "The name of the directory for IM configurations."
 msgstr "निर्देशिका जहाँ तंत्र स्तरीय IM विन्यास को रखा जाता है."
 
 #: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
@@ -611,7 +626,10 @@ msgid "A flag if logging facility is enabled or not."
 msgstr "कोई फ्लैग यदि लॉगिंग सुविधा सक्रिय है या नहीं."
 
 #: ../src/factory.c:1408
-msgid "A directory where puts the system-wide xinputrc puts on (debugging only)"
+#, fuzzy
+msgid ""
+"Specify the name of the directory of the system-wide xinputrc file (for "
+"debugging only)"
 msgstr "निर्देशिका जहाँ तंत्र स्तरीय xinputrc को रखा जाता है (केवल डिबगिंग के लिए)"
 
 #: ../src/factory.c:1408 ../src/factory.c:1409 ../src/factory.c:1410
@@ -619,7 +637,9 @@ msgid "DIR"
 msgstr "DIR"
 
 #: ../src/factory.c:1409
-msgid "A directory where puts the IM configurations puts on (debugging only)"
+#, fuzzy
+msgid ""
+"Specify the name of the directory for IM configurations (for debugging only)"
 msgstr "निर्देशिका जहाँ तंत्र स्तरीय IM विन्यास को रखा जाता है (केवल डिबगिंग के लिए)"
 
 #: ../src/factory.c:1410
@@ -662,14 +682,15 @@ msgstr "सत्र बस पाने में विफल.\n"
 #: ../utils/imsettings-info.c:61 ../utils/imsettings-list.c:58
 #: ../utils/imsettings-restart.c:84 ../utils/imsettings-start.c:85
 #: ../utils/imsettings-stop.c:83
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Mismatch the version of imsettings.\n"
-"Run imsettings-reload -f may resolves this issue but be aware that will ends "
-"up to restart Input Method too\n"
+"Currently a different version of imsettings is running.\n"
+"Running \"imsettings-reload -f\" may help but it will restart the Input "
+"Method\n"
 msgstr ""
 "imsettings के संस्करण का बेमेल.\n"
-"imsettings-reload -f चलाना इस समस्या को खत्म कर सकता है लेकिन इसे जानें कि वह इनपुट विधि के फिर आरंभ करने को समाप्त कर देगा\n"
+"imsettings-reload -f चलाना इस समस्या को खत्म कर सकता है लेकिन इसे जानें कि वह इनपुट "
+"विधि के फिर आरंभ करने को समाप्त कर देगा\n"
 
 #: ../utils/imsettings-info.c:77 ../utils/imsettings-restart.c:98
 #: ../utils/imsettings-stop.c:97
@@ -762,3 +783,30 @@ msgstr "बिना किसी त्रुटि के IM प्रक्�
 msgid "Stopped %s\n"
 msgstr "%s रोका गया\n"
 
+#, fuzzy
+#~ msgid ""
+#~ "You are running under the different version of imsettings.\n"
+#~ "Try imsettings-reload -f. that may resolves this issue but note that it "
+#~ "will causes restarting Input Method\n"
+#~ msgstr ""
+#~ "imsettings के संस्करण का बेमेल.\n"
+#~ "imsettings-reload -f चलाना इस समस्या को खत्म कर सकता है लेकिन इसे जानें कि वह "
+#~ "इनपुट विधि के फिर आरंभ करने को समाप्त कर देगा\n"
+
+#~ msgid "A XIM server name"
+#~ msgstr "XIM सर्वर नाम"
+
+#, fuzzy
+#~ msgid ""
+#~ "When this option is enabled, all of key events will be sent to Input "
+#~ "Method synchronously.  This might affects a performance."
+#~ msgstr ""
+#~ "जब यह विकल्प सक्रिय है, सभी कुंजी घटनाएँ इनपुट विधि को भेजी जाएँगी. यह प्रदर्शन को "
+#~ "प्रभावित कर सकता है."
+
+#~ msgid ""
+#~ "When this option is enabled, all of key events will be sent to Input "
+#~ "Method synchronously. this might affects a performance."
+#~ msgstr ""
+#~ "जब यह विकल्प सक्रिय किया जाता है, सभी कुंजी घटनाएँ इनपुट विधि को तुल्यकालित रूप से "
+#~ "भेजी जाएँगी. यह प्रदर्शन को प्रभावित कर सकता है."

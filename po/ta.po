@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.trunk.ta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-27 10:14+0900\n"
+"POT-Creation-Date: 2009-09-10 17:02+0900\n"
 "PO-Revision-Date: 2009-09-02 00:57+0530\n"
 "Last-Translator: I. Felix <ifelix@redhat.com>\n"
 "Language-Team: Tamil <fedora-trans-ta@redhat.com>\n"
@@ -46,10 +46,13 @@ msgid "Enable this when accelerator keys etc doesn't work"
 msgstr "முடுக்க விசைகள் வேலை செய்யவில்லையெனில் இதனை செயல்படுத்து"
 
 #: ../applet/imsettings-applet.schemas.in.h:3
+#, fuzzy
 msgid ""
-"If false, all of informations will not delivered through libnotify, except "
-"error and warning messages."
-msgstr "தவறு எனில், பிழை மற்றும் எச்சரிக்கை செய்திகள் தவிர அனைத்து தகவல்களும் libnotify வழியாக வழங்கப்படும்."
+"If \"true\", all messages will be delivered through libnotify, otherwise "
+"only error and warning messages."
+msgstr ""
+"தவறு எனில், பிழை மற்றும் எச்சரிக்கை செய்திகள் தவிர அனைத்து தகவல்களும் libnotify வழியாக "
+"வழங்கப்படும்."
 
 #: ../applet/imsettings-applet.schemas.in.h:4
 msgid "If true, the icon will be displayed at the systray."
@@ -68,14 +71,19 @@ msgid ""
 "set the option to the special string \"disabled\", then there will be no "
 "keybinding for this."
 msgstr ""
-"விசைபிணைத்தல் உள்ளீடு முறையை அணுக்கும் அல்லது துண்டிக்கும். இந்த வடிவம் \"&lt;Control&gt;a\" அல்லது \"&lt;Shift&gt;&lt;"
-"Alt&gt;F1\" என இருக்கும். பகுப்பி சிறிய அல்லது தலைப்பெழுத்துக்களை அனுமதிக்கிறது மற்றும் \"&lt;Ctl&gt;\" and \"&lt;Ctrl&gt;\" போன்ற சுருக்கங்களையும் பயன்படுத்தலாம். விருப்பத்தை சிறப்பு சரம் \"செயல்நீக்கப்பட்டது\" என அமைத்தால், பின் இதற்கு விசை பிணைத்தல் இருக்காது."
+"விசைபிணைத்தல் உள்ளீடு முறையை அணுக்கும் அல்லது துண்டிக்கும். இந்த வடிவம் \"&lt;Control&gt;"
+"a\" அல்லது \"&lt;Shift&gt;&lt;Alt&gt;F1\" என இருக்கும். பகுப்பி சிறிய அல்லது "
+"தலைப்பெழுத்துக்களை அனுமதிக்கிறது மற்றும் \"&lt;Ctl&gt;\" and \"&lt;Ctrl&gt;\" போன்ற "
+"சுருக்கங்களையும் பயன்படுத்தலாம். விருப்பத்தை சிறப்பு சரம் \"செயல்நீக்கப்பட்டது\" என "
+"அமைத்தால், பின் இதற்கு விசை பிணைத்தல் இருக்காது."
 
-#: ../applet/imsettings-applet.schemas.in.h:7
+#: ../applet/imsettings-applet.schemas.in.h:7 ../applet/main.c:714
 msgid ""
 "When this option is enabled, all of key events will be sent to Input Method "
 "synchronously. This might affects a performance."
-msgstr "இந்த விருப்பம் செயல்படுத்தப்பட்டால் அனைத்து விசை நிகழ்வும் உள்ளீடு முறைக்கு ஒத்திசைக்கப்படும். இது செயல்திறனை பாதிக்கும்."
+msgstr ""
+"இந்த விருப்பம் செயல்படுத்தப்பட்டால் அனைத்து விசை நிகழ்வும் உள்ளீடு முறைக்கு ஒத்திசைக்கப்படும். "
+"இது செயல்திறனை பாதிக்கும்."
 
 #: ../applet/imsettings-applet.schemas.in.h:8
 msgid "Whether to notify informations with libnotify"
@@ -86,7 +94,8 @@ msgid "No detailed information"
 msgstr "விரிவாக தகவல் இல்லை"
 
 #: ../applet/main.c:151
-msgid "Mismatch the version of im-settings-daemon"
+#, fuzzy
+msgid "Version-mismatch of im-settings-daemon"
 msgstr "im-settings-daemonஇன் பொருந்தாத பதிப்பு"
 
 #: ../applet/main.c:178 ../applet/main.c:258
@@ -98,7 +107,9 @@ msgstr "%sஐ துவக்க முடியவில்லை"
 msgid ""
 " and the default Input Method has been changed. if you need to change that "
 "to anything else, please use im-chooser."
-msgstr "மற்றும் முன்னிருப்பு உள்ளீடு முறை மாற்றப்பட்டுள்ளது. நீங்கள் ஏதாவது மாற்ற நினைத்தால், im-chooserஐ பயன்படுத்தவும்."
+msgstr ""
+"மற்றும் முன்னிருப்பு உள்ளீடு முறை மாற்றப்பட்டுள்ளது. நீங்கள் ஏதாவது மாற்ற நினைத்தால், im-"
+"chooserஐ பயன்படுத்தவும்."
 
 #: ../applet/main.c:198
 #, c-format
@@ -155,12 +166,6 @@ msgstr "நிலை சின்னத்தை காட்டு (_S)"
 msgid "_Enable this when accelerator keys etc doesn't work"
 msgstr "முடுக்க விசைகள் வேலை செய்யவில்லை எனில் செயல்படுத்து (_E)"
 
-#: ../applet/main.c:714
-msgid ""
-"When this option is enabled, all of key events will be sent to Input Method "
-"synchronously. this might affects a performance."
-msgstr "இந்த விருப்பம் செயல்படுத்தப்பட்டால் அனைத்து விசை நிகழ்வுகளும் உள்ளீடு முறைமை ஒத்திசைவுக்கு அனுப்பப்படும். இது செயல்திறனை பாதிக்கும்."
-
 #: ../applet/main.c:723
 msgid "<b>Trigger key:</b>"
 msgstr "<b>ட்ரிகர் விசை:</b>"
@@ -173,7 +178,9 @@ msgstr "விசை எடு (_G)"
 msgid ""
 "Please click Grab key button and press the key combinations you want to "
 "assign for the acceleration key. Press Backspace key to disable this feature."
-msgstr "எடுக்கும் விசை பொத்தானை சொடுக்கி முடுக்க விசைக்கு ஒதுக்க வேண்டிய விசை கலவைகளை அழுத்தவும். பேக்ஸ்பேஸ் விசையை அழுத்தி இந்த வசதியை செயல்நீக்கவும்."
+msgstr ""
+"எடுக்கும் விசை பொத்தானை சொடுக்கி முடுக்க விசைக்கு ஒதுக்க வேண்டிய விசை கலவைகளை "
+"அழுத்தவும். பேக்ஸ்பேஸ் விசையை அழுத்தி இந்த வசதியை செயல்நீக்கவும்."
 
 #: ../applet/main.c:826
 msgid "Disconnect"
@@ -192,17 +199,21 @@ msgid ""
 "The default Input Method isn't yet configured. To get this working, you need "
 "to set up that on im-chooser or select one from the menu which appears by "
 "the right click first."
-msgstr "முன்னிருப்பு உள்ளீடு முறை இன்னும் கட்டமைக்கப்படவில்லை. இது வேலை செய்ய, நீங்கள் im-chooserஐ அமைக்க வேண்டும் அல்லது வலது சொடுக்கும் போது தோன்றும் மெனுவிலிருந்து தேர்ந்தெடுக்க வேண்டும்."
+msgstr ""
+"முன்னிருப்பு உள்ளீடு முறை இன்னும் கட்டமைக்கப்படவில்லை. இது வேலை செய்ய, நீங்கள் im-chooserஐ "
+"அமைக்க வேண்டும் அல்லது வலது சொடுக்கும் போது தோன்றும் மெனுவிலிருந்து தேர்ந்தெடுக்க வேண்டும்."
 
-#. This may looks like "Please press blahblahblah or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * or "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. * with the combinations of the following 4 translations as a result.
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
-#: ../applet/main.c:987
+#: ../applet/main.c:986
 msgid "Left-click on the icon to connect to/disconnect from Input Method."
 msgstr "உள்ளீடு முறையிலிருந்து இணைக்க/துண்டிக்க சினத்தில் இடது சொடுக்கவும்."
 
-#: ../applet/main.c:988
+#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
+#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
+#.
+#: ../applet/main.c:990
 msgid ""
 "\n"
 "Right-click to show up the Input Method menu."
@@ -210,25 +221,29 @@ msgstr ""
 "\n"
 "உள்ளீடு முறை மெனுவை காட்ட வலது கிளிக் செய்யவும்."
 
-#: ../applet/main.c:990
+#. One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:994
 #, c-format
 msgid "Please %s%s"
 msgstr "தயவு செய்து %s%s"
 
-#: ../applet/main.c:992
+#. Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
+#.
+#: ../applet/main.c:998
 #, c-format
 msgid "Please press %s or %s%s"
 msgstr "%s அல்லது %s%sஐ அழுத்து"
 
-#: ../applet/main.c:996
+#: ../applet/main.c:1002
 msgid "Tips"
 msgstr "குறிப்புகள்"
 
-#: ../applet/main.c:1002
+#: ../applet/main.c:1008
 msgid "Do not show notifications again"
 msgstr "மீண்டும் அறிவிப்புகள் காட்டாதே"
 
-#: ../applet/main.c:1048
+#: ../applet/main.c:1054
 msgid "Unable to take an ownership for XIM server"
 msgstr "XIM சேவையகத்திற்கு உரிமையை எடுக்க முடியவில்லை"
 
@@ -241,12 +256,12 @@ msgid "Child widget to appear next to the menu text"
 msgstr "சேய் விட் மெனு உரைக்கு அடுத்து தோன்றுகிறது"
 
 #: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:699
-#: ../src/factory.c:1317
+#: ../src/factory.c:1407
 msgid "Replace the running settings daemon with new instance."
 msgstr "புதிய நிகழ்வுடன் இயங்கும் டீமான் அமைவுகளை மாற்றவும்"
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:1343 ../utils/imsettings-reload.c:63
+#: ../src/factory.c:1433 ../utils/imsettings-reload.c:63
 #: ../utils/imsettings-restart.c:70 ../utils/imsettings-start.c:71
 #: ../utils/imsettings-stop.c:69
 msgid "Unknown error in parsing the command lines."
@@ -261,8 +276,10 @@ msgid "Helper application for imsettings"
 msgstr "imsettingகளுக்கான உதவியாளர் பயன்பாடு"
 
 #: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid "Helper application that delivers GTK+ immodule name between GConf and Xfconf"
-msgstr "உதவியாளர் பயன்பாடு GTK+ immodule பெயர் GConf மற்றும் Xfconfக்கு இடையே வழங்குகிறது"
+msgid ""
+"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
+msgstr ""
+"உதவியாளர் பயன்பாடு GTK+ immodule பெயர் GConf மற்றும் Xfconfக்கு இடையே வழங்குகிறது"
 
 #: ../backends/xim/loopback.c:223
 msgid "Synchronous"
@@ -296,12 +313,13 @@ msgstr "XIM சேவையகம் இணைக்க, பிழைத்த�
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2968
-msgid "A XIM server name"
-msgstr "ஒரு XIM சேவையக பெயர்"
+#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:681
+msgid "XIM server name"
+msgstr "XIM சேவையக பெயர்"
 
 #: ../backends/xim/proxy.c:2969
-msgid "A XIM server name would connects to"
+#, fuzzy
+msgid "The name of XIM server for the connection"
 msgstr "இணைக்க வேண்டிய XIM சேவையக பெயர்"
 
 #: ../backends/xim/proxy.c:2974
@@ -359,10 +377,6 @@ msgstr "Qtக்கு பயன்படுத்தப்பட்ட ஒர�
 #: ../imsettings/imsettings-info.c:680
 msgid "XIM name"
 msgstr "XIM பெயர்"
-
-#: ../imsettings/imsettings-info.c:681
-msgid "XIM server name"
-msgstr "XIM சேவையக பெயர்"
 
 #: ../imsettings/imsettings-info.c:686
 msgid "Ignore flag"
@@ -512,66 +526,69 @@ msgstr ""
 "முறை `%s'ஐ எடுக்க முடியவில்லை:\n"
 "  %s"
 
-#: ../src/factory.c:423
+#: ../src/factory.c:436
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
 "rapidly died many times. See .imsettings.log for more details."
-msgstr "செயலை கொண்டுவர கொடுக்கிறது ஏனெனில் %s உள்ளீடு முறை செயல் %s க்கு பல முறைகள் விரைவாக செயலிழக்கிறது. மேலும் விவரங்களுக்கு .imsettings.log ஐ பார்க்கவும்."
+msgstr ""
+"செயலை கொண்டுவர கொடுக்கிறது ஏனெனில் %s உள்ளீடு முறை செயல் %s க்கு பல முறைகள் விரைவாக "
+"செயலிழக்கிறது. மேலும் விவரங்களுக்கு .imsettings.log ஐ பார்க்கவும்."
 
-#: ../src/factory.c:424
+#: ../src/factory.c:437
 msgid "Main"
 msgstr "முதன்மை"
 
-#: ../src/factory.c:424
+#: ../src/factory.c:437
 msgid "AUX"
 msgstr "AUX"
 
-#: ../src/factory.c:426
+#: ../src/factory.c:439 ../src/factory.c:456
 msgid "Unable to keep Input Method running"
 msgstr "உள்ளீடு முறை இயங்குவதை வைத்திருக்க முடியவில்லை"
 
-#: ../src/factory.c:604
+#: ../src/factory.c:630
 #, c-format
 msgid "No such Input Method is running: %s"
 msgstr "இதுபோன்ற உள்ளீடு முறை இயங்கவில்லை: %s"
 
-#: ../src/factory.c:618
+#: ../src/factory.c:644
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "ஒரு சிக்னலை %s செயலுக்கு அனுப்ப முடியவில்லை."
 
-#: ../src/factory.c:645 ../src/factory.c:1071
+#: ../src/factory.c:671 ../src/factory.c:1161
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr "இல்ல அடைவில் ஒரு இடத்தைப் பெற முடியவில்லை."
 
-#: ../src/factory.c:662
+#: ../src/factory.c:688
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "பின்சேமிப்பு கோப்பினை திரும்ப எடுக்க முடியவில்லை: %s"
 
-#: ../src/factory.c:674
+#: ../src/factory.c:700
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "ஒரு பின் சேமிப்பு கோப்பினை உருவாக்க முடியவில்லை: %s"
 
-#: ../src/factory.c:683
+#: ../src/factory.c:709
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "ஒரு .xinputrc கோப்பினை நீக்க முடியவில்லை: %s"
 
-#: ../src/factory.c:694
+#: ../src/factory.c:720
 #, c-format
 msgid "Failed to make a symlink: %s"
 msgstr "ஒரு symlinkஐ உருவாக்க முடியவில்லை: %s"
 
-#: ../src/factory.c:846 ../src/factory.c:885
+#: ../src/factory.c:872 ../src/factory.c:911
 #, c-format
 msgid "No input methods available on your system."
 msgstr "உங்கள் கணினியில் உள்ளீடு முறைகள் எதுவும் இல்லை."
 
-#: ../src/factory.c:932 ../src/factory.c:1133
+#: ../src/factory.c:956 ../src/factory.c:1018 ../src/factory.c:1056
+#: ../src/factory.c:1223
 #, c-format
 msgid ""
 "No such input method on your system: %s\n"
@@ -580,57 +597,64 @@ msgstr ""
 "உங்கள் கணினியில் இதுபோன்ற உள்ளீடு முறை இல்லை: %s\n"
 "  விவரங்கள்: %s"
 
-#: ../src/factory.c:952
+#: ../src/factory.c:1067
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr "%s இல் XIM சேவையகம் இல்லை"
 
-#: ../src/factory.c:1204 ../src/monitor.c:237
+#: ../src/factory.c:1294 ../src/monitor.c:237
 msgid "xinputrc directory"
 msgstr "xinputrc அடைவு"
 
-#: ../src/factory.c:1205
-msgid "A directory where puts the system wide xinputrc on."
+#: ../src/factory.c:1295
+#, fuzzy
+msgid "The name of the directory for the system wide xinputrc file."
 msgstr "ஒரு அடைவு கணினி பரந்த xinputrc ஆன் வைத்திருத்தல்."
 
-#: ../src/factory.c:1210 ../src/monitor.c:243
+#: ../src/factory.c:1300 ../src/monitor.c:243
 msgid "xinput directory"
 msgstr "xinput அடைவு"
 
-#: ../src/factory.c:1211
-msgid "A directory where puts the IM configurations on."
+#: ../src/factory.c:1301
+#, fuzzy
+msgid "The name of the directory for IM configurations."
 msgstr "ஒரு அடைவு கணினி பரந்த IM கட்டமைப்புகளை ஆன் வைத்திருத்தல்."
 
-#: ../src/factory.c:1216 ../src/factory.c:1217 ../src/monitor.c:249
+#: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
 #: ../src/monitor.c:250
 msgid "home directory"
 msgstr "இல்ல அடைவு"
 
-#: ../src/factory.c:1222
+#: ../src/factory.c:1312
 msgid "logging"
 msgstr "பதிவுசெய்தல்"
 
-#: ../src/factory.c:1223
+#: ../src/factory.c:1313
 msgid "A flag if logging facility is enabled or not."
 msgstr "பதிவு செய்தல் வசதி செயல்படுத்தப்பட்டால் அல்லது இல்லையெனில் ஒரு கொடி"
 
-#: ../src/factory.c:1318
-msgid "A directory where puts the system-wide xinputrc puts on (debugging only)"
+#: ../src/factory.c:1408
+#, fuzzy
+msgid ""
+"Specify the name of the directory of the system-wide xinputrc file (for "
+"debugging only)"
 msgstr "ஒரு அடைவு system-wide xinputrc கள் இருக்கும் (பிழைத்திருத்தம் மட்டும்)"
 
-#: ../src/factory.c:1318 ../src/factory.c:1319 ../src/factory.c:1320
+#: ../src/factory.c:1408 ../src/factory.c:1409 ../src/factory.c:1410
 msgid "DIR"
 msgstr "DIR"
 
-#: ../src/factory.c:1319
-msgid "A directory where puts the IM configurations puts on (debugging only)"
+#: ../src/factory.c:1409
+#, fuzzy
+msgid ""
+"Specify the name of the directory for IM configurations (for debugging only)"
 msgstr "ஒரு அடைவு IM கட்டமைப்புகள் இருக்கும் (பிழைத்திருத்தத்திற்கு மட்டும்)"
 
-#: ../src/factory.c:1320
+#: ../src/factory.c:1410
 msgid "A home directory (debugging only)"
 msgstr "ஒரு இல்ல அடைவு (பிழைத்திருத்தம் மட்டும்)"
 
-#: ../src/factory.c:1321
+#: ../src/factory.c:1411
 msgid "Do not create a log file."
 msgstr "ஒரு பதிவு கோப்பினை உருவாக்க வேண்டாம்."
 
@@ -666,15 +690,15 @@ msgstr "ஒரு அமர்வு பஸ்ஸை பெற முடிய�
 #: ../utils/imsettings-info.c:61 ../utils/imsettings-list.c:58
 #: ../utils/imsettings-restart.c:84 ../utils/imsettings-start.c:85
 #: ../utils/imsettings-stop.c:83
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Mismatch the version of imsettings.\n"
-"Run imsettings-reload -f may resolves this issue but be aware that will ends "
-"up to restart Input Method too\n"
+"Currently a different version of imsettings is running.\n"
+"Running \"imsettings-reload -f\" may help but it will restart the Input "
+"Method\n"
 msgstr ""
 "imsettingsஇன் பொருந்தாத பதிப்பு.\n"
-"imsettings-reload -f ஐ இயக்கினால் இந்த சிக்கலை தீர்க்கும் ஆனால் உள்ளீடு முறைமையை "
-"மீண்டும் துவக்க கவனமாக இருக்க வேண்டும்\n"
+"imsettings-reload -f ஐ இயக்கினால் இந்த சிக்கலை தீர்க்கும் ஆனால் உள்ளீடு முறைமையை மீண்டும் "
+"துவக்க கவனமாக இருக்க வேண்டும்\n"
 
 #: ../utils/imsettings-info.c:77 ../utils/imsettings-restart.c:98
 #: ../utils/imsettings-stop.c:97
@@ -767,3 +791,30 @@ msgstr "ஏதாவது பிழைகள் வந்தால் IM செ
 msgid "Stopped %s\n"
 msgstr "%s நிறுத்தப்பட்டது\n"
 
+#, fuzzy
+#~ msgid ""
+#~ "You are running under the different version of imsettings.\n"
+#~ "Try imsettings-reload -f. that may resolves this issue but note that it "
+#~ "will causes restarting Input Method\n"
+#~ msgstr ""
+#~ "imsettingsஇன் பொருந்தாத பதிப்பு.\n"
+#~ "imsettings-reload -f ஐ இயக்கினால் இந்த சிக்கலை தீர்க்கும் ஆனால் உள்ளீடு முறைமையை "
+#~ "மீண்டும் துவக்க கவனமாக இருக்க வேண்டும்\n"
+
+#~ msgid "A XIM server name"
+#~ msgstr "ஒரு XIM சேவையக பெயர்"
+
+#, fuzzy
+#~ msgid ""
+#~ "When this option is enabled, all of key events will be sent to Input "
+#~ "Method synchronously.  This might affects a performance."
+#~ msgstr ""
+#~ "இந்த விருப்பம் செயல்படுத்தப்பட்டால் அனைத்து விசை நிகழ்வும் உள்ளீடு முறைக்கு "
+#~ "ஒத்திசைக்கப்படும். இது செயல்திறனை பாதிக்கும்."
+
+#~ msgid ""
+#~ "When this option is enabled, all of key events will be sent to Input "
+#~ "Method synchronously. this might affects a performance."
+#~ msgstr ""
+#~ "இந்த விருப்பம் செயல்படுத்தப்பட்டால் அனைத்து விசை நிகழ்வுகளும் உள்ளீடு முறைமை "
+#~ "ஒத்திசைவுக்கு அனுப்பப்படும். இது செயல்திறனை பாதிக்கும்."
