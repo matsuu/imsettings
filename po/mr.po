@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: imsettings.trunk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-09-10 17:02+0900\n"
-"PO-Revision-Date: 2009-09-10 17:26+0900\n"
+"PO-Revision-Date: 2009-09-10 15:45+0530\n"
 "Last-Translator: Sandeep Shedmake <sshedmak@redhat.com>\n"
 "Language-Team: Marathi <fedora-trans-mr@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -34,13 +34,10 @@ msgid "Enable this when accelerator keys etc doesn't work"
 msgstr "ऍक्सीलरेटर किज् अकार्यान्वीत असल्यावर यांस कार्यक्षम करा"
 
 #: ../applet/imsettings-applet.schemas.in.h:3
-#, fuzzy
 msgid ""
 "If \"true\", all messages will be delivered through libnotify, otherwise "
 "only error and warning messages."
-msgstr ""
-"खोटे असल्यास, libnotify द्वारे सर्व माहिती पुरवली जाणार नाही, त्रुटी व सावधानता "
-"संदेशला वगळता."
+msgstr "\"true\" असल्यास,  त्रुटी व सावधानता संदेश वगळता, libnotify द्वारे सर्व माहिती पुरवली जाणार."
 
 #: ../applet/imsettings-applet.schemas.in.h:4
 msgid "If true, the icon will be displayed at the systray."
@@ -82,9 +79,8 @@ msgid "No detailed information"
 msgstr "तपशील माहिती आढळली नाही"
 
 #: ../applet/main.c:151
-#, fuzzy
 msgid "Version-mismatch of im-settings-daemon"
-msgstr "im-settings-daemon च्या आवृत्तीसह जुळले नाही"
+msgstr "im-settings-daemon ची आवृत्ती-जुळवणी अशक्य"
 
 #: ../applet/main.c:178 ../applet/main.c:258
 #, c-format
@@ -196,15 +192,13 @@ msgstr ""
 #. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
 #: ../applet/main.c:986
-#, fuzzy
 msgid "Left-click on the icon to connect to/disconnect from Input Method."
-msgstr "इंपुट पद्धत पासून जुळवणी स्थापीत/खंडीत करण्यासाठी चिन्हावर डावी-क्लिक करा."
+msgstr "इंपुट पद्धत पासून जुळवणी स्थापीत/खंडीत करण्यासाठी चिन्हावर डावी-क्लिक द्या."
 
 #. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
 #. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
 #: ../applet/main.c:990
-#, fuzzy
 msgid ""
 "\n"
 "Right-click to show up the Input Method menu."
@@ -215,14 +209,14 @@ msgstr ""
 #. One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
 #.
 #: ../applet/main.c:994
-#, c-format, fuzzy
+#, c-format
 msgid "Please %s%s"
 msgstr "कृपया %s%s"
 
 #. Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
 #.
 #: ../applet/main.c:998
-#, c-format, fuzzy
+#, c-format
 msgid "Please press %s or %s%s"
 msgstr "कृपया %s किंवा %s%s दाबा"
 
@@ -267,8 +261,7 @@ msgid "Helper application for imsettings"
 msgstr "imsettings करीता सहाय्यक ऍप्लिकेशन"
 
 #: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
+msgid "Helper application that delivers GTK+ immodule name between GConf and Xfconf"
 msgstr "GConf व Xfconf अंतर्गत GTK+ immodule नाव पुरवणारे सहाय्यक ऍप्लिकेशन"
 
 #: ../backends/xim/loopback.c:223
@@ -305,12 +298,11 @@ msgstr "XIM"
 
 #: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:681
 msgid "XIM server name"
-msgstr "XIM सर्वर नाव"
+msgstr "XIM सर्व्हरचे नाव"
 
 #: ../backends/xim/proxy.c:2969
-#, fuzzy
 msgid "The name of XIM server for the connection"
-msgstr "XIM सर्व्हर नाव याच्याशी जुळवणी करेल"
+msgstr "जुळवणीकरीता XIM सर्व्हरचे नाव"
 
 #: ../backends/xim/proxy.c:2974
 msgid "Signals for Protocol class"
@@ -346,7 +338,7 @@ msgstr "लहान वर्णन"
 
 #: ../imsettings/imsettings-info.c:662
 msgid "Whether or not IM is a XIM server."
-msgstr "IM XIM सर्वर आहे की नाही."
+msgstr "IM XIM सर्व्हर आहे की नाही."
 
 #: ../imsettings/imsettings-info.c:668
 msgid "GTK+ immodule"
@@ -378,19 +370,19 @@ msgstr "यादी मध्ये न दर्शविण्याजोग
 
 #: ../imsettings/imsettings-info.c:692
 msgid "XIM server program name"
-msgstr "XIM सर्वर कार्यक्रमाचे नाव"
+msgstr "XIM सर्व्हर कार्यक्रमाचे नाव"
 
 #: ../imsettings/imsettings-info.c:693
 msgid "XIM server program to be run"
-msgstr "चालविण्याजोगी XIM सर्वर कार्यक्रम"
+msgstr "चालविण्याजोगी XIM सर्व्हर कार्यक्रम"
 
 #: ../imsettings/imsettings-info.c:698
 msgid "XIM server program's options"
-msgstr "XIM सर्वर कार्यक्रमाचे पर्याय"
+msgstr "XIM सर्व्हर कार्यक्रमाचे पर्याय"
 
 #: ../imsettings/imsettings-info.c:699
 msgid "Command line options for XIM server program"
-msgstr "XIM सर्वर कार्यक्रम करीता आदेश ओळवरील पर्याय"
+msgstr "XIM सर्व्हर कार्यक्रम करीता आदेश ओळवरील पर्याय"
 
 #: ../imsettings/imsettings-info.c:704
 msgid "Preference program name"
@@ -590,25 +582,23 @@ msgstr ""
 #: ../src/factory.c:1067
 #, c-format
 msgid "No XIM server is available in %s"
-msgstr "XIM सर्वर %s मध्ये उपलब्ध नाही"
+msgstr "XIM सर्व्हर %s मध्ये उपलब्ध नाही"
 
 #: ../src/factory.c:1294 ../src/monitor.c:237
 msgid "xinputrc directory"
 msgstr "xinputrc डिरेक्ट्री"
 
 #: ../src/factory.c:1295
-#, fuzzy
 msgid "The name of the directory for the system wide xinputrc file."
-msgstr "प्रणालीकरीता xinputrc समाविष्ट करण्यासाठी डिरेक्ट्री."
+msgstr "प्रणालीकरीता xinputrc फाइलकरीता डिरेक्ट्रीचे नाव."
 
 #: ../src/factory.c:1300 ../src/monitor.c:243
 msgid "xinput directory"
 msgstr "xinput डिरेक्ट्री"
 
 #: ../src/factory.c:1301
-#, fuzzy
 msgid "The name of the directory for IM configurations."
-msgstr "IM संयोजना समाविष्ट करण्यासाठी डिरेक्ट्री."
+msgstr "IM संरचनाकरीता डिरेक्ट्रीचे नाव."
 
 #: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
 #: ../src/monitor.c:250
@@ -624,21 +614,18 @@ msgid "A flag if logging facility is enabled or not."
 msgstr "लॉगींग सुविधा कार्यक्षम किंवा अकार्यक्षम असल्यास एक फ्लॅग."
 
 #: ../src/factory.c:1408
-#, fuzzy
 msgid ""
 "Specify the name of the directory of the system-wide xinputrc file (for "
 "debugging only)"
-msgstr "प्रणालीभर xinputrc समाविष्ट करण्यासाठी डिरेक्ट्री (फक्त डिबगींग)"
+msgstr "प्रणालीभर xinputrc फाइलच्या (फक्त डिबगींग करीता) डिरेक्ट्रीचे नाव निर्देशीत करा"
 
 #: ../src/factory.c:1408 ../src/factory.c:1409 ../src/factory.c:1410
 msgid "DIR"
 msgstr "DIR"
 
 #: ../src/factory.c:1409
-#, fuzzy
-msgid ""
-"Specify the name of the directory for IM configurations (for debugging only)"
-msgstr "IM संयोजना समाविष्ट करण्यासाठी डिरेक्ट्री (फक्त डिबगींग)"
+msgid "Specify the name of the directory for IM configurations (for debugging only)"
+msgstr "IM संरचना (फक्त डिबगींग करीता) डिरेक्ट्रीचे नाव निर्देशीत करा"
 
 #: ../src/factory.c:1410
 msgid "A home directory (debugging only)"
@@ -680,15 +667,15 @@ msgstr "सत्र बस् प्राप्त करण्यास अ�
 #: ../utils/imsettings-info.c:61 ../utils/imsettings-list.c:58
 #: ../utils/imsettings-restart.c:84 ../utils/imsettings-start.c:85
 #: ../utils/imsettings-stop.c:83
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
 "Running \"imsettings-reload -f\" may help but it will restart the Input "
 "Method\n"
 msgstr ""
-"imsettings च्या आवृत्तीशी जुळत नाही.\n"
-"imsettings-reload -f चालवल्यास या अडचणीचे निर्धारण शक्य आहे परंतु त्यासाठी इंपुट पद्धत "
-"पुनःचालू करावे लागेल\n"
+"सध्या imsettings च्या विविध आवृत्ती कार्यरत आहेत.\n"
+"\"imsettings-reload -f\" चालवलणे फायदेशीर ठरू शकते परंतु इंपुट पद्धत "
+"पुनःचालू होईल\n"
 
 #: ../utils/imsettings-info.c:77 ../utils/imsettings-restart.c:98
 #: ../utils/imsettings-stop.c:97
@@ -696,8 +683,7 @@ msgstr ""
 msgid ""
 "No Input Method running. please specify Input Method name explicitly if "
 "necessary.\n"
-msgstr ""
-"कार्यरत इंपुट पद्धत आढळले नाही. आवश्यक असल्यास कृपया इंपुट पद्धतीचे नाव निर्देशीत करा.\n"
+msgstr "कार्यरत इंपुट पद्धत आढळले नाही. आवश्यक असल्यास कृपया इंपुट पद्धतीचे नाव निर्देशीत करा.\n"
 
 #: ../utils/imsettings-info.c:86
 #, c-format
@@ -706,8 +692,7 @@ msgstr "इंपुट पद्धत विषयी माहिती प�
 
 #: ../utils/imsettings-reload.c:42
 msgid "Force reloading the configuration, including restarting the process."
-msgstr ""
-"संयोजना जबरनरित्या पुन्ह दाखलन करण्यास प्रयत्न करा, कार्यपध्दती पुन्हा सुरू करणे समाविष्टीत."
+msgstr "संयोजना जबरनरित्या पुन्ह दाखलन करण्यास प्रयत्न करा, कार्यपध्दती पुन्हा सुरू करणे समाविष्टीत."
 
 #: ../utils/imsettings-restart.c:42 ../utils/imsettings-start.c:43
 #: ../utils/imsettings-stop.c:42
@@ -783,30 +768,3 @@ msgstr "कुठलिही त्रुटी आढळल्यास IM क
 msgid "Stopped %s\n"
 msgstr "%s थांबविले\n"
 
-#, fuzzy
-#~ msgid ""
-#~ "You are running under the different version of imsettings.\n"
-#~ "Try imsettings-reload -f. that may resolves this issue but note that it "
-#~ "will causes restarting Input Method\n"
-#~ msgstr ""
-#~ "imsettings च्या आवृत्तीशी जुळत नाही.\n"
-#~ "imsettings-reload -f चालवल्यास या अडचणीचे निर्धारण शक्य आहे परंतु त्यासाठी इंपुट "
-#~ "पद्धत पुनःचालू करावे लागेल\n"
-
-#~ msgid "A XIM server name"
-#~ msgstr "XIM सर्व्हर नाव"
-
-#, fuzzy
-#~ msgid ""
-#~ "When this option is enabled, all of key events will be sent to Input "
-#~ "Method synchronously.  This might affects a performance."
-#~ msgstr ""
-#~ "हा पर्याय कार्यक्षम केल्यास, सर्व कि घटना इंपुट पद्धतीकडे समरित्या पाठवले जाईल. यामुळे "
-#~ "कार्यक्षमता प्रभावीत ठरू शकते."
-
-#~ msgid ""
-#~ "When this option is enabled, all of key events will be sent to Input "
-#~ "Method synchronously. this might affects a performance."
-#~ msgstr ""
-#~ "या पर्याय कार्यक्षम असल्यास, सर्व कि घटना इंपुट पद्धतकडे समरित्या पाठवले जाईल. यामुळे "
-#~ "कार्यक्षमा प्रभावीत होऊ शकते."
