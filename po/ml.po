@@ -12,10 +12,9 @@ msgstr ""
 "Project-Id-Version: imsettings.trunk.ml\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-09-10 17:02+0900\n"
-"PO-Revision-Date: 2009-09-10 17:26+0900\n"
-"Last-Translator: Ani Peter <apeter@redhat.com>\n"
-"Language-Team:  Swathantra Malayalam Computing|സ്വതന്ത്ര മലയാളം കമ്പ്യൂട്ടിങ്  <smc-"
-"discuss@googlegroups.com>\n"
+"PO-Revision-Date: 2009-09-10 16:03+0530\n"
+"Last-Translator: \n"
+"Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,13 +35,12 @@ msgid "Enable this when accelerator keys etc doesn't work"
 msgstr "ആക്സിലറേറ്റര്‍ കീകള്‍ പ്രവര്‍ത്തിക്കാത്തപ്പോള്‍ ഇതു് സജ്ജമാക്കുക"
 
 #: ../applet/imsettings-applet.schemas.in.h:3
-#, fuzzy
 msgid ""
 "If \"true\", all messages will be delivered through libnotify, otherwise "
 "only error and warning messages."
 msgstr ""
-"false എങ്കില്‍, പിശക്, മുന്നറിയിപ്പുകള്‍ എന്നിവയൊഴികെയുള്ള സന്ദേശങ്ങള്‍ libnotify വഴി "
-"ലഭ്യമാകുന്നില്ല."
+"\"true\" എങ്കില്‍, എല്ലാ സന്ദേശങ്ങളും libnotify വഴി ലഭ്യമാകുന്നു, അല്ലെങ്കില്‍ പിശക്, "
+"മുന്നറിയിപ്പു് സന്ദേശങ്ങള്‍ മാത്രമേ ലഭ്യമാകൂ."
 
 #: ../applet/imsettings-applet.schemas.in.h:4
 msgid "If true, the icon will be displayed at the systray."
@@ -84,9 +82,8 @@ msgid "No detailed information"
 msgstr "വിശദമായ വിവരം ലഭ്യമല്ല"
 
 #: ../applet/main.c:151
-#, fuzzy
 msgid "Version-mismatch of im-settings-daemon"
-msgstr "imsettings-ഡെമണിന്റെ പതിപ്പു് പൊരുത്തപ്പെടുന്നില്ല"
+msgstr "im-settings-daemon പതിപ്പുകള്‍ ചേരുന്നില്ല"
 
 #: ../applet/main.c:178 ../applet/main.c:258
 #, c-format
@@ -197,16 +194,15 @@ msgstr ""
 #. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
 #: ../applet/main.c:986
-#, fuzzy
 msgid "Left-click on the icon to connect to/disconnect from Input Method."
 msgstr ""
-"ഇന്‍പുട്ട് മെഥേഡിലേക്ക് കണക്ട് ചെയ്യുന്നതിനോ വിഛേദിക്കുന്നതിനോ ചിഹ്നത്തില്‍ ലെഫ്റ്റ് ക്ലിക്ക് ചെയ്യുക."
+"ഇന്‍പുട്ട് മെഥേഡില്‍ നിന്നും കണക്ട് ചെയ്യുന്നതിനോ വിഛേദിക്കുന്നതിനോ ചിഹ്നത്തില്‍ ലെഫ്റ്റ് ക്ലിക്ക് "
+"ചെയ്യുക."
 
 #. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
 #. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
 #: ../applet/main.c:990
-#, fuzzy
 msgid ""
 "\n"
 "Right-click to show up the Input Method menu."
@@ -217,14 +213,14 @@ msgstr ""
 #. One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
 #.
 #: ../applet/main.c:994
-#, c-format, fuzzy
+#, c-format
 msgid "Please %s%s"
 msgstr "ദയവായി %s%s"
 
 #. Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
 #.
 #: ../applet/main.c:998
-#, c-format, fuzzy
+#, c-format
 msgid "Please press %s or %s%s"
 msgstr "ദയവായി %s അല്ലെങ്കില്‍ %s%s അമര്‍ത്തുക"
 
@@ -311,9 +307,8 @@ msgid "XIM server name"
 msgstr "XIM സര്‍വര്‍ നാമം"
 
 #: ../backends/xim/proxy.c:2969
-#, fuzzy
 msgid "The name of XIM server for the connection"
-msgstr "ഒരു XIM സര്‍വര്‍ നാമം കണക്ട് ചെയ്യുന്നതു്"
+msgstr "കണക്ഷനുള്ള XIM സര്‍വറിന്റെ പേരു്"
 
 #: ../backends/xim/proxy.c:2974
 msgid "Signals for Protocol class"
@@ -600,18 +595,16 @@ msgid "xinputrc directory"
 msgstr "xinputrc ഡയറക്ടറി"
 
 #: ../src/factory.c:1295
-#, fuzzy
 msgid "The name of the directory for the system wide xinputrc file."
-msgstr "system wide xinputrc സൂക്ഷിക്കുന്നതിനുള്ള ഒരു ഡയറക്ടറി."
+msgstr "സിസ്റ്റത്തിന്റെ xinputrc ഫയലിനുള്ള ഡയറക്ടറിയുടെ പേരു്."
 
 #: ../src/factory.c:1300 ../src/monitor.c:243
 msgid "xinput directory"
 msgstr "xinput ഡയറക്ടറി"
 
 #: ../src/factory.c:1301
-#, fuzzy
 msgid "The name of the directory for IM configurations."
-msgstr "ഐ എം ക്രമീകരണം സൂക്ഷിക്കുന്നതിനുള്ള ഒരു ഡയറക്ടറി."
+msgstr "ഐ എം ക്രമീകരണങ്ങള്‍ക്കുള്ള ഡയറക്ടറിയുടെ പേരു്."
 
 #: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
 #: ../src/monitor.c:250
@@ -627,21 +620,19 @@ msgid "A flag if logging facility is enabled or not."
 msgstr "ലോഗ്ഗിങ് സംവിധാനം സജ്ജമാണോ എന്നറിയുന്നതിനുള്ള ഫ്ലാഗ്."
 
 #: ../src/factory.c:1408
-#, fuzzy
 msgid ""
 "Specify the name of the directory of the system-wide xinputrc file (for "
 "debugging only)"
-msgstr "ystem-wide xinputrc സൂക്ഷിക്കുന്നതിനുള്ള ഡയറക്ടറി (ഡീബഗ്ഗിങ് മാത്രം)"
+msgstr "system-wide xinputrc-നുള്ള ഡയറക്ടറിയുടെ പേരു് നല്‍കുക  (ഡീബഗ്ഗിങ് മാത്രം)"
 
 #: ../src/factory.c:1408 ../src/factory.c:1409 ../src/factory.c:1410
 msgid "DIR"
 msgstr "DIR"
 
 #: ../src/factory.c:1409
-#, fuzzy
 msgid ""
 "Specify the name of the directory for IM configurations (for debugging only)"
-msgstr "ഐ എം ക്രമീകരണം സൂക്ഷിക്കുന്നതിനുള്ള ഡയറക്ടറി (ഡീബഗ്ഗിങ് മാത്രം)"
+msgstr "ഐ എം ക്രമീകരണങ്ങള്‍ക്കുള്ള ഡയറക്ടറിയുടെ പേരു് നല്‍കുക  (ഡീബഗ്ഗിങ് മാത്രം)"
 
 #: ../src/factory.c:1410
 msgid "A home directory (debugging only)"
@@ -683,14 +674,14 @@ msgstr "ഒരു സെഷന്‍ ബസ് ലഭ്യമാക്കുന
 #: ../utils/imsettings-info.c:61 ../utils/imsettings-list.c:58
 #: ../utils/imsettings-restart.c:84 ../utils/imsettings-start.c:85
 #: ../utils/imsettings-stop.c:83
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
 "Running \"imsettings-reload -f\" may help but it will restart the Input "
 "Method\n"
 msgstr ""
-"imsettings-ന്റെ പതിപ്പു് പൊരുത്തപ്പെടുന്നില്ല.\n"
-"imsettings-reload -f പ്രവര്‍ത്തിപ്പിച്ചു് ഇതു് പരിഹരിക്കാം, പക്ഷേ നിങ്ങള്‍ ഇന്‍പുട്ട് മെഥേഡ് "
+"imsettings-ന്റെ മറ്റൊരു പതിപ്പു് ഇപ്പോള്‍ പ്രവര്‍ത്തിക്കുന്നു.\n"
+"\"imsettings-reload -f\" പ്രവര്‍ത്തിപ്പിച്ചു് ഇതു് പരിഹരിക്കാം, പക്ഷേ നിങ്ങള്‍ ഇന്‍പുട്ട് മെഥേഡ് "
 "വീണ്ടും ആരംഭിക്കേണ്ടതുണ്ടു്\n"
 
 #: ../utils/imsettings-info.c:77 ../utils/imsettings-restart.c:98
@@ -785,31 +776,3 @@ msgstr "പിശകുകളുണ്ടേലും ഐഎം പ്രക്�
 #, c-format
 msgid "Stopped %s\n"
 msgstr "%s നിര്‍ത്തിയിരിക്കുന്നു\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "You are running under the different version of imsettings.\n"
-#~ "Try imsettings-reload -f. that may resolves this issue but note that it "
-#~ "will causes restarting Input Method\n"
-#~ msgstr ""
-#~ "imsettings-ന്റെ പതിപ്പു് പൊരുത്തപ്പെടുന്നില്ല.\n"
-#~ "imsettings-reload -f പ്രവര്‍ത്തിപ്പിച്ചു് ഇതു് പരിഹരിക്കാം, പക്ഷേ നിങ്ങള്‍ ഇന്‍പുട്ട് മെഥേഡ് "
-#~ "വീണ്ടും ആരംഭിക്കേണ്ടതുണ്ടു്\n"
-
-#~ msgid "A XIM server name"
-#~ msgstr "XIM സര്‍വര്‍ നാമം"
-
-#, fuzzy
-#~ msgid ""
-#~ "When this option is enabled, all of key events will be sent to Input "
-#~ "Method synchronously.  This might affects a performance."
-#~ msgstr ""
-#~ "ഈ ഉപാധി സജ്ജമാക്കുമ്പോള്‍, സിന്‍ക്രൊണസായി എല്ലാ കീ ഈവന്റുകളും ഇന്‍പുട്ട് മെഥേഡിലേക്ക് "
-#~ "സിന്‍ക്രൊണസായി അയയ്ക്കുന്നു. ഇതു് പ്രവര്‍ത്തനത്തെ ഒരു പക്ഷേ ബാധിക്കാം."
-
-#~ msgid ""
-#~ "When this option is enabled, all of key events will be sent to Input "
-#~ "Method synchronously. this might affects a performance."
-#~ msgstr ""
-#~ "ഈ ഉപാധി സജ്ജമാക്കുമ്പോള്‍, സിന്‍ക്രൊണസായി എല്ലാ കീ ഈവന്റുകളും ഇന്‍പുട്ട് മെഥേഡിലേക്ക് "
-#~ "അയയ്ക്കുന്നു. ഇതു് പ്രവര്‍ത്തനത്തെ ഒരു പക്ഷേ ബാധിക്കാം."
