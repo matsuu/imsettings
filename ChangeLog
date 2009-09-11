@@ -1,4 +1,11 @@
-2009-09-08  Akira TAGOH  <akira@tagoh.org>
+2009-09-11  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (_get_process_info_by_pid): new.
+	(_watch_im_status_cb): unref'd the instance here to not keep
+	the process running as zombie. (rhbz#522689)
+	(_stop_process): don't remove the instance from the hash table yet.
+
+2009-09-08  Akira TAGOH  <tagoh@redhat.com>
 
 	* src/factory.c (imsettings_manager_real_finalize): unreference the object.
 

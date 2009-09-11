@@ -214,6 +214,25 @@ _get_process_info_by_id(GHashTable *table,
 	return NULL;
 }
 
+static struct ProcessInformation *
+_get_process_info_by_pid(GHashTable *table,
+			 GPid        pid)
+{
+	GHashTableIter iter;
+	gpointer key, val;
+
+	g_hash_table_iter_init(&iter, table);
+	while (g_hash_table_iter_next(&iter, &key, &val)) {
+		struct ProcessInformation *info = val;
+
+		if (pid == info->pid) {
+			return info;
+		}
+	}
+
+	return NULL;
+}
+
 static GPid
 _get_pid_from_name(IMSettingsManagerPrivate *priv,
 		   gboolean                  is_body,
@@ -462,8 +481,25 @@ _watch_im_status_cb(GPid     pid,
 			}
 		}
 	} else {
-		g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
-		      "pid %d is successfully stopped with %s.", pid, status_message->str);
+		info = _get_process_info_by_pid(priv->body2info, pid);
+		if (info == NULL) {
+			is_body = FALSE;
+			info = _get_process_info_by_pid(priv->aux2info, pid);
+		}
+		if (info == NULL) {
+			g_warning("No consistency in the internal process management database: pid: %d", pid);
+			g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
+			      "pid %d is successfully stopped with %s.", pid, status_message->str);
+		} else {
+			gchar *module = g_strdup(info->module);
+
+			g_hash_table_remove(is_body ? priv->body2info : priv->aux2info,
+					    info->module);
+			g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
+			      "Stopped %s process for %s with %s: pid %d",
+			      is_body ? "Main" : "AUX", module, status_message->str, pid);
+			g_free(module);
+		}
 	}
 	if (status_message)
 		g_string_free(status_message, TRUE);
@@ -635,7 +671,7 @@ _stop_process(IMSettingsManagerPrivate  *priv,
 		}
 	} else {
 		tmp = _process_info_ref(info);
-		g_hash_table_remove(hash, identity);
+		/* info will be deleted from *2info Hash table at _watch_im_status_cb when the process is really died. */
 		g_hash_table_remove(priv->pid2id, GINT_TO_POINTER (info->pid));
 		if (kill(-info->pid, SIGTERM) == -1) {
 			gchar *module = g_strdup(identity);
@@ -647,8 +683,15 @@ _stop_process(IMSettingsManagerPrivate  *priv,
 			g_hash_table_insert(hash, module, tmp);
 			g_hash_table_insert(priv->pid2id, GINT_TO_POINTER (info->pid), GUINT_TO_POINTER (info->id));
 		} else {
+			GTimeVal time;
+			gchar *s;
+
+			g_get_current_time(&time);
+			s = g_time_val_to_iso8601(&time);
+			g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "Sent a signal to stop %s: pid: %d, time: %s", identity, info->pid, s);
 			retval = TRUE;
-			_process_info_unref(tmp);
+			g_free(s);
+			/* info will be unref'd in _watch_im_status_cb when the process is really died. */
 		}
 	}
 
