@@ -20,6 +20,14 @@
 # Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+function is_script() {
+    if [ "x$(sed -re '/^[ 	]?*[a-zA-Z0-9_]+=.*/{d};/[ 	]?*#.*/{d}' $1)" = "x" ]; then
+	return 1
+    else
+	return 0
+    fi
+}
+
 USER_XINPUTRC="$HOME/.xinputrc"
 SYS_XINPUTRC="@XINPUTRC_PATH@/xinputrc"
 
@@ -42,13 +50,16 @@ unset AUXILIARY_PROGRAM AUXILIARY_ARGS GTK_IM_MODULE ICON IMSETTINGS_IGNORE_ME L
 
 if [ $# -gt 0 ]; then
     source $1
+    IMSETTINGS_FILENAME=$1
 else
     [ -z "$IMSETTINGS_DISABLE_USER_XINPUTRC" ] && IMSETTINGS_DISABLE_USER_XINPUTRC=no
 
     if [ -r "$USER_XINPUTRC" -a "x$IMSETTINGS_DISABLE_USER_XINPUTRC" = "xno" ]; then
 	source "$USER_XINPUTRC"
+	IMSETTINGS_FILENAME=$USER_XINPUTRC
     elif [ -r "$SYS_XINPUTRC" ]; then
 	source "$SYS_XINPUTRC"
+	IMSETTINGS_FILENAME=$SYS_XINPUTRC
     fi
 fi
 
@@ -57,6 +68,12 @@ fi
 [ -n "$QT_IM_MODULE" ] && export QT_IM_MODULE
 # For backward compatibility
 [ -z "$IMSETTINGS_IGNORE_ME" ] && IMSETTINGS_IGNORE_ME=$IM_CHOOSER_IGNORE_ME
+
+if is_script $IMSETTINGS_FILENAME; then
+    IMSETTINGS_IS_SCRIPT=1
+else
+    IMSETTINGS_IS_SCRIPT=0
+fi
 
 cat <<EOF
 AUXILIARY_PROGRAM=$AUXILIARY_PROGRAM
@@ -72,4 +89,5 @@ SHORT_DESC="`echo $SHORT_DESC | sed -e "s/\\\\([\\"']\\\\)/\\\\\\\\\\\\1/g"`"
 XIM=$XIM
 XIM_PROGRAM=$XIM_PROGRAM
 XIM_ARGS="`echo $XIM_ARGS | sed -e "s/\\\\([\\"']\\\\)/\\\\\\\\\\\\1/g"`"
+IMSETTINGS_IS_SCRIPT=$IMSETTINGS_IS_SCRIPT
 EOF

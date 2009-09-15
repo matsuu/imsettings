@@ -1,3 +1,20 @@
+2009-09-15  Akira TAGOH  <akira@tagoh.org>
+
+	* data/xinputinfo.sh.in: output the value if the configuration is
+	the script or not.
+
+	* tests/main.c (init): set IMSETTINGS_HELPER_PATH to xinputinfo.sh
+	working without the real installation.
+
+	* tests/rhbz_523349.c: new testcase.
+
+	* imsettings/imsettings-info.c (imsettings_info_notify_properties):
+	Add a reference of the environment variable to get the unit testing
+	working.
+	(_IMSETTINGS_DEFUNC_PROPERTY): update the variables before looking
+	if the configuration is based on the script. (rhbz#523349)
+	(imsettings_info_is_script): new.
+
 2009-09-11  Akira TAGOH  <tagoh@redhat.com>
 
 	* src/factory.c (_get_process_info_by_pid): new.

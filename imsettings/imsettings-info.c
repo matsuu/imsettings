@@ -74,6 +74,7 @@ typedef struct _IMSettingsInfoPrivate {
 	gboolean  is_system_default;
 	gboolean  is_user_default;
 	gboolean  is_xim;
+	gboolean  is_script;
 } IMSettingsInfoPrivate;
 
 enum {
@@ -94,6 +95,7 @@ enum {
 	PROP_SHORT_DESC,
 	PROP_LONG_DESC,
 	PROP_ICON,
+	PROP_IS_SCRIPT,
 	PROP_IS_SYSTEM_DEFAULT,
 	PROP_IS_USER_DEFAULT,
 	PROP_IS_XIM,
@@ -181,6 +183,7 @@ imsettings_info_notify_properties(GObject     *object,
 		"SHORT_DESC=",
 		"LONG_DESC=",
 		"ICON=",
+		"IMSETTINGS_IS_SCRIPT=",
 		NULL
 	};
 	static const gchar *properties[] = {
@@ -197,6 +200,7 @@ imsettings_info_notify_properties(GObject     *object,
 		"short_desc",
 		"long_desc",
 		"icon",
+		"is_script",
 		NULL
 	};
 	gint i;
@@ -204,7 +208,7 @@ imsettings_info_notify_properties(GObject     *object,
 	guint prop;
 	struct stat st;
 	IMSettingsInfoPrivate *priv = IMSETTINGS_INFO_GET_PRIVATE (object);
-	gchar *lang;
+	gchar *lang, *path;
 
 	cmd = g_string_new(NULL);
 	str = g_string_new(NULL);
@@ -212,7 +216,13 @@ imsettings_info_notify_properties(GObject     *object,
 		lang = g_strdup_printf("LANG=%s ", priv->language);
 	else
 		lang = g_strdup("");
-	xinputinfo = g_build_filename(XINPUTINFO_PATH, "xinputinfo.sh", NULL);
+	if (g_getenv("IMSETTINGS_HELPER_PATH") != NULL) {
+		path = g_strdup(g_getenv("IMSETTINGS_HELPER_PATH"));
+	} else {
+		path = g_strdup(XINPUTINFO_PATH);
+	}
+	xinputinfo = g_build_filename(path, "xinputinfo.sh", NULL);
+	g_free(path);
 	g_string_append_printf(cmd, "%s. %s %s", lang, xinputinfo, filename);
 
 	g_free(xinputinfo);
@@ -266,6 +276,14 @@ imsettings_info_notify_properties(GObject     *object,
 #endif
 						    g_object_set(object,
 								 properties[prop - (PROP_GTK_IMM - PROP_0)], str->str,
+								 NULL);
+						    break;
+					    case PROP_IS_SCRIPT:
+						    g_object_set(object,
+								 "is_script",
+								 (g_ascii_strcasecmp(str->str, "true") == 0 ||
+								  g_ascii_strcasecmp(str->str, "yes") == 0 ||
+								  g_ascii_strcasecmp(str->str, "1") == 0),
 								 NULL);
 						    break;
 					    case PROP_IGNORE_FLAG:
@@ -412,6 +430,9 @@ imsettings_info_set_property(GObject      *object,
 			    }
 		    } G_STMT_END;
 		    break;
+	    case PROP_IS_SCRIPT:
+		    _set_bool_prop(is_script);
+		    break;
 	    case PROP_IS_SYSTEM_DEFAULT:
 		    _set_bool_prop(is_system_default);
 		    break;
@@ -488,6 +509,9 @@ imsettings_info_get_property(GObject    *object,
 		    break;
 	    case PROP_ICON:
 		    _get_str_prop(icon_file);
+		    break;
+	    case PROP_IS_SCRIPT:
+		    _get_bool_prop(is_script);
 		    break;
 	    case PROP_IS_SYSTEM_DEFAULT:
 		    _get_bool_prop(is_system_default);
@@ -735,6 +759,12 @@ imsettings_info_class_init(IMSettingsInfoClass *klass)
 							    _("Icon filename to be used on GUI"),
 							    ICONDIR G_DIR_SEPARATOR_S "imsettings-unknown.png",
 							    G_PARAM_READWRITE));
+	g_object_class_install_property(object_class, PROP_IS_SCRIPT,
+					g_param_spec_boolean("is_script",
+							     "Script",
+							     "Whether or not the configuration is written in the shell script",
+							     FALSE,
+							     G_PARAM_READWRITE));
 	g_object_class_install_property(object_class, PROP_IS_SYSTEM_DEFAULT,
 					g_param_spec_boolean("is_system_default",
 							     _("System Default"),
@@ -807,6 +837,11 @@ imsettings_info_new_with_lang(const gchar *filename,
 		g_return_val_if_fail (IMSETTINGS_IS_INFO (info), (_v_)); \
 									\
 		priv = IMSETTINGS_INFO_GET_PRIVATE (info);		\
+		if (imsettings_info_is_script(info)) {			\
+			/* reload the configuration before referencing. */ \
+			g_object_set(info, "filename",			\
+				     priv->filename, NULL);		\
+		}							\
 									\
 		return priv->_m_;					\
 	}
@@ -860,6 +895,18 @@ imsettings_info_is_visible(IMSettingsInfo *info)
 	priv = IMSETTINGS_INFO_GET_PRIVATE (info);
 
 	return !priv->ignore;
+}
+
+gboolean
+imsettings_info_is_script(IMSettingsInfo *info)
+{
+	IMSettingsInfoPrivate *priv;
+
+	g_return_val_if_fail (IMSETTINGS_IS_INFO (info), FALSE);
+
+	priv = IMSETTINGS_INFO_GET_PRIVATE (info);
+
+	return priv->is_script;
 }
 
 gboolean

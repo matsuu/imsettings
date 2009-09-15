@@ -61,11 +61,15 @@ logger(const gchar    *log_domain,
 }
 
 static void
-init(void)
+init(int argc, char **argv)
 {
+	gchar *dir = g_path_get_dirname(argv[0]);
+	gchar *path = g_build_filename(dir, "..", "..", "data", NULL);
+
 	g_type_init();
 
 	old_logger = g_log_set_default_handler(logger, NULL);
+	g_setenv("IMSETTINGS_HELPER_PATH", path, TRUE);
 }
 
 static void
@@ -179,13 +183,13 @@ imsettings_test_reload_daemons(void)
 }
 
 int
-main(void)
+main(int argc, char **argv)
 {
 	int number_failed;
 	Suite *s = imsettings_suite();
 	SRunner *sr = srunner_create(s);
 
-	init();
+	init(argc, argv);
 
 	srunner_run_all(sr, CK_NORMAL);
 	number_failed = srunner_ntests_failed(sr);
