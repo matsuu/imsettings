@@ -1,4 +1,4 @@
-2009-09-15  Akira TAGOH  <akira@tagoh.org>
+2009-09-15  Akira TAGOH  <tagoh@redhat.com>
 
 	* data/xinputinfo.sh.in: output the value if the configuration is
 	the script or not.
