@@ -652,7 +652,7 @@ _stop_process(IMSettingsManagerPrivate  *priv,
 {
 	gboolean retval = FALSE;
 	GHashTable *hash;
-	struct ProcessInformation *info, *tmp;
+	struct ProcessInformation *info;
 
 	if (is_body) {
 		hash = priv->body2info;
@@ -670,17 +670,13 @@ _stop_process(IMSettingsManagerPrivate  *priv,
 			retval = TRUE;
 		}
 	} else {
-		tmp = _process_info_ref(info);
 		/* info will be deleted from *2info Hash table at _watch_im_status_cb when the process is really died. */
 		g_hash_table_remove(priv->pid2id, GINT_TO_POINTER (info->pid));
 		if (kill(-info->pid, SIGTERM) == -1) {
-			gchar *module = g_strdup(identity);
-
 			g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_UNABLE_TO_TRACK_IM,
 				    _("Couldn't send a signal to the %s process successfully."),
 				    is_body ? "Main" : "AUX");
 			/* push back to the table */
-			g_hash_table_insert(hash, module, tmp);
 			g_hash_table_insert(priv->pid2id, GINT_TO_POINTER (info->pid), GUINT_TO_POINTER (info->id));
 		} else {
 			GTimeVal time;

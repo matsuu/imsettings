@@ -1,3 +1,8 @@
+2009-09-17  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (_stop_process): get rid of the unnecessary increasing
+	the reference count, which causes taking a lot CPU load again.
+
 2009-09-15  Akira TAGOH  <tagoh@redhat.com>
 
 	* data/xinputinfo.sh.in: output the value if the configuration is
