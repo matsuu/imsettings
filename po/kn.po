@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: imsettings.trunk.kn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-09-10 17:02+0900\n"
-"PO-Revision-Date: 2009-09-10 17:25+0900\n"
+"PO-Revision-Date: 2009-09-22 16:16+0530\n"
 "Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
 "Language-Team: Kannada <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,12 +36,11 @@ msgid "Enable this when accelerator keys etc doesn't work"
 msgstr "ವೇಗವರ್ಧಕ ಕೀಲಿಗಳು ಹಾಗು ಇತರೆಗಳು ಕೆಲಸ ಮಾಡದೆ ಇದ್ದಾಗ ಈ ಇದನ್ನು ಶಕ್ತಗೊಳಿಸಿ"
 
 #: ../applet/imsettings-applet.schemas.in.h:3
-#, fuzzy
 msgid ""
 "If \"true\", all messages will be delivered through libnotify, otherwise "
 "only error and warning messages."
 msgstr ""
-"false ಆದಲ್ಲಿ, ದೋಷ ಹಾಗು ಎಚ್ಚರಿಕೆ ಸಂದೇಶಗಳನ್ನು ಹೊರತುಪಡಿಸಿ ಎಲ್ಲಾ ಸೂಚನೆಗಳನ್ನು "
+"\"true\" ಆದಲ್ಲಿ, ದೋಷ ಹಾಗು ಎಚ್ಚರಿಕೆ ಸಂದೇಶಗಳನ್ನು ಹೊರತುಪಡಿಸಿ ಎಲ್ಲಾ ಸೂಚನೆಗಳನ್ನು "
 "libnotify ಮೂಲಕ ನೀಡಲಾಗುವುದು."
 
 #: ../applet/imsettings-applet.schemas.in.h:4
@@ -85,7 +84,6 @@ msgid "No detailed information"
 msgstr "ಯಾವುದೆ ವಿವರವಾದ ಮಾಹಿತಿ ಇಲ್ಲ"
 
 #: ../applet/main.c:151
-#, fuzzy
 msgid "Version-mismatch of im-settings-daemon"
 msgstr "im-settings-daemon ಆವೃತ್ತಿಯು ತಾಳೆಯಾಗುತ್ತಿಲ್ಲ"
 
@@ -199,33 +197,31 @@ msgstr ""
 #. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
 #: ../applet/main.c:986
-#, fuzzy
 msgid "Left-click on the icon to connect to/disconnect from Input Method."
-msgstr "ಇನ್‌ಪುಟ್ ವಿಧಾನಕ್ಕೆ ಸಂಪರ್ಕ ಜೋಡಿಸಲು/ಕಡಿಯಲು ಎಡ ಬದಿಯ ಕ್ಲಿಕ್ ಅನ್ನು ಮಾಡಿ."
+msgstr "ಇನ್‌ಪುಟ್ ವಿಧಾನಕ್ಕೆ ಸಂಪರ್ಕ ಜೋಡಿಸಲು/ಕಡಿಯಲು ಎಡ ಬದಿಯ ಗುಂಡಿಯನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ."
 
 #. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
 #. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
 #.
 #: ../applet/main.c:990
-#, fuzzy
 msgid ""
 "\n"
 "Right-click to show up the Input Method menu."
 msgstr ""
 "\n"
-"ಇನ್‌ಪುಟ್ ವಿಧಾನವನ್ನು ತೋರಿಸಲು ಬಲಬದಿಯ ಕ್ಲಿಕ್ ಮಾಡಿ."
+"ಇನ್‌ಪುಟ್ ವಿಧಾನದ ಮೆನುವನ್ನು ತೋರಿಸಲು ಬಲಬದಿಯ ಕ್ಲಿಕ್ ಮಾಡಿ."
 
 #. One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
 #.
 #: ../applet/main.c:994
-#, c-format, fuzzy
+#, c-format
 msgid "Please %s%s"
 msgstr "ದಯವಿಟ್ಟು %s%s"
 
 #. Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
 #.
 #: ../applet/main.c:998
-#, c-format, fuzzy
+#, c-format
 msgid "Please press %s or %s%s"
 msgstr "ದಯವಿಟ್ಟು %s ಅನ್ನು ಅಥವ %s%s ಅನ್ನು ಒತ್ತಿ"
 
@@ -270,8 +266,7 @@ msgid "Helper application for imsettings"
 msgstr "imsettings ಗಾಗಿನ ನೆರವಿನ ಅನ್ವಯ"
 
 #: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
+msgid "Helper application that delivers GTK+ immodule name between GConf and Xfconf"
 msgstr "GConf ಹಾಗು Xfconf ನಡುವೆ  GTK+ immodule ಹೆಸರನ್ನು ಒದಗಿಸುವ ನೆರವಿನ ಅನ್ವಯ"
 
 #: ../backends/xim/loopback.c:223
@@ -311,9 +306,8 @@ msgid "XIM server name"
 msgstr "XIM ಪರಿಚಾರಕದ ಹೆಸರು"
 
 #: ../backends/xim/proxy.c:2969
-#, fuzzy
 msgid "The name of XIM server for the connection"
-msgstr "ಸಂಪರ್ಕಸಾಧಿಸಬೇಕಿರುವ XIM ಪರಿಚಾರಕದ ಹೆಸರು"
+msgstr "ಸಂಪರ್ಕಕ್ಕಾಗಿನ XIM ಪರಿಚಾರಕದ ಹೆಸರು"
 
 #: ../backends/xim/proxy.c:2974
 msgid "Signals for Protocol class"
@@ -601,18 +595,16 @@ msgid "xinputrc directory"
 msgstr "xinputrc ಕೋಶ"
 
 #: ../src/factory.c:1295
-#, fuzzy
 msgid "The name of the directory for the system wide xinputrc file."
-msgstr "ವ್ಯವಸ್ಥೆಯಾದ್ಯಂತದ xinputrc ಯನ್ನು ಆನ್ ಮಾಡುವ ಒಂದು ಕೋಶ."
+msgstr "ವ್ಯವಸ್ಥೆಯಾದ್ಯಂತದ xinputrc ಕಡತಕ್ಕಾಗಿನ ಕೋಶದ ಹೆಸರು."
 
 #: ../src/factory.c:1300 ../src/monitor.c:243
 msgid "xinput directory"
 msgstr "xinput ಕೋಶ"
 
 #: ../src/factory.c:1301
-#, fuzzy
 msgid "The name of the directory for IM configurations."
-msgstr "IM ಸಂರಚನೆಗಳನ್ನು ಆನ್ ಮಾಡುವ ಒಂದು ಕೋಶ."
+msgstr "IM ಸಂರಚನೆಗಳಿಗಾಗಿನ ಕೋಶದ ಹೆಸರು."
 
 #: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
 #: ../src/monitor.c:250
@@ -628,22 +620,18 @@ msgid "A flag if logging facility is enabled or not."
 msgstr "ದಾಖಲಿಸುವ ಸವಲತ್ತು ಶಕ್ತಗೊಂಡಿದೆಯೆ ಅಥವ ಇಲ್ಲವೆ ಎಂದು ಸೂಚಿಸುವ ಒಂದು ಫ್ಲಾಗ್."
 
 #: ../src/factory.c:1408
-#, fuzzy
 msgid ""
 "Specify the name of the directory of the system-wide xinputrc file (for "
 "debugging only)"
-msgstr ""
-"ವ್ಯವಸ್ಥೆಯಾದ್ಯಂತದ xinputrc ಯನ್ನು ಆನ್ ಮಾಡಿ ಇಡುವ ಒಂದು ಕೋಶ (ದೋಷನಿವಾರಣೆಗಾಗಿ ಮಾತ್ರ)"
+msgstr "ವ್ಯವಸ್ಥೆಯಾದ್ಯಂತದ xinputrc ಕಡತಕ್ಕಾಗಿನ ಕೋಶದ ಹೆಸರನ್ನು ಸೂಚಿಸಿ (ದೋಷನಿವಾರಣೆಗಾಗಿ ಮಾತ್ರ)"
 
 #: ../src/factory.c:1408 ../src/factory.c:1409 ../src/factory.c:1410
 msgid "DIR"
 msgstr "DIR"
 
 #: ../src/factory.c:1409
-#, fuzzy
-msgid ""
-"Specify the name of the directory for IM configurations (for debugging only)"
-msgstr "IM ಸಂರಚನೆಗಳನ್ನು ಇರಿಸಲಾಗುವ ಒಂದು ಕೋಶ (ದೋಷನಿವಾರಣೆಗಾಗಿ ಮಾತ್ರ)"
+msgid "Specify the name of the directory for IM configurations (for debugging only)"
+msgstr "IM ಸಂರಚನೆಗಳಿಗಾಗಿನ ಕೋಶದ ಹೆಸರನ್ನು ಸೂಚಿಸಿ (ದೋಷನಿವಾರಣೆಗಾಗಿ ಮಾತ್ರ)"
 
 #: ../src/factory.c:1410
 msgid "A home directory (debugging only)"
@@ -685,15 +673,15 @@ msgstr "ಒಂದು ಅಧಿವೇಶನದ ಬಸ್‌ ಅನ್ನು ಪ�
 #: ../utils/imsettings-info.c:61 ../utils/imsettings-list.c:58
 #: ../utils/imsettings-restart.c:84 ../utils/imsettings-start.c:85
 #: ../utils/imsettings-stop.c:83
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
 "Running \"imsettings-reload -f\" may help but it will restart the Input "
 "Method\n"
 msgstr ""
-"imsettings ನ ಆವೃತ್ತಿಯು ತಾಳೆಯಾಗುತ್ತಿಲ್ಲ.\n"
-"imsettings-reload -f ಅನ್ನು ಚಲಾಯಿಸಿದಾಗ ಈ ಸಮಸ್ಯೆಯು ನಿವಾರಣೆಗೊಳ್ಳಬಹುದು ಆದರೆ ಇದರಿಂದ "
-"ಇನ್‌ಪುಟ್ ವಿಧಾನವೂ ಸಹ ಮರಳಿ ಆರಂಭಿಸಲ್ಪಡುತ್ತದೆ ಎಂಬುದನ್ನು ನೆನಪಿಡಿ\n"
+"ಪ್ರಸಕ್ತ imsettings ನ ಬೇರೊಂದು ಆವೃತ್ತಿಯು ಚಾಲನೆಯಲ್ಲಿದೆ.\n"
+"\"imsettings-reload -f\" ಅನ್ನು ಚಲಾಯಿಸಿದಾಗ ಈ ಸಮಸ್ಯೆಯು ನಿವಾರಣೆಗೊಳ್ಳಬಹುದು ಆದರೆ ಇದರಿಂದ "
+"ಇನ್‌ಪುಟ್ ವಿಧಾನವೂ ಸಹ ಮರಳಿ ಆರಂಭಿಸಲ್ಪಡುತ್ತದೆ\n"
 
 #: ../utils/imsettings-info.c:77 ../utils/imsettings-restart.c:98
 #: ../utils/imsettings-stop.c:97
@@ -712,8 +700,7 @@ msgstr "ಒಂದು ಇನ್‌ಪುಟ್ ವಿಧಾನದ ಮಾಹಿತ
 
 #: ../utils/imsettings-reload.c:42
 msgid "Force reloading the configuration, including restarting the process."
-msgstr ""
-"ಪ್ರಕ್ರಿಯೆಯನ್ನು ಪುನರಾರಂಭಿಸುವ ಜೊತೆಗೆ ಸಂರಚನೆಯನ್ನು ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮರು ಲೋಡ್ ಮಾಡುವುದು."
+msgstr "ಪ್ರಕ್ರಿಯೆಯನ್ನು ಪುನರಾರಂಭಿಸುವ ಜೊತೆಗೆ ಸಂರಚನೆಯನ್ನು ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮರು ಲೋಡ್ ಮಾಡುವುದು."
 
 #: ../utils/imsettings-restart.c:42 ../utils/imsettings-start.c:43
 #: ../utils/imsettings-stop.c:42
@@ -789,30 +776,3 @@ msgstr "ಯಾವುದೆ ದೋಷಗಳಿದ್ದರೂ ಸಹ IM ಪ್ರ
 msgid "Stopped %s\n"
 msgstr "%s ಅನ್ನು ನಿಲ್ಲಿಸಲಾಗಿದೆ\n"
 
-#, fuzzy
-#~ msgid ""
-#~ "You are running under the different version of imsettings.\n"
-#~ "Try imsettings-reload -f. that may resolves this issue but note that it "
-#~ "will causes restarting Input Method\n"
-#~ msgstr ""
-#~ "imsettings ನ ಆವೃತ್ತಿಯು ತಾಳೆಯಾಗುತ್ತಿಲ್ಲ.\n"
-#~ "imsettings-reload -f ಅನ್ನು ಚಲಾಯಿಸಿದಾಗ ಈ ಸಮಸ್ಯೆಯು ನಿವಾರಣೆಗೊಳ್ಳಬಹುದು ಆದರೆ "
-#~ "ಇದರಿಂದ ಇನ್‌ಪುಟ್ ವಿಧಾನವೂ ಸಹ ಮರಳಿ ಆರಂಭಿಸಲ್ಪಡುತ್ತದೆ ಎಂಬುದನ್ನು ನೆನಪಿಡಿ\n"
-
-#~ msgid "A XIM server name"
-#~ msgstr "XIM ಪರಿಚಾರಕದ ಹೆಸರು"
-
-#, fuzzy
-#~ msgid ""
-#~ "When this option is enabled, all of key events will be sent to Input "
-#~ "Method synchronously.  This might affects a performance."
-#~ msgstr ""
-#~ "ಈ ಆಯ್ಕೆಯನ್ನು ಶಕ್ತಗೊಳಿಸಿದಾಗ, ಎಲ್ಲಾ ಕೀಲಿ ಘಟನೆಗಳನ್ನು ಏಕಕಾಲಕ್ಕೆ ಇನ್‌ಪುಟ್ ವಿಧಾನಕ್ಕೆ "
-#~ "ಕಳುಹಿಸಲಾಗುವುದು. ಇದು ಕಾರ್ಯಕ್ಷಮತೆಯ ಮೇಲೆ ಪರಿಣಾಮ ಬೀರುತ್ತದೆ."
-
-#~ msgid ""
-#~ "When this option is enabled, all of key events will be sent to Input "
-#~ "Method synchronously. this might affects a performance."
-#~ msgstr ""
-#~ "ಈ ಆಯ್ಕೆಯನ್ನು ಶಕ್ತಗೊಳಿಸಿದಾಗ, ಎಲ್ಲಾ ಕೀಲಿ ಘಟನೆಗಳನ್ನು ಏಕಕಾಲಕ್ಕೆ ಇನ್‌ಪುಟ್ ವಿಧಾನಕ್ಕೆ "
-#~ "ಕಳುಹಿಸಲಾಗುವುದು. ಇದು ಕಾರ್ಯಕ್ಷಮತೆಯ ಮೇಲೆ ಪರಿಣಾಮ ಬೀರುತ್ತದೆ."
