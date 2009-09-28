@@ -1,3 +1,24 @@
+0.107.3 -> 0.107.4
+=====================
+* Bug Fixes:
+  * rhbz#520976: Fix aborting after DBus session closed.
+  * rhbz#522689: Fix keeping IM process running as the defunct process.
+  * rhbz#523349: Update the IM information as needed if the configuration is written in the script.
+* Translation updated:
+  * Catalan
+  * Gujarati
+  * Hindi
+  * Japanese
+  * Kannada
+  * Korean
+  * Malayalam
+  * Marathi
+  * Oriya
+  * Polish
+  * Simplified Chinese
+  * Tamil
+  * Traditional Chinese
+
 0.107.2 -> 0.107.3
 =====================
 * Bug Fixes:

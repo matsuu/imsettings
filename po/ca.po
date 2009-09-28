@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser 0.3.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-10 17:02+0900\n"
+"POT-Creation-Date: 2009-09-28 21:22+0900\n"
 "PO-Revision-Date: 2009-09-19 14:38+0900\n"
 "Last-Translator: Xavier Conde Rueda <xavi.conde@gmail.com>\n"
 "Language-Team: none\n"
@@ -44,8 +44,8 @@ msgid ""
 "If \"true\", all messages will be delivered through libnotify, otherwise "
 "only error and warning messages."
 msgstr ""
-"Si és «cert», tots els missatges s'entregaran mitjançant libnotifiy, "
-"en cas contrari només els d'avís i error." 
+"Si és «cert», tots els missatges s'entregaran mitjançant libnotifiy, en cas "
+"contrari només els d'avís i error."
 
 #: ../applet/imsettings-applet.schemas.in.h:4
 msgid "If true, the icon will be displayed at the systray."
@@ -64,11 +64,11 @@ msgid ""
 "set the option to the special string \"disabled\", then there will be no "
 "keybinding for this."
 msgstr ""
-"La drecera de teclat que connecta o desconnecta el mètode d'entrada. El format "
-"és \"&lt;Control&gt;a\" o \"&lt;Shift&gt;&lt;"
-"Alt&gt;F1\". L'analitzador permet fer servir majúscules o minúscules, "
-"també abreviatures com ara \"&lt;Ctl&gt;\" i \"&lt;Ctrl&gt;\". Si feu servir "
-"la cadena especial \"disabled\", no hi haurà cap drecera de teclat per això."
+"La drecera de teclat que connecta o desconnecta el mètode d'entrada. El "
+"format és \"&lt;Control&gt;a\" o \"&lt;Shift&gt;&lt;Alt&gt;F1\". "
+"L'analitzador permet fer servir majúscules o minúscules, també abreviatures "
+"com ara \"&lt;Ctl&gt;\" i \"&lt;Ctrl&gt;\". Si feu servir la cadena especial "
+"\"disabled\", no hi haurà cap drecera de teclat per això."
 
 #: ../applet/imsettings-applet.schemas.in.h:7 ../applet/main.c:714
 msgid ""
@@ -132,7 +132,8 @@ msgstr "No es pot emmagatzemar un valor al GConf"
 #: ../applet/main.c:472
 #, c-format
 msgid "The acceleration key %s may be invalid. disabled it temporarily."
-msgstr "La drecera de teclat %s pot ser invàlida. S'ha inhabilitat temporalment."
+msgstr ""
+"La drecera de teclat %s pot ser invàlida. S'ha inhabilitat temporalment."
 
 #: ../applet/main.c:474
 msgid "Unable to set up the acceleration key"
@@ -202,8 +203,9 @@ msgstr ""
 #.
 #: ../applet/main.c:986
 msgid "Left-click on the icon to connect to/disconnect from Input Method."
-msgstr "Cliqueu amb el botó esquerre per connectar-se o deconnectar del "
-"mètode d'entrada."
+msgstr ""
+"Cliqueu amb el botó esquerre per connectar-se o deconnectar del mètode "
+"d'entrada."
 
 #. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
 #. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
@@ -251,12 +253,12 @@ msgid "Child widget to appear next to the menu text"
 msgstr "Control fill que apareixerà al costat del text del menú"
 
 #: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:699
-#: ../src/factory.c:1407
+#: ../src/factory.c:1446
 msgid "Replace the running settings daemon with new instance."
 msgstr "Reemplaça el dimoni de configuració en execució amb la nova instància."
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:1433 ../utils/imsettings-reload.c:63
+#: ../src/factory.c:1472 ../utils/imsettings-reload.c:63
 #: ../utils/imsettings-restart.c:70 ../utils/imsettings-start.c:71
 #: ../utils/imsettings-stop.c:69
 msgid "Unknown error in parsing the command lines."
@@ -274,7 +276,8 @@ msgstr "Aplicació ajudant per a l'imsettings"
 msgid ""
 "Helper application that delivers GTK+ immodule name between GConf and Xfconf"
 msgstr ""
-"Aplicació ajudant que proporciona el mòdul d'entrada GTK+ entre el GConf i l'Xfconf"
+"Aplicació ajudant que proporciona el mòdul d'entrada GTK+ entre el GConf i "
+"l'Xfconf"
 
 #: ../backends/xim/loopback.c:223
 msgid "Synchronous"
@@ -304,11 +307,11 @@ msgstr "Sortida dels registres de depuració"
 msgid "XIM server connects to, for debugging purpose only"
 msgstr "Servidor XIM al qual connectar-se, per motius de depuració"
 
-#: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:661
+#: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:685
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:681
+#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:705
 msgid "XIM server name"
 msgstr "Nom del servidor XIM"
 
@@ -324,135 +327,135 @@ msgstr "Senyals per a la classe de protocol"
 msgid "A structure of signals for Protocol class"
 msgstr "Una estructura de senyals per a la classe de protocol"
 
-#: ../imsettings/imsettings-info.c:633 ../imsettings/imsettings-info.c:634
+#: ../imsettings/imsettings-info.c:657 ../imsettings/imsettings-info.c:658
 msgid "Home directory"
 msgstr "Directori d'inici"
 
-#: ../imsettings/imsettings-info.c:640
+#: ../imsettings/imsettings-info.c:664
 msgid "Language"
 msgstr "Idioma"
 
-#: ../imsettings/imsettings-info.c:641
+#: ../imsettings/imsettings-info.c:665
 msgid "A language to pull the information in."
 msgstr "Un idioma on ficar-hi la informació."
 
-#: ../imsettings/imsettings-info.c:647
+#: ../imsettings/imsettings-info.c:671
 msgid "Filename"
 msgstr "Nom de fitxer"
 
-#: ../imsettings/imsettings-info.c:648
+#: ../imsettings/imsettings-info.c:672
 msgid "A filename referring to the IM information."
 msgstr "Un nom de fitxer que es refereix a la informació del mètode d'entrada."
 
-#: ../imsettings/imsettings-info.c:654 ../imsettings/imsettings-info.c:655
+#: ../imsettings/imsettings-info.c:678 ../imsettings/imsettings-info.c:679
 msgid "Short Description"
 msgstr "Descripció breu"
 
-#: ../imsettings/imsettings-info.c:662
+#: ../imsettings/imsettings-info.c:686
 msgid "Whether or not IM is a XIM server."
 msgstr "Si el mètode d'entrada és un servidor XIM."
 
-#: ../imsettings/imsettings-info.c:668
+#: ../imsettings/imsettings-info.c:692
 msgid "GTK+ immodule"
 msgstr "Mòdul d'entrada GTK+"
 
-#: ../imsettings/imsettings-info.c:669
+#: ../imsettings/imsettings-info.c:693
 msgid "A module name used for GTK+"
 msgstr "Un nom de mòdul usat pel GTK+"
 
-#: ../imsettings/imsettings-info.c:674
+#: ../imsettings/imsettings-info.c:698
 msgid "Qt immodule"
 msgstr "Mètode d'entrada usat pel Qt"
 
-#: ../imsettings/imsettings-info.c:675
+#: ../imsettings/imsettings-info.c:699
 msgid "A module name used for Qt"
 msgstr "Un nom de mòdul usat per Qt"
 
-#: ../imsettings/imsettings-info.c:680
+#: ../imsettings/imsettings-info.c:704
 msgid "XIM name"
 msgstr "Nom de l'XIM"
 
-#: ../imsettings/imsettings-info.c:686
+#: ../imsettings/imsettings-info.c:710
 msgid "Ignore flag"
 msgstr "Ignora el senyalador"
 
-#: ../imsettings/imsettings-info.c:687
+#: ../imsettings/imsettings-info.c:711
 msgid "A flag to not list up."
 msgstr "Un senyalador que no es llistarà."
 
-#: ../imsettings/imsettings-info.c:692
+#: ../imsettings/imsettings-info.c:716
 msgid "XIM server program name"
 msgstr "Nom del programa del servidor XIM"
 
-#: ../imsettings/imsettings-info.c:693
+#: ../imsettings/imsettings-info.c:717
 msgid "XIM server program to be run"
 msgstr "Nom del programa servidor XIM a executar"
 
-#: ../imsettings/imsettings-info.c:698
+#: ../imsettings/imsettings-info.c:722
 msgid "XIM server program's options"
 msgstr "Opcions del programa servidor XIM"
 
-#: ../imsettings/imsettings-info.c:699
+#: ../imsettings/imsettings-info.c:723
 msgid "Command line options for XIM server program"
 msgstr "Opcions de la línia d'ordres per al programa servidor XIM"
 
-#: ../imsettings/imsettings-info.c:704
+#: ../imsettings/imsettings-info.c:728
 msgid "Preference program name"
 msgstr "Nom del programa de preferència"
 
-#: ../imsettings/imsettings-info.c:705
+#: ../imsettings/imsettings-info.c:729
 msgid "Preference program to be run"
 msgstr "Programa de preferència a executar"
 
-#: ../imsettings/imsettings-info.c:710
+#: ../imsettings/imsettings-info.c:734
 msgid "Preference program's options"
 msgstr "Opcions del programa de preferència"
 
-#: ../imsettings/imsettings-info.c:711
+#: ../imsettings/imsettings-info.c:735
 msgid "Command line options for preference program"
 msgstr "Opcions de línia d'ordres per al programa de preferència"
 
-#: ../imsettings/imsettings-info.c:716
+#: ../imsettings/imsettings-info.c:740
 msgid "Auxiliary program name"
 msgstr "Nom del programa auxiliar"
 
-#: ../imsettings/imsettings-info.c:717
+#: ../imsettings/imsettings-info.c:741
 msgid "Auxiliary program to be run"
 msgstr "Programa auxiliar a executar"
 
-#: ../imsettings/imsettings-info.c:722
+#: ../imsettings/imsettings-info.c:746
 msgid "Auxiliary program's options"
 msgstr "Opcions del programa auxiliar"
 
-#: ../imsettings/imsettings-info.c:723
+#: ../imsettings/imsettings-info.c:747
 msgid "Command line options for auxiliary program"
 msgstr "Opcions de línia d'ordres per al programa auxiliar"
 
-#: ../imsettings/imsettings-info.c:728 ../imsettings/imsettings-info.c:729
+#: ../imsettings/imsettings-info.c:752 ../imsettings/imsettings-info.c:753
 msgid "Long Description"
 msgstr "Descripció llarga"
 
-#: ../imsettings/imsettings-info.c:734
+#: ../imsettings/imsettings-info.c:758
 msgid "Icon"
 msgstr "Icona"
 
-#: ../imsettings/imsettings-info.c:735
+#: ../imsettings/imsettings-info.c:759
 msgid "Icon filename to be used on GUI"
 msgstr "Nom de fitxer de la icona a emprar en la interfície"
 
-#: ../imsettings/imsettings-info.c:740
+#: ../imsettings/imsettings-info.c:770
 msgid "System Default"
 msgstr "Predeterminat del sistema"
 
-#: ../imsettings/imsettings-info.c:741
+#: ../imsettings/imsettings-info.c:771
 msgid "Whether or not IM is a system default."
 msgstr "Si el mètode d'entrada és el predeterminat del sistema."
 
-#: ../imsettings/imsettings-info.c:746
+#: ../imsettings/imsettings-info.c:776
 msgid "User Default"
 msgstr "Predeterminat de l'usuari"
 
-#: ../imsettings/imsettings-info.c:747
+#: ../imsettings/imsettings-info.c:777
 msgid "Whether or not IM is an user default."
 msgstr "Si el mètode d'entrada és el predeterminat de l'usuari."
 
@@ -492,7 +495,8 @@ msgstr "Idioma"
 
 #: ../imsettings/imsettings-request.c:182
 msgid "Locale to get the imsettings information"
-msgstr "Idioma del qual s'obtindrà la informació de configuració de mètodes d'entrada"
+msgstr ""
+"Idioma del qual s'obtindrà la informació de configuració de mètodes d'entrada"
 
 #: ../imsettings/imsettings-request.c:243
 #: ../imsettings/imsettings-request.c:270
@@ -520,69 +524,69 @@ msgstr ""
 "No s'ha pogut invocar el mètode «%s»:\n"
 "  %s"
 
-#: ../src/factory.c:436
+#: ../src/factory.c:455
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
 "rapidly died many times. See .imsettings.log for more details."
 msgstr ""
-"No s'ha pogut aixecar el procés perquè el procés %s del mètode d'entrada "
-"per a %s ha mort moltes vegades. Veieu .imsettings.log per a més detalls."
+"No s'ha pogut aixecar el procés perquè el procés %s del mètode d'entrada per "
+"a %s ha mort moltes vegades. Veieu .imsettings.log per a més detalls."
 
-#: ../src/factory.c:437
+#: ../src/factory.c:456
 msgid "Main"
 msgstr "Principal"
 
-#: ../src/factory.c:437
+#: ../src/factory.c:456
 msgid "AUX"
 msgstr "AUX"
 
-#: ../src/factory.c:439 ../src/factory.c:456
+#: ../src/factory.c:458 ../src/factory.c:475
 msgid "Unable to keep Input Method running"
 msgstr "El mètode d'entrada no s'ha pogut executar"
 
-#: ../src/factory.c:630
+#: ../src/factory.c:666
 #, c-format
 msgid "No such Input Method is running: %s"
 msgstr "No s'està executant aquest mètode d'entrada: %s"
 
-#: ../src/factory.c:644
+#: ../src/factory.c:677
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "No s'ha pogut enviar un senyal al procés %s correctament."
 
-#: ../src/factory.c:671 ../src/factory.c:1161
+#: ../src/factory.c:710 ../src/factory.c:1200
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr "No s'ha pogut obtenir un directori d'inici."
 
-#: ../src/factory.c:688
+#: ../src/factory.c:727
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "No s'ha pogut recuperar el fitxer de còpia de seguretat: %s"
 
-#: ../src/factory.c:700
+#: ../src/factory.c:739
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "No s'ha ogut crear un fitxer de còpia de seguretat: %s"
 
-#: ../src/factory.c:709
+#: ../src/factory.c:748
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "No s'ha pogut suprimir un fitxer .xinputrc: %s"
 
-#: ../src/factory.c:720
+#: ../src/factory.c:759
 #, c-format
 msgid "Failed to make a symlink: %s"
 msgstr "No s'ha pogut crear l'enllaç simbòlic: %s"
 
-#: ../src/factory.c:872 ../src/factory.c:911
+#: ../src/factory.c:911 ../src/factory.c:950
 #, c-format
 msgid "No input methods available on your system."
 msgstr "No hi ha cap mètode d'entrada disponible en el vostre sistema."
 
-#: ../src/factory.c:956 ../src/factory.c:1018 ../src/factory.c:1056
-#: ../src/factory.c:1223
+#: ../src/factory.c:995 ../src/factory.c:1057 ../src/factory.c:1095
+#: ../src/factory.c:1262
 #, c-format
 msgid ""
 "No such input method on your system: %s\n"
@@ -591,63 +595,64 @@ msgstr ""
 "No existeix el mètode d'entrada en el vostre sistema: %s\n"
 "  Detalls: %s"
 
-#: ../src/factory.c:1067
+#: ../src/factory.c:1106
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr "No hi ha cap servidor XIM disponible a %s"
 
-#: ../src/factory.c:1294 ../src/monitor.c:237
+#: ../src/factory.c:1333 ../src/monitor.c:237
 msgid "xinputrc directory"
 msgstr "Directori de l'xinputrc"
 
-#: ../src/factory.c:1295
+#: ../src/factory.c:1334
 msgid "The name of the directory for the system wide xinputrc file."
 msgstr "El nom del directori per al fitxer xinputrc del sistema."
 
-#: ../src/factory.c:1300 ../src/monitor.c:243
+#: ../src/factory.c:1339 ../src/monitor.c:243
 msgid "xinput directory"
 msgstr "directori de l'xinput"
 
-#: ../src/factory.c:1301
+#: ../src/factory.c:1340
 msgid "The name of the directory for IM configurations."
 msgstr "El nom del directori per a les configuracions dels mètodes d'entrada."
 
-#: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
+#: ../src/factory.c:1345 ../src/factory.c:1346 ../src/monitor.c:249
 #: ../src/monitor.c:250
 msgid "home directory"
 msgstr "directori d'inici"
 
-#: ../src/factory.c:1312
+#: ../src/factory.c:1351
 msgid "logging"
 msgstr "registre"
 
-#: ../src/factory.c:1313
+#: ../src/factory.c:1352
 msgid "A flag if logging facility is enabled or not."
 msgstr "Un indicador de si està habilitat el registre."
 
-#: ../src/factory.c:1408
+#: ../src/factory.c:1447
 msgid ""
 "Specify the name of the directory of the system-wide xinputrc file (for "
 "debugging only)"
 msgstr ""
-"Especifiqueu el nom del directori del fitxer del sistema xinputrc (només "
-"per a depurar)"
+"Especifiqueu el nom del directori del fitxer del sistema xinputrc (només per "
+"a depurar)"
 
-#: ../src/factory.c:1408 ../src/factory.c:1409 ../src/factory.c:1410
+#: ../src/factory.c:1447 ../src/factory.c:1448 ../src/factory.c:1449
 msgid "DIR"
 msgstr "DIR"
 
-#: ../src/factory.c:1409
+#: ../src/factory.c:1448
 msgid ""
 "Specify the name of the directory for IM configurations (for debugging only)"
 msgstr ""
-"Especifiqueu el nom del directori per a les configuracions dels mètodes d'entrada (només per a depuració)"
+"Especifiqueu el nom del directori per a les configuracions dels mètodes "
+"d'entrada (només per a depuració)"
 
-#: ../src/factory.c:1410
+#: ../src/factory.c:1449
 msgid "A home directory (debugging only)"
 msgstr "Un directori d'inici (només per depurar)"
 
-#: ../src/factory.c:1411
+#: ../src/factory.c:1450
 msgid "Do not create a log file."
 msgstr "No creïs un fitxer de registre."
 
@@ -700,8 +705,8 @@ msgid ""
 "No Input Method running. please specify Input Method name explicitly if "
 "necessary.\n"
 msgstr ""
-"Cap mètode d'entrada està corrent. Especifiqueu explícitament el nom "
-"del mètode d'entrada si calguès.\n"
+"Cap mètode d'entrada està corrent. Especifiqueu explícitament el nom del "
+"mètode d'entrada si calguès.\n"
 
 #: ../utils/imsettings-info.c:86
 #, c-format
@@ -785,5 +790,3 @@ msgstr "Força l'aturada del procés del ME tot i els possibles errors."
 #, c-format
 msgid "Stopped %s\n"
 msgstr "S'ha aturat %s\n"
-
-

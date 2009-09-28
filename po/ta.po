@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.trunk.ta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-10 17:02+0900\n"
+"POT-Creation-Date: 2009-09-28 21:22+0900\n"
 "PO-Revision-Date: 2009-09-10 15:55+0530\n"
 "Last-Translator: I. Felix <ifelix@redhat.com>\n"
 "Language-Team: Tamil <fedora-trans-ta@redhat.com>\n"
@@ -255,12 +255,12 @@ msgid "Child widget to appear next to the menu text"
 msgstr "சேய் விட் மெனு உரைக்கு அடுத்து தோன்றுகிறது"
 
 #: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:699
-#: ../src/factory.c:1407
+#: ../src/factory.c:1446
 msgid "Replace the running settings daemon with new instance."
 msgstr "புதிய நிகழ்வுடன் இயங்கும் டீமான் அமைவுகளை மாற்றவும்"
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:1433 ../utils/imsettings-reload.c:63
+#: ../src/factory.c:1472 ../utils/imsettings-reload.c:63
 #: ../utils/imsettings-restart.c:70 ../utils/imsettings-start.c:71
 #: ../utils/imsettings-stop.c:69
 msgid "Unknown error in parsing the command lines."
@@ -308,11 +308,11 @@ msgstr "பிழைத்திருத்த பதிவுகளை வெ�
 msgid "XIM server connects to, for debugging purpose only"
 msgstr "XIM சேவையகம் இணைக்க, பிழைத்திருத்த நோக்கத்திற்கு மட்டும்"
 
-#: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:661
+#: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:685
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:681
+#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:705
 msgid "XIM server name"
 msgstr "XIM சேவையக பெயர்"
 
@@ -328,135 +328,135 @@ msgstr "நெறிமுறை வகுப்புக்கான சிக�
 msgid "A structure of signals for Protocol class"
 msgstr "நெறிமுறை வகுப்புக்கான சிக்னல்களின் ஒரு வடிவம்"
 
-#: ../imsettings/imsettings-info.c:633 ../imsettings/imsettings-info.c:634
+#: ../imsettings/imsettings-info.c:657 ../imsettings/imsettings-info.c:658
 msgid "Home directory"
 msgstr "இல்ல அடைவு"
 
-#: ../imsettings/imsettings-info.c:640
+#: ../imsettings/imsettings-info.c:664
 msgid "Language"
 msgstr "மொழி"
 
-#: ../imsettings/imsettings-info.c:641
+#: ../imsettings/imsettings-info.c:665
 msgid "A language to pull the information in."
 msgstr "ஒரு மொழி எடுக்கும் தகவல்."
 
-#: ../imsettings/imsettings-info.c:647
+#: ../imsettings/imsettings-info.c:671
 msgid "Filename"
 msgstr "கோப்பு பெயர்"
 
-#: ../imsettings/imsettings-info.c:648
+#: ../imsettings/imsettings-info.c:672
 msgid "A filename referring to the IM information."
 msgstr "IM தகவலை குறிப்பிடும் கோப்பு பெயர்."
 
-#: ../imsettings/imsettings-info.c:654 ../imsettings/imsettings-info.c:655
+#: ../imsettings/imsettings-info.c:678 ../imsettings/imsettings-info.c:679
 msgid "Short Description"
 msgstr "சிறிய விவரம்"
 
-#: ../imsettings/imsettings-info.c:662
+#: ../imsettings/imsettings-info.c:686
 msgid "Whether or not IM is a XIM server."
 msgstr "IM XIM சேவையகமாக இருக்க வேண்டுமா அல்லது வேண்டாமா."
 
-#: ../imsettings/imsettings-info.c:668
+#: ../imsettings/imsettings-info.c:692
 msgid "GTK+ immodule"
 msgstr "GTK+ immodule"
 
-#: ../imsettings/imsettings-info.c:669
+#: ../imsettings/imsettings-info.c:693
 msgid "A module name used for GTK+"
 msgstr "GTK+க்கு பயன்படுத்தப்பட்ட ஒரு தொகுதி பெயர்"
 
-#: ../imsettings/imsettings-info.c:674
+#: ../imsettings/imsettings-info.c:698
 msgid "Qt immodule"
 msgstr "Qt immodule"
 
-#: ../imsettings/imsettings-info.c:675
+#: ../imsettings/imsettings-info.c:699
 msgid "A module name used for Qt"
 msgstr "Qtக்கு பயன்படுத்தப்பட்ட ஒரு தொகுதி பெயர்"
 
-#: ../imsettings/imsettings-info.c:680
+#: ../imsettings/imsettings-info.c:704
 msgid "XIM name"
 msgstr "XIM பெயர்"
 
-#: ../imsettings/imsettings-info.c:686
+#: ../imsettings/imsettings-info.c:710
 msgid "Ignore flag"
 msgstr "கொடியை தவிர்த்தல்"
 
-#: ../imsettings/imsettings-info.c:687
+#: ../imsettings/imsettings-info.c:711
 msgid "A flag to not list up."
 msgstr "பட்டியலிட வேண்டாத ஒரு கொடி"
 
-#: ../imsettings/imsettings-info.c:692
+#: ../imsettings/imsettings-info.c:716
 msgid "XIM server program name"
 msgstr "XIM சேவையக நிரல் பெயர்"
 
-#: ../imsettings/imsettings-info.c:693
+#: ../imsettings/imsettings-info.c:717
 msgid "XIM server program to be run"
 msgstr "இயங்க வேண்டிய XIM சேவையக பெயர்"
 
-#: ../imsettings/imsettings-info.c:698
+#: ../imsettings/imsettings-info.c:722
 msgid "XIM server program's options"
 msgstr "XIM சேவையக நிரலின் விருப்பங்கள்"
 
-#: ../imsettings/imsettings-info.c:699
+#: ../imsettings/imsettings-info.c:723
 msgid "Command line options for XIM server program"
 msgstr "XIM சேவையக நிரலுக்கான கட்டளை வரி விருப்பங்கள்"
 
-#: ../imsettings/imsettings-info.c:704
+#: ../imsettings/imsettings-info.c:728
 msgid "Preference program name"
 msgstr "விருப்ப நிரல் பெயர்"
 
-#: ../imsettings/imsettings-info.c:705
+#: ../imsettings/imsettings-info.c:729
 msgid "Preference program to be run"
 msgstr "இயங்க வேண்டிய விருப்ப நிரல்"
 
-#: ../imsettings/imsettings-info.c:710
+#: ../imsettings/imsettings-info.c:734
 msgid "Preference program's options"
 msgstr "விருப்ப நிரலின் விருப்பங்கள்"
 
-#: ../imsettings/imsettings-info.c:711
+#: ../imsettings/imsettings-info.c:735
 msgid "Command line options for preference program"
 msgstr "விருப்பமான நிரலுக்கான கட்டளை வரி விருப்பங்கள்"
 
-#: ../imsettings/imsettings-info.c:716
+#: ../imsettings/imsettings-info.c:740
 msgid "Auxiliary program name"
 msgstr "கூடுதல் நிரல் பெயர்"
 
-#: ../imsettings/imsettings-info.c:717
+#: ../imsettings/imsettings-info.c:741
 msgid "Auxiliary program to be run"
 msgstr "இயங்க வேண்டிய கூடுதல் நிரல்"
 
-#: ../imsettings/imsettings-info.c:722
+#: ../imsettings/imsettings-info.c:746
 msgid "Auxiliary program's options"
 msgstr "கூடுதல் நிரலின் விருப்பங்கள்"
 
-#: ../imsettings/imsettings-info.c:723
+#: ../imsettings/imsettings-info.c:747
 msgid "Command line options for auxiliary program"
 msgstr "கூடுதல் நிரலுக்கான கட்டளை வரி விருப்பங்கள்"
 
-#: ../imsettings/imsettings-info.c:728 ../imsettings/imsettings-info.c:729
+#: ../imsettings/imsettings-info.c:752 ../imsettings/imsettings-info.c:753
 msgid "Long Description"
 msgstr "நீண்ட விவரம்"
 
-#: ../imsettings/imsettings-info.c:734
+#: ../imsettings/imsettings-info.c:758
 msgid "Icon"
 msgstr "சின்னம்"
 
-#: ../imsettings/imsettings-info.c:735
+#: ../imsettings/imsettings-info.c:759
 msgid "Icon filename to be used on GUI"
 msgstr "GUIஇல் பயன்படுத்த வேண்டிய சின்னத்தின் கோப்பு பெயர்"
 
-#: ../imsettings/imsettings-info.c:740
+#: ../imsettings/imsettings-info.c:770
 msgid "System Default"
 msgstr "கணினி முன்னுரிமை"
 
-#: ../imsettings/imsettings-info.c:741
+#: ../imsettings/imsettings-info.c:771
 msgid "Whether or not IM is a system default."
 msgstr "IM கணினி முன்னிருப்பாக இருக்க வேண்டுமா அல்லது வேண்டாமா."
 
-#: ../imsettings/imsettings-info.c:746
+#: ../imsettings/imsettings-info.c:776
 msgid "User Default"
 msgstr "பயனர் முன்னிருப்பு"
 
-#: ../imsettings/imsettings-info.c:747
+#: ../imsettings/imsettings-info.c:777
 msgid "Whether or not IM is an user default."
 msgstr "IM பயனர் முன்னிருப்பாக இருக்க வேண்டுமா அல்லது வேண்டாமா."
 
@@ -524,7 +524,7 @@ msgstr ""
 "முறை `%s'ஐ எடுக்க முடியவில்லை:\n"
 "  %s"
 
-#: ../src/factory.c:436
+#: ../src/factory.c:455
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
@@ -533,60 +533,60 @@ msgstr ""
 "செயலை கொண்டுவர கொடுக்கிறது ஏனெனில் %s உள்ளீடு முறை செயல் %s க்கு பல முறைகள் விரைவாக "
 "செயலிழக்கிறது. மேலும் விவரங்களுக்கு .imsettings.log ஐ பார்க்கவும்."
 
-#: ../src/factory.c:437
+#: ../src/factory.c:456
 msgid "Main"
 msgstr "முதன்மை"
 
-#: ../src/factory.c:437
+#: ../src/factory.c:456
 msgid "AUX"
 msgstr "AUX"
 
-#: ../src/factory.c:439 ../src/factory.c:456
+#: ../src/factory.c:458 ../src/factory.c:475
 msgid "Unable to keep Input Method running"
 msgstr "உள்ளீடு முறை இயங்குவதை வைத்திருக்க முடியவில்லை"
 
-#: ../src/factory.c:630
+#: ../src/factory.c:666
 #, c-format
 msgid "No such Input Method is running: %s"
 msgstr "இதுபோன்ற உள்ளீடு முறை இயங்கவில்லை: %s"
 
-#: ../src/factory.c:644
+#: ../src/factory.c:677
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "ஒரு சிக்னலை %s செயலுக்கு அனுப்ப முடியவில்லை."
 
-#: ../src/factory.c:671 ../src/factory.c:1161
+#: ../src/factory.c:710 ../src/factory.c:1200
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr "இல்ல அடைவில் ஒரு இடத்தைப் பெற முடியவில்லை."
 
-#: ../src/factory.c:688
+#: ../src/factory.c:727
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "பின்சேமிப்பு கோப்பினை திரும்ப எடுக்க முடியவில்லை: %s"
 
-#: ../src/factory.c:700
+#: ../src/factory.c:739
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "ஒரு பின் சேமிப்பு கோப்பினை உருவாக்க முடியவில்லை: %s"
 
-#: ../src/factory.c:709
+#: ../src/factory.c:748
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "ஒரு .xinputrc கோப்பினை நீக்க முடியவில்லை: %s"
 
-#: ../src/factory.c:720
+#: ../src/factory.c:759
 #, c-format
 msgid "Failed to make a symlink: %s"
 msgstr "ஒரு symlinkஐ உருவாக்க முடியவில்லை: %s"
 
-#: ../src/factory.c:872 ../src/factory.c:911
+#: ../src/factory.c:911 ../src/factory.c:950
 #, c-format
 msgid "No input methods available on your system."
 msgstr "உங்கள் கணினியில் உள்ளீடு முறைகள் எதுவும் இல்லை."
 
-#: ../src/factory.c:956 ../src/factory.c:1018 ../src/factory.c:1056
-#: ../src/factory.c:1223
+#: ../src/factory.c:995 ../src/factory.c:1057 ../src/factory.c:1095
+#: ../src/factory.c:1262
 #, c-format
 msgid ""
 "No such input method on your system: %s\n"
@@ -595,60 +595,60 @@ msgstr ""
 "உங்கள் கணினியில் இதுபோன்ற உள்ளீடு முறை இல்லை: %s\n"
 "  விவரங்கள்: %s"
 
-#: ../src/factory.c:1067
+#: ../src/factory.c:1106
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr "%s இல் XIM சேவையகம் இல்லை"
 
-#: ../src/factory.c:1294 ../src/monitor.c:237
+#: ../src/factory.c:1333 ../src/monitor.c:237
 msgid "xinputrc directory"
 msgstr "xinputrc அடைவு"
 
-#: ../src/factory.c:1295
+#: ../src/factory.c:1334
 msgid "The name of the directory for the system wide xinputrc file."
 msgstr "ஒரு அடைவு கணினி பரந்த xinputrc ஆன் வைத்திருத்தல்."
 
-#: ../src/factory.c:1300 ../src/monitor.c:243
+#: ../src/factory.c:1339 ../src/monitor.c:243
 msgid "xinput directory"
 msgstr "xinput அடைவு"
 
-#: ../src/factory.c:1301
+#: ../src/factory.c:1340
 msgid "The name of the directory for IM configurations."
 msgstr "ஒரு அடைவு கணினி பரந்த IM கட்டமைப்புகளை ஆன் வைத்திருத்தல்."
 
-#: ../src/factory.c:1306 ../src/factory.c:1307 ../src/monitor.c:249
+#: ../src/factory.c:1345 ../src/factory.c:1346 ../src/monitor.c:249
 #: ../src/monitor.c:250
 msgid "home directory"
 msgstr "இல்ல அடைவு"
 
-#: ../src/factory.c:1312
+#: ../src/factory.c:1351
 msgid "logging"
 msgstr "பதிவுசெய்தல்"
 
-#: ../src/factory.c:1313
+#: ../src/factory.c:1352
 msgid "A flag if logging facility is enabled or not."
 msgstr "பதிவு செய்தல் வசதி செயல்படுத்தப்பட்டால் அல்லது இல்லையெனில் ஒரு கொடி"
 
-#: ../src/factory.c:1408
+#: ../src/factory.c:1447
 msgid ""
 "Specify the name of the directory of the system-wide xinputrc file (for "
 "debugging only)"
 msgstr "ஒரு அடைவு system-wide xinputrc கள் இருக்கும் (பிழைத்திருத்தம் மட்டும்)"
 
-#: ../src/factory.c:1408 ../src/factory.c:1409 ../src/factory.c:1410
+#: ../src/factory.c:1447 ../src/factory.c:1448 ../src/factory.c:1449
 msgid "DIR"
 msgstr "DIR"
 
-#: ../src/factory.c:1409
+#: ../src/factory.c:1448
 msgid ""
 "Specify the name of the directory for IM configurations (for debugging only)"
 msgstr "ஒரு அடைவு IM கட்டமைப்புகள் இருக்கும் (பிழைத்திருத்தத்திற்கு மட்டும்)"
 
-#: ../src/factory.c:1410
+#: ../src/factory.c:1449
 msgid "A home directory (debugging only)"
 msgstr "ஒரு இல்ல அடைவு (பிழைத்திருத்தம் மட்டும்)"
 
-#: ../src/factory.c:1411
+#: ../src/factory.c:1450
 msgid "Do not create a log file."
 msgstr "ஒரு பதிவு கோப்பினை உருவாக்க வேண்டாம்."
 

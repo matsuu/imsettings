@@ -1,3 +1,9 @@
+2009-09-28  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: bump the version to 0.107.4.
+
+	* NEWS: update.
+
 2009-09-17  Akira TAGOH  <tagoh@redhat.com>
 
 	* src/factory.c (_stop_process): get rid of the unnecessary increasing

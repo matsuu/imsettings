@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-10 17:02+0900\n"
+"POT-Creation-Date: 2009-09-28 21:22+0900\n"
 "PO-Revision-Date: 2009-09-16 01:02+0100\n"
 "Last-Translator: Rui Gouveia <rui.gouveia@globaltek.pt>\n"
 "Language-Team: pt <fedora-trans-pt@redhat.com>\n"
@@ -33,7 +33,9 @@ msgid "Enable this when accelerator keys etc doesn't work"
 msgstr ""
 
 #: ../applet/imsettings-applet.schemas.in.h:3
-msgid "If \"true\", all messages will be delivered through libnotify, otherwise only error and warning messages."
+msgid ""
+"If \"true\", all messages will be delivered through libnotify, otherwise "
+"only error and warning messages."
 msgstr ""
 
 #: ../applet/imsettings-applet.schemas.in.h:4
@@ -45,21 +47,26 @@ msgid "Show the status icon"
 msgstr "Mostrar o ícone de estado"
 
 #: ../applet/imsettings-applet.schemas.in.h:6
-msgid "The keybinding which connect to Input Method or disconnect from Input Method. The format looks like \"&lt;Control&gt;a\" or \"&lt;Shift&gt;&lt;Alt&gt;F1\". The parser is fairly liberal and allows lower or upper case, and also abbreviations such as \"&lt;Ctl&gt;\" and \"&lt;Ctrl&gt;\". If you set the option to the special string \"disabled\", then there will be no keybinding for this."
+msgid ""
+"The keybinding which connect to Input Method or disconnect from Input "
+"Method. The format looks like \"&lt;Control&gt;a\" or \"&lt;Shift&gt;&lt;"
+"Alt&gt;F1\". The parser is fairly liberal and allows lower or upper case, "
+"and also abbreviations such as \"&lt;Ctl&gt;\" and \"&lt;Ctrl&gt;\". If you "
+"set the option to the special string \"disabled\", then there will be no "
+"keybinding for this."
 msgstr ""
 
-#: ../applet/imsettings-applet.schemas.in.h:7
-#: ../applet/main.c:714
-msgid "When this option is enabled, all of key events will be sent to Input Method synchronously. This might affects a performance."
+#: ../applet/imsettings-applet.schemas.in.h:7 ../applet/main.c:714
+msgid ""
+"When this option is enabled, all of key events will be sent to Input Method "
+"synchronously. This might affects a performance."
 msgstr ""
 
 #: ../applet/imsettings-applet.schemas.in.h:8
 msgid "Whether to notify informations with libnotify"
 msgstr ""
 
-#: ../applet/main.c:148
-#: ../applet/main.c:181
-#: ../applet/main.c:221
+#: ../applet/main.c:148 ../applet/main.c:181 ../applet/main.c:221
 msgid "No detailed information"
 msgstr "Sem informação detalhada"
 
@@ -67,14 +74,15 @@ msgstr "Sem informação detalhada"
 msgid "Version-mismatch of im-settings-daemon"
 msgstr ""
 
-#: ../applet/main.c:178
-#: ../applet/main.c:258
+#: ../applet/main.c:178 ../applet/main.c:258
 #, c-format
 msgid "Unable to start %s"
 msgstr "Não foi possível iniciar %s"
 
 #: ../applet/main.c:192
-msgid " and the default Input Method has been changed. if you need to change that to anything else, please use im-chooser."
+msgid ""
+" and the default Input Method has been changed. if you need to change that "
+"to anything else, please use im-chooser."
 msgstr ""
 
 #: ../applet/main.c:198
@@ -82,14 +90,11 @@ msgstr ""
 msgid "Connected to %s.%s"
 msgstr "Ligado a %s.%s"
 
-#: ../applet/main.c:203
-#: ../applet/main.c:238
-#: ../applet/main.c:911
+#: ../applet/main.c:203 ../applet/main.c:238 ../applet/main.c:911
 msgid "Information"
 msgstr "Informação"
 
-#: ../applet/main.c:218
-#: ../applet/main.c:284
+#: ../applet/main.c:218 ../applet/main.c:284
 #, c-format
 msgid "Unable to stop %s"
 msgstr "Incapaz de parar %s"
@@ -98,13 +103,11 @@ msgstr "Incapaz de parar %s"
 msgid "Disconnected from Input Method"
 msgstr ""
 
-#: ../applet/main.c:262
-#: ../applet/main.c:288
+#: ../applet/main.c:262 ../applet/main.c:288
 msgid "maybe DBus related issue."
 msgstr ""
 
-#: ../applet/main.c:343
-#: ../applet/main.c:369
+#: ../applet/main.c:343 ../applet/main.c:369
 msgid "Unable to store a value to GConf"
 msgstr ""
 
@@ -147,7 +150,9 @@ msgid "_Grab key"
 msgstr "_Capturar tecla"
 
 #: ../applet/main.c:749
-msgid "Please click Grab key button and press the key combinations you want to assign for the acceleration key. Press Backspace key to disable this feature."
+msgid ""
+"Please click Grab key button and press the key combinations you want to "
+"assign for the acceleration key. Press Backspace key to disable this feature."
 msgstr ""
 
 #: ../applet/main.c:826
@@ -164,7 +169,10 @@ msgid "Click to disconnect from Input Method"
 msgstr "Usar um método _personalizado"
 
 #: ../applet/main.c:912
-msgid "The default Input Method isn't yet configured. To get this working, you need to set up that on im-chooser or select one from the menu which appears by the right click first."
+msgid ""
+"The default Input Method isn't yet configured. To get this working, you need "
+"to set up that on im-chooser or select one from the menu which appears by "
+"the right click first."
 msgstr ""
 
 #. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
@@ -219,18 +227,14 @@ msgstr "Widget de imagem"
 msgid "Child widget to appear next to the menu text"
 msgstr "Widget filho a apresentar ao lado do texto de menu"
 
-#: ../backends/gconf/main.c:184
-#: ../imsettings/imsettings-observer.c:699
-#: ../src/factory.c:1407
+#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:699
+#: ../src/factory.c:1446
 msgid "Replace the running settings daemon with new instance."
 msgstr ""
 
-#: ../backends/gconf/main.c:206
-#: ../backends/xim/main.c:179
-#: ../src/factory.c:1433
-#: ../utils/imsettings-reload.c:63
-#: ../utils/imsettings-restart.c:70
-#: ../utils/imsettings-start.c:71
+#: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
+#: ../src/factory.c:1472 ../utils/imsettings-reload.c:63
+#: ../utils/imsettings-restart.c:70 ../utils/imsettings-start.c:71
 #: ../utils/imsettings-stop.c:69
 msgid "Unknown error in parsing the command lines."
 msgstr ""
@@ -245,7 +249,8 @@ msgid "Helper application for imsettings"
 msgstr ""
 
 #: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid "Helper application that delivers GTK+ immodule name between GConf and Xfconf"
+msgid ""
+"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
 msgstr ""
 
 #: ../backends/xim/loopback.c:223
@@ -276,13 +281,11 @@ msgstr "Mostrar os registos de Depuração"
 msgid "XIM server connects to, for debugging purpose only"
 msgstr ""
 
-#: ../backends/xim/main.c:145
-#: ../imsettings/imsettings-info.c:661
+#: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:685
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2968
-#: ../imsettings/imsettings-info.c:681
+#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:705
 #, fuzzy
 msgid "XIM server name"
 msgstr "Nome de Servidor Inválido"
@@ -299,144 +302,141 @@ msgstr ""
 msgid "A structure of signals for Protocol class"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:633
-#: ../imsettings/imsettings-info.c:634
+#: ../imsettings/imsettings-info.c:657 ../imsettings/imsettings-info.c:658
 msgid "Home directory"
 msgstr "Directório Pessoal"
 
-#: ../imsettings/imsettings-info.c:640
+#: ../imsettings/imsettings-info.c:664
 msgid "Language"
 msgstr "Língua"
 
-#: ../imsettings/imsettings-info.c:641
+#: ../imsettings/imsettings-info.c:665
 msgid "A language to pull the information in."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:647
+#: ../imsettings/imsettings-info.c:671
 msgid "Filename"
 msgstr "Nome de ficheiro"
 
-#: ../imsettings/imsettings-info.c:648
+#: ../imsettings/imsettings-info.c:672
 msgid "A filename referring to the IM information."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:654
-#: ../imsettings/imsettings-info.c:655
+#: ../imsettings/imsettings-info.c:678 ../imsettings/imsettings-info.c:679
 msgid "Short Description"
 msgstr "Descrição abreviada"
 
-#: ../imsettings/imsettings-info.c:662
+#: ../imsettings/imsettings-info.c:686
 msgid "Whether or not IM is a XIM server."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:668
+#: ../imsettings/imsettings-info.c:692
 #, fuzzy
 msgid "GTK+ immodule"
 msgstr "Módulos GTK"
 
-#: ../imsettings/imsettings-info.c:669
+#: ../imsettings/imsettings-info.c:693
 msgid "A module name used for GTK+"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:674
+#: ../imsettings/imsettings-info.c:698
 #, fuzzy
 msgid "Qt immodule"
 msgstr "Funções de Qt"
 
-#: ../imsettings/imsettings-info.c:675
-msgid "A module name used for Qt"
-msgstr ""
-
-#: ../imsettings/imsettings-info.c:680
-#, fuzzy
-msgid "XIM name"
-msgstr "_Nome do marcador:"
-
-#: ../imsettings/imsettings-info.c:686
-#, fuzzy
-msgid "Ignore flag"
-msgstr "Ignorar marca"
-
-#: ../imsettings/imsettings-info.c:687
-msgid "A flag to not list up."
-msgstr ""
-
-#: ../imsettings/imsettings-info.c:692
-msgid "XIM server program name"
-msgstr ""
-
-#: ../imsettings/imsettings-info.c:693
-msgid "XIM server program to be run"
-msgstr ""
-
-#: ../imsettings/imsettings-info.c:698
-msgid "XIM server program's options"
-msgstr ""
-
 #: ../imsettings/imsettings-info.c:699
-msgid "Command line options for XIM server program"
+msgid "A module name used for Qt"
 msgstr ""
 
 #: ../imsettings/imsettings-info.c:704
 #, fuzzy
-msgid "Preference program name"
-msgstr "Nome de aplicação inválido: %s"
-
-#: ../imsettings/imsettings-info.c:705
-msgid "Preference program to be run"
-msgstr ""
+msgid "XIM name"
+msgstr "_Nome do marcador:"
 
 #: ../imsettings/imsettings-info.c:710
-msgid "Preference program's options"
-msgstr ""
+#, fuzzy
+msgid "Ignore flag"
+msgstr "Ignorar marca"
 
 #: ../imsettings/imsettings-info.c:711
-msgid "Command line options for preference program"
+msgid "A flag to not list up."
 msgstr ""
 
 #: ../imsettings/imsettings-info.c:716
+msgid "XIM server program name"
+msgstr ""
+
+#: ../imsettings/imsettings-info.c:717
+msgid "XIM server program to be run"
+msgstr ""
+
+#: ../imsettings/imsettings-info.c:722
+msgid "XIM server program's options"
+msgstr ""
+
+#: ../imsettings/imsettings-info.c:723
+msgid "Command line options for XIM server program"
+msgstr ""
+
+#: ../imsettings/imsettings-info.c:728
+#, fuzzy
+msgid "Preference program name"
+msgstr "Nome de aplicação inválido: %s"
+
+#: ../imsettings/imsettings-info.c:729
+msgid "Preference program to be run"
+msgstr ""
+
+#: ../imsettings/imsettings-info.c:734
+msgid "Preference program's options"
+msgstr ""
+
+#: ../imsettings/imsettings-info.c:735
+msgid "Command line options for preference program"
+msgstr ""
+
+#: ../imsettings/imsettings-info.c:740
 #, fuzzy
 msgid "Auxiliary program name"
 msgstr "Nome de aplicação inválido: %s"
 
-#: ../imsettings/imsettings-info.c:717
+#: ../imsettings/imsettings-info.c:741
 msgid "Auxiliary program to be run"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:722
+#: ../imsettings/imsettings-info.c:746
 msgid "Auxiliary program's options"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:723
+#: ../imsettings/imsettings-info.c:747
 msgid "Command line options for auxiliary program"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:728
-#: ../imsettings/imsettings-info.c:729
+#: ../imsettings/imsettings-info.c:752 ../imsettings/imsettings-info.c:753
 msgid "Long Description"
 msgstr "Descrição detalhada"
 
-#: ../imsettings/imsettings-info.c:734
+#: ../imsettings/imsettings-info.c:758
 msgid "Icon"
 msgstr "Ícone"
 
-#: ../imsettings/imsettings-info.c:735
+#: ../imsettings/imsettings-info.c:759
 msgid "Icon filename to be used on GUI"
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:740
+#: ../imsettings/imsettings-info.c:770
 msgid "System Default"
 msgstr "Predefinição do Sistema"
 
-#: ../imsettings/imsettings-info.c:741
+#: ../imsettings/imsettings-info.c:771
 msgid "Whether or not IM is a system default."
 msgstr ""
 
-#: ../imsettings/imsettings-info.c:746
+#: ../imsettings/imsettings-info.c:776
 msgid "User Default"
 msgstr "Predefinição do Utilizador"
 
-#: ../imsettings/imsettings-info.c:747
+#: ../imsettings/imsettings-info.c:777
 msgid "Whether or not IM is an user default."
 msgstr ""
 
@@ -503,137 +503,131 @@ msgid ""
 "  %s"
 msgstr "Não foi possível iniciar o Método de Introdução de Dados"
 
-#: ../src/factory.c:436
+#: ../src/factory.c:455
 #, c-format
-msgid "Giving up to bring the process up because %s Input Method process for %s rapidly died many times. See .imsettings.log for more details."
+msgid ""
+"Giving up to bring the process up because %s Input Method process for %s "
+"rapidly died many times. See .imsettings.log for more details."
 msgstr ""
 
-#: ../src/factory.c:437
+#: ../src/factory.c:456
 msgid "Main"
 msgstr "Principal"
 
-#: ../src/factory.c:437
+#: ../src/factory.c:456
 msgid "AUX"
 msgstr ""
 
-#: ../src/factory.c:439
-#: ../src/factory.c:456
+#: ../src/factory.c:458 ../src/factory.c:475
 #, fuzzy
 msgid "Unable to keep Input Method running"
 msgstr "Método de Introdução de Dados"
 
-#: ../src/factory.c:630
+#: ../src/factory.c:666
 #, fuzzy, c-format
 msgid "No such Input Method is running: %s"
 msgstr "Método de Introdução de Dados"
 
-#: ../src/factory.c:644
+#: ../src/factory.c:677
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr ""
 
-#: ../src/factory.c:671
-#: ../src/factory.c:1161
+#: ../src/factory.c:710 ../src/factory.c:1200
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr ""
 
-#: ../src/factory.c:688
+#: ../src/factory.c:727
 #, fuzzy, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "Não foi possível salvaguardar o ficheiro de imagem de arranque %1"
 
-#: ../src/factory.c:700
+#: ../src/factory.c:739
 #, fuzzy, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "Falha ao criar o ficheiro “%s”: %s"
 
-#: ../src/factory.c:709
+#: ../src/factory.c:748
 #, fuzzy, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "Falha ao remover ficheiro de exclusividade `%s': %s"
 
-#: ../src/factory.c:720
+#: ../src/factory.c:759
 #, fuzzy, c-format
 msgid "Failed to make a symlink: %s"
 msgstr "não foi possível criar a ligação simbólica %s: %s\n"
 
-#: ../src/factory.c:872
-#: ../src/factory.c:911
+#: ../src/factory.c:911 ../src/factory.c:950
 #, c-format
 msgid "No input methods available on your system."
 msgstr ""
 
-#: ../src/factory.c:956
-#: ../src/factory.c:1018
-#: ../src/factory.c:1056
-#: ../src/factory.c:1223
+#: ../src/factory.c:995 ../src/factory.c:1057 ../src/factory.c:1095
+#: ../src/factory.c:1262
 #, c-format
 msgid ""
 "No such input method on your system: %s\n"
 "  Details: %s"
 msgstr ""
 
-#: ../src/factory.c:1067
+#: ../src/factory.c:1106
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr ""
 
-#: ../src/factory.c:1294
-#: ../src/monitor.c:237
+#: ../src/factory.c:1333 ../src/monitor.c:237
 #, fuzzy
 msgid "xinputrc directory"
 msgstr "Opções da Pasta"
 
-#: ../src/factory.c:1295
+#: ../src/factory.c:1334
 msgid "The name of the directory for the system wide xinputrc file."
 msgstr ""
 
-#: ../src/factory.c:1300
-#: ../src/monitor.c:243
+#: ../src/factory.c:1339 ../src/monitor.c:243
 #, fuzzy
 msgid "xinput directory"
 msgstr "Opções da Pasta"
 
-#: ../src/factory.c:1301
+#: ../src/factory.c:1340
 msgid "The name of the directory for IM configurations."
 msgstr ""
 
-#: ../src/factory.c:1306
-#: ../src/factory.c:1307
-#: ../src/monitor.c:249
+#: ../src/factory.c:1345 ../src/factory.c:1346 ../src/monitor.c:249
 #: ../src/monitor.c:250
 msgid "home directory"
 msgstr "directório pessoal"
 
-#: ../src/factory.c:1312
+#: ../src/factory.c:1351
 msgid "logging"
 msgstr "a registar"
 
-#: ../src/factory.c:1313
+#: ../src/factory.c:1352
 msgid "A flag if logging facility is enabled or not."
 msgstr ""
 
-#: ../src/factory.c:1408
-msgid "Specify the name of the directory of the system-wide xinputrc file (for debugging only)"
+#: ../src/factory.c:1447
+msgid ""
+"Specify the name of the directory of the system-wide xinputrc file (for "
+"debugging only)"
 msgstr ""
 
-#: ../src/factory.c:1408
-#: ../src/factory.c:1409
-#: ../src/factory.c:1410
+#: ../src/factory.c:1447 ../src/factory.c:1448 ../src/factory.c:1449
 #, fuzzy
 msgid "DIR"
 msgstr "DIR"
 
-#: ../src/factory.c:1409
-msgid "Specify the name of the directory for IM configurations (for debugging only)"
+#: ../src/factory.c:1448
+msgid ""
+"Specify the name of the directory for IM configurations (for debugging only)"
 msgstr ""
 
-#: ../src/factory.c:1410
+#: ../src/factory.c:1449
 msgid "A home directory (debugging only)"
 msgstr ""
 
-#: ../src/factory.c:1411
+#: ../src/factory.c:1450
 msgid "Do not create a log file."
 msgstr "Não criar um ficheiro de registo."
 
@@ -660,43 +654,41 @@ msgstr ""
 msgid "No system default input method."
 msgstr ""
 
-#: ../utils/imsettings-info.c:55
-#: ../utils/imsettings-restart.c:77
-#: ../utils/imsettings-start.c:78
-#: ../utils/imsettings-stop.c:76
+#: ../utils/imsettings-info.c:55 ../utils/imsettings-restart.c:77
+#: ../utils/imsettings-start.c:78 ../utils/imsettings-stop.c:76
 #, fuzzy, c-format
 msgid "Failed to get a session bus.\n"
 msgstr "Falha ao obter ligação à sessão: %s"
 
-#: ../utils/imsettings-info.c:61
-#: ../utils/imsettings-list.c:58
-#: ../utils/imsettings-restart.c:84
-#: ../utils/imsettings-start.c:85
+#: ../utils/imsettings-info.c:61 ../utils/imsettings-list.c:58
+#: ../utils/imsettings-restart.c:84 ../utils/imsettings-start.c:85
 #: ../utils/imsettings-stop.c:83
 #, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload -f\" may help but it will restart the Input Method\n"
+"Running \"imsettings-reload -f\" may help but it will restart the Input "
+"Method\n"
 msgstr ""
 
-#: ../utils/imsettings-info.c:77
-#: ../utils/imsettings-restart.c:98
+#: ../utils/imsettings-info.c:77 ../utils/imsettings-restart.c:98
 #: ../utils/imsettings-stop.c:97
 #, c-format
-msgid "No Input Method running. please specify Input Method name explicitly if necessary.\n"
+msgid ""
+"No Input Method running. please specify Input Method name explicitly if "
+"necessary.\n"
 msgstr ""
 
 #: ../utils/imsettings-info.c:86
 #, fuzzy, c-format
 msgid "Unable to obtain an Input Method Information."
-msgstr "Não foi possível obter informações sobre o Método de Introdução de Dados"
+msgstr ""
+"Não foi possível obter informações sobre o Método de Introdução de Dados"
 
 #: ../utils/imsettings-reload.c:42
 msgid "Force reloading the configuration, including restarting the process."
 msgstr ""
 
-#: ../utils/imsettings-restart.c:42
-#: ../utils/imsettings-start.c:43
+#: ../utils/imsettings-restart.c:42 ../utils/imsettings-start.c:43
 #: ../utils/imsettings-stop.c:42
 msgid "[Input Method name|xinput.conf]"
 msgstr ""
@@ -705,14 +697,12 @@ msgstr ""
 msgid "Force restarting the IM process regardless of any errors."
 msgstr ""
 
-#: ../utils/imsettings-restart.c:45
-#: ../utils/imsettings-start.c:45
+#: ../utils/imsettings-restart.c:45 ../utils/imsettings-start.c:45
 #: ../utils/imsettings-stop.c:45
 msgid "Do not update .xinputrc."
 msgstr "Não actualizar .xinputrc."
 
-#: ../utils/imsettings-restart.c:109
-#: ../utils/imsettings-stop.c:109
+#: ../utils/imsettings-restart.c:109 ../utils/imsettings-stop.c:109
 #, c-format
 msgid "Failed to stop IM process `%s'\n"
 msgstr ""
@@ -782,6 +772,7 @@ msgstr "Parado %s\n"
 #, fuzzy
 #~ msgid "Stopping Input Method - %s"
 #~ msgstr "Método de Introdução de Dados"
+
 #~ msgid "<b>Input Method</b>"
 #~ msgstr "<b>Método de Introdução de Dados</b>"
 
@@ -796,8 +787,10 @@ msgstr "Parado %s\n"
 #, fuzzy
 #~ msgid "Input Method _Preferences..."
 #~ msgstr "Método de Introdução de Dados"
+
 #~ msgid "IM Chooser - Input Method configuration tool"
 #~ msgstr "Selector de IM - Configuração do método de introdução de dados"
+
 #~ msgid "_Log Out"
 #~ msgstr "_Encerrar"
 
@@ -809,6 +802,7 @@ msgstr "Parado %s\n"
 #~ "Uma ferramenta para escolher o Método de Introdução de Dados a usar ou "
 #~ "para desactivar a utilização de Métodos de Introdução de Dados no "
 #~ "ambiente de trabalho"
+
 #~ msgid "No valid IM installed"
 #~ msgstr "Não está nenhum método instalado"
 
@@ -830,18 +824,20 @@ msgstr "Parado %s\n"
 #, fuzzy
 #~ msgid "Use legacy _Input Method"
 #~ msgstr "_Usar os métodos legados"
+
 #~ msgid ""
 #~ "Use X Input Method anyway. In fact, which input method will be chosen for "
 #~ "the desktop session, depends on the desktop language."
 #~ msgstr ""
 #~ "Usa o 'X Input Method' à mesma. De facto, o método de introdução de dados "
 #~ "que será usado depende da língua do ambiente de trabalho."
+
 #~ msgid "_Follow the system-wide configuration"
 #~ msgstr "Usar a con_figuração do sistema"
+
 #~ msgid ""
 #~ "Follow the system-wide input method configuration to determine which "
 #~ "input method should be used."
 #~ msgstr ""
 #~ "Usa a configuração do sistema para determinar qual o método de introdução "
 #~ "de dados a usar."
-
