@@ -1,3 +1,16 @@
+2009-09-30  Akira TAGOH  <akira@tagoh.org>
+
+	* tests/rhbz_526205.c: new test case.
+
+	* src/monitor.c (_imsettings_monitor_lookup): compare the name with
+	the lower case.
+
+	* src/factory.c (imsettings_manager_real_whats_im_running): ensure not
+	returning null even when any errors occurs.
+
+	* imsettings/imsettings-observer.c (imsettings_whats_input_method_running):
+	Fix a memory leak.
+
 2009-09-28  Akira TAGOH  <tagoh@redhat.com>
 
 	* configure.ac: bump the version to 0.107.4.

@@ -65,6 +65,7 @@ TDEF (issue) {
 	p = imsettings_request_whats_input_method_running(req, &error);
 	fail_unless(p != NULL, "We don't expect null as the result of imsettings_request_what_im_is_running(): %s",
 		    error ? error->message : "no details");
+	fail_unless(p[0] == 0, "Unexpected result to check what IM is running: %s", p);
 } TEND
 
 /************************************************************/

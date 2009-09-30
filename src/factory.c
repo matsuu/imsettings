@@ -1281,11 +1281,12 @@ imsettings_manager_real_whats_im_running(IMSettingsObserver  *observer,
 				module = NULL;
 			}
 		}
-	} else {
+	}
+  end:
+	if (module == NULL) {
 		/* No error means no IM currently running */
 		module = g_strdup("");
 	}
-  end:
 	if (info)
 		g_object_unref(info);
 

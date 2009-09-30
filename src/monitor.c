@@ -1031,6 +1031,7 @@ _imsettings_monitor_lookup(GHashTable   *table,
 		GHashTableIter iter;
 		gpointer key, val;
 		const gchar *name;
+		gchar *ln;
 
 		g_hash_table_iter_init(&iter, table);
 		while (g_hash_table_iter_next(&iter, &key, &val)) {
@@ -1043,8 +1044,14 @@ _imsettings_monitor_lookup(GHashTable   *table,
 					     "language", locale,
 					     NULL);
 				name = imsettings_info_get_short_desc(info);
-				if (strcmp(name, lowername) != 0)
+				if (need_lower) {
+					ln = g_ascii_strdown(name, -1);
+				} else {
+					ln = g_strdup(name);
+				}
+				if (strcmp(ln, lowername) != 0)
 					info = NULL;
+				g_free(ln);
 				break;
 			}
 			info = NULL;

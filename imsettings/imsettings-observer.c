@@ -433,7 +433,7 @@ imsettings_whats_input_method_running(GObject      *object,
 				      GError      **error)
 {
 	IMSettingsObserverClass *klass = IMSETTINGS_OBSERVER_GET_CLASS (object);
-	const gchar *module;
+	gchar *module;
 	gboolean retval = FALSE;
 
 	d(g_print("Obtaining which Input Method is currently running\n"));
@@ -444,8 +444,9 @@ imsettings_whats_input_method_running(GObject      *object,
 			*ret = g_strdup(module);
 			retval = TRUE;
 		} else {
-			*ret = NULL;
+			*ret = g_strdup("");
 		}
+		g_free(module);
 	} else {
 		g_set_error(error, IMSETTINGS_GERROR, IMSETTINGS_GERROR_NOT_AVAILABLE,
 			    "No WhatsInputMethodRunning method is supported.");
