@@ -1,3 +1,7 @@
+2009-10-06  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xcompose.in.in: Add a xinput file for X compose.
+
 2009-10-05  Akira TAGOH  <tagoh@redhat.com>
 
 	* data/xinput.sh.in.in: do not expand the wildcard in the message.

@@ -17,6 +17,7 @@ EXTRA_DIST =			\
 xinput_in_in_files =		\
 	none.in.in		\
 	xim.in.in		\
+	xcompose.in.in		\
 	$(NULL)
 xinput_in_files = $(xinput_in_in_files:.in.in=.in)
 #

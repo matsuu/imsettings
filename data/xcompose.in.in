@@ -1,0 +1,7 @@
+XIM=none
+XIM_PROGRAM=/bin/true
+XIM_ARGS=
+GTK_IM_MODULE=xim
+QT_IM_MODULE=xim
+SHORT_DESC="X compose table"
+LONG_DESC="X locale based compose table"
