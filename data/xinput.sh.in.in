@@ -18,7 +18,7 @@ function log_init() {
 }
 
 function log() {
-    echo $* >> $HOME/.imsettings.log
+    echo "$@" >> $HOME/.imsettings.log
 }
 
 function is_dbus_enabled() {

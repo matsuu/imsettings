@@ -1,4 +1,8 @@
-2009-09-30  Akira TAGOH  <akira@tagoh.org>
+2009-10-05  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xinput.sh.in.in: do not expand the wildcard in the message.
+
+2009-09-30  Akira TAGOH  <tagoh@redhat.com>
 
 	* tests/rhbz_526205.c: new test case.
 
