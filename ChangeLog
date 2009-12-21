@@ -1,3 +1,7 @@
+2009-12-21  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xinput.sh.in.in: don't unset IMSETTINGS_INTEGRATE_DESKTOP.
+
 2009-10-06  Akira TAGOH  <tagoh@redhat.com>
 
 	* data/xcompose.in.in: Add a xinput file for X compose.
