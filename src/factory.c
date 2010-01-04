@@ -875,8 +875,6 @@ imsettings_manager_real_finalize(GObject *object)
 		/* XXX: workaround to avoid aborting on dbus. */
 		if (dbus_connection_get_is_connected(priv->req_conn))
 			g_object_unref(priv->notify);
-		else
-			printf("no dbus running\n");
 	}
 	dbus_connection_unref(priv->req_conn);
 	if (priv->monitor)
