@@ -1,3 +1,8 @@
+2010-01-04  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xfce_xfconf/main.c (main): Fix a segfault issue
+	on XFCE desktop. (rhbz#540062)
+
 2009-12-21  Akira TAGOH  <tagoh@redhat.com>
 
 	* data/xinput.sh.in.in: don't unset IMSETTINGS_INTEGRATE_DESKTOP.

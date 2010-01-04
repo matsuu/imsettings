@@ -57,7 +57,7 @@ int
 main(int argc, char **argv)
 {
 	GError *error = NULL;
-	GConfClient *client = gconf_client_get_default();
+	GConfClient *client = NULL;
 	GMainLoop *loop;
 	GConfEntry *entry;
 	guint ctxt_id;
@@ -68,6 +68,11 @@ main(int argc, char **argv)
 		return 1;
 	}
 
+	client = gconf_client_get_default();
+	if (client == NULL) {
+		g_printerr("Failed to obtain the default GConfClient instance.\n");
+		goto end;
+	}
 	gconf_client_add_dir(client, "/desktop/gnome/interface",
 			     GCONF_CLIENT_PRELOAD_ONELEVEL, &error);
 	if (error) {
@@ -93,7 +98,8 @@ main(int argc, char **argv)
 	loop = g_main_loop_new(NULL, FALSE);
 	g_main_loop_run(loop);
   end:
-	g_object_unref(client);
+	if (client)
+		g_object_unref(client);
 	xfconf_shutdown();
 
 	return 0;
