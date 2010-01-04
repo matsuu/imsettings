@@ -871,6 +871,13 @@ imsettings_manager_real_finalize(GObject *object)
 		g_object_unref(priv->xim_req);
 	if (priv->qt_req)
 		g_object_unref(priv->qt_req);
+	if (priv->notify) {
+		/* XXX: workaround to avoid aborting on dbus. */
+		if (dbus_connection_get_is_connected(priv->req_conn))
+			g_object_unref(priv->notify);
+		else
+			printf("no dbus running\n");
+	}
 	dbus_connection_unref(priv->req_conn);
 	if (priv->monitor)
 		g_object_unref(priv->monitor);
@@ -882,8 +889,6 @@ imsettings_manager_real_finalize(GObject *object)
 		g_hash_table_destroy(priv->aux2info);
 	if (priv->body2info)
 		g_hash_table_destroy(priv->body2info);
-	if (priv->notify)
-		g_object_unref(priv->notify);
 
 	if (G_OBJECT_CLASS (imsettings_manager_parent_class)->finalize)
 		G_OBJECT_CLASS (imsettings_manager_parent_class)->finalize(object);

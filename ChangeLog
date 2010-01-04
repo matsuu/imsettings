@@ -1,5 +1,8 @@
 2010-01-04  Akira TAGOH  <tagoh@redhat.com>
 
+	* src/factory.c (imsettings_manager_real_finalize): avoid a segfault
+	in libnotify when the dbus session is being closed. (rhbz#530357)
+
 	* backends/xfce_xfconf/main.c (main): Fix a segfault issue
 	on XFCE desktop. (rhbz#540062)
 
