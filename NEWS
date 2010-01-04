@@ -1,3 +1,17 @@
+0.107.4 ->
+=====================
+* Bug Fixes:
+  * rhbz#540062: Fix a segfault issue on XFCE desktop.
+  * rhbz#530357: workaround to avoid aborting from dbus in libnotify.
+  * Fix a memory leak.
+  * Don't unset IMSETTINGS_INTEGRATE_DESKTOP that could be overridden from the outside of xinput.sh.
+* Translation updated:
+  * Brazilian Portuguese
+  * German
+  * Polish
+  * Simplified Chinese
+  * Spanish
+
 0.107.3 -> 0.107.4
 =====================
 * Bug Fixes:
