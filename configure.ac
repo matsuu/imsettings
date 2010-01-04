@@ -285,6 +285,7 @@ AC_CONFIG_FILES([
 	backends/xim/Makefile
 	data/Makefile
 	data/none.in
+	data/xcompose.in
 	data/xim.in
 	data/xinput.sh.in
 	data/xinputinfo.sh
