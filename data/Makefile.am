@@ -1,9 +1,6 @@
 ##
 # Global definitions
 NULL =
-CONFIGURE_DEPENDENCIES =	\
-	xinput.sh.in		\
-	$(NULL)
 EXTRA_DIST =			\
 	$(xinput_in_in_files)	\
 	$(xinputsh_in_in)	\
@@ -29,11 +26,14 @@ xinputinfosh_in = xinputinfo.sh.in
 
 ##
 # Local Rules
-$(xinput_DATA): $(xinput_in_files)
+$(xinput_DATA): $(xinput_in_files) $(builddir)/Makefile
 	cp `echo $@ | sed -e 's|$(XINPUT_SUFFIX)$$||'`.in $@
 #
-$(xinputsh_DATA): $(xinputsh_in)
+$(xinputsh_DATA): $(xinputsh_in) $(builddir)/Makefile
 	cp $(xinputsh_in) @XINPUTSH@
+#
+$(xinputinfosh_DATA): $(xinputinfosh_in) $(builddir)/Makefile
+	chmod a+x $@
 
 clean-local:
 	-rm $(xinput_DATA)
