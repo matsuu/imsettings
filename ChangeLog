@@ -1,3 +1,9 @@
+2010-02-16  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-info.c (imsettings_info_notify_properties):
+	Fix a segfault issue when /bin/sh points to non-bash shell.
+	(rhbz#553680)
+
 2010-02-05  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/gconf/main.c (main): avoid a crash when the session bus

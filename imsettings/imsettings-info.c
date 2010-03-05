@@ -223,7 +223,7 @@ imsettings_info_notify_properties(GObject     *object,
 	}
 	xinputinfo = g_build_filename(path, "xinputinfo.sh", NULL);
 	g_free(path);
-	g_string_append_printf(cmd, "%s. %s %s", lang, xinputinfo, filename);
+	g_string_append_printf(cmd, "%s %s %s", lang, xinputinfo, filename);
 
 	g_free(xinputinfo);
 	g_free(lang);
@@ -306,6 +306,14 @@ imsettings_info_notify_properties(GObject     *object,
 	}
 	g_string_free(cmd, TRUE);
 	g_string_free(str, TRUE);
+
+	/* sanity check */
+	if (priv->ignore == FALSE &&
+	    (priv->xim == NULL ||
+	     priv->filename == NULL)) {
+		g_warning("Broken config file or unable to read: %s", filename);
+		g_object_set(object, "ignore", TRUE, NULL);
+	}
 }
 
 static void
