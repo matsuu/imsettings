@@ -213,6 +213,10 @@ main(int    argc,
 
 	gconn = dbus_g_bus_get(DBUS_BUS_SESSION, NULL);
 	conn = dbus_g_connection_get_connection(gconn);
+	if (conn == NULL) {
+		g_printerr("DBus session isn't yet established.\n");
+		return 1;
+	}
 
 	flags = DBUS_NAME_FLAG_ALLOW_REPLACEMENT | DBUS_NAME_FLAG_DO_NOT_QUEUE;
 	if (arg_replace) {

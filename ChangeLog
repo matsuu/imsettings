@@ -1,3 +1,8 @@
+2010-02-05  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/gconf/main.c (main): avoid a crash when the session bus
+	isn't yet established or terminated. (rhbz#543005)
+
 2010-01-04  Akira TAGOH  <tagoh@redhat.com>
 
 	* src/factory.c (imsettings_manager_real_finalize): avoid a segfault
