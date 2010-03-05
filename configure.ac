@@ -113,7 +113,8 @@ PKG_CHECK_MODULES(XIM, libgxim >= $LIBGXIM_REQUIRED
 	[use_xim="no"])
 PKG_CHECK_MODULES(APPLET, gtk+-2.0
 			  libnotify
-			  gconf-2.0,
+			  gconf-2.0
+			  x11,
 	[use_applet="yes"],
 	[use_applet="no"])
 

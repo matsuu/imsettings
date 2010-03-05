@@ -1,3 +1,7 @@
+2010-03-05  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: Add x11 module check to avoid DSO issue.
+
 2010-02-16  Akira TAGOH  <tagoh@redhat.com>
 
 	* imsettings/imsettings-info.c (imsettings_info_notify_properties):
