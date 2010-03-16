@@ -78,6 +78,7 @@ struct _IMSettingsManagerPrivate {
 	IMSettingsRequest  *gtk_req;
 	IMSettingsRequest  *xim_req;
 	IMSettingsRequest  *qt_req;
+	IMSettingsRequest  *lxde_req;
 	DBusConnection     *req_conn;
 	GSList             *im_running;
 	IMSettingsMonitor  *monitor;
@@ -871,6 +872,8 @@ imsettings_manager_real_finalize(GObject *object)
 		g_object_unref(priv->xim_req);
 	if (priv->qt_req)
 		g_object_unref(priv->qt_req);
+	if (priv->lxde_req)
+		g_object_unref(priv->lxde_req);
 	if (priv->notify) {
 		/* XXX: workaround to avoid aborting on dbus. */
 		if (dbus_connection_get_is_connected(priv->req_conn))
@@ -1014,6 +1017,8 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 	imsettings_request_change_to(priv->gtk_req, imm, error);
 	imm = imsettings_info_get_xim(info);
 	imsettings_request_change_to_with_signal(priv->xim_req, imm);
+	imm = imsettings_info_get_gtkimm(info);
+	imsettings_request_change_to(priv->lxde_req, imm, error);
 #if 0
 	imm = imsettings_info_get_qtimm(info);
 	imsettings_request_change_to(priv->qt_req, imm, error);
@@ -1026,6 +1031,7 @@ imsettings_manager_real_start_im(IMSettingsObserver  *imsettings,
 
 		imsettings_request_send_signal_changed(priv->gtk_req, module);
 		imsettings_request_send_signal_changed(priv->xim_req, module);
+		imsettings_request_send_signal_changed(priv->lxde_req, module);
 #if 0
 		imsettings_request_send_signal_changed(priv->qt_req, module);
 #endif
@@ -1153,6 +1159,7 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 	 */
 	imsettings_request_change_to(priv->gtk_req, gtkimm ? gtkimm : "", error);
 	imsettings_request_change_to_with_signal(priv->xim_req, xim ? xim : "none");
+	imsettings_request_change_to(priv->lxde_req, gtkimm ? gtkimm : "", error);
 #if 0
 	imsettings_request_change_to(priv->qt_req, NULL, error);
 #endif
@@ -1227,6 +1234,7 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 	if (update_xinputrc) {
 		imsettings_request_send_signal_changed(priv->gtk_req, "none");
 		imsettings_request_send_signal_changed(priv->xim_req, "none");
+		imsettings_request_send_signal_changed(priv->lxde_req, "none");
 #if 0
 		imsettings_request_send_signal_changed(priv->qt_req, "none");
 #endif
@@ -1367,6 +1375,7 @@ imsettings_manager_init(IMSettingsManager *manager)
 
 	priv->gtk_req = imsettings_request_new(priv->req_conn, IMSETTINGS_GCONF_INTERFACE_DBUS);
 	priv->xim_req = imsettings_request_new(priv->req_conn, IMSETTINGS_XIM_INTERFACE_DBUS);
+	priv->lxde_req = imsettings_request_new(priv->req_conn, IMSETTINGS_LXDE_INTERFACE_DBUS);
 //	priv->qt_req = imsettings_request_new(priv->req_conn, IMSETTINGS_QT_INTERFACE_DBUS);
 	priv->monitor = imsettings_monitor_new(NULL, NULL, NULL);
 	priv->pid2id = g_hash_table_new(g_direct_hash, g_direct_equal);

@@ -106,6 +106,9 @@ PKG_CHECK_MODULES(XFCE_XFCONF, gconf-2.0
 			libxfconf-0,
 	[use_xfce_xfconf="yes"],
 	[use_xfce_xfconf="no"])
+PKG_CHECK_MODULES(LXDE, gtk+-2.0,
+	[use_lxde="yes"],
+	[use_lxde="no"])
 PKG_CHECK_MODULES(XIM, libgxim >= $LIBGXIM_REQUIRED
 		       gdk-2.0 >= $GDK_REQUIRED,
 	[use_xim="yes"],
@@ -131,6 +134,8 @@ AC_SUBST(XFCE_MCS_CFLAGS)
 AC_SUBST(XFCE_MCS_LIBS)
 AC_SUBST(XFCE_XFCONF_CFLAGS)
 AC_SUBST(XFCE_XFCONF_LIBS)
+AC_SUBST(LXDE_CFLAGS)
+AC_SUBST(LXDE_LIBS)
 AC_SUBST(XIM_CFLAGS)
 AC_SUBST(XIM_LIBS)
 AC_SUBST(XSETTINGS_CFLAGS)
@@ -145,6 +150,7 @@ AM_CONDITIONAL(ENABLE_GCONF, test x$use_gconf != xno)
 AM_CONDITIONAL(ENABLE_QT, test x$use_qt != xno)
 AM_CONDITIONAL(ENABLE_XFCE_MCS, test x$use_xfce_mcs != xno)
 AM_CONDITIONAL(ENABLE_XFCE_XFCONF, test x$use_xfce_xfconf != xno)
+AM_CONDITIONAL(ENABLE_LXDE, test x$use_lxde != xno)
 AM_CONDITIONAL(ENABLE_XIM, test x$use_xim != xno)
 AM_CONDITIONAL(ENABLE_APPLET, test x$use_applet != xno)
 
@@ -279,6 +285,7 @@ AC_CONFIG_FILES([
 	applet/imsettings-applet.desktop.in
 	backends/Makefile
 	backends/gconf/Makefile
+	backends/lxde/Makefile
 	backends/qt/Makefile
 	backends/xfce_mcs/Makefile
 	backends/xfce_xfconf/Makefile
@@ -324,6 +331,11 @@ echo " Xfce xfconf support:    $use_xfce_xfconf"
 if test "x$use_xfce_xfconf" = "xyes"; then
    echo "   CFLAGS:               $XFCE_XFCONF_CFLAGS"
    echo "   LDFLAGS:              $XFCE_XFCONF_LIBS"
+fi
+echo " LXDE support:           $use_lxde"
+if test "x$use_lxde" = "xyes"; then
+   echo "   CFLAGS:               $LXDE_CFLAGS"
+   echo "   LDFLAGS:              $LXDE_LIBS"
 fi
 echo " XIM support:            $use_xim"
 if test "x$use_xim" = "xyes"; then

@@ -32,7 +32,7 @@ function is_imsettings_enabled() {
 function is_gtk_supported() {
     [ -n "$IMSETTINGS_DISABLE_DESKTOP_CHECK" ] && return 0
     case "$DESKTOP_SESSION" in
-	*gnome|openbox|xfce4)
+	*gnome|LXDE|openbox|xfce4)
 	    return 0
 	    ;;
 	*)

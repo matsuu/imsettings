@@ -1,3 +1,21 @@
+2010-03-16  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/lxde/main.c: new.
+
+	* backends/lxde/lxde-im-settings-daemon.service.in: new.
+
+	* backends/lxde/introspection.xml: new.
+
+	* configure.ac: Add the library dependencies check for LXDE.
+
+	* src/factory.c (imsettings_manager_real_start_im): send a signal
+	for LXDE.
+	(imsettings_manager_real_stop_im): likewise.
+
+	* imsettings/imsettings.h: add DBus stuff for LXDE.
+
+	* data/xinput.sh.in.in (is_gtk_supported): add LXDE support.
+
 2010-03-05  Akira TAGOH  <tagoh@redhat.com>
 
 	* data/Makefile.am: make xinputinfo.sh executable.
