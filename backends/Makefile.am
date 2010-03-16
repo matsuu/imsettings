@@ -13,6 +13,9 @@ endif
 if ENABLE_XFCE_XFCONF
 SUBDIRS += xfce_xfconf
 endif
+if ENABLE_LXDE
+SUBDIRS += lxde
+endif
 if ENABLE_XIM
 SUBDIRS += xim
 endif
