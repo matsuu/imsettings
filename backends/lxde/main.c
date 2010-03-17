@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * main.c
- * Copyright (C) 2009 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2009-2010 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -34,12 +34,6 @@
 #include <dbus/dbus-glib-lowlevel.h>
 #include "imsettings/imsettings.h"
 #include "imsettings/imsettings-utils.h"
-
-#ifdef GNOME_ENABLE_DEBUG
-#define d(e)	e
-#else
-#define d(e)
-#endif
 
 
 typedef struct _IMSettingsLxdeClass	IMSettingsLxdeClass;
@@ -90,7 +84,7 @@ lxde_imsettings_change_to(GObject      *object,
 		if (g_mkdir_with_parents(confdir, 0700) != 0) {
 			int save_errno = errno;
 
-			g_set_error(error, g_file_error_from_errno(save_errno),
+			g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(save_errno),
 				    "Failed to create the user config dir: %s",
 				    g_strerror(save_errno));
 			g_free(s);

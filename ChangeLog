@@ -1,3 +1,7 @@
+2010-03-17  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/lxde/main.c (lxde_imsettings_change_to): fix a typo.
+
 2010-03-16  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/lxde/main.c: new.
