@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-28 21:22+0900\n"
+"POT-Creation-Date: 2010-03-23 11:42+0900\n"
 "PO-Revision-Date: 2009-09-21 16:10+0530\n"
 "Last-Translator: Rajesh Ranjan <rajesh672@gmail.com>\n"
 "Language-Team: Hindi <hindi.sf.net>\n"
@@ -247,13 +247,13 @@ msgstr "छवि विजेट"
 msgid "Child widget to appear next to the menu text"
 msgstr "मेन्यू पाठ के बगल में प्रकट होने के लिए संतति विजेट"
 
-#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:699
-#: ../src/factory.c:1446
+#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:700
+#: ../src/factory.c:1461
 msgid "Replace the running settings daemon with new instance."
 msgstr "नए उदाहरण के साथ कार्यशील सेटिंग को बदलें."
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:1472 ../utils/imsettings-reload.c:63
+#: ../src/factory.c:1488 ../utils/imsettings-reload.c:63
 #: ../utils/imsettings-restart.c:70 ../utils/imsettings-start.c:71
 #: ../utils/imsettings-stop.c:69
 msgid "Unknown error in parsing the command lines."
@@ -300,11 +300,11 @@ msgstr "डिबगिंग लॉग का आउटपुट दें"
 msgid "XIM server connects to, for debugging purpose only"
 msgstr "XIM सर्वर इसमें कनेक्ट करता है, केवल डिबगिंग उद्देश्य के लिए"
 
-#: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:685
+#: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:693
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:705
+#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:713
 msgid "XIM server name"
 msgstr "XIM सर्वर नाम"
 
@@ -320,156 +320,156 @@ msgstr "प्रोटोकॉल वर्ग के लिए संके�
 msgid "A structure of signals for Protocol class"
 msgstr "प्रोटोकॉल वर्ग के लिए संकेत की संरचना"
 
-#: ../imsettings/imsettings-info.c:657 ../imsettings/imsettings-info.c:658
+#: ../imsettings/imsettings-info.c:665 ../imsettings/imsettings-info.c:666
 msgid "Home directory"
 msgstr "घर निर्देशिका"
 
-#: ../imsettings/imsettings-info.c:664
+#: ../imsettings/imsettings-info.c:672
 msgid "Language"
 msgstr "भाषा"
 
-#: ../imsettings/imsettings-info.c:665
+#: ../imsettings/imsettings-info.c:673
 msgid "A language to pull the information in."
 msgstr "सूचना को खींचने के लिए एक भाषा."
 
-#: ../imsettings/imsettings-info.c:671
+#: ../imsettings/imsettings-info.c:679
 msgid "Filename"
 msgstr "फ़ाइलनाम"
 
-#: ../imsettings/imsettings-info.c:672
+#: ../imsettings/imsettings-info.c:680
 msgid "A filename referring to the IM information."
 msgstr "IM सूचना में संदर्भित फाइलनाम."
 
-#: ../imsettings/imsettings-info.c:678 ../imsettings/imsettings-info.c:679
+#: ../imsettings/imsettings-info.c:686 ../imsettings/imsettings-info.c:687
 msgid "Short Description"
 msgstr "संक्षिप्त विवरण"
 
-#: ../imsettings/imsettings-info.c:686
+#: ../imsettings/imsettings-info.c:694
 msgid "Whether or not IM is a XIM server."
 msgstr "क्या IM एक XIM सर्वर है या नहीं."
 
-#: ../imsettings/imsettings-info.c:692
+#: ../imsettings/imsettings-info.c:700
 msgid "GTK+ immodule"
 msgstr "GTK+ immodule"
 
-#: ../imsettings/imsettings-info.c:693
+#: ../imsettings/imsettings-info.c:701
 msgid "A module name used for GTK+"
 msgstr "GTK+ के लिए प्रयुक्त मॉड्यूलनाम"
 
-#: ../imsettings/imsettings-info.c:698
+#: ../imsettings/imsettings-info.c:706
 msgid "Qt immodule"
 msgstr "Qt immodule"
 
-#: ../imsettings/imsettings-info.c:699
+#: ../imsettings/imsettings-info.c:707
 msgid "A module name used for Qt"
 msgstr "Qt के लिए प्रयुक्त मॉड्यूलनाम"
 
-#: ../imsettings/imsettings-info.c:704
+#: ../imsettings/imsettings-info.c:712
 msgid "XIM name"
 msgstr "XIM नाम"
 
-#: ../imsettings/imsettings-info.c:710
+#: ../imsettings/imsettings-info.c:718
 msgid "Ignore flag"
 msgstr "पताका अनदेखा करें"
 
-#: ../imsettings/imsettings-info.c:711
+#: ../imsettings/imsettings-info.c:719
 msgid "A flag to not list up."
 msgstr "पताका जो सूचीबद्ध करने के लिए नहीं है"
 
-#: ../imsettings/imsettings-info.c:716
+#: ../imsettings/imsettings-info.c:724
 msgid "XIM server program name"
 msgstr "XIM सर्वर प्रोग्राम नाम"
 
-#: ../imsettings/imsettings-info.c:717
+#: ../imsettings/imsettings-info.c:725
 msgid "XIM server program to be run"
 msgstr "XIM सर्वर प्रोग्राम चलाने के लिए"
 
-#: ../imsettings/imsettings-info.c:722
+#: ../imsettings/imsettings-info.c:730
 msgid "XIM server program's options"
 msgstr "XIM सर्वर प्रोग्राम का विकल्प"
 
-#: ../imsettings/imsettings-info.c:723
+#: ../imsettings/imsettings-info.c:731
 msgid "Command line options for XIM server program"
 msgstr "XIM सर्वर प्रोग्राम के लिए कमांड पंक्ति विकल्प"
 
-#: ../imsettings/imsettings-info.c:728
+#: ../imsettings/imsettings-info.c:736
 msgid "Preference program name"
 msgstr "वरीयता प्रोग्राम नाम"
 
-#: ../imsettings/imsettings-info.c:729
+#: ../imsettings/imsettings-info.c:737
 msgid "Preference program to be run"
 msgstr "चलाने के लिए वरीय प्रोग्राम"
 
-#: ../imsettings/imsettings-info.c:734
+#: ../imsettings/imsettings-info.c:742
 msgid "Preference program's options"
 msgstr "वरीय प्रोग्राम का विकल्प"
 
-#: ../imsettings/imsettings-info.c:735
+#: ../imsettings/imsettings-info.c:743
 msgid "Command line options for preference program"
 msgstr "वरीय प्रोग्राम के लिए कमांड लाइन विकल्प"
 
-#: ../imsettings/imsettings-info.c:740
+#: ../imsettings/imsettings-info.c:748
 msgid "Auxiliary program name"
 msgstr "सहायक प्रोग्राम नाम"
 
-#: ../imsettings/imsettings-info.c:741
+#: ../imsettings/imsettings-info.c:749
 msgid "Auxiliary program to be run"
 msgstr "चलाने के लिए सहायक प्रोग्राम नाम"
 
-#: ../imsettings/imsettings-info.c:746
+#: ../imsettings/imsettings-info.c:754
 msgid "Auxiliary program's options"
 msgstr "सहायक प्रोग्राम का विकल्प"
 
-#: ../imsettings/imsettings-info.c:747
+#: ../imsettings/imsettings-info.c:755
 msgid "Command line options for auxiliary program"
 msgstr "सहायक प्रोग्राम के लिए कमांड लाइन विकल्प"
 
-#: ../imsettings/imsettings-info.c:752 ../imsettings/imsettings-info.c:753
+#: ../imsettings/imsettings-info.c:760 ../imsettings/imsettings-info.c:761
 msgid "Long Description"
 msgstr "लंबा विवरण"
 
-#: ../imsettings/imsettings-info.c:758
+#: ../imsettings/imsettings-info.c:766
 msgid "Icon"
 msgstr "प्रतीक"
 
-#: ../imsettings/imsettings-info.c:759
+#: ../imsettings/imsettings-info.c:767
 msgid "Icon filename to be used on GUI"
 msgstr "GUI पर प्रयोग के लिए प्रतीक फ़ाइलनाम"
 
-#: ../imsettings/imsettings-info.c:770
+#: ../imsettings/imsettings-info.c:778
 msgid "System Default"
 msgstr "सिस्टम मूलभूत"
 
-#: ../imsettings/imsettings-info.c:771
+#: ../imsettings/imsettings-info.c:779
 msgid "Whether or not IM is a system default."
 msgstr "क्या IM सिस्टम मूलभूत है या नहीं."
 
-#: ../imsettings/imsettings-info.c:776
+#: ../imsettings/imsettings-info.c:784
 msgid "User Default"
 msgstr "उपयोक्ता मूलभूत"
 
-#: ../imsettings/imsettings-info.c:777
+#: ../imsettings/imsettings-info.c:785
 msgid "Whether or not IM is an user default."
 msgstr "क्या IM उपयोक्ता मूलभूत है या नहीं."
 
-#: ../imsettings/imsettings-observer.c:692
+#: ../imsettings/imsettings-observer.c:693
 msgid "IM module name"
 msgstr "IM मॉड्यूल नाम"
 
-#: ../imsettings/imsettings-observer.c:693
+#: ../imsettings/imsettings-observer.c:694
 msgid "A target IM module name that to observe signals"
 msgstr "लक्ष्य IM मॉड्यूल नाम जो संकेत को देखता है"
 
-#: ../imsettings/imsettings-observer.c:698
+#: ../imsettings/imsettings-observer.c:699
 msgid "Replace"
 msgstr "प्रतिस्थापित करें"
 
-#: ../imsettings/imsettings-observer.c:704
+#: ../imsettings/imsettings-observer.c:705
 #: ../imsettings/imsettings-request.c:175
 msgid "DBus connection"
 msgstr "DBus कनेक्शन"
 
-#: ../imsettings/imsettings-observer.c:705
+#: ../imsettings/imsettings-observer.c:706
 #: ../imsettings/imsettings-request.c:176
 msgid "An object to be a DBus connection"
 msgstr "DBus कनेक्शन होने के लिए वस्तु"
@@ -516,7 +516,7 @@ msgstr ""
 "विधि `%s' वापस लाने के लिए विफल:\n"
 "  %s"
 
-#: ../src/factory.c:455
+#: ../src/factory.c:456
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
@@ -525,60 +525,60 @@ msgstr ""
 "प्रक्रिया को फिर लाने के लिए छोड़ रहा है क्योंकि %s इनपुट विधि प्रक्रिया %s के लिए कई "
 "बार जल्दी जल्दी खत्म हो गई. .imsettings.log अधिक विवरण के लिए देखें."
 
-#: ../src/factory.c:456
+#: ../src/factory.c:457
 msgid "Main"
 msgstr "मुख्य"
 
-#: ../src/factory.c:456
+#: ../src/factory.c:457
 msgid "AUX"
 msgstr "AUX"
 
-#: ../src/factory.c:458 ../src/factory.c:475
+#: ../src/factory.c:459 ../src/factory.c:476
 msgid "Unable to keep Input Method running"
 msgstr "इनपुट विधि चलाते रहने में असमर्थ"
 
-#: ../src/factory.c:666
+#: ../src/factory.c:667
 #, c-format
 msgid "No such Input Method is running: %s"
 msgstr "कोई ऐसी इनपुट विधि नहीं चल रही है: %s"
 
-#: ../src/factory.c:677
+#: ../src/factory.c:678
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "%s प्रक्रिया में सफलतापूर्वक संकेत नहीं भेज सका."
 
-#: ../src/factory.c:710 ../src/factory.c:1200
+#: ../src/factory.c:711 ../src/factory.c:1212
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr "घर निर्देशिका को रख पाने में विफल."
 
-#: ../src/factory.c:727
+#: ../src/factory.c:728
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "बैकअप फाइल वापस करने में विफल: %s"
 
-#: ../src/factory.c:739
+#: ../src/factory.c:740
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "बैकअप फाइल बनाने में विफल: %s"
 
-#: ../src/factory.c:748
+#: ../src/factory.c:749
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr ".xinputrc फाइल हटाने में विफल: %s"
 
-#: ../src/factory.c:759
+#: ../src/factory.c:760
 #, c-format
 msgid "Failed to make a symlink: %s"
 msgstr "सांकेतिकलिंक बनाने में विफल: %s"
 
-#: ../src/factory.c:911 ../src/factory.c:950
+#: ../src/factory.c:919 ../src/factory.c:958
 #, c-format
 msgid "No input methods available on your system."
 msgstr "आपके सिस्टम पर कोई इनपुट विधि उपलब्ध नहीं."
 
-#: ../src/factory.c:995 ../src/factory.c:1057 ../src/factory.c:1095
-#: ../src/factory.c:1262
+#: ../src/factory.c:1003 ../src/factory.c:1068 ../src/factory.c:1106
+#: ../src/factory.c:1275
 #, c-format
 msgid ""
 "No such input method on your system: %s\n"
@@ -587,60 +587,60 @@ msgstr ""
 "आपके सिस्टम पर कोई ऐसी इनपुट विधि नहीं है: %s\n"
 "  विवरण: %s"
 
-#: ../src/factory.c:1106
+#: ../src/factory.c:1117
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr "कोई XIM सर्वर %s में उपलब्ध नहीं है"
 
-#: ../src/factory.c:1333 ../src/monitor.c:237
+#: ../src/factory.c:1347 ../src/monitor.c:237
 msgid "xinputrc directory"
 msgstr "xinputrc निर्देशिका"
 
-#: ../src/factory.c:1334
+#: ../src/factory.c:1348
 msgid "The name of the directory for the system wide xinputrc file."
 msgstr "तंत्र स्तरीय xinputrc फ़ाइल के लिए निर्देशिका का नाम."
 
-#: ../src/factory.c:1339 ../src/monitor.c:243
+#: ../src/factory.c:1353 ../src/monitor.c:243
 msgid "xinput directory"
 msgstr "xinput निर्देशिका"
 
-#: ../src/factory.c:1340
+#: ../src/factory.c:1354
 msgid "The name of the directory for IM configurations."
 msgstr "IM विन्यास के लिए निर्देशिका का नाम"
 
-#: ../src/factory.c:1345 ../src/factory.c:1346 ../src/monitor.c:249
+#: ../src/factory.c:1359 ../src/factory.c:1360 ../src/monitor.c:249
 #: ../src/monitor.c:250
 msgid "home directory"
 msgstr "घर निर्देशिका"
 
-#: ../src/factory.c:1351
+#: ../src/factory.c:1365
 msgid "logging"
 msgstr "लॉगिंग"
 
-#: ../src/factory.c:1352
+#: ../src/factory.c:1366
 msgid "A flag if logging facility is enabled or not."
 msgstr "कोई फ्लैग यदि लॉगिंग सुविधा सक्रिय है या नहीं."
 
-#: ../src/factory.c:1447
+#: ../src/factory.c:1462
 msgid ""
 "Specify the name of the directory of the system-wide xinputrc file (for "
 "debugging only)"
 msgstr "तंत्र स्तरीय xinputrc  फ़ाइल के निर्देशिका का नाम बताएँ (केवल डिबगिंग के लिए)"
 
-#: ../src/factory.c:1447 ../src/factory.c:1448 ../src/factory.c:1449
+#: ../src/factory.c:1462 ../src/factory.c:1463 ../src/factory.c:1464
 msgid "DIR"
 msgstr "DIR"
 
-#: ../src/factory.c:1448
+#: ../src/factory.c:1463
 msgid ""
 "Specify the name of the directory for IM configurations (for debugging only)"
 msgstr "IM विन्यास के लिए निर्देशिका का नाम बताएँ (केवल डिबगिंग के लिए)"
 
-#: ../src/factory.c:1449
+#: ../src/factory.c:1464
 msgid "A home directory (debugging only)"
 msgstr "घर निर्देशिका (केवल डिबगिंग)"
 
-#: ../src/factory.c:1450
+#: ../src/factory.c:1465
 msgid "Do not create a log file."
 msgstr "कोई लॉग फ़ाइल मत बनाएँ."
 
@@ -657,12 +657,12 @@ msgstr "xinputrc विन्यास फ़ाइल जमा करने �
 msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
 msgstr "`%s' नकल प्रविष्टि %s से. SHORT_DESC को अद्वितीय होना चाहिए."
 
-#: ../src/monitor.c:1056
+#: ../src/monitor.c:1063
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "आपके सिस्टम पर कोई ऐसी इनपुट विधि नहीं है: %s"
 
-#: ../src/monitor.c:1258
+#: ../src/monitor.c:1265
 #, c-format
 msgid "No system default input method."
 msgstr "कोई तंत्र तयशुदा इनपुट विधि नहीं."

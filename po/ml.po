@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.trunk.ml\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-28 21:22+0900\n"
+"POT-Creation-Date: 2010-03-23 11:42+0900\n"
 "PO-Revision-Date: 2009-09-10 16:03+0530\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -244,13 +244,13 @@ msgstr "ഇമേജ് വിഡ്ജറ്റ്"
 msgid "Child widget to appear next to the menu text"
 msgstr "മെനു ടെക്സ്റ്റിനടുത്തു് കാണുവാനുള്ള ചൈള്‍ഡ് വിഡ്ജറ്റ്"
 
-#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:699
-#: ../src/factory.c:1446
+#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:700
+#: ../src/factory.c:1461
 msgid "Replace the running settings daemon with new instance."
 msgstr "പ്രവര്‍ത്തനത്തിലുള്ള ക്രമികരണങ്ങളുടെ ഡെണിനെ പുതിയ ഇന്‍സ്റ്റന്‍സ് ഉപയോഗിച്ച് മാറ്റുക."
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:1472 ../utils/imsettings-reload.c:63
+#: ../src/factory.c:1488 ../utils/imsettings-reload.c:63
 #: ../utils/imsettings-restart.c:70 ../utils/imsettings-start.c:71
 #: ../utils/imsettings-stop.c:69
 msgid "Unknown error in parsing the command lines."
@@ -298,11 +298,11 @@ msgstr "ഡീബഗ്ഗിങ് ലോഗുകള്‍ ഔട്ട്പ�
 msgid "XIM server connects to, for debugging purpose only"
 msgstr "XIM സര്‍വര്‍ കണക്ട് ചെയ്യുന്നതു്, ഡീബഗ്ഗിനു് മാത്രം"
 
-#: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:685
+#: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:693
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:705
+#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:713
 msgid "XIM server name"
 msgstr "XIM സര്‍വര്‍ നാമം"
 
@@ -318,156 +318,156 @@ msgstr "പ്രോട്ടോക്കോള്‍ ക്ലാസ്സി�
 msgid "A structure of signals for Protocol class"
 msgstr "പ്രോട്ടോക്കോള്‍ ക്ലാസ്സിനുള്ള സിഗ്നലുകളുടെ സ്ട്രക്ചര്‍"
 
-#: ../imsettings/imsettings-info.c:657 ../imsettings/imsettings-info.c:658
+#: ../imsettings/imsettings-info.c:665 ../imsettings/imsettings-info.c:666
 msgid "Home directory"
 msgstr "ഹോം ഡയറക്ടറി"
 
-#: ../imsettings/imsettings-info.c:664
+#: ../imsettings/imsettings-info.c:672
 msgid "Language"
 msgstr "ഭാഷ"
 
-#: ../imsettings/imsettings-info.c:665
+#: ../imsettings/imsettings-info.c:673
 msgid "A language to pull the information in."
 msgstr "വിവരങ്ങള്‍ ലഭ്യമാക്കുന്നതിനുള്ള ഒരു ഭാഷ."
 
-#: ../imsettings/imsettings-info.c:671
+#: ../imsettings/imsettings-info.c:679
 msgid "Filename"
 msgstr "ഫയല്‍നാമം"
 
-#: ../imsettings/imsettings-info.c:672
+#: ../imsettings/imsettings-info.c:680
 msgid "A filename referring to the IM information."
 msgstr "ഐഎം വിവരങ്ങള്‍ സൂചിപ്പിക്കുന്ന ഒരു ഫയല്‍നാമം."
 
-#: ../imsettings/imsettings-info.c:678 ../imsettings/imsettings-info.c:679
+#: ../imsettings/imsettings-info.c:686 ../imsettings/imsettings-info.c:687
 msgid "Short Description"
 msgstr "ചെറിയ വിവരണം"
 
-#: ../imsettings/imsettings-info.c:686
+#: ../imsettings/imsettings-info.c:694
 msgid "Whether or not IM is a XIM server."
 msgstr "ഐഎം ഒരു XIM സര്‍വര്‍ ആണോ എന്ന്."
 
-#: ../imsettings/imsettings-info.c:692
+#: ../imsettings/imsettings-info.c:700
 msgid "GTK+ immodule"
 msgstr "GTK+ immodule"
 
-#: ../imsettings/imsettings-info.c:693
+#: ../imsettings/imsettings-info.c:701
 msgid "A module name used for GTK+"
 msgstr "GTK+-ന് ഉപയോഗിക്കുന്ന ഘടകനാമം"
 
-#: ../imsettings/imsettings-info.c:698
+#: ../imsettings/imsettings-info.c:706
 msgid "Qt immodule"
 msgstr "Qt immodule"
 
-#: ../imsettings/imsettings-info.c:699
+#: ../imsettings/imsettings-info.c:707
 msgid "A module name used for Qt"
 msgstr "Qt-യ്ക്ക് ഉപയോഗിക്കുന്ന ഘടകനാമം"
 
-#: ../imsettings/imsettings-info.c:704
+#: ../imsettings/imsettings-info.c:712
 msgid "XIM name"
 msgstr "XIM നാമം"
 
-#: ../imsettings/imsettings-info.c:710
+#: ../imsettings/imsettings-info.c:718
 msgid "Ignore flag"
 msgstr "ഫ്ലാഗ് വേണ്ടെന്ന് വയ്ക്കുക"
 
-#: ../imsettings/imsettings-info.c:711
+#: ../imsettings/imsettings-info.c:719
 msgid "A flag to not list up."
 msgstr "ലിസ്റ്റ് ചെയ്ത് കാണിക്കാതിരിക്കുന്നതിനുള്ള ഫ്ലാഗ്."
 
-#: ../imsettings/imsettings-info.c:716
+#: ../imsettings/imsettings-info.c:724
 msgid "XIM server program name"
 msgstr "XIM സര്‍വര്‍ പ്രോഗ്രാമിന്റെ പേര്"
 
-#: ../imsettings/imsettings-info.c:717
+#: ../imsettings/imsettings-info.c:725
 msgid "XIM server program to be run"
 msgstr "പ്രവര്‍ത്തിക്കുന്നതിനുള്ള XIM സര്‍വര്‍ പ്രോഗ്രാം"
 
-#: ../imsettings/imsettings-info.c:722
+#: ../imsettings/imsettings-info.c:730
 msgid "XIM server program's options"
 msgstr "XIM സര്‍വര്‍ പ്രോഗ്രാമിന്റെ ഉപാധികള്‍"
 
-#: ../imsettings/imsettings-info.c:723
+#: ../imsettings/imsettings-info.c:731
 msgid "Command line options for XIM server program"
 msgstr "XIM സര്‍വര്‍ പ്രോഗ്രാമിനുള്ള കമാന്‍ഡ് ലൈന്‍ ഉപാധികള്‍"
 
-#: ../imsettings/imsettings-info.c:728
+#: ../imsettings/imsettings-info.c:736
 msgid "Preference program name"
 msgstr "മുന്‍ഗണനയുള്ള പ്രോഗ്രാമിന്റെ നാമം"
 
-#: ../imsettings/imsettings-info.c:729
+#: ../imsettings/imsettings-info.c:737
 msgid "Preference program to be run"
 msgstr "പ്രവര്‍ത്തിക്കുന്നതിന് മുന്‍ഗണനയുള്ള പ്രോഗ്രാം"
 
-#: ../imsettings/imsettings-info.c:734
+#: ../imsettings/imsettings-info.c:742
 msgid "Preference program's options"
 msgstr "മുന്‍ഗണനയുള്ള പ്രോഗ്രാമിന്റെ ഉപാധികള്‍"
 
-#: ../imsettings/imsettings-info.c:735
+#: ../imsettings/imsettings-info.c:743
 msgid "Command line options for preference program"
 msgstr "മുന്‍ഗണനയുള്ള പ്രോഗ്രാമിനുള്ള കമാന്‍ഡ് ലൈന്‍ ഉപാധികള്‍"
 
-#: ../imsettings/imsettings-info.c:740
+#: ../imsettings/imsettings-info.c:748
 msgid "Auxiliary program name"
 msgstr "ഓക്സിലിയറി പ്രോഗ്രാമിന്റെ പേര്"
 
-#: ../imsettings/imsettings-info.c:741
+#: ../imsettings/imsettings-info.c:749
 msgid "Auxiliary program to be run"
 msgstr "പ്രവര്‍ത്തിക്കുന്നതിനുള്ള ഓക്സിലിയറി പ്രോഗ്രാം"
 
-#: ../imsettings/imsettings-info.c:746
+#: ../imsettings/imsettings-info.c:754
 msgid "Auxiliary program's options"
 msgstr "ഓക്സിലിയറി പ്രോഗ്രാമിനുള്ള ഉപാധികള്‍"
 
-#: ../imsettings/imsettings-info.c:747
+#: ../imsettings/imsettings-info.c:755
 msgid "Command line options for auxiliary program"
 msgstr "ഓക്സിലിയറി പ്രോഗ്രാമിനുള്ള കമാന്‍ഡ് ലൈന്‍ ഉപാധികള്‍"
 
-#: ../imsettings/imsettings-info.c:752 ../imsettings/imsettings-info.c:753
+#: ../imsettings/imsettings-info.c:760 ../imsettings/imsettings-info.c:761
 msgid "Long Description"
 msgstr "വലിയ വിശദീകരണം"
 
-#: ../imsettings/imsettings-info.c:758
+#: ../imsettings/imsettings-info.c:766
 msgid "Icon"
 msgstr "ചിഹ്നം"
 
-#: ../imsettings/imsettings-info.c:759
+#: ../imsettings/imsettings-info.c:767
 msgid "Icon filename to be used on GUI"
 msgstr "ജിയുഐയില്‍ ഉപയോഗിക്കുന്നതിനുള്ള ചിഹ്നത്തിന്റെ ഫയല്‍നാമം"
 
-#: ../imsettings/imsettings-info.c:770
+#: ../imsettings/imsettings-info.c:778
 msgid "System Default"
 msgstr "സിസ്റ്റം ഡീഫോള്‍ട്ട്"
 
-#: ../imsettings/imsettings-info.c:771
+#: ../imsettings/imsettings-info.c:779
 msgid "Whether or not IM is a system default."
 msgstr "ഐഎം സിസ്റ്റം ഡീഫോള്‍ട്ട് ആണോ എന്ന്."
 
-#: ../imsettings/imsettings-info.c:776
+#: ../imsettings/imsettings-info.c:784
 msgid "User Default"
 msgstr "യൂസര്‍ ഡീഫോള്‍ട്ട്"
 
-#: ../imsettings/imsettings-info.c:777
+#: ../imsettings/imsettings-info.c:785
 msgid "Whether or not IM is an user default."
 msgstr "ഐഎം യൂസര്‍ ഡീഫോള്‍ട്ട് ആണോ എന്ന്."
 
-#: ../imsettings/imsettings-observer.c:692
+#: ../imsettings/imsettings-observer.c:693
 msgid "IM module name"
 msgstr "ഐഎം ഘടകനാമം"
 
-#: ../imsettings/imsettings-observer.c:693
+#: ../imsettings/imsettings-observer.c:694
 msgid "A target IM module name that to observe signals"
 msgstr "സിഗ്നലുകള്‍ നിരീക്ഷിക്കുന്നതിനുള്ള ഐഎം ഘടകനാമം"
 
-#: ../imsettings/imsettings-observer.c:698
+#: ../imsettings/imsettings-observer.c:699
 msgid "Replace"
 msgstr "മാറ്റിസ്ഥാപിക്കുക"
 
-#: ../imsettings/imsettings-observer.c:704
+#: ../imsettings/imsettings-observer.c:705
 #: ../imsettings/imsettings-request.c:175
 msgid "DBus connection"
 msgstr "ഡിബസ് കണക്ഷന്‍"
 
-#: ../imsettings/imsettings-observer.c:705
+#: ../imsettings/imsettings-observer.c:706
 #: ../imsettings/imsettings-request.c:176
 msgid "An object to be a DBus connection"
 msgstr "ഡിബസ് കണക്ഷനാകുന്നതിനുള്ള ഒരു ഒബ്ജക്ട്"
@@ -514,7 +514,7 @@ msgstr ""
 "`%s' എന്ന രീതി ആരംഭിക്കുന്നതില്‍ പരാജയപ്പെട്ടു:\n"
 "  %s"
 
-#: ../src/factory.c:455
+#: ../src/factory.c:456
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
@@ -523,60 +523,60 @@ msgstr ""
 "%s ഇന്‍പുട്ട് മെഥേഡ് പ്രക്രിയ, %s-നുള്ളതു്, പല തവണ പ്രവര്‍ത്തിക്കാത്തതിനാല്‍, പ്രക്രിയ തിരികെ "
 "കൊണ്ടുവരാന്‍ ഇനി ശ്രമിക്കുന്നില്ല. കൂടുതല്‍ വിവരങ്ങള്‍ക്കായി .imsettings.log കാണുക."
 
-#: ../src/factory.c:456
+#: ../src/factory.c:457
 msgid "Main"
 msgstr "പ്രധാനം"
 
-#: ../src/factory.c:456
+#: ../src/factory.c:457
 msgid "AUX"
 msgstr "AUX"
 
-#: ../src/factory.c:458 ../src/factory.c:475
+#: ../src/factory.c:459 ../src/factory.c:476
 msgid "Unable to keep Input Method running"
 msgstr "ഇന്‍പുട്ട് രീതി പ്രവര്‍ത്തിപ്പിക്കുന്നതിനു് സാധ്യമല്ല"
 
-#: ../src/factory.c:666
+#: ../src/factory.c:667
 #, c-format
 msgid "No such Input Method is running: %s"
 msgstr "അത്തരം ഇന്‍പുട്ട് മെഥേഡ് പ്രവര്‍ത്തനത്തിലില്ല: %s"
 
-#: ../src/factory.c:677
+#: ../src/factory.c:678
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "വിജയകരമായി %s പ്രക്രിയയിലേക്ക് ഒരു സിഗ്നല്‍ അയയ്ക്കുവാന്‍ സാധ്യമായില്ല."
 
-#: ../src/factory.c:710 ../src/factory.c:1200
+#: ../src/factory.c:711 ../src/factory.c:1212
 #, c-format
 msgid "Failed to get a place of home directory."
 msgstr "ഹോം ഡയറക്ടറിയില്‍ ഒരു സ്ഥലം ലഭിക്കുന്നതില്‍ പരാജയപ്പെട്ടു."
 
-#: ../src/factory.c:727
+#: ../src/factory.c:728
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "ബാക്കപ്പ് ഫയല്‍ തിരികെ ലഭ്യമാക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
 
-#: ../src/factory.c:739
+#: ../src/factory.c:740
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "ഒരു ബാക്കപ്പ് ഫയല്‍ ഉണ്ടാക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
 
-#: ../src/factory.c:748
+#: ../src/factory.c:749
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "ഒരു .xinputrc ഫയല്‍ നീക്കം ചെയ്യുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
 
-#: ../src/factory.c:759
+#: ../src/factory.c:760
 #, c-format
 msgid "Failed to make a symlink: %s"
 msgstr "ഒരു സിംലിങ്ക് ഉണ്ടാക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
 
-#: ../src/factory.c:911 ../src/factory.c:950
+#: ../src/factory.c:919 ../src/factory.c:958
 #, c-format
 msgid "No input methods available on your system."
 msgstr "നിങ്ങളുടെ സിസ്റ്റമില്‍ ഒരു ഇന്‍പുട്ട് രീതിയും ലഭ്യമല്ല."
 
-#: ../src/factory.c:995 ../src/factory.c:1057 ../src/factory.c:1095
-#: ../src/factory.c:1262
+#: ../src/factory.c:1003 ../src/factory.c:1068 ../src/factory.c:1106
+#: ../src/factory.c:1275
 #, c-format
 msgid ""
 "No such input method on your system: %s\n"
@@ -585,60 +585,60 @@ msgstr ""
 "നിങ്ങളുടെ സിസ്റ്റമില്‍ അത്തരം ഒരു ഇന്‍പുട്ട് രീതിയില്ല: %s\n"
 "  വിശദാംശങ്ങള്‍: %s"
 
-#: ../src/factory.c:1106
+#: ../src/factory.c:1117
 #, c-format
 msgid "No XIM server is available in %s"
 msgstr "%s-ല്‍ ഒരു XIM സര്‍വറും ലഭ്യമല്ല"
 
-#: ../src/factory.c:1333 ../src/monitor.c:237
+#: ../src/factory.c:1347 ../src/monitor.c:237
 msgid "xinputrc directory"
 msgstr "xinputrc ഡയറക്ടറി"
 
-#: ../src/factory.c:1334
+#: ../src/factory.c:1348
 msgid "The name of the directory for the system wide xinputrc file."
 msgstr "സിസ്റ്റത്തിന്റെ xinputrc ഫയലിനുള്ള ഡയറക്ടറിയുടെ പേരു്."
 
-#: ../src/factory.c:1339 ../src/monitor.c:243
+#: ../src/factory.c:1353 ../src/monitor.c:243
 msgid "xinput directory"
 msgstr "xinput ഡയറക്ടറി"
 
-#: ../src/factory.c:1340
+#: ../src/factory.c:1354
 msgid "The name of the directory for IM configurations."
 msgstr "ഐ എം ക്രമീകരണങ്ങള്‍ക്കുള്ള ഡയറക്ടറിയുടെ പേരു്."
 
-#: ../src/factory.c:1345 ../src/factory.c:1346 ../src/monitor.c:249
+#: ../src/factory.c:1359 ../src/factory.c:1360 ../src/monitor.c:249
 #: ../src/monitor.c:250
 msgid "home directory"
 msgstr "ഹോം ഡയറക്ടറി"
 
-#: ../src/factory.c:1351
+#: ../src/factory.c:1365
 msgid "logging"
 msgstr "ലോഗ് ചെയ്യുന്നു"
 
-#: ../src/factory.c:1352
+#: ../src/factory.c:1366
 msgid "A flag if logging facility is enabled or not."
 msgstr "ലോഗ്ഗിങ് സംവിധാനം സജ്ജമാണോ എന്നറിയുന്നതിനുള്ള ഫ്ലാഗ്."
 
-#: ../src/factory.c:1447
+#: ../src/factory.c:1462
 msgid ""
 "Specify the name of the directory of the system-wide xinputrc file (for "
 "debugging only)"
 msgstr "system-wide xinputrc-നുള്ള ഡയറക്ടറിയുടെ പേരു് നല്‍കുക  (ഡീബഗ്ഗിങ് മാത്രം)"
 
-#: ../src/factory.c:1447 ../src/factory.c:1448 ../src/factory.c:1449
+#: ../src/factory.c:1462 ../src/factory.c:1463 ../src/factory.c:1464
 msgid "DIR"
 msgstr "DIR"
 
-#: ../src/factory.c:1448
+#: ../src/factory.c:1463
 msgid ""
 "Specify the name of the directory for IM configurations (for debugging only)"
 msgstr "ഐ എം ക്രമീകരണങ്ങള്‍ക്കുള്ള ഡയറക്ടറിയുടെ പേരു് നല്‍കുക  (ഡീബഗ്ഗിങ് മാത്രം)"
 
-#: ../src/factory.c:1449
+#: ../src/factory.c:1464
 msgid "A home directory (debugging only)"
 msgstr "ഒരു ഹോം ഡയറക്ടറി (ഡീബഗ്ഗിങ് മാത്രം)"
 
-#: ../src/factory.c:1450
+#: ../src/factory.c:1465
 msgid "Do not create a log file."
 msgstr "ഒരു ലോഗ് ഫയല്‍ ഉണ്ടാക്കേണ്ട."
 
@@ -655,12 +655,12 @@ msgstr "xinputrc ക്രമീകരണ ഫയലുകള്‍ സൂക്�
 msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
 msgstr "`%s' എന്ന് ആവര്‍ത്തിക്കുന്നു, %s-ല്‍. SHORT_DESC ഒന്നേ പാടുള്ളൂ."
 
-#: ../src/monitor.c:1056
+#: ../src/monitor.c:1063
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "നിങ്ങളുടെ സിസ്റ്റമില്‍ അത്തരം ഒരു ഇന്‍പുട്ട് രീതിയില്ല: %s"
 
-#: ../src/monitor.c:1258
+#: ../src/monitor.c:1265
 #, c-format
 msgid "No system default input method."
 msgstr "സിസ്റ്റം സഹജമായ ഇന്‍പുട്ട് മെഥേഡ് ലഭ്യമല്ല."
