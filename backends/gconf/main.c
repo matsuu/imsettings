@@ -259,7 +259,8 @@ main(int    argc,
 	g_main_loop_run(loop);
 
 	g_main_loop_unref(loop);
-	dbus_g_connection_unref(gconn);
+	if (dbus_connection_get_is_connected(conn))
+		dbus_g_connection_unref(gconn);
 	g_object_unref(gconf);
 
 	return 0;

@@ -1,4 +1,15 @@
-2010-03-17  Akira TAGOH  <akira@tagoh.org>
+2010-03-23  Akira TAGOH  <tagoh@redhat.com>
+
+	Fix of rhbz#570462
+
+	* src/factory.c (imsettings_manager_real_finalize): don't try to unref
+	the dbus connection if the session is already closed.
+	(main): likewise.
+
+	* backends/gconf/main.c (main): don't try to unref the dbus connection
+	if the session is already closed.
+
+2010-03-17  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/lxde/main.c (lxde_imsettings_change_to): fix a typo.
 

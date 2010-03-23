@@ -879,7 +879,9 @@ imsettings_manager_real_finalize(GObject *object)
 		if (dbus_connection_get_is_connected(priv->req_conn))
 			g_object_unref(priv->notify);
 	}
-	dbus_connection_unref(priv->req_conn);
+	if (priv->req_conn &&
+	    dbus_connection_get_is_connected(priv->req_conn))
+		dbus_connection_unref(priv->req_conn);
 	if (priv->monitor)
 		g_object_unref(priv->monitor);
 	if (priv->im_running)
@@ -1464,6 +1466,7 @@ main(int    argc,
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};
 	DBusGConnection *gconn;
+	DBusConnection *conn;
 	struct sigaction sa;
 
 #ifdef ENABLE_NLS
@@ -1531,7 +1534,10 @@ main(int    argc,
 
 	g_main_loop_unref(loop);
 	g_object_unref(manager);
-	dbus_g_connection_unref(gconn);
+	conn = dbus_g_connection_get_connection(gconn);
+	if (conn &&
+	    dbus_connection_get_is_connected(conn))
+		dbus_g_connection_unref(gconn);
 
 	return 0;
 }
