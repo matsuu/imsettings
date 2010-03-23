@@ -1,5 +1,12 @@
 2010-03-23  Akira TAGOH  <tagoh@redhat.com>
 
+	* backends/lxde/main.c: revise. run as the helper program
+	not the dbus service.
+
+	* src/factory.c: revert the changes of LXDE support code.
+
+2010-03-23  Akira TAGOH  <tagoh@redhat.com>
+
 	* configure.ac: bump to 0.108.0.
 
 	Fix of rhbz#570462

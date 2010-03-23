@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=com.redhat.imsettings.LXDE
-Exec=@libexecdir@/lxde-im-settings-daemon
