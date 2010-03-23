@@ -1,10 +1,15 @@
-0.107.4 ->
+0.107.4 -> 0.108.0
 =====================
+* Features:
+  * Add LXDE support.
 * Bug Fixes:
   * rhbz#540062: Fix a segfault issue on XFCE desktop.
   * rhbz#530357: workaround to avoid aborting from dbus in libnotify.
   * Fix a memory leak.
   * Don't unset IMSETTINGS_INTEGRATE_DESKTOP that could be overridden from the outside of xinput.sh.
+  * rhbz#543005: Fix a abort issue on GConf backend.
+  * rhbz#553680: Fix a segfault issue when /bin/sh points to non-bash shell.
+  * rhbz#570462: Fix another abort issue after DBus session closed.
 * Translation updated:
   * Brazilian Portuguese
   * German

@@ -1,5 +1,7 @@
 2010-03-23  Akira TAGOH  <tagoh@redhat.com>
 
+	* configure.ac: bump to 0.108.0.
+
 	Fix of rhbz#570462
 
 	* src/factory.c (imsettings_manager_real_finalize): don't try to unref
