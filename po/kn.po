@@ -248,7 +248,7 @@ msgstr "ಮೆನು ಪಠ್ಯದ ಎದುರಿಗೆ ಕಾಣಿಸಿಕ
 #: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:700
 #: ../src/factory.c:1461
 msgid "Replace the running settings daemon with new instance."
-msgstr "ಚಲಾಯಿಸಲ್ಪಡುತ್ತಿರುವ ಸಂಯೋಜನೆಗಳ ಡೆಮನ್ ಅನ್ನು ಹೊಸ ಸನ್ನಿವೇಶದಿಂದ(ಇನ್ಸನ್ಸ್‍) ಬದಲಾಯಿಸು."
+msgstr "ಚಲಾಯಿಸಲ್ಪಡುತ್ತಿರುವ ಸಿದ್ಧತೆಗಳ ಡೆಮನ್ ಅನ್ನು ಹೊಸ ಸನ್ನಿವೇಶದಿಂದ(ಇನ್ಸನ್ಸ್‍) ಬದಲಾಯಿಸು."
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
 #: ../src/factory.c:1488 ../utils/imsettings-reload.c:63
