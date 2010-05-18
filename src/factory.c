@@ -422,6 +422,10 @@ _watch_im_status_cb(GPid     pid,
 
 		if (WIFEXITED (status)) {
 			g_string_append_printf(status_message, "the status %d", WEXITSTATUS (status));
+			if (WEXITSTATUS (status) == 0) {
+				/* don't restart the process. the process died intentionally */
+				g_hash_table_remove(priv->pid2id, GINT_TO_POINTER (pid));
+			}
 		} else if (WIFSIGNALED (status)) {
 			g_string_append_printf(status_message, "the signal %d", WTERMSIG (status));
 			if (WCOREDUMP (status)) {
@@ -1135,7 +1139,7 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 	IMSettingsManagerPrivate *priv = IMSETTINGS_MANAGER_GET_PRIVATE (imsettings);
 	IMSettingsInfo *info = NULL;
 	gchar *homedir = NULL;
-	const gchar *gtkimm, *xim, *aux_prog = NULL;
+	const gchar *gtkimm, /* *qtimm,*/ *xim, *aux_prog = NULL;
 	gchar *p = NULL;
 	gboolean retval = FALSE;
 	GString *strerr = g_string_new(NULL);
@@ -1148,6 +1152,9 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 		goto end;
 
 	gtkimm = imsettings_info_get_gtkimm(info);
+#if 0
+	qtimm = imsettings_info_get_qtimm(info);
+#endif
 	xim = imsettings_info_get_xim(info);
 
 	/* Change the settings before killing the IM process(es) */
@@ -1156,7 +1163,7 @@ imsettings_manager_real_stop_im(IMSettingsObserver  *imsettings,
 	imsettings_request_change_to(priv->gtk_req, gtkimm ? gtkimm : "", error);
 	imsettings_request_change_to_with_signal(priv->xim_req, xim ? xim : "none");
 #if 0
-	imsettings_request_change_to(priv->qt_req, NULL, error);
+	imsettings_request_change_to(priv->qt_req, qtimm ? qtimm : "", error);
 #endif
 
 	g_object_unref(info);

@@ -1,3 +1,8 @@
+2010-05-18  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (_watch_im_status_cb): don't restart the process
+	if the exit status is 0. (rhbz#573604)
+
 2010-03-23  Akira TAGOH  <tagoh@redhat.com>
 
 	* backends/lxde/main.c: revise. run as the helper program
