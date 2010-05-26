@@ -7,22 +7,23 @@
 # Tony Fu <tfu@redhat.com>, 2006.
 # Walter Cheuk <wwycheuk@gmail.com>, 2007.
 # Leah Liu <lliu@redhat.com>, 2008.
+# Cheng-Chia Tseng <pswo10680@gmail.com>, 2010.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser.trunk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-23 11:42+0900\n"
-"PO-Revision-Date: 2009-09-25 10:39+0800\n"
-"Last-Translator: Tom K. C. Chiu <tomchiukc@gmail.com>\n"
-"Language-Team: Traditional Chinese <zh@li.org>\n"
+"PO-Revision-Date: 2010-05-24 22:05+0800\n"
+"Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
+"Language-Team: Traditional Chinese <trans-zh_tw@lists.fedoraproject.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
 
 #: ../applet/imsettings-applet.desktop.in.in.h:1
 msgid "IMSettings Applet"
-msgstr ""
+msgstr "IMSettings 面板程式"
 
 #: ../applet/imsettings-applet.schemas.in.h:1
 msgid "A shortcut key to connect to/disconnect from Input Method"
@@ -30,71 +31,66 @@ msgstr "連結/終止連結到輸入法的快速鍵"
 
 #: ../applet/imsettings-applet.schemas.in.h:2
 msgid "Enable this when accelerator keys etc doesn't work"
-msgstr ""
+msgstr "當輔助鍵無法作用時啟用它"
 
 #: ../applet/imsettings-applet.schemas.in.h:3
-msgid ""
-"If \"true\", all messages will be delivered through libnotify, otherwise "
-"only error and warning messages."
-msgstr ""
+msgid "If \"true\", all messages will be delivered through libnotify, otherwise only error and warning messages."
+msgstr "如果為 \"true\"，所有訊息將透過 libnotify 來傳遞，錯誤與警告訊息除外。"
 
 #: ../applet/imsettings-applet.schemas.in.h:4
 msgid "If true, the icon will be displayed at the systray."
-msgstr ""
+msgstr "如果為 true，該圖示會顯示於系統匣。"
 
 #: ../applet/imsettings-applet.schemas.in.h:5
 msgid "Show the status icon"
 msgstr "顯示狀況圖示"
 
 #: ../applet/imsettings-applet.schemas.in.h:6
-msgid ""
-"The keybinding which connect to Input Method or disconnect from Input "
-"Method. The format looks like \"&lt;Control&gt;a\" or \"&lt;Shift&gt;&lt;"
-"Alt&gt;F1\". The parser is fairly liberal and allows lower or upper case, "
-"and also abbreviations such as \"&lt;Ctl&gt;\" and \"&lt;Ctrl&gt;\". If you "
-"set the option to the special string \"disabled\", then there will be no "
-"keybinding for this."
-msgstr ""
+msgid "The keybinding which connect to Input Method or disconnect from Input Method. The format looks like \"&lt;Control&gt;a\" or \"&lt;Shift&gt;&lt;Alt&gt;F1\". The parser is fairly liberal and allows lower or upper case, and also abbreviations such as \"&lt;Ctl&gt;\" and \"&lt;Ctrl&gt;\". If you set the option to the special string \"disabled\", then there will be no keybinding for this."
+msgstr "連接到輸入法，或是從輸入法斷開連接的按鍵綁定功能。格式範例： \"&lt;Control&gt;a\" 或 \"&lt;Shift&gt;&lt;Alt&gt;F1\"。解析器相當開明，允許使用小寫以及大寫，甚至連 \"&lt;Ctl&gt;\" 與 \"&lt;Ctrl&gt;\" 這樣的縮寫都能接受。如果您將該選項設定為特殊字串 \"disabled\"，那麼就不會使用按鍵綁定。"
 
-#: ../applet/imsettings-applet.schemas.in.h:7 ../applet/main.c:714
-msgid ""
-"When this option is enabled, all of key events will be sent to Input Method "
-"synchronously. This might affects a performance."
-msgstr ""
+#: ../applet/imsettings-applet.schemas.in.h:7
+#: ../applet/main.c:714
+msgid "When this option is enabled, all of key events will be sent to Input Method synchronously. This might affects a performance."
+msgstr "當此選項啟用時，所有按鍵事件將會同步傳送給輸入法。這可能會影響到系統效能。"
 
 #: ../applet/imsettings-applet.schemas.in.h:8
 msgid "Whether to notify informations with libnotify"
-msgstr ""
+msgstr "是否以 libnotify 通知相關資訊"
 
-#: ../applet/main.c:148 ../applet/main.c:181 ../applet/main.c:221
+#: ../applet/main.c:148
+#: ../applet/main.c:181
+#: ../applet/main.c:221
 msgid "No detailed information"
 msgstr "沒有詳細資訊"
 
 #: ../applet/main.c:151
 msgid "Version-mismatch of im-settings-daemon"
-msgstr "im-settings-daemon的版本不相符"
+msgstr "im-settings-daemon 的版本不相符"
 
-#: ../applet/main.c:178 ../applet/main.c:258
+#: ../applet/main.c:178
+#: ../applet/main.c:258
 #, c-format
 msgid "Unable to start %s"
 msgstr "未能重新啟動 %s"
 
 #: ../applet/main.c:192
-msgid ""
-" and the default Input Method has been changed. if you need to change that "
-"to anything else, please use im-chooser."
-msgstr ""
+msgid " and the default Input Method has been changed. if you need to change that to anything else, please use im-chooser."
+msgstr "以及預設輸入法已被變更。如果您需要將它變更為其它項目，請使用 im-chooser。"
 
 #: ../applet/main.c:198
 #, c-format
 msgid "Connected to %s.%s"
 msgstr "連往 %s.%s"
 
-#: ../applet/main.c:203 ../applet/main.c:238 ../applet/main.c:911
+#: ../applet/main.c:203
+#: ../applet/main.c:238
+#: ../applet/main.c:911
 msgid "Information"
 msgstr "資訊"
 
-#: ../applet/main.c:218 ../applet/main.c:284
+#: ../applet/main.c:218
+#: ../applet/main.c:284
 #, c-format
 msgid "Unable to stop %s"
 msgstr "未能停止 %s"
@@ -103,18 +99,20 @@ msgstr "未能停止 %s"
 msgid "Disconnected from Input Method"
 msgstr "終止連結到輸入法"
 
-#: ../applet/main.c:262 ../applet/main.c:288
+#: ../applet/main.c:262
+#: ../applet/main.c:288
 msgid "maybe DBus related issue."
 msgstr "可能是 DBus 相關問題。"
 
-#: ../applet/main.c:343 ../applet/main.c:369
+#: ../applet/main.c:343
+#: ../applet/main.c:369
 msgid "Unable to store a value to GConf"
-msgstr ""
+msgstr "無法將設定值儲存至 GConf"
 
 #: ../applet/main.c:472
 #, c-format
 msgid "The acceleration key %s may be invalid. disabled it temporarily."
-msgstr ""
+msgstr "輔助鍵 %s 可能無效。暫時將它停用。"
 
 #: ../applet/main.c:474
 msgid "Unable to set up the acceleration key"
@@ -130,29 +128,27 @@ msgstr "請按加速鍵……"
 
 #: ../applet/main.c:683
 msgid "IMSettings Applet Preferences"
-msgstr ""
+msgstr "IMSettings 面板程式偏好設定"
 
 #: ../applet/main.c:695
 msgid "_Show the status icon"
-msgstr ""
+msgstr "顯示狀態圖示(_S)"
 
 #: ../applet/main.c:704
 msgid "_Enable this when accelerator keys etc doesn't work"
-msgstr ""
+msgstr "當輔助鍵無法作用時啟用它(_E)"
 
 #: ../applet/main.c:723
 msgid "<b>Trigger key:</b>"
-msgstr ""
+msgstr "<b>觸發鍵：</b>"
 
 #: ../applet/main.c:735
 msgid "_Grab key"
-msgstr ""
+msgstr "擷取鍵(_G)"
 
 #: ../applet/main.c:749
-msgid ""
-"Please click Grab key button and press the key combinations you want to "
-"assign for the acceleration key. Press Backspace key to disable this feature."
-msgstr ""
+msgid "Please click Grab key button and press the key combinations you want to assign for the acceleration key. Press Backspace key to disable this feature."
+msgstr "請點擊「擷取鍵」按鈕，並按下您想要指派給該輔助鍵的按鍵組合。按下 Backspace 鍵以停用此功能。"
 
 #: ../applet/main.c:826
 msgid "Disconnect"
@@ -167,11 +163,8 @@ msgid "Click to disconnect from Input Method"
 msgstr "點擊以停止連結到輸入法"
 
 #: ../applet/main.c:912
-msgid ""
-"The default Input Method isn't yet configured. To get this working, you need "
-"to set up that on im-chooser or select one from the menu which appears by "
-"the right click first."
-msgstr ""
+msgid "The default Input Method isn't yet configured. To get this working, you need to set up that on im-chooser or select one from the menu which appears by the right click first."
+msgstr "尚未設定預設輸入法。要讓此功能產生作用，您需要於 im-chooser 中設定它，或是從右鍵點擊後顯現的選單內選擇其一。"
 
 #. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
 #. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
@@ -215,24 +208,28 @@ msgstr "不要再顯示通知"
 
 #: ../applet/main.c:1054
 msgid "Unable to take an ownership for XIM server"
-msgstr ""
+msgstr "無法為 XIM 伺服器獲取所有權"
 
 #: ../applet/radiomenuitem.c:314
 msgid "Image widget"
-msgstr ""
+msgstr "圖像小工具"
 
 #: ../applet/radiomenuitem.c:315
 msgid "Child widget to appear next to the menu text"
-msgstr ""
+msgstr "要顯現在選單文字旁的子代小工具"
 
-#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:700
+#: ../backends/gconf/main.c:184
+#: ../imsettings/imsettings-observer.c:700
 #: ../src/factory.c:1461
 msgid "Replace the running settings daemon with new instance."
-msgstr "使用新實例替代執行的設定常駐程式。"
+msgstr "以新實體取代執行中的設定常駐程式。"
 
-#: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:1488 ../utils/imsettings-reload.c:63
-#: ../utils/imsettings-restart.c:70 ../utils/imsettings-start.c:71
+#: ../backends/gconf/main.c:206
+#: ../backends/xim/main.c:179
+#: ../src/factory.c:1488
+#: ../utils/imsettings-reload.c:63
+#: ../utils/imsettings-restart.c:70
+#: ../utils/imsettings-start.c:71
 #: ../utils/imsettings-stop.c:69
 msgid "Unknown error in parsing the command lines."
 msgstr "在解析指令行時出現未知錯誤。"
@@ -243,12 +240,11 @@ msgstr "按鍵標簽|輸入法"
 
 #: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:1
 msgid "Helper application for imsettings"
-msgstr "imsettings的幫助程式"
+msgstr "imsettings 的幫助程式"
 
 #: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
-msgstr ""
+msgid "Helper application that delivers GTK+ immodule name between GConf and Xfconf"
+msgstr "負責在 GConf 與 Xfconf 間傳遞 GTK+ immodule 名稱的輔助程式"
 
 #: ../backends/xim/loopback.c:223
 msgid "Synchronous"
@@ -256,7 +252,7 @@ msgstr "同步"
 
 #: ../backends/xim/loopback.c:224
 msgid "Request to send a key event synchronously"
-msgstr ""
+msgstr "要求同步傳送按鍵事件"
 
 #: ../backends/xim/main.c:142
 msgid "X display to use"
@@ -267,9 +263,8 @@ msgid "DISPLAY"
 msgstr "DISPLAY"
 
 #: ../backends/xim/main.c:143
-#, fuzzy
 msgid "Replace the running XIM server with new instance."
-msgstr "使用新實例替代執行的設定常駐程式。"
+msgstr "以新實體取代執行中的 XIM 伺服器。"
 
 #: ../backends/xim/main.c:144
 msgid "Output the debugging logs"
@@ -277,31 +272,34 @@ msgstr "輸出除錯紀錄"
 
 #: ../backends/xim/main.c:145
 msgid "XIM server connects to, for debugging purpose only"
-msgstr ""
+msgstr "要連接的 XIM 伺服器，僅供除錯使用"
 
-#: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:693
+#: ../backends/xim/main.c:145
+#: ../imsettings/imsettings-info.c:693
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:713
+#: ../backends/xim/proxy.c:2968
+#: ../imsettings/imsettings-info.c:713
 msgid "XIM server name"
 msgstr "XIM 伺服器名稱"
 
 #: ../backends/xim/proxy.c:2969
 msgid "The name of XIM server for the connection"
-msgstr "要連結的 XIM 伺服器名稱"
+msgstr "要連線的 XIM 伺服器名稱"
 
 #: ../backends/xim/proxy.c:2974
 msgid "Signals for Protocol class"
-msgstr ""
+msgstr "協定層級的訊號"
 
 #: ../backends/xim/proxy.c:2975
 msgid "A structure of signals for Protocol class"
-msgstr ""
+msgstr "協定層級的訊號架構"
 
-#: ../imsettings/imsettings-info.c:665 ../imsettings/imsettings-info.c:666
+#: ../imsettings/imsettings-info.c:665
+#: ../imsettings/imsettings-info.c:666
 msgid "Home directory"
-msgstr "主目錄空間"
+msgstr "主目錄"
 
 #: ../imsettings/imsettings-info.c:672
 msgid "Language"
@@ -319,7 +317,8 @@ msgstr "檔名"
 msgid "A filename referring to the IM information."
 msgstr "檔名參照 IM 資訊。"
 
-#: ../imsettings/imsettings-info.c:686 ../imsettings/imsettings-info.c:687
+#: ../imsettings/imsettings-info.c:686
+#: ../imsettings/imsettings-info.c:687
 msgid "Short Description"
 msgstr "簡短說明"
 
@@ -349,11 +348,11 @@ msgstr "XIM 名稱"
 
 #: ../imsettings/imsettings-info.c:718
 msgid "Ignore flag"
-msgstr "捨棄記號"
+msgstr "捨棄旗標"
 
 #: ../imsettings/imsettings-info.c:719
 msgid "A flag to not list up."
-msgstr "不清單的記號。"
+msgstr "不列出的旗標。"
 
 #: ../imsettings/imsettings-info.c:724
 msgid "XIM server program name"
@@ -403,7 +402,8 @@ msgstr "輔助程式選項"
 msgid "Command line options for auxiliary program"
 msgstr "輔助程式的指令行選項"
 
-#: ../imsettings/imsettings-info.c:760 ../imsettings/imsettings-info.c:761
+#: ../imsettings/imsettings-info.c:760
+#: ../imsettings/imsettings-info.c:761
 msgid "Long Description"
 msgstr "詳細說明"
 
@@ -413,7 +413,7 @@ msgstr "圖示"
 
 #: ../imsettings/imsettings-info.c:767
 msgid "Icon filename to be used on GUI"
-msgstr ""
+msgstr "要在 GUI 上使用的圖示檔名"
 
 #: ../imsettings/imsettings-info.c:778
 msgid "System Default"
@@ -441,7 +441,7 @@ msgstr "觀察訊號的目標 IM 模組"
 
 #: ../imsettings/imsettings-observer.c:699
 msgid "Replace"
-msgstr "替代"
+msgstr "取代"
 
 #: ../imsettings/imsettings-observer.c:705
 #: ../imsettings/imsettings-request.c:175
@@ -459,15 +459,15 @@ msgstr "DBus 介面"
 
 #: ../imsettings/imsettings-request.c:170
 msgid "Interface name to connect to DBus"
-msgstr "要連線到 DBus 的介面名稱"
+msgstr "要連接的 DBus 介面名稱"
 
 #: ../imsettings/imsettings-request.c:181
 msgid "Locale"
-msgstr "地區資訊"
+msgstr "地區語言資訊"
 
 #: ../imsettings/imsettings-request.c:182
 msgid "Locale to get the imsettings information"
-msgstr "獲得輸入法設定資訊的地區資訊"
+msgstr "要獲得輸入法設定資訊的地區語言資訊"
 
 #: ../imsettings/imsettings-request.c:243
 #: ../imsettings/imsettings-request.c:270
@@ -497,10 +497,8 @@ msgstr ""
 
 #: ../src/factory.c:456
 #, c-format
-msgid ""
-"Giving up to bring the process up because %s Input Method process for %s "
-"rapidly died many times. See .imsettings.log for more details."
-msgstr ""
+msgid "Giving up to bring the process up because %s Input Method process for %s rapidly died many times. See .imsettings.log for more details."
+msgstr "由於 %s 輸入法程序 (來自 %s) 多次迅速失去回應，因此放棄喚起該程序。請見 .imsettings.log 以取得更多詳細資訊。"
 
 #: ../src/factory.c:457
 msgid "Main"
@@ -510,7 +508,8 @@ msgstr "主程式"
 msgid "AUX"
 msgstr "AUX"
 
-#: ../src/factory.c:459 ../src/factory.c:476
+#: ../src/factory.c:459
+#: ../src/factory.c:476
 msgid "Unable to keep Input Method running"
 msgstr "無法保持輸入法於執行狀態"
 
@@ -524,10 +523,11 @@ msgstr "在您的系統中，以下輸入法並非運行中：%s"
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "無法成功將訊號傳送給 %s 程式。"
 
-#: ../src/factory.c:711 ../src/factory.c:1212
+#: ../src/factory.c:711
+#: ../src/factory.c:1212
 #, c-format
 msgid "Failed to get a place of home directory."
-msgstr "無法獲得主目錄空間。"
+msgstr "無法獲得主目錄位置。"
 
 #: ../src/factory.c:728
 #, c-format
@@ -549,12 +549,15 @@ msgstr "移除 .xinputrc 檔案失敗：%s"
 msgid "Failed to make a symlink: %s"
 msgstr "生成象徵式鏈結失敗：%s"
 
-#: ../src/factory.c:919 ../src/factory.c:958
+#: ../src/factory.c:919
+#: ../src/factory.c:958
 #, c-format
 msgid "No input methods available on your system."
 msgstr "在您的系統中沒有輸入法。"
 
-#: ../src/factory.c:1003 ../src/factory.c:1068 ../src/factory.c:1106
+#: ../src/factory.c:1003
+#: ../src/factory.c:1068
+#: ../src/factory.c:1106
 #: ../src/factory.c:1275
 #, c-format
 msgid ""
@@ -569,27 +572,30 @@ msgstr ""
 msgid "No XIM server is available in %s"
 msgstr "在 %s 中沒有可用 XIM 伺服器"
 
-#: ../src/factory.c:1347 ../src/monitor.c:237
+#: ../src/factory.c:1347
+#: ../src/monitor.c:237
 msgid "xinputrc directory"
-msgstr ""
+msgstr "xinputrc 目錄"
 
 #: ../src/factory.c:1348
 msgid "The name of the directory for the system wide xinputrc file."
-msgstr ""
+msgstr "全系統 xinputrc 檔的目錄名稱。"
 
-#: ../src/factory.c:1353 ../src/monitor.c:243
+#: ../src/factory.c:1353
+#: ../src/monitor.c:243
 msgid "xinput directory"
-msgstr ""
+msgstr "xinput 目錄"
 
 #: ../src/factory.c:1354
-#, fuzzy
 msgid "The name of the directory for IM configurations."
-msgstr "檔名參照 IM 資訊。"
+msgstr "存放 IM 配置檔的目錄名稱。"
 
-#: ../src/factory.c:1359 ../src/factory.c:1360 ../src/monitor.c:249
+#: ../src/factory.c:1359
+#: ../src/factory.c:1360
+#: ../src/monitor.c:249
 #: ../src/monitor.c:250
 msgid "home directory"
-msgstr "主目錄空間"
+msgstr "主目錄"
 
 #: ../src/factory.c:1365
 msgid "logging"
@@ -600,36 +606,34 @@ msgid "A flag if logging facility is enabled or not."
 msgstr "這個旗標顯示紀錄設備有否被啟用。"
 
 #: ../src/factory.c:1462
-msgid ""
-"Specify the name of the directory of the system-wide xinputrc file (for "
-"debugging only)"
-msgstr ""
+msgid "Specify the name of the directory of the system-wide xinputrc file (for debugging only)"
+msgstr "指定全系統 xinputrc 檔的目錄名稱 (僅供除錯使用)"
 
-#: ../src/factory.c:1462 ../src/factory.c:1463 ../src/factory.c:1464
+#: ../src/factory.c:1462
+#: ../src/factory.c:1463
+#: ../src/factory.c:1464
 msgid "DIR"
 msgstr "DIR"
 
 #: ../src/factory.c:1463
-msgid ""
-"Specify the name of the directory for IM configurations (for debugging only)"
-msgstr "指名 IM 資訊檔名參照（作除錯用途）"
+msgid "Specify the name of the directory for IM configurations (for debugging only)"
+msgstr "指定 IM 配置檔的目錄名稱 (僅供除錯使用)"
 
 #: ../src/factory.c:1464
 msgid "A home directory (debugging only)"
-msgstr ""
+msgstr "一個主目錄 (僅供除錯)"
 
 #: ../src/factory.c:1465
 msgid "Do not create a log file."
 msgstr "不要建立紀錄檔。"
 
 #: ../src/monitor.c:238
-#, fuzzy
 msgid "A place to store xinputrc file"
-msgstr "移除 .xinputrc 檔案失敗：%s"
+msgstr "儲存 xinputrc 檔案的位置"
 
 #: ../src/monitor.c:244
 msgid "A place to store xinput configuration files"
-msgstr ""
+msgstr "儲存 xinput 配置檔的位置"
 
 #: ../src/monitor.c:876
 #, c-format
@@ -646,28 +650,32 @@ msgstr "在您的系統中沒有這個輸入法：%s"
 msgid "No system default input method."
 msgstr "沒有系統預設輸入法。"
 
-#: ../utils/imsettings-info.c:55 ../utils/imsettings-restart.c:77
-#: ../utils/imsettings-start.c:78 ../utils/imsettings-stop.c:76
-#, fuzzy, c-format
+#: ../utils/imsettings-info.c:55
+#: ../utils/imsettings-restart.c:77
+#: ../utils/imsettings-start.c:78
+#: ../utils/imsettings-stop.c:76
+#, c-format
 msgid "Failed to get a session bus.\n"
-msgstr "生成象徵式鏈結失敗：%s"
+msgstr "無法取得作業階段的 bus。\n"
 
-#: ../utils/imsettings-info.c:61 ../utils/imsettings-list.c:58
-#: ../utils/imsettings-restart.c:84 ../utils/imsettings-start.c:85
+#: ../utils/imsettings-info.c:61
+#: ../utils/imsettings-list.c:58
+#: ../utils/imsettings-restart.c:84
+#: ../utils/imsettings-start.c:85
 #: ../utils/imsettings-stop.c:83
 #, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload -f\" may help but it will restart the Input "
-"Method\n"
+"Running \"imsettings-reload -f\" may help but it will restart the Input Method\n"
 msgstr ""
+"目前有不同版本的 imsettings 正在執行。\n"
+"執行 \"imsettings-reload -f\" 可能有所助益，但它也會重新啟動輸入法\n"
 
-#: ../utils/imsettings-info.c:77 ../utils/imsettings-restart.c:98
+#: ../utils/imsettings-info.c:77
+#: ../utils/imsettings-restart.c:98
 #: ../utils/imsettings-stop.c:97
 #, c-format
-msgid ""
-"No Input Method running. please specify Input Method name explicitly if "
-"necessary.\n"
+msgid "No Input Method running. please specify Input Method name explicitly if necessary.\n"
 msgstr "沒有任何輸入法執行中。如有需要，請指明輸入法的名稱。\n"
 
 #: ../utils/imsettings-info.c:86
@@ -679,7 +687,8 @@ msgstr "未能取得輸入法資訊"
 msgid "Force reloading the configuration, including restarting the process."
 msgstr "強制重新載入配置，包括重啟程式。"
 
-#: ../utils/imsettings-restart.c:42 ../utils/imsettings-start.c:43
+#: ../utils/imsettings-restart.c:42
+#: ../utils/imsettings-start.c:43
 #: ../utils/imsettings-stop.c:42
 msgid "[Input Method name|xinput.conf]"
 msgstr "[Input Method name|xinput.conf]"
@@ -688,12 +697,14 @@ msgstr "[Input Method name|xinput.conf]"
 msgid "Force restarting the IM process regardless of any errors."
 msgstr "強制重新啟動 %s，但可能不能完全重啟"
 
-#: ../utils/imsettings-restart.c:45 ../utils/imsettings-start.c:45
+#: ../utils/imsettings-restart.c:45
+#: ../utils/imsettings-start.c:45
 #: ../utils/imsettings-stop.c:45
 msgid "Do not update .xinputrc."
 msgstr "不要更新 .xinputrc。"
 
-#: ../utils/imsettings-restart.c:109 ../utils/imsettings-stop.c:109
+#: ../utils/imsettings-restart.c:109
+#: ../utils/imsettings-stop.c:109
 #, c-format
 msgid "Failed to stop IM process `%s'\n"
 msgstr "終止 IM 程式 `%s' 失敗\n"
@@ -716,11 +727,11 @@ msgstr "IM 程序 `%s' 重新啟動失敗\n"
 
 #: ../utils/imsettings-start.c:46
 msgid "Start Input Method if not yet running."
-msgstr "若輸入法未運行則啟動。"
+msgstr "若輸入法尚未執行則將之啟動。"
 
 #: ../utils/imsettings-start.c:47
 msgid "Shut up the extra messages."
-msgstr "關閉額外訊息"
+msgstr "關閉額外訊息。"
 
 #: ../utils/imsettings-start.c:104
 #, c-format
@@ -757,34 +768,24 @@ msgstr "終止 %s\n"
 #, fuzzy
 #~ msgid "A XIM server name"
 #~ msgstr "XIM 伺服器名稱"
-
 #~ msgid "X display name"
 #~ msgstr "X 顯示屏 名稱"
-
 #~ msgid "X display name to use"
 #~ msgstr "要使用的 X顯示屏 名稱"
-
 #~ msgid "X screen to use"
 #~ msgstr "要使用的 X 螢幕"
-
 #~ msgid "SCREEN"
 #~ msgstr "SCREEN"
-
 #~ msgid "Failed to open a X display."
 #~ msgstr "開啟 X顯示屏 失敗。"
-
 #~ msgid "Failed to remove a pidfile: %s"
 #~ msgstr "移除 pid 檔案失敗：%s"
-
 #~ msgid "Failed to open a pidfile: %s"
 #~ msgstr "開啟 pid 檔案失敗：%s"
-
 #~ msgid "Couldn't determine the pid for %s process."
 #~ msgstr "無法為 %s  程式確定 pid。"
-
 #~ msgid "Reloading...\n"
 #~ msgstr "重新載入... \n"
-
 #~ msgid "Invalid IM module type: %d"
 #~ msgstr "無效 IM 模組類別：%d"
 
@@ -795,70 +796,51 @@ msgstr "終止 %s\n"
 #, fuzzy
 #~ msgid "Verbose flag"
 #~ msgstr "捨棄記號"
-
 #~ msgid "Timed out to initialize %s services."
 #~ msgstr "起始化 %s 服務逾時。"
-
 #~ msgid "User Specific"
 #~ msgstr "用戶特有"
-
 #~ msgid "xinputrc was modified by the user"
 #~ msgstr "xinputrc 曾被用戶修改"
-
 #~ msgid "Updating Input Method list"
 #~ msgstr "更新輸入法清單"
-
 #~ msgid "Stopping Input Method - %s"
 #~ msgstr "終止輸入法 - %s"
-
 #~ msgid "Parent Window"
 #~ msgstr "上一級視窗"
-
 #~ msgid "GtkWindow that points to the parent window"
 #~ msgstr "指向上一級視窗的 Gtk 視窗"
-
 #~ msgid "Work in progress..."
 #~ msgstr "處理中... "
-
 #~ msgid "Use %s"
 #~ msgstr "使用 %s"
-
 #~ msgid " (legacy)"
 #~ msgstr "（繼承）"
-
 #~ msgid " (recommended)"
 #~ msgstr "（建議）"
-
 #~ msgid "<b>Input Method</b>"
 #~ msgstr "<b>輸入法</b>"
-
 #~ msgid "_Enable input method feature"
 #~ msgstr "啟用輸入法特徴（_E）"
-
 #~ msgid ""
 #~ "<small><i>Note: this change will not take effect until you next log in, "
 #~ "except GTK+ applications.</i></small>"
 #~ msgstr ""
 #~ "<small><i>請注意：這個修改在您下一次登入後才會生效，GTK+ 應用程式除外。</"
 #~ "i></small>"
-
 #~ msgid "Input Method _Preferences..."
 #~ msgstr "輸入法偏好…… (_P)"
-
 #~ msgid ""
 #~ "<span weight=\"bold\" size=\"larger\">No input method is available</span>"
 #~ msgstr "<span weight=\"bold\" size=\"larger\">沒有可用的輸入法</span>"
-
 #~ msgid "Please install any input methods before running if you like."
 #~ msgstr "如果您願意，請在執行前安裝輸入法。"
-
 #~ msgid "IM Chooser - Input Method configuration tool"
 #~ msgstr "IM Chooser - 輸入法配置工具"
-
 #~ msgid "_Log Out"
 #~ msgstr "登出 (_O)"
-
 #~ msgid ""
 #~ "Choose the input method to be used or disable the input method usage on "
 #~ "the desktop"
 #~ msgstr "選取要使用的輸入法或者在桌面中禁用輸入法用法"
+
