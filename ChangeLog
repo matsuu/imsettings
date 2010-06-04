@@ -1,4 +1,4 @@
-2010-06-04  Akira TAGOH  <akira@tagoh.org>
+2010-06-04  Akira TAGOH  <tagoh@redhat.com>
 
 	* imsettings/imsettings-info.c (imsettings_info_notify_properties): 
 	Fix the race condition issue during popen. (rhbz#599924)
