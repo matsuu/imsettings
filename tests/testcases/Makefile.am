@@ -58,6 +58,34 @@ testcase_dist =							\
 	rhbz_455363/case1/xinput.d/test-scim.conf		\
 	rhbz_455363/case1/xinput.d/test-scim2.conf		\
 	rhbz_455363/case1/xinputrc				\
+	rhbz_471833/case1/xinput.d				\
+	rhbz_471833/case1/xinput.d/test-scim.conf		\
+	rhbz_471833/case1/xinput.d/test-scim2.conf		\
+	rhbz_490587/case1/xinput.d				\
+	rhbz_490587/case1/xinput.d/none.conf			\
+	rhbz_490587/case1/xinput.d/test-scim.conf		\
+	rhbz_490587/case1/xinputrc				\
+	rhbz_510666/case1/xinput.d				\
+	rhbz_510666/case1/xinput.d/test-immodule.conf		\
+	rhbz_510666/case1/xinputrc				\
+	rhbz_514852/case1/alternatives				\
+	rhbz_514852/case1/alternatives/xinputrc			\
+	rhbz_514852/case1/xinput.d				\
+	rhbz_514852/case1/xinput.d/none.conf			\
+	rhbz_514852/case1/xinput.d/test-scim.conf		\
+	rhbz_514852/case1/xinput.d/test-uim.conf		\
+	rhbz_514852/case1/xinputrc				\
+	rhbz_523349/case1/xinput.d				\
+	rhbz_523349/case1/xinput.d/test-scim.conf		\
+	rhbz_523349/case1/xinputrc				\
+	rhbz_526205/case1/xinput.d				\
+	rhbz_526205/case1/xinput.d/none.conf			\
+	rhbz_526205/case1/xinput.d/pt_BR			\
+	rhbz_526205/case1/xinput.d/xim.conf			\
+	rhbz_526205/case1/xinputrc				\
+	rhbz_599924/xinput.d					\
+	rhbz_599924/xinput.d/xim.conf				\
+	rhbz_599924/xinput.d/xim2.conf				\
 	$(NULL)
 
 ##

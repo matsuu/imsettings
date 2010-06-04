@@ -63,6 +63,7 @@ noinst_PROGRAMS +=					\
 	test-rhbz-514852				\
 	test-rhbz-523349				\
 	test-rhbz-526205				\
+	test-rhbz-599924				\
 	$(NULL)
 endif
 #
@@ -147,4 +148,15 @@ test_rhbz_523349_SOURCES =				\
 test_rhbz_526205_SOURCES =				\
 	rhbz_526205.c					\
 	$(common_sources)				\
+	$(NULL)
+#
+test_rhbz_599924_SOURCES =				\
+	rhbz_599924.c					\
+	$(common_sources)				\
+	$(NULL)
+test_rhbz_599924_CFLAGS =				\
+	$(GTHREAD_CFLAGS)				\
+	$(NULL)
+test_rhbz_599924_LDADD =				\
+	$(GTHREAD_LIBS)					\
 	$(NULL)

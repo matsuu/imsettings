@@ -107,6 +107,7 @@ static const gchar *imsettings_info_get_homedir(IMSettingsInfo *info);
 
 
 G_DEFINE_TYPE (IMSettingsInfo, imsettings_info, IMSETTINGS_TYPE_OBJECT);
+G_LOCK_DEFINE_STATIC (info);
 
 /*
  * Private functions
@@ -223,10 +224,12 @@ imsettings_info_notify_properties(GObject     *object,
 	}
 	xinputinfo = g_build_filename(path, "xinputinfo.sh", NULL);
 	g_free(path);
-	g_string_append_printf(cmd, "%s %s %s", lang, xinputinfo, filename);
+	g_string_append_printf(cmd, "%s /bin/bash %s %s", lang, xinputinfo, filename);
 
 	g_free(xinputinfo);
 	g_free(lang);
+
+	G_LOCK (info);
 
 	if (lstat(filename, &st) == -1 ||
 	    (fp = popen(cmd->str, "r")) == NULL) {
@@ -304,6 +307,8 @@ imsettings_info_notify_properties(GObject     *object,
 		}
 		pclose(fp);
 	}
+
+	G_UNLOCK (info);
 	g_string_free(cmd, TRUE);
 	g_string_free(str, TRUE);
 
