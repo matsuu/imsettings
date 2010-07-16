@@ -36,6 +36,7 @@ extern Suite *imsettings_suite(void);
 
 static GLogFunc old_logger = NULL;
 static GError *error = NULL;
+G_LOCK_DEFINE_STATIC(err);
 
 /*
  * Private functions
@@ -46,18 +47,21 @@ logger(const gchar    *log_domain,
        const gchar    *message,
        gpointer        user_data)
 {
-	GError *err = NULL;
 	gchar *prev = NULL;
+
+	G_LOCK (err);
 
 	if (error) {
 		prev = g_strdup_printf("\n    %s", error->message);
-		g_clear_error(&error);
+		g_error_free(error);
+		error = NULL;
 	}
-	g_set_error(&err, IMSETTINGS_TEST_ERROR, log_level,
+	g_set_error(&error, IMSETTINGS_TEST_ERROR, log_level,
 		    "%s%s", message,
 		    (prev ? prev : ""));
-	error = err;
 	g_free(prev);
+
+	G_UNLOCK (err);
 }
 
 static void

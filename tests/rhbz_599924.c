@@ -54,6 +54,7 @@ _thread(gpointer data)
 	gchar *xinputrc;
 	static gboolean first = FALSE;
 	static gint i = 0;
+	gint j;
 
 	if (!first) {
 		first = TRUE;
@@ -62,7 +63,11 @@ _thread(gpointer data)
 		xinputrc = g_build_filename(IMSETTINGS_SRCDIR, "testcases", "rhbz_599924", "xinput.d", "xim.conf", NULL);
 	}
 	g_print("creating...%d\n", ++i);
+	j = i;
 	*info = imsettings_info_new(xinputrc);
+	if (*info == NULL)
+		g_print("failing %d\n", j);
+
 	g_free(xinputrc);
 
 	return NULL;
@@ -72,15 +77,16 @@ _thread(gpointer data)
 /* Test cases                                               */
 /************************************************************/
 TDEF (issue) {
-	GThread *th[256];
-	IMSettingsInfo *i[256];
+#define N	512
+	GThread *th[N];
+	IMSettingsInfo *i[N];
 	int x;
 
-	for (x = 0; x < 256; x++) {
+	for (x = 0; x < N; x++) {
 		i[x] = NULL;
 		th[x] = g_thread_create(&_thread, (gpointer)&i[x], TRUE, NULL);
 	}
-	for (x = 0; x < 256; x++) {
+	for (x = 0; x < N; x++) {
 		g_thread_join(th[x]);
 		fail_unless(i[x] != NULL, "Unable to create the instance.");
 		fail_unless(imsettings_info_get_short_desc(i[x]) != NULL, "Unable to obtain the short description: %d", x);
@@ -98,7 +104,7 @@ imsettings_suite(void)
 	TCase *tc = tcase_create("Bug#599924: https://bugzilla.redhat.com/show_bug.cgi?id=599924");
 
 	tcase_add_checked_fixture(tc, setup, teardown);
-	tcase_set_timeout(tc, 60);
+	tcase_set_timeout(tc, 600);
 
 	T (issue);
 
