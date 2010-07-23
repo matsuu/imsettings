@@ -1,3 +1,17 @@
+2010-07-23  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/lxde/main.c: add g_type_init() prior to do something. this
+	avoids a segfault if no gconf instance is running (rhbz#603582)
+
+2010-07-16  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/main.c (logger): make it a thread safe.
+
+	* tests/rhbz_599924.c: Update to improve a reproducer.
+
+	* imsettings/imsettings-info.c (imsettings_info_notify_properties):
+	fix a typo.
+
 2010-06-04  Akira TAGOH  <tagoh@redhat.com>
 
 	* imsettings/imsettings-info.c (imsettings_info_notify_properties): 

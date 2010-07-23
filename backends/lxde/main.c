@@ -98,6 +98,8 @@ main(int    argc,
 	GConfEntry *entry;
 	guint ctxt_id;
 
+	g_type_init();
+
 	client = gconf_client_get_default();
 	if (client == NULL) {
 		g_printerr("Failed to obtain the default GConfClient instance.\n");
