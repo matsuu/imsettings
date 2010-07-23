@@ -842,6 +842,13 @@ imsettings_monitor_add_file(IMSettingsMonitor *monitor,
 	if (info != NULL) {
 		g_object_set(G_OBJECT (info), "homedir", monitor->homedir, NULL);
 		name = imsettings_info_get_short_desc(info);
+		if (name == NULL) {
+			g_printerr("[BUG] Unable to obtain the short description for `%s'\n",
+				   filename);
+			g_object_unref(info);
+
+			return NULL;
+		}
 
 		if (strcmp(name, IMSETTINGS_NONE_CONF) == 0 &&
 		    imsettings_info_is_xim(info)) {

@@ -1,5 +1,8 @@
 2010-07-23  Akira TAGOH  <tagoh@redhat.com>
 
+	* src/monitor.c (imsettings_monitor_add_file): to avoid a crash,
+	just warn when no short description.
+
 	* backends/lxde/main.c: add g_type_init() prior to do something. this
 	avoids a segfault if no gconf instance is running (rhbz#603582)
 
