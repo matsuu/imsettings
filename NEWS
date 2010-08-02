@@ -1,3 +1,16 @@
+0.108.0 -> 0.108.1
+=====================
+* Bug Fixes:
+  * rhbz#573604: Don't restart the IM process when the exit status is 0.
+  * rhbz#582448: Fix failing to bring the process up.
+  * rhbz#599924: Fix segfault caused by the race condition on popen.
+  * rhbz#603582: Fix a segfault in imsettings-lxde-helper
+* Translation updated:
+  * Kannada
+  * Korean
+  * Russian
+  * Traditional Chinese
+
 0.107.4 -> 0.108.0
 =====================
 * Features:
