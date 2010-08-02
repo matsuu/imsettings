@@ -1,3 +1,7 @@
+2010-08-02  Akira TAGOH  <tagoh@redhat.com>
+
+	* 0.108.1 released.
+
 2010-07-23  Akira TAGOH  <tagoh@redhat.com>
 
 	* src/monitor.c (imsettings_monitor_add_file): to avoid a crash,
