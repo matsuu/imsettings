@@ -12,10 +12,15 @@ Makefile
 Makefile.in
 a\.out
 aclocal\.m4
+applet/*\.in
+!applet/*\.in\.in
 autom4te\.cache
 config\.*
 configure
 core.*
+data/*\.in
+!data/*\.in\.in
+data/*\.sh
 depcomp
 install-sh
 intltool-*
