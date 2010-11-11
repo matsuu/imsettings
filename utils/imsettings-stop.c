@@ -25,6 +25,7 @@
 #include "config.h"
 #endif
 
+#include <locale.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <glib/gi18n.h>

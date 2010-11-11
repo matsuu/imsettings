@@ -25,6 +25,7 @@
 #include "config.h"
 #endif
 
+#include <locale.h>
 #include <string.h>
 #include <glib/gi18n-lib.h>
 #include <dbus/dbus-glib-lowlevel.h>

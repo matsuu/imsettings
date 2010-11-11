@@ -83,8 +83,20 @@ dnl ======================================================================
 PKG_CHECK_MODULES(IMSETTINGS, dbus-1 >= $DBUS_REQUIRED
 			      dbus-glib-1 >= $DBUS_GLIB_REQUIRED
 			      gio-2.0 >= $GIO_REQUIRED)
-PKG_CHECK_MODULES(IMDAEMON, gtk+-2.0
-			    libnotify)
+PKG_CHECK_MODULES(GTK, gtk+-2.0 >= $GTK_REQUIRED)
+PKG_CHECK_MODULES(LIBNOTIFY, libnotify, [
+	save_CFLAGS="$CFLAGS"
+	CFLAGS="$(pkg-config --cflags --libs libnotify gtk+-2.0)"
+	AC_CHECK_FUNC(notify_notification_new_with_status_icon,[
+		has_status_icon=yes
+		AC_DEFINE(HAS_STATUS_ICON,, [status icon support in libnotify])
+		IMDAEMON_CFLAGS="$GTK_CFLAGS $LIBNOTIFY_CFLAGS"
+		IMDAEMON_LIBS="$GTK_LIBS $LIBNOTIFY_LIBS"],[
+		has_status_icon=no
+		IMDAEMON_CFLAGS="$LIBNOTIFY_CFLAGS"
+		IMDAEMON_LIBS="$LIBNOTIFY_LIBS"])
+	CFLAGS="$save_CFLAGS"
+])
 PKG_CHECK_MODULES(GTHREAD, gthread-2.0)
 PKG_CHECK_MODULES(X11, x11)
 PKG_CHECK_MODULES(CHECK, check >= $CHECK_REQUIRED,
@@ -121,6 +133,8 @@ PKG_CHECK_MODULES(APPLET, gtk+-2.0
 	[use_applet="yes"],
 	[use_applet="no"])
 
+AC_SUBST(IMDAEMON_CFLAGS)
+AC_SUBST(IMDAEMON_LIBS)
 AC_SUBST(IMSETTINGS_CFLAGS)
 AC_SUBST(IMSETTINGS_LIBS)
 AC_SUBST(IMINFO_CFLAGS)

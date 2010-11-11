@@ -1385,7 +1385,12 @@ imsettings_manager_init(IMSettingsManager *manager)
 
 	if (!notify_is_initted())
 		notify_init("im-settings-daemon");
+#ifdef HAS_STATUS_ICON
+	/* this is deprecated code */
 	priv->notify = notify_notification_new("_", "_", NULL, NULL);
+#else
+	priv->notify = notify_notification_new("_", "_", NULL);
+#endif
 }
 
 static IMSettingsManager *

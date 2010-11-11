@@ -31,6 +31,7 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+#include <locale.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
@@ -1167,7 +1168,12 @@ _create_applet(void)
 	_update_icon(applet);
 
 	notify_init("imsettings-applet");
+#ifdef HAS_STATUS_ICON
+	/* this is deprecated code */
 	applet->notify = notify_notification_new_with_status_icon("foo", "bar", NULL, applet->status_icon);
+#else
+	applet->notify = notify_notification_new("foo", "bar", NULL);
+#endif
 
 	client = gconf_client_get_default();
 
