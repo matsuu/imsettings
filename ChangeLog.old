@@ -1,0 +1,2018 @@
+2010-08-02  Akira TAGOH  <tagoh@redhat.com>
+
+	* 0.108.1 released.
+
+2010-07-23  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/monitor.c (imsettings_monitor_add_file): to avoid a crash,
+	just warn when no short description.
+
+	* backends/lxde/main.c: add g_type_init() prior to do something. this
+	avoids a segfault if no gconf instance is running (rhbz#603582)
+
+2010-07-16  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/main.c (logger): make it a thread safe.
+
+	* tests/rhbz_599924.c: Update to improve a reproducer.
+
+	* imsettings/imsettings-info.c (imsettings_info_notify_properties):
+	fix a typo.
+
+2010-06-04  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-info.c (imsettings_info_notify_properties): 
+	Fix the race condition issue during popen. (rhbz#599924)
+
+2010-05-18  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (_watch_im_status_cb): don't restart the process
+	if the exit status is 0. (rhbz#573604)
+
+2010-03-23  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/lxde/main.c: revise. run as the helper program
+	not the dbus service.
+
+	* src/factory.c: revert the changes of LXDE support code.
+
+2010-03-23  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: bump to 0.108.0.
+
+	Fix of rhbz#570462
+
+	* src/factory.c (imsettings_manager_real_finalize): don't try to unref
+	the dbus connection if the session is already closed.
+	(main): likewise.
+
+	* backends/gconf/main.c (main): don't try to unref the dbus connection
+	if the session is already closed.
+
+2010-03-17  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/lxde/main.c (lxde_imsettings_change_to): fix a typo.
+
+2010-03-16  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/lxde/main.c: new.
+
+	* backends/lxde/lxde-im-settings-daemon.service.in: new.
+
+	* backends/lxde/introspection.xml: new.
+
+	* configure.ac: Add the library dependencies check for LXDE.
+
+	* src/factory.c (imsettings_manager_real_start_im): send a signal
+	for LXDE.
+	(imsettings_manager_real_stop_im): likewise.
+
+	* imsettings/imsettings.h: add DBus stuff for LXDE.
+
+	* data/xinput.sh.in.in (is_gtk_supported): add LXDE support.
+
+2010-03-05  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/Makefile.am: make xinputinfo.sh executable.
+
+	* configure.ac: Add x11 module check to avoid DSO issue.
+
+2010-02-16  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-info.c (imsettings_info_notify_properties):
+	Fix a segfault issue when /bin/sh points to non-bash shell.
+	(rhbz#553680)
+
+2010-02-05  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/gconf/main.c (main): avoid a crash when the session bus
+	isn't yet established or terminated. (rhbz#543005)
+
+2010-01-04  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (imsettings_manager_real_finalize): avoid a segfault
+	in libnotify when the dbus session is being closed. (rhbz#530357)
+
+	* backends/xfce_xfconf/main.c (main): Fix a segfault issue
+	on XFCE desktop. (rhbz#540062)
+
+2009-12-21  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xinput.sh.in.in: don't unset IMSETTINGS_INTEGRATE_DESKTOP.
+
+2009-10-06  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xcompose.in.in: Add a xinput file for X compose.
+
+2009-10-05  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xinput.sh.in.in: do not expand the wildcard in the message.
+
+2009-09-30  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/rhbz_526205.c: new test case.
+
+	* src/monitor.c (_imsettings_monitor_lookup): compare the name with
+	the lower case.
+
+	* src/factory.c (imsettings_manager_real_whats_im_running): ensure not
+	returning null even when any errors occurs.
+
+	* imsettings/imsettings-observer.c (imsettings_whats_input_method_running):
+	Fix a memory leak.
+
+2009-09-28  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: bump the version to 0.107.4.
+
+	* NEWS: update.
+
+2009-09-17  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (_stop_process): get rid of the unnecessary increasing
+	the reference count, which causes taking a lot CPU load again.
+
+2009-09-15  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xinputinfo.sh.in: output the value if the configuration is
+	the script or not.
+
+	* tests/main.c (init): set IMSETTINGS_HELPER_PATH to xinputinfo.sh
+	working without the real installation.
+
+	* tests/rhbz_523349.c: new testcase.
+
+	* imsettings/imsettings-info.c (imsettings_info_notify_properties):
+	Add a reference of the environment variable to get the unit testing
+	working.
+	(_IMSETTINGS_DEFUNC_PROPERTY): update the variables before looking
+	if the configuration is based on the script. (rhbz#523349)
+	(imsettings_info_is_script): new.
+
+2009-09-11  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (_get_process_info_by_pid): new.
+	(_watch_im_status_cb): unref'd the instance here to not keep
+	the process running as zombie. (rhbz#522689)
+	(_stop_process): don't remove the instance from the hash table yet.
+
+2009-09-08  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (imsettings_manager_real_finalize): unreference the object.
+
+2009-09-01  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: bump to 0.107.3.
+
+	* NEWS: update.
+
+	* src/factory.c (_process_info_unref): stop watching fd.
+	(_logger_write_cb): avoid getting stuck to wait for read data.
+	(_watch_im_status_cb): avoid restarting the unnecessary process.
+	(_imsettings_manager_start_im_aux): new.
+	(_imsettings_manager_start_im_main): new.
+
+2009-08-27  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: bump to 0.107.2.
+
+	* NEWS: update.
+
+	* src/factory.c (disconnected_cb): exit with the disconnect signal
+	properly.
+
+	* imsettings/imsettings-observer.c (imsettings_observer_setup):
+	Set a flag to not exit with the disconnect signal.
+
+2009-08-26  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xinput.sh.in.in: Apply the environment variables properly.
+
+2009-08-14  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: bump to 0.107.1.
+
+	* NEWS: update.
+
+2009-08-12  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-object.c (imsettings_object_dump): 
+	Fix memory leaks.
+
+	* src/monitor.c (imsettings_monitor_real_changed_xinputrc): likewise.
+	(_imsettings_monitor_start_for_xinputrc): likewise.
+
+	* src/factory.c (_output_log): likewise.
+	(_watch_im_status_cb): likewise.
+	(imsettings_manager_real_stop_im): likewise.
+
+	* configure.ac: bump to 0.107.0
+
+	* NEWS: update.
+
+	* src/factory.c (main): Add a --no-logfile option for testing.
+
+	* utils/imsettings-list.c (main): don't restart the daemon
+	automatically.
+
+	* utils/imsettings-stop.c (main): likewise.
+
+	* utils/imsettings-start.c (main): likewise.
+
+	* utils/imsettings-restart.c (main): likewise.
+
+	* src/factory.c (_notify): notify an error through libnotify.
+	(imsettings_manager_real_stop_im): ignore an error to stop the aux
+	process if IM doesn't use it.
+	(imsettings_manager_real_stop_im): ignore an error to stop the xim
+	process if IM is immodule only.
+
+2009-08-11  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xinput.sh.in.in: initialize the log file.
+
+	* src/factory.c (_process_info_new): Add a reference counter.
+	(_process_info_ref): new.
+	(_process_info_unref): new.
+	(_process_info_dup, _process_info_free): removed.
+	(_output_log): new.
+	(_log_handler): new.
+	(_logger_write_cb): new.
+	(_watch_im_status_cb): deal with the status properly.
+	(_start_process): logging the stdout and the stderr from IM.
+
+2009-08-10  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/rhbz_455363.c (test_issue): Fix a typo.
+
+	* src/monitor.c (imsettings_monitor_real_changed_xinputrc): 
+	Fix unnecessary object creation.
+	(imsettings_monitor_real_changed_xinputrc): reset is_system_default
+	flag in the deletion. (rhbz#514852)
+	(imsettings_monitor_real_changed_dot_xinputrc): Fix unnecessary
+	object creation.
+
+	* src/factory.c (_process_info_new): new
+	(_process_info_dup): new.
+	(_process_info_free): new.
+	(_get_process_info_by_module): new.
+	(_get_process_info_by_id): new.
+	(_get_pid_from_name): new.
+	(_watch_im_status_cb): new.
+	(_stop_all_processes): new.
+	(_start_process): manage the child process without the pid file.
+	(_stop_process): likewise.
+	(reload_cb): restart monitoring files too.
+	(imsettings_manager_real_dispose): stop all of the child processes.
+	(_sig_handler): new.
+	(main): set a signal handlers.
+
+	* imsettings/imsettings-observer.c (imsettings_observer_signal_disconnected):
+	decrease a reference count of the connection.
+
+2009-08-06  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/monitor.c (_imsettings_monitor_start_for_xinputdir): 
+	Fix a memory leak.
+	(_imsettings_monitor_start_for_xinputrc): likewise.
+	(imsettings_monitor_validate_from_file_info): likewise.
+
+	* imsettings/imsettings-info.c (imsettings_info_notify_properties):
+	Fix a memory leak.
+
+2009-07-27  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: update the soname info.
+
+	* src/factory.c (imsettings_manager_real_start_im): skip starting
+	the real process for immodule only conf.
+	(imsettings_manager_real_whats_im_running): revert the previous change
+	and better handling for immodule only conf.
+
+	* imsettings/imsettings-info.c (imsettings_info_is_immodule_only): NEW
+	to check for the object if it's immodule only or not.
+
+2009-07-23  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (imsettings_manager_real_whats_im_running): Support
+	immodule only configuration file.
+
+2009-04-13  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_forward_event):
+	Fix an underflow of pending counter.
+
+2009-04-07  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: bump to 0.106.2
+
+	* backends/xim/proxy.c (_weak_notify_conn_cb): avoid a segfault related
+	to reconnection. (rhbz#488899)
+
+	* data/xinput.sh.in.in: export IMSETTINGS_MODULE.
+
+2009-04-06  Akira TAGOH  <tagoh@redhat.com>
+
+	Fix no creation of .xinputrc with stopping IM. (rhbz#490587)
+
+	* src/factory.c (_update_symlink): Use customizable homedir stored in
+	IMSettingsMonitor instead of g_get_homedir.
+	(imsettings_manager_real_stop_im): likewise.
+	(imsettings_manager_real_stop_im): check if current IM for an user is
+	same to the requested module too, to update .xinputrc.
+
+	* tests/rhbz_490587.c: new testcase.
+
+	* utils/imsettings-start.c (main): Use IMSETTINGS_MODULE prior to look
+	up from imsettings to ensure IM running for certain locales. (rhbz#493406)
+
+2009-04-01  Akira TAGOH  <tagoh@redhat.com>
+
+	Have a workaround to avoid a freeze issue on applications not
+	supporting reconnecting IC. (rhbz#488877)
+
+	* backends/xim/proxy.c (xim_proxy_ic_new): new.
+	(xim_proxy_ic_free): new.
+	(xim_proxy_client_protocol_real_xim_create_ic_reply): create IC to keep
+	availability on track.
+	(xim_proxy_client_protocol_real_xim_destroy_ic_reply): destroy IC to
+	manage availability.
+	(xim_proxy_protocol_real_xim_trigger_notify): send XIM_ERROR back
+	when IC is invalid.
+	(xim_proxy_protocol_real_xim_destroy_ic): just send back DESTROY_IC
+	even if IC is invalid.
+	(xim_proxy_protocol_real_xim_set_ic_values): send XIM_ERROR back
+	when IC is invalid.
+	(xim_proxy_protocol_real_xim_get_ic_values): likewise.
+	(xim_proxy_protocol_real_xim_reset_ic): likewise.
+	(xim_proxy_protocol_real_xim_forward_event): just send XIM_FORWARD_EVENT
+	and XIM_SYNC_REPLY as needed back even if IC is invalid.
+
+2009-03-24  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (_reconnect): trivial change to make better.
+
+	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event): avoid
+	a segfault if invalid ic is given.
+
+2009-03-14  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/compose.c (sequence_lookup): correct masking modifiers.
+
+2009-03-13  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/loopback.c (xim_loopback_real_xim_destroy_ic):
+	implemented.
+
+	* backends/xim/compose.c (sequence_add): Override old entry like XKB.
+	(sequence_replace): new to discard old entry that has more sequences
+	than new one.
+	(compose_parse): allow overriding partially duplicated sequences.
+
+	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event):
+	get rid of an unnecessary synchronization.
+
+2009-03-12  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event):
+	Fix an assertion on looking up a sequence.
+
+	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event):
+	Ignore modifker keys.
+
+	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event): wait
+	for a XIM_SYNC_REPLY if it's on going and postpone processing of
+	a keyevent.
+	(xim_loopback_real_xim_sync_reply): set a timer to restart processing
+	of keyevents if there are.
+	(_process_keyevent): new.
+
+2009-03-11  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/compose.c (compose_parse): get rid of NoSymbol warning.
+	maybe passed thourgh enough time to estimate. (rhbz#484142)
+
+2009-03-10  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/main.c (_preference_activated): Fix a warning on free.
+	(_create_applet): likewise.
+
+	* configure.ac: bump to 0.106.1.
+
+	* src/monitor.c (imsettings_monitor_get_current_user_im): Fix appearing
+	a critical message in g_ascii_strdown().
+	(imsettings_monitor_get_current_system_im): likewise.
+
+	* applet/main.c (_create_applet): set a default value.
+
+	* backends/xim/compose.c (compose_parse): Fix a double-free issue. (RHBZ#485595)
+
+2009-03-09  Akira TAGOH  <tagoh@redhat.com>
+
+	Stop a debugging message. (RHBZ#489119)
+
+	* utils/imsettings-start.c (main): Add -q option.
+
+	* applet/main.c (_setup_acceleration_key): disable a debugging message.
+
+	Workaround to not filtered out the key event with accelerator keys
+	on some X apps. (RHBZ#488675)
+
+	* applet/main.c (_gconf_sync_cb): new.
+	(_preference_activated): reflect a value from gconf.
+
+	* applet/imsettings-applet.schemas.in: Add a sync_on_forward key.
+
+	* backends/xim/loopback.c (xim_loopback_real_set_property): new.
+	(xim_loopback_real_get_property): new.
+	(xim_loopback_real_xim_create_ic): change a event mask for
+	XIM_SET_EVENT_MASK to allow a synchronous event of XIM_FORWARD_EVENT.
+
+	* applet/main.c (_preference_sync_toggled): new.
+	(_preference_activated): Add a option to enable/disable synchronous
+	event on XIM_FORWARD_EVENT for loopback.
+
+	* README: Add a description of IMSETTINGS_INTEGRATE_DESKTOP env.
+
+	* utils/imsettings-start.c (main): Add --cond-start option.
+
+	* utils/imsettings-start.desktop.in: New.
+
+	* data/xinput.sh.in.in: Support execution-delay to integrate more
+	to desktop.
+
+2009-03-04  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xfce_xfconf/imsettings-xfce-helper.desktop.in:
+	Remove Hidden tag.
+
+2009-02-23  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: bump to 0.106.0
+
+	* NEWS: update
+
+	Fix a warning during parsing Compose data. (RHBZ#484142)
+	
+	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event): send
+	a key event with XLookupKeySym when no strings available.
+
+	* backends/xim/compose.c (compose_parse): Fix not working in the case
+	when the keysym or the string only is available at the right value.
+
+2009-02-18  Akira TAGOH  <tagoh@redhat.com>
+
+	Add Xfconf support. (RHBZ#478669)
+
+	* backends/xfce_xfconf/imsettings-xfce-helper.desktop.in:
+	* backends/xfce_xfconf/main.c:
+	* backends/xfce\xfconf/Makefile.am: New.
+
+2009-02-16  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/rhbz_471833.c: add new testcase.
+
+	* src/monitor.c (_imsettings_monitor_lookup): set an error if no
+	return value.
+	(imsettings_monitor_lookup): use stocked directory name instead of
+	hardcoded one.
+
+2009-02-13  Akira TAGOH  <tagoh@redhat.com>
+
+	Allow a lowercase input method name. (RHBZ#471833)
+	
+	* utils/imsettings-list.c (main): display the xinput conf name
+	in the list too.
+
+	* src/monitor.c (imsettings_monitor_add_file): allow a lower-case name
+	to look up the name.
+	(imsettings_monitor_remove_file): likewise.
+	(imsettings_monitor_get_current_user_im): likewise.
+	(imsettings_monitor_get_current_system_im): likewise.
+	(_imsettings_monitor_lookup): new.
+	(imsettings_monitor_lookup): try to look up IM with .conf to allow
+	xinput conf name.
+
+2009-01-21  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: update to support xfconf and mcs separately.
+
+	Integrated im-info-daemon into im-settings-daemon.
+
+	* applet/main.c: get rid of the dbus interface no longer used.
+
+	* imsettings/imsettings.xml: integrate methods from
+	/com/redhat/imsettings/IMINfo to /com/redhat/imsettings.
+
+	* imsettings/imsettings.h: bump API version.
+
+	* imsettings/imsettings-observer.c: clean up obsolete DBus APIs.
+
+	* imsettings/imsettings-request.c: likewise.
+
+	* src/monitor.[ch]: new to deal with monitoring files.
+
+	* src/factory.c: integrate methods from factory_info.c
+
+	* utils/imsettings-list.c (main): get rid of the dbus interface
+	no longer used.
+
+	* utils/imsettings-info.c (main): likewise.
+
+	* utils/imsettings-start.c (main): likewise.
+
+	* utils/imsettings-restart.c (main): likewise.
+
+	* utils/imsettings-stop.c (main): likewise.
+
+	* utils/imsettings-reload.c (main): likewise.
+
+	* tests/rhbz_455363.c (setup): likewise.
+
+	* tests/rhbz_453358.c (setup): likewise.
+
+	* tests/imsettings-request.c (test_imsettings_request_new): likewise.
+
+	* tests/gcit_5.c (setup): likewise.
+
+	* tests/gcit_11.c (setup): likewise.
+
+	* tests/rhbz_431291.c (setup): likewise.
+
+	* tests/gcit_13.c (setup): likewise.
+
+	* tests/main.c (imsettings_test_restart_daemons_full): get rid of
+	the code bringing up im-info-daemon.
+
+2009-01-08  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xinput.sh.in.in: stop bringing imsettings-xim up. we are relying
+	on XDG's autostart to provide full features of imsettings now.
+
+	* applet/imsettings-applet.desktop.in.in: correct Categories.
+
+	* applet/main.c: get rid of xsettings support.
+
+	* applet/Makefile.am: likewise.
+
+	* src/Makefile.am: likewise.
+
+	* imsettings/Makefile.am: likewise.
+
+	* configure.ac: likewise.
+
+	* utils/imsettings-info.c (main): Fix a build issue.
+
+2008-12-22  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: add AC_PROG_CXX.
+
+2008-11-14  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/main.c (main): Disable immodule to prevent the event loop in
+	itself. (Issue#22)
+
+2008-11-05  Akira TAGOH  <tagoh@redhat.com>
+
+	* utils/imsettings-restart.c (main): restart IM currently running
+	if no arguments specified.
+
+	* utils/imsettings-stop.c (main): stop IM currently running
+	if no arguments specified.
+
+	* utils/imsettings-start.c (main): start the default IM if no arguments
+	specified.
+
+	* data/none.in.in (QT_IM_MODULE): default to xim.
+
+2008-10-28  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_register_triggerkeys):
+	do not discard the signal when imid is 0.
+
+2008-10-23  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_set_ic_values): 
+	Fix a freeze issue when focus out and reset the number of the forward
+	event waiting for. this might be the race condition issue again. so it
+	would be safe to append the request into the queue still.
+
+2008-10-21  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (imsettings_manager_real_start_im): allow to start none
+	without any warnings.
+
+2008-10-12  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_disconnect_all): wait for finishing
+	the reconnection before disconnecting the session.
+
+	* backends/xim/proxy.c (xim_proxy_client_protocol_real_parser_error):
+	send back XIM_DESTROY_IC_REPLY instead of XIM_ERROR.
+
+2008-10-11  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (_INC_PENDING): store imid and icid as well.
+	(_DEC_PENDING): take imid and icid as argument.
+	(INC_PENDING): likewise.
+	(DEC_PENDING): likewise.
+	(INC_PENDING_C): likewise.
+	(DEC_PENDING_C): likewise.
+	(xim_proxy_real_dispose): just flush the queue instead of waiting for
+	the pending request.
+	(xim_proxy_disconnect_all): likewise.
+	(xim_proxy_flush_queue): new.
+
+	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_encoding_negotiation_reply):
+	decrease the pending counter when reconnecting as well.
+
+	* data/xinput.sh.in.in (is_gtk_supported): Add a "kde" since KDE
+	support XDG autostart and imsettings-applet could works for XSETTINGS
+	manager on KDE.
+
+	* imsettings/imsettings-xsettings.c (_imsettings_xsettings_new):
+	Use better API to create an instance of XSETTINGS manager.
+
+	* imsettings/imsettings-xsettings.c (_imsettings_xsettings_dispatch_events): 
+	event handler for GdkEvent.
+	(imsettings_xsettings_new_with_gdkevent): new.
+
+2008-10-06  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_client_protocol_real_parser_error):
+	send back the appropriate error to the client application when
+	the parser error happens.
+
+2008-10-03  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_set_ic_values): 
+	serialize the event if waiting for any replies of synchronous event.
+
+2008-10-02  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_unset_ic_focus): 
+	reset the number of the forward event that is waiting for the response.
+
+	* backends/xim/proxy.c (DEC_PENDING): resend the packet to the proper
+	place.
+	(INC_PENDING_K): new.
+	(DEC_PENDING_K): new.
+	(xim_proxy_client_protocol_real_xim_set_ic_values_reply): return true
+	if the received packet is a delayed event for fake.
+	(xim_proxy_protocol_real_xim_set_ic_values): look at the number of
+	the forward event.
+
+	* backends/xim/proxy.c (DEC_PENDING): send packet in the queue when no
+	pending tasks.
+	(_find_packet_to_receive): new.
+	(_find_packet_to_send): new.
+	(xim_proxy_client_protocol_real_xim_set_ic_values_reply): do not send
+	back an event to the client if it's a reply for delayed packet.
+	(xim_proxy_protocol_real_xim_set_ic_values): put the packet into
+	the queue and just send back a reply if waiting for any synchronous
+	event.
+
+2008-10-01  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (_INC_PENDING): manage the pending tasks
+	strictly.
+	(_DEC_PENDING): likewise.
+	(_find_reply): new.
+
+2008-09-29  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_set_ic_values):
+	Fix a typo and memory leak.
+
+2008-09-25  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/main.c (notify_notification): set urgency.
+	(_setup_acceleration_key): don't process if accel key is "disabled".
+
+	* applet/imsettings-applet.schemas.in: Escape characters reserved for
+	markup language.
+
+2008-09-24  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: check whether or not gconftool-2 is available.
+
+	* tests/main.c (imsettings_test_restart_daemons_full): bring up
+	im-settings-daemon in the tree as well.
+
+	* src/factory.c (imsettings_manager_real_what_im_is_running): 
+	return NULL if no info object available.
+
+	* imsettings/imsettings-request.c (imsettings_request_get_info_object):
+	return NULL if no info object available.
+
+	* imsettings/imsettings-observer.c (imsettings_get_info_object): send
+	an empty GString if no info object available.
+
+	* applet/Makefile.am: ship and install imsettings-applet.schemas.
+
+2008-09-21  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/loopback.c (xim_loopback_real_xim_forward_event): 
+	just send back a key event if input-context is invalid. (rhbz#462899)
+
+2008-09-15  Akira TAGOH  <tagoh@redhat.com>
+
+	* README: Update.
+
+	* data/none.in.in (GTK_IM_MODULE): set gtk-im-context-simple for default.
+
+	* src/factory.c (imsettings_manager_real_stop_im): follow up the value
+	in none.conf to set. then it could be customized.
+
+2008-09-14  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/imsettings-applet.schema: disable show_icon by default.
+
+2008-09-13  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/testcases/Makefile.am (dist-hook): support older automake.
+
+	* Makefile.am (ACLOCAL_AMFLAGS): Fix an error on aclocal.
+
+	* backends/xim/loopback.c (xim_loopback_real_xim_get_ic_values):
+	deal with NESTEDLIST properly.
+	(xim_loopback_real_xim_forward_event): reset modifiers state and
+	keycode if the sequence is on the way.
+
+	* backends/xim/loopback.c (xim_loopback_real_xim_close): Fix a build
+	error on 32bit arch with gcc-4.1.3.
+	(xim_loopback_real_xim_get_im_values): likewise.
+	(xim_loopback_real_xim_create_ic): likewise.
+	(xim_loopback_real_xim_set_ic_values): likewise.
+	(xim_loopback_real_xim_get_ic_values): likewise.
+	(xim_loopback_real_xim_forward_event): likewise.
+	(xim_loopback_real_xim_encoding_negotiation): Use COMPOUND_TEXT anyway.
+	(xim_loopback_real_xim_create_ic): Fix a typo for event mask.
+	(xim_loopback_real_xim_forward_event): convert the string to
+	COMPOUND_TEXT.
+
+	* backends/xim/compose.c (compose_parse): convert data to UTF-8.
+	(compose_parse): Fix a build error on 32bit arch with gcc-4.1.3.
+
+	* autogen.sh: Fix an error on aclocal.
+
+	X11's compose data support. (Issue#15)
+	
+	* backends/xim/loopback.c (xim_loopback_ic_new): new.
+	(xim_loopback_ic_free): new.
+	(xim_loopback_connection_real_finalize): new.
+	(xim_loopback_connection_class_init): new.
+	(xim_loopback_connection_init): new.
+	(xim_loopback_connection_find_icid): new.
+	(xim_loopback_real_xim_open): read compose data.
+	(xim_loopback_real_xim_create_ic): create input-context.
+	(xim_loopback_real_xim_set_ic_values): new.
+	(xim_loopback_real_xim_get_ic_values): new.
+	(xim_loopback_real_xim_set_ic_focus): new.
+	(xim_loopback_real_xim_unset_ic_focus): new.
+	(xim_loopback_real_xim_forward_event): new.
+	(xim_loopback_real_xim_sync_reply): new.
+
+	* backends/xim/compose.[ch]: new.
+
+2008-09-12  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/main.c (_preference_grabbed): Store the value to gconf even
+	when the accel key is disabled.
+
+2008-09-11  Akira TAGOH  <tagoh@redhat.com>
+
+	Fix rhbz#460703.
+
+	* applet/imsettings-applet.schema: Add a key.
+
+	* applet/main.c (_preference_showicon_toggled): new.
+	(_gconf_show_icon_cb): new.
+	(_preference_activated): Add a check button to determine if the status
+	icon is displayed.
+
+	* backends/xim/proxy.c (_weak_notify_conn_cb): remove the communication
+	window from hash when disconnecting. (rhbz#452849)
+
+	* imsettings/imsettings-request.c (imsettings_request_what_im_is_running):
+	Fix accessing an invalid pointer.
+
+	* backends/xim/proxy.c: Fix freeze issues might happens when changing
+	IM and reconnecting.
+
+2008-09-10  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/main.c (_lookup_ignorable_modifiers): new.
+	(_grab_ungrab_with_ignorable_modifiers): new.
+	(_keymap_changed): new.
+	(filter_func): ignore certain modifiers.
+
+2008-09-09  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/main.c (_gconf_xsettings_cb): new
+	(_gconf_trigger_key_cb): new.
+	(_preference_grabbed): store the accel key into gconf.
+	(_create_applet): setup the accel key.
+
+2008-09-08  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory_xsettings.c (main): Use libimsettings-xsettings.so
+	instead of using xsettings API directly.
+
+	* imsettings/imsettings-xsettings.[ch]: new for xsettings support.
+
+	* applet/imsettings-applet.schema: Add a key for xsettings support.
+
+	* applet/main.c (_xsettings_terminated): new for xsettings support.
+	(_xsettings_update): likewise.
+	(_preference_xsettings_toggled): likewise.
+	(_preference_activated): Add a preference for xsettings support.
+
+2008-09-05  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-info.c (imsettings_info_set_property): set
+	a default value for icon.
+
+	* imsettings-uninstalled.pc.in (Requires): Add missing deps.
+
+2008-09-04  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_set_ic_focus): 
+	ignore the event if it's brought up on reconnecting.
+	(xim_proxy_protocol_real_xim_unset_ic_focus): likewise.
+
+2008-09-02  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-request.c (imsettings_request_get_info_object):
+	Use current locale if no locale is set.
+
+	* utils/imsettings-info.c (main): set a locale to get the locale.
+
+	* src/factory_info.c (imsettings_info_manager_real_get_info): 
+	try to update the info for XIM if no info is in the hash.
+
+	* imsettings/imsettings.h (IMSETTINGS_IMINFO_DAEMON_VERSION): 
+	bump a version.
+
+	* imsettings/imsettings-observer.c (imsettings_get_info_object): 
+	interface has been changed.
+
+	* imsettings/imsettings.xml (GetInfoObject): Add a langauge.
+
+	* applet/main.c: ifdef'd a value.
+
+	* utils/imsettings-info.c (main): set the language to query
+	the info. (Issue#16)
+
+	* applet/Makefile.am (INCLUDES): Fix a build stop due to the lack of
+	the proper options.
+
+2008-09-01  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/imsettings-applet.desktop.in.in (Icon): Get rid of
+	the extension. (rhbz#460695)
+
+2008-08-29  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/main.c (_activate): Fix a typo.
+
+	* applet/main.c (_setup_acceleration_key): new.
+	(_get_acceleration_key): new.
+	(_preference_update_entry): new.
+	(_preference_grabbed): new.
+	(_preference_grabkey): new.
+	(_preference_closed): new.
+	(_preference_activated): new.
+	(_create_applet): disable the acceleration key feature temporarily.
+	this isn't well tested.
+
+2008-08-28  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/proxy.c (xim_proxy_protocol_real_xim_destroy_ic): 
+	send XIM_DESTROY_IC instead of relying on the default behavior when
+	unable to get imid.
+
+	* src/factory.c (imsettings_manager_real_start_im): send "Changed"
+	signal.
+	(imsettings_manager_real_stop_im): likewise.
+
+	* imsettings/imsettings-request.c (imsettings_request_send_signal_changed):
+	new.
+
+	* applet/main.c (_activate): show a notice if no default IM is setup.
+	(imsettings_xim_message_filter): Update the icon when any changes made
+	externally.
+
+	* applet/radiomenuitem.c: the code cleanup.
+
+2008-08-27  Akira TAGOH  <tagoh@redhat.com>
+
+	* applet/imsettings-applet.desktop.in.in: new.
+
+	* applet/main.c: XIM support.
+
+2008-08-26  Akira TAGOH  <tagoh@redhat.com>
+
+	* utils/imsettings-info.c (main): make default to see the info for IM
+	currently running. (Issue#14)
+
+	* data/xinput.sh.in.in: provide the old way to bring up IM and do that
+	when dbus session isn't running.
+
+	* data/xinput.sh.in.in: Remove the unnecessary invocation of gconftool.
+
+	* backends/xim/proxy.c (_create_client): fallback to the default IM
+	if failed.
+	(xim_proxy_client_protocol_real_xim_auth_ng): new.
+	(xim_proxy_client_protocol_real_xim_trigger_notify_reply):
+	fix a deadlock on finalize.
+	(xim_proxy_client_protocol_real_xim_set_im_values_reply): new.
+	(xim_proxy_client_protocol_real_xim_get_im_values_reply): Update
+	the default IM values.
+	(xim_proxy_protocol_real_xim_auth_ng): new.
+	(xim_proxy_protocol_real_xim_set_im_values): new.
+	(xim_proxy_protocol_real_xim_forward_event): send back to the client
+	application if failed.
+
+	* backends/xim/loopback.c (xim_loopback_set_default_im_values): 
+	set default IM values.
+	(xim_loopback_real_xim_open): initialize the default IM values.
+
+2008-08-22  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/xim/proxy.c (_reconnect): send XIM_ENCODING_NEGOTIATION
+	to reconnect.
+	(xim_proxy_client_protocol_real_xim_open_reply): relink the attribute
+	id between the server and clients.
+	(xim_proxy_client_protocol_real_xim_encoding_negotiation_reply): 
+	relink the encoding between the server and clients.
+	(xim_proxy_client_protocol_real_xim_get_im_values_reply): relink
+	the attribute id between the server and clients.
+	(xim_proxy_client_protocol_real_xim_get_ic_values_reply): likewise.
+	(xim_proxy_protocol_real_xim_get_im_values): likewise.
+	(xim_proxy_protocol_real_xim_create_ic): likewise.
+	(xim_proxy_protocol_real_xim_set_ic_values): likewise.
+	(xim_proxy_protocol_real_xim_get_ic_values): likewise.
+
+2008-08-21  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/xim/main.c (imsettings_xim_message_filter): 
+	just change the connect_to instead of recreating the proxy instance.
+
+	* backends/xim/proxy.c (INC_PENDING): new macro.
+	(DEC_PENDING): new macro.
+	(_find_free_imid): new.
+	(_link_imid): new.
+	(_get_server_imid): new.
+	(_get_client_imid): new.
+	(_remove_imid): new.
+	(_reconnect): new.
+	(_create_client): use the default server if the connection is
+	to "none".
+	(_get_client_connection): reconnect to the XIM server if there are
+	no valid client instance.
+	(xim_proxy_client_real_xconnect_cb): do not forward the event to
+	the clients if reconnecting.
+	(xim_proxy_client_protocol_real_xim_connect_reply): likewise.
+	(xim_proxy_client_protocol_real_xim_open_reply): likewise.
+	(xim_proxy_client_protocol_real_xim_sync): new.
+	(xim_proxy_real_constructor): new.
+	(xim_proxy_real_set_property): disconnect the connection to the XIM
+	server if the connection is changed.
+	(xim_proxy_real_dispose): wait for all pending tasks is done before
+	disposing.
+	(xim_proxy_protocol_real_xim_sync): new.
+	(xim_proxy_connection_real_finalize): new.
+	(xim_proxy_is_pending): new.
+	(xim_proxy_disconnect_all): new.
+
+	* backends/xim/loopback.[ch]: new.
+
+2008-08-15  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_reset_ic_reply):
+	new.
+	(xim_proxy_client_protocol_real_xim_error): new.
+	(xim_proxy_protocol_real_xim_reset_ic): new.
+	(xim_proxy_protocol_real_xim_error): new.
+
+	* backends/xim/main.c (imsettings_xim_message_filter): remove the dbus
+	message filter properly.
+	(imsettings_xim_message_filter): Update current XIM server name.
+
+	* backends/xim/proxy.c (xim_proxy_client_real_xconnect_cb): 
+	remove the unnecessary event wathcer.
+	(xim_proxy_real_dispose): destroy the connection if available.
+	(_weak_notify_conn_cb): remove the item from the hash surely.
+
+2008-08-14  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_preedit_draw):
+	new.
+	(xim_proxy_client_protocol_real_xim_commit): new.
+	(xim_proxy_client_protocol_real_xim_status_start): new.
+	(xim_proxy_client_protocol_real_xim_status_done): new.
+	(xim_proxy_client_protocol_real_xim_register_triggerkeys): new.
+	(xim_proxy_client_protocol_real_xim_trigger_notify_reply): new.
+	(xim_proxy_client_protocol_real_xim_status_draw): new.
+	(xim_proxy_client_protocol_real_xim_set_ic_values_reply): new.
+	(xim_proxy_protocol_real_xim_trigger_notify): new.
+	(xim_proxy_protocol_real_xim_set_ic_values): new.
+
+	* backends/xim/client.c (xim_client_real_setup_connection):
+	empty function to shut up a warning.
+
+2008-08-12  Akira TAGOH  <tagoh@redhat.com>
+
+	Fix Issue#13.
+
+	* src/factory_info.c (imsettings_info_manager_add_info): 
+	make sure registering the info object for xim.conf separately.
+	(_collect_im_list): reset "ignore" flag.
+	(_collect_info_objects): likewise.
+
+2008-08-12  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/gcit_13.c: Add a test case for Issue#13.
+
+2008-08-12  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/gcit_11.c (imsettings_suite): Fix a typo.
+
+2008-08-08  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_create_ic_reply): 
+	new.
+	(xim_proxy_client_protocol_real_xim_set_event_mask): new.
+	(xim_proxy_client_protocol_real_xim_get_ic_values_reply): new.
+	(xim_proxy_client_protocol_real_xim_destroy_ic_reply): new.
+	(xim_proxy_client_protocol_real_xim_close_reply): new.
+	(xim_proxy_client_protocol_real_xim_disconnect_reply): new.
+	(xim_proxy_client_protocol_real_xim_preedit_start): new.
+	(xim_proxy_client_protocol_real_xim_preedit_caret): new.
+	(xim_proxy_client_protocol_real_xim_preedit_done): new.
+	(xim_proxy_client_protocol_real_xim_forward_event): new.
+	(xim_proxy_client_protocol_real_xim_sync_reply): new.
+	(xim_proxy_protocol_real_xim_create_ic): new.
+	(xim_proxy_protocol_real_xim_get_ic_values): new.
+	(xim_proxy_protocol_real_xim_destroy_ic): new.
+	(xim_proxy_protocol_real_xim_close): new.
+	(xim_proxy_protocol_real_xim_disconnect): new.
+	(xim_proxy_protocol_real_xim_set_ic_focus): new.
+	(xim_proxy_protocol_real_xim_unset_ic_focus): new.
+	(xim_proxy_protocol_real_xim_preedit_start_reply): new.
+	(xim_proxy_protocol_real_xim_preedit_caret_reply): new.
+	(xim_proxy_protocol_real_xim_forward_event): new.
+	(xim_proxy_protocol_real_xim_sync_reply): new.
+
+2008-08-05  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/xim/main.c (main): Add a debug option.
+
+	* backends/xim/proxy.c (xim_proxy_client_protocol_real_xim_query_extension_reply):
+	new.
+	(xim_proxy_client_protocol_real_xim_encoding_negotiation_reply): new.
+	(xim_proxy_client_protocol_real_xim_get_im_values_reply): new.
+	(xim_proxy_protocol_real_xim_query_extension): new.
+	(xim_proxy_protocol_real_xim_encoding_negotiation): new.
+	(xim_proxy_protocol_real_xim_get_im_values): new.
+
+2008-07-31  Akira TAGOH  <akira@tagoh.org>
+
+	* backends/xim/proxy.c (xim_proxy_client_real_notify_locales_cb):
+	update to be comfortable with the signal on the client template class.
+	(xim_proxy_client_real_notify_transport_cb): likewise.
+	(_get_client_connection): new.
+	(xim_proxy_client_real_notify_locales_cb): Prepend @locales= to
+	the joined strings.
+	(xim_proxy_client_protocol_real_xim_connect_reply): new.
+	(_get_server_connection): new.
+	(xim_proxy_protocol_real_xim_connect): new.
+	(xim_proxy_protocol_real_xim_open): new.
+
+	* backends/xim/client.c (xim_client_real_selection_notify_event):
+	removed. use the template callback instead.
+	(xim_client_class_init): removed own signals.
+
+2008-07-30  Akira TAGOH  <akira@tagoh.org>
+
+	* configure.ac: Update the dependencies for XIM backend.
+
+	* backends/xim/main.c: clean up.
+
+	* backends/xim/proxy.[ch]: new. an server/proxy implementation
+	inherited from GXimServerTemplate and GXimServerConnection.
+
+	* backends/xim/client.[ch]: new. an client implementation inherited
+	from GXimClientTemplate and GXimClientConnection.
+
+	* Initial commit for libgxim work.
+	
+	* backends/xim/loopback.[ch]: Remove. it's not used anymore.
+	
+	* backends/xim/connection.[ch]: likewise.
+	
+	* backends/xim/protocol.[ch]: likewise.
+	
+	* backends/xim/server.[ch]: likewise.
+
+	* backends/xim/utils.c: clean up.
+
+2008-07-23  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xinput.sh.in.in (check_xsettings_manager): Add more desktop
+	session to check.
+
+2008-07-22  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xinput.sh.in.in: run im-xsettings-daemon as needed.
+
+	* src/factory_xsettings.c (_set_value): set correct key to XSETTINGS.
+
+	* src/xsettings-common.[ch]: a copy of reference implementation for
+	XSETTINGS common functions.
+
+	* src/xsettings-manager.[ch]: a copy of reference implementation for
+	XSETTINGS manager.
+
+	* src/factory_xsettings.c: simple XSETTINGS daemon.
+
+2008-07-17  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory_info.c (imsettings_info_get_error_quark): new.
+	(imsettings_info_monitor_new): new.
+	(imsettings_info_monitor_free): new.
+	(imsettings_info_monitor_targeted_new): new.
+	(imsettings_info_monitor_targeted_free): new.
+	(imsettings_info_manager_add_info): change the behavior a bit to update
+	the hash anyway.
+	(imsettings_info_manager_remove_info): make a copy of IM name
+	before removing from the hash. that may possibly points out
+	the invalid pointer.
+	(imsettings_info_manager_real_changed_xinputd): sanity check of
+	the filename.
+	(imsettings_info_manager_real_changed_xinputd): at the end, notify
+	the change of the file to the handlers of xinputrc and .xinputrc to
+	not miss the flag for them.
+	this is the kind of the race condition issue.
+	(imsettings_info_manager_setup_monitor_for_xinputrc_target): new.
+
+2008-07-16  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-info.c (imsettings_info_set_property):
+	parameterize the homedir instead of hardcoded path.
+
+	* tests/rhbz_431291.c: Add a testcase for the user specific conf.
+
+	* utils/imsettings-info.c (main): show up the icon file.
+
+2008-07-15  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/rhbz_455363.c: a testcase for rhbz#455363.
+
+2008-07-08  Akira TAGOH  <tagoh@redhat.com>
+
+	* utils/imsettings-stop.c (main): Fix a typo.
+
+2008-07-03  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/connection.c (xim_connection_forward_client_message_event):
+	ifdef conditioned code.
+
+	* tests/rhbz_453358.c: new testcase.
+
+	* src/factory_info.c (imsettings_info_manager_real_get_current_user_im):
+	check if current user IM is still valid. (rhbz#453358)
+	(imsettings_info_manager_real_get_current_system_im): likewise.
+
+	* tests/gcit_11.c: Update to use more common function.
+
+	* tests/gcit_5.c: likewise.
+
+	* tests/imsettings-request.c: likewise.
+
+	* tests/main.c (imsettings_test_restart_daemons_full): new function.
+	(imsettings_test_restart_daemons): likewise.
+	(imsettings_test_reload_daemons): likewise.
+
+2008-07-02  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/imsettings-request.c: New testcase.
+
+	* src/factory_info.c (imsettings_info_manager_validate_from_file_info):
+	Fix a regression - validate xinputrc and .xinputrc as well.
+
+2008-07-02  Akira TAGOH  <tagoh@redhat.com>
+
+	* m4macros/tar.m4: get rid of h option for tar to include a dangling
+	symlink for testcase.
+
+	* tests/testcases/Makefile.am (dist-hook): include all the testcases
+	into the archive.
+
+2008-06-30  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/gcit_11.c: new testcase for Issue#11.
+
+	* src/factory_info.c (imsettings_info_manager_validate_from_file_info):
+	check the config file's suffix (Issue#11).
+
+2008-06-26  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/gconf/main.c (main): unref the main loop.
+
+	* src/factory_info.c (main): unref the main loop.
+
+	* backends/xim/main.c (main): unref the main loop.
+
+	* src/factory.c (main): unref the main loop.
+
+2008-06-18  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/loopback.c (xim_loopback_finalize): unset the selection
+	owner.
+
+	* backends/xim/utils.c (xim_lookup_atom): deal with the X event in
+	the queue before doing something.
+
+	* backends/xim/server.c (xim_server_set_property): work around for
+	a dalay until IM is ready. (rhbz#451753)
+
+	* src/factory.c (imsettings_manager_real_what_im_is_running):
+	Fix a typo. always saying IM is running if no .xinputrc.
+
+2008-06-17  Akira TAGOH  <tagoh@redhat.com>
+
+	* utils/imsettings-info.c (main): exit if can't get the session bus.
+
+	* utils/imsettings-stop.c (main): likewise.
+
+	* utils/imsettings-restart.c (main): likewise.
+
+	* utils/imsettings-start.c (main): likewise.
+
+	* utils/imsettings-list.c (main): likewise.
+
+	* utils/imsettings-stop.c (main): Fix a typo in the help
+	message. (rhbz#451739)
+
+	* utils/imsettings-restart.c (main): likewise.
+
+	* utils/imsettings-start.c (main): likewise.
+
+	* backends/xim/main.c (main): do not unref the instance of
+	IMSettingsInfo during referring the information in IMSettingsInfo
+	because those is the constant variable.
+
+2008-06-12  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory_info.c (imsettings_info_manager_real_changed_dot_xinputrc):
+	do not remove the hash by IM name. (Issue#9)
+
+2008-06-11  Akira TAGOH  <tagoh@redhat.com>
+
+	* utils/imsettings-info.c (main): check the version of the service
+	and reload as needed.
+
+	* utils/imsettings-stop.c (main): likewise.
+
+	* utils/imsettings-restart.c (main): likewise.
+
+	* utils/imsettings-start.c (main): likewise.
+
+	* utils/imsettings-list.c (main): likewise.
+
+	* src/factory.c (imsettings_manager_real_get_version): new.
+
+	* src/factory_info.c (imsettings_info_manager_real_get_version): new.
+
+	* imsettings/imsettings-request.c (imsettings_request_get_version):
+	new.
+
+	* imsettings/imsettings-observer.c (imsettings_get_version): new.
+
+	* imsettings/imsettings.xml: Add GetVersion method.
+
+	* imsettings/imsettings-object.c (imsettings_object_dump):
+	output the type name instead of GType directly. this wasn't a portable
+	way for other process.
+	(imsettings_object_load_from_stream): likewise.
+
+	* src/factory_info.c (imsettings_info_manager_validate_from_file_info):
+	do not destroy an object.
+	(imsettings_info_manager_validate_from_file): destroy a GFileInfo
+	object.
+	(main): initialize arg_homedir.
+
+	* src/factory.c (imsettings_manager_real_start_im): Get information
+	from IMSettingsInfo instead of asking through IMSettingsRequest
+	every time.
+	(imsettings_manager_real_stop_im): likewise.
+	(imsettings_manager_real_what_im_is_running): likewise.
+
+	* utils/imsettings-info.c (main): likewise.
+
+	* backends/xim/main.c (main): likewise.
+
+	* imsettings/imsettings-request.c (imsettings_request_get_info_objects):
+	new for GetInfoObjects.
+	(imsettings_request_get_info_object): new for GetInfoObject.
+	(imsettings_request_get_xinput_filename)
+	(imsettings_request_get_im_module_name)
+	(imsettings_request_get_xim_program)
+	(imsettings_request_get_preferences_program)
+	(imsettings_request_get_auxiliary_program)
+	(imsettings_request_get_short_description)
+	(imsettings_request_get_long_description)
+	(imsettings_request_is_system_default)
+	(imsettings_request_is_user_default, imsettings_request_is_xim):
+	Removed. these APIs are no longer supported in C API. but D-Bus API
+	still do support.
+
+	* src/factory_info.c (_collect_info_objects): new
+	(imsettings_info_manager_real_get_info_objects): likewise.
+
+	* imsettings/imsettings-observer.c (imsettings_get_info_objects):
+	Implementation of GetInfoObjects.
+	(imsettings_get_info_object): likewise for GetInfoObject.
+
+	* imsettings/imsettings.xml: Add GetInfoObjects and GetInfoObject
+	method.
+
+	* imsettings/imsettings-info.c (imsettings_info_load): do not break
+	the original value for padding.
+
+	* tests/gcit_7.c: New testcase for Issue#7.
+
+	* configure.ac: get rid of gamin check. no longer depend on that
+	directly.
+
+2008-06-10  Akira TAGOH  <tagoh@redhat.com>
+
+	* utils/imsettings-restart.c (main): Fix a typo. (RHBZ#450574)
+
+2008-06-06  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings.pc.in (Requires): Add gio-2.0.
+
+2008-06-04  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xim.in.in: get rid of shebang.
+
+	* imsettings/imsettings-request.c (imsettings_request_get_im_list)
+	(imsettings_request_get_current_user_im)
+	(imsettings_request_get_current_system_im)
+	(imsettings_request_get_xinput_filename)
+	(imsettings_request_get_im_module_name)
+	(imsettings_request_get_xim_program)
+	(imsettings_request_get_preferences_program)
+	(imsettings_request_get_auxiliary_program)
+	(imsettings_request_get_short_description)
+	(imsettings_request_get_long_description)
+	(imsettings_request_is_system_default)
+	(imsettings_request_is_user_default, imsettings_request_is_xim)
+	(imsettings_request_get_supported_language)
+	(imsettings_request_start_im, imsettings_request_stop_im)
+	(imsettings_request_what_im_is_running)
+	(imsettings_request_change_to): Allow invoking without giving GError.
+
+2008-06-03  Akira TAGOH  <tagoh@redhat.com>
+
+	* data/xinputinfo.sh.in: Add ICON support.
+
+	* tests/gcit_5.c (setup): Fix a typo.
+
+	* tests/imsettings-info.c (test_imsettings_info_get_icon_file):
+	New testcase.
+
+	* README: Add a description for ICON option.
+
+	* imsettings/imsettings-info.c (imsettings_info_notify_properties):
+	Add ICON support.
+	(imsettings_info_get_icon_file): new function.
+
+	* src/factory_info.c (imsettings_info_manager_validate_from_file_info):
+	New function to check if the file got changed is valid to deal with.
+	(imsettings_info_manager_validate_from_file): likewise.
+	(imsettings_info_manager_real_changed_xinputd): don't try to add
+	the information if it's not a valid file.
+	(imsettings_info_manager_real_changed_dot_xinputrc): likewise.
+	(imsettings_info_manager_real_changed_xinputrc): likewise.
+	(imsettings_info_manager_init_monitor): clear the current IM held in.
+
+	* imsettings/imsettings-request.c (imsettings_request_get_im_list)
+	(imsettings_request_get_current_user_im)
+	(imsettings_request_get_current_system_im)
+	(imsettings_request_get_xinput_filename)
+	(imsettings_request_get_im_module_name)
+	(imsettings_request_get_xim_program)
+	(imsettings_request_get_preferences_program)
+	(imsettings_request_get_auxiliary_program)
+	(imsettings_request_get_short_description)
+	(imsettings_request_get_long_description)
+	(imsettings_request_is_system_default)
+	(imsettings_request_is_user_default, imsettings_request_is_xim)
+	(imsettings_request_get_supported_language)
+	(imsettings_request_start_im, imsettings_request_stop_im)
+	(imsettings_request_what_im_is_running)
+	(imsettings_request_change_to): export GError to able to deal with more
+	complex error handling.
+
+	* imsettings/imsettings-observer.c (imsettings_what_input_method_is_running):
+	Intialize the return value even if any errors happens.
+
+2008-05-30  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/gcit_5.c: New testcase for Issue#5.
+
+	* src/factory_info.c (imsettings_info_manager_real_set_property):
+	new function.
+	(imsettings_info_manager_real_get_property): new function.
+	(imsettings_info_manager_init_monitor): check if .xinputrc or xinputrc
+	really exists.
+	(main): Add --xinputrcdir, --xinputdir and --homedir for debugging
+	purpose.
+
+	* imsettings/imsettings-info.c (imsettings_info_update_filename_list)
+	(_imsettings_info_init, _imsettings_info_finalize)
+	(_imsettings_info_get_filename_list): Removed. no longer used.
+
+	* src/factory_info.c (imsettings_info_manager_get_fam_target)
+	(imsettings_info_manager_fam_event_loop)
+	(imsettings_info_manager_pending_init): Removed.
+	(imsettings_info_manager_real_changed_xinputd): New function to take
+	actions for monitoring xinput.d.
+	(imsettings_info_manager_real_changed_dot_xinputrc): likewise for
+	.xinputrc.
+	(imsettings_info_manager_real_changed_xinputrc): likewise for xinputrc.
+	(imsettings_info_manager_init_monitor): renamed from *_init_fam.
+	We use GFileMonitor instead of using FAM directly.
+	(imsettings_info_manager_tini_monitor): likewise.
+
+	* imsettings/imsettings-object.c (imsettings_object_base_class_init):
+	Initialize the hash here to share that in the class properly.
+	(imsettings_object_base_class_finalize): Destroy the hash instead of
+	the object finalizer. that caused an error in g_hash_table_destroy.
+
+2008-05-29  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/Makefile.am (libimsettings_la_LDFLAGS):
+	Add -version-info.
+
+2008-05-28  Akira TAGOH  <tagoh@redhat.com>
+
+	* tests/imsettings-info.c: New testcase for IMSettingsInfo.
+
+	* imsettings/imsettings-object.c (_swap16, _swapu16, _swap32)
+	(_swapu32, _swap64, _swapu64): Fix a typo.
+	(imsettings_object_dump): Lookup the table first to check
+	if the property is supposed to dump in the own way.
+	(imsettings_object_dump): Fix an endian issue to update the amount
+	of property.
+	(imsettings_object_load_from_stream): Initialize GValue before puting
+	a value.
+
+	* imsettings/imsettings-utils.h (imsettings_swap16)
+	(imsettings_swapu16, imsettings_swap32, imsettings_swapu32)
+	(imsettings_swap64, imsettings_swapu64): Fix a typo.
+
+	* imsettings/imsettings-info.c (imsettings_info_get_property):
+	Add PROP_LANGUAGE, missing property.
+	(imsettings_info_dump): Fix a crash if no language is given.
+	(imsettings_info_dump): Add more self-dump for PROP_SHORT_DESC and
+	PROP_IS_XIM.
+	(imsettings_info_load): likewise.
+	(imsettings_info_get_language): new function.
+	(imsettings_info_compare): Add a debugging code.
+
+2008-05-15  Akira TAGOH  <tagoh@redhat.com>
+
+	* configure.ac: Add checking if "check" is available.
+
+	* tests/Makefile.am: new.
+
+	* tests/imsettings-object.c: test case for IMSettingsObject.
+
+	* tests/main.[ch]: core module for the unit testing.
+
+	* requires (CHECK_REQUIRED): for Unit testing.
+
+	* README: Add more docs.
+
+2008-05-14  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (imsettings_manager_real_what_im_is_running):
+	Ignore an error if the pid file doesn't exist. (RH#445129)
+
+2008-05-12  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-object.c (imsettings_object_real_dump):
+	Use macro to convert the variable type.
+	(imsettings_object_real_load): likewise.
+
+	* src/factory.c (_get_pid): check the existence of the pid file first.
+
+2008-05-11  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-info.c: Inherit from IMSettingsObject to
+	dump/load the object.
+
+	* imsettings/imsettings-utils.h (imsettings_n_pad4)
+	(imsettings_pad4, imsettings_skip_pad4, imsettings_swap16)
+	(imsettings_swapu16, imsettings_swap32, imsettings_swapu32)
+	(imsettings_swap64, imsettings_swapu64): new macros.
+
+	* imsettings/imsettings-object.c: new.
+
+2008-04-29  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (_get_pid): new.
+	(imsettings_manager_real_what_im_is_running): check if pid is valid
+	or not.
+
+	* utils/imsettings-reload.c (main): exit if opening session bus
+	is failed.
+
+2008-04-28  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/protocol.c (xim_protocol_process_event): proper casting
+	to the pointer.
+
+2008-04-25  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/Makefile.am: correct build order.
+
+	* src/factory.c (imsettings_manager_real_what_im_is_running):
+	real function to check what IM is running.
+
+	* imsettings/imsettings-request.c (imsettings_request_what_im_is_running):
+	new function.
+
+	* imsettings/imsettings-observer.c (imsettings_what_input_method_is_running):
+	new function.
+
+	* imsettings/imsettings.xml (WhatInputMethodIsRunning): new method.
+
+	* utils/imsettings-list.c (main): Show "*" if IM is really running and
+	"-" for not running but is supposed to run by default for user.
+
+2008-04-23  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/protocol.c (xim_protocol_swap32): Fix a typo.
+
+2008-04-14  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/loopback.c (_source_dispatch): Use G_GSIZE_FORMAT macro
+	instead of "d".
+
+	* backends/xim/protocol.c (xim_protocol_process_event):
+	Use GUINT_TO_POINTER macro instead of direct casting.
+	(xim_protocol_send): Use G_GSIZE_FORMAT macro instead of "d".
+
+	* backends/xim/connection.c (xim_connection_forward_client_message_event):
+	Use G_GSIZE_FORMAT macro instead of "d".
+
+	* backends/gconf/Makefile.am (main.c): Add deps of
+	gconf-imsettings-glue.h to ensure its creation at bootstrap.
+
+	* imsettings/Makefile.am (imsettings-observer.c): Add deps of
+	stamp-bindings.h to ensure its creation at bootstrap.
+
+2008-04-14  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/loopback.c (xim_loopback_finalize): destroy GSource.
+
+2008-04-10  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/server.c (xim_server_set_property): create a loopback
+	server as needed.
+
+	* backends/xim/protocol.c (xim_protocol_real_open): fix a typo.
+	(xim_protocol_class_init): Add missing signals, get_ic_values,
+	get_ic_values_reply.
+	(xim_protocol_process_event): Get CARD8 directly so that the byte order
+	may be unsure at this moment.
+	(xim_protocol_send): Fix the packet length to be
+	"the number of 4 bytes elements".
+
+	* backends/xim/utils.c (xim_substitute_display_name): make this
+	function public from main.c.
+
+	* backends/xim/loopback.[ch]: new.
+
+2008-04-07  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/server.c: clean up.
+
+	* backends/xim/main.c (imsettings_xim_message_filter):
+	get more debugging message with appropriate option.
+	(imsettings_xim_message_filter): don't create an instance if no changes
+	of XIM server.
+
+2008-04-03  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/server.c: a lot of changes to have separate connection
+	management.
+
+	* backends/xim/protocol.[ch]: new.
+
+	* backends/xim/utils.c (xim_lookup_atom): more sanity check.
+	(xim_ximattr_free): new.
+	(xim_xicattr_free): new.
+	(xim_ext_free): new.
+	(xim_ximattribute_free): new.
+	(xim_xicattribute_free): new.
+	(xim_strconvtext_free): new.
+	(xim_protocol_name): new.
+
+	* backends/xim/connection.c: a lot of changes to have separate class
+	for protocol processor.
+
+2008-04-02  Akira TAGOH  <tagoh@redhat.com>
+
+	* utils/imsettings-restart.c (main): Fix a typo.
+
+2008-03-27  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (imsettings_manager_real_stop_im): send empty string
+	and "none" for XIM instead of NULL.
+
+	* imsettings/imsettings-request.c (imsettings_request_change_to):
+	disallow to get a NULL as module because DBus doesn't support sending
+	NULL as string.
+	(imsettings_request_change_to_with_signal): likewise.
+
+2008-03-19  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xim/main.c: Add a missing header file.
+
+	* backends/xim/connection.c (xim_connection_forward_event):
+	Fix a segfault when the major-opcode is more than expects.
+
+	* imsettings/imsettings-request.c (imsettings_request_change_to_with_signal):
+	Fix a typo.
+
+	* src/factory.c (imsettings_manager_real_start_im): send a change to
+	XIM server too.
+	(imsettings_manager_real_stop_im): likewise.
+
+	* imsettings/imsettings-request.c (imsettings_request_change_to_with_signal):
+	new to send a ChangeTo signal. particularly for XIM server.
+
+	* imsettings/backends/Makefile.am: Add a rule to build xim support.
+
+	* imsettings/backends/xim/connection.[ch]:
+	* imsettings/backends/xim/main.c:
+	* imsettings/backends/xim/server.[ch]:
+	* imsettings/backends/xim/utils.[ch]:
+	* imsettings/backends/xim/Makefile.am: Initial commit to support XIM.
+
+	* imsettings/imsettings/imsettings.h: Add dbus interface for XIM.
+
+	* imsettings/Makefile.am: Make it more better to generate code from glib-genmarshal.
+
+2008-03-17  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory_info.c (imsettings_info_manager_real_get_current_user_im):
+	Get back current system IM if current user IM is NULL.
+
+2008-03-12  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/xfce/imsettings_plugin.c: Mcs plugin for imsettings support.
+
+2008-03-11  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/gconf/main.c: Add a prototype declaration for
+	imsettings_gconf_get_type() and imsettings_gconf_new() to shut up
+	a compiler warning.
+
+	* src/factory.c: Add a prototype declaration for
+	imsettings_manager_get_type() to shut up a compiler warning.
+
+	* src/factory_info.c: Add a prototype declaration for
+	imsettings_info_manager_get_type() to shut up a compiler warning.
+
+	* imsettings/Makefile.am ($(srcdir)/imsettings-marshal.c): Add #include
+	"imsettings-marshal.h" to shut up a compiler warning.
+
+2008-03-07  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-request.h: Fix a typo.
+
+2008-03-06  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/qt/Makefile.am (noinst_HEADERS): missed qt-imsettings.h to
+	be distributed.
+
+	* src/factory.c (_child_setup): new function to setup PGID for child
+	process.
+	(_stop_process): send a signal to PGID instread of PID.
+	(imsettings_manager_real_stop_im): make a change in the settings before
+	killing the processes.
+
+2008-02-22  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/qt/introspection.xml:
+	* backends/qt/main.cpp:
+	* backends/qt/qt-imsettings.(cpp|h):
+	* backends/qt/qt-im-settings-daemon.service.in:
+	* backends/qt/Makefile.am: Initial commit for IMSettings service for Qt.
+	* backends/Makefile.am:
+	* configure.ac: Add Qt support.
+
+	* imsettings/imsettings.h: Add defines for Qt interface.
+
+	* backends/gconf/Makefile.am (LIBS): get rid of the unnecessary library
+	linkage.
+
+	* backends/gconf/main.c: clean up.
+
+	* src/Makefile.am (im_settings_daemon_CFLAGS): Use X11_CFLAGS instead of.
+	(im_settings_daemon_LDADD): Use X11_LIBS instead of.
+
+2008-02-20  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-info.c (imsettings_info_notify_properties):
+	Prefer IMSETTINGS_IGNORE_ME rather than IM_CHOOSER_IGNORE_ME.
+
+	* src/factory.c (imsettings_manager_real_start_im): do not update
+	.xinputrc if requested.
+	(imsettings_manager_real_stop_im): likewise.
+
+	* imsettings/imsettings-request.c (imsettings_request_start_im):
+	Add update_xinputrc option.
+	(imsettings_request_start_im_async): likewise.
+	(imsettings_request_stop_im): likewise.
+	(imsettings_request_stop_im_async): likewise.
+
+	* imsettings/imsettings-observer.c (imsettings_start_im):
+	Add update_xinputrc option.
+	(imsettings_stop_im): likewise.
+	(imsettings_observer_real_start_im): likewise.
+	(imsettings_observer_real_stop_im): likewise.
+
+	* imsettings/imsettings.xml (StartIM): Add update_xinputrc option.
+	(StopIM): likewise.
+
+	* utils/imsettings-stop.c (main): Add --no-update option.
+
+	* utils/imsettings-restart.c (main): Add --no-update option.
+
+	* utils/imsettings-start.c (main): Add --no-update option.
+
+	* imsettings/imsettings-info.c (imsettings_info_finalize):
+	Invoke the finalizer from the parent class.
+
+	* src/factory_info.c (imsettings_info_manager_fam_event_loop):
+	Process the FAM event within one idle call.
+
+	* imsettings/imsettings-info.c (_unquote_string): new.
+	(imsettings_info_notify_properties): unquote string for escaped characters.
+
+2008-02-19  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory_info.c (imsettings_info_manager_fam_event_loop):
+	Update the fam status if the result code is FAMEndExist anyway.
+	(imsettings_info_manager_pending_init): new function to check
+	if the initial FAM events are proceeded.
+	(imsettings_info_manager_real_get_list): wait for the initialization
+	finished.
+	(imsettings_info_manager_real_get_current_user_im): likewise.
+	(imsettings_info_manager_real_get_current_system_im): likewise.
+	(imsettings_info_manager_real_get_info): likewise.
+
+	* src/factory.c (imsettings_manager_real_start_im):
+	Add appropriate error handling.
+
+	* src/factory.c (reload_cb): Do nothing for reloading anymore.
+
+	* src/factory_info.c: Add new class to deal with the event.
+	(imsettings_info_manager_fam_event_loop): new to deal with FAM event.
+
+	* imsettings/src/imsettings-manager.[ch]: Move into factory.c
+
+	* imsettings/imsettings-request.c (imsettings_request_get_current_user_im):
+	new
+	(imsettings_request_get_current_system_im): new.
+
+	* imsettings/imsettings-observer.c (imsettings_get_current_user_im):
+	new.
+	(imsettings_get_current_system_im): new.
+
+	* imsettings/imsettings.xml: Move GetList method to
+	com.redhat.imsettings.IMInfo interface.
+	Add GetCurrentUserIM and GetCurrentSystemIM.
+
+	* utils/imsettings-reload.c (main): ugly hack to make sure if a signal
+	is delivered. this might not work on some machines.
+
+	* utils/imsettings-list.c (main): change the output a bit friendly.
+
+2008-02-08  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-request.c: similar fixes.
+
+	* imsettings/imsettings.xml: similar fixes.
+
+	* imsettings/backends/gconf/introspection.xml: similar fixes.
+
+	* imsettings/imsettings.h: get rid of "DBus" from all the services,
+	paths and interfaces name.
+
+	* src/im-settings-daemon.service.in: likewise.
+
+	* src/im-info-daemon.service.in: likewise.
+
+	* backends/gconf/gconf-im-settings-daemon.service.in: likewise.
+
+	* imsettings/imsettings-info.c (_set_bool_prop): get rid of g_object_notify.
+
+	* imsettings/imsettings-request.c (imsettings_request_set_property):
+	likewise.
+
+	* imsettings/imsettings-observer.c (imsettings_observer_set_property):
+	likewise.
+
+	* backends/gconf/main.c (imsettings_gconf_message_filter): add actions
+	for org.freedesktop.DBus.Local.Disconnected and
+	org.freedesktop.DBus.NameOwnerChanged.
+
+	* src/factory.c (main): get rid of sending a reload request.
+	(main): connect to the disconnect signal.
+
+	* src/factory_info.c (main): get rid of sending a reload request.
+	(main): connect to the disconnect signal.
+
+	* src/imsettings-manager.c (imsettings_manager_real_finalize):
+	unref a connection for requesting.
+	(imsettings_manager_real_start_im): likewise.
+	(imsettings_manager_real_stop_im): likewise.
+
+	* imsettings/imsettings-observer.c (imsettings_observer_signal_disconnected):
+	new function to handle org.freedesktop.DBus.Local.Disconnected.
+	(imsettings_observer_signal_name_owner_changed): new function to handle
+	org.freedesktop.DBus.NameOwnerChanged.
+	(imsettings_observer_class_init): add a disconnected signal.
+
+	* imsettings/imsettings-utils.c: cleaning up.
+
+	* utils/imsettings-list.c (main): unref a connection.
+
+	* utils/imsettings-reload.c (main): likewise.
+
+	* utils/imsettings-stop.c (main): likewise.
+
+	* utils/imsettings-restart.c (main): likewise.
+
+	* utils/imsettings-start.c (main): likewise.
+
+	* utils/imsettings-info.c (main): likewise.
+
+2008-02-07  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/imsettings-manager.c: cleaning up.
+
+	* imsettings/imsettings-request.c: cleaning up.
+
+	* imsettings/imsettings-observer.c: cleaning up.
+
+	* imsettings/imsettings-info.c: cleaning up.
+
+	* src/imsettings-manager.c (_build_pidfilename): get rid of .bak from
+	the filename to make stopping-process working for the user specific
+	xinputrc.
+	(_update_symlink): do nothing if it's going to do something for .xinputrc.
+	(imsettings_manager_load_conf): add the info for .xinputrc.bak too.
+
+	* imsettings/imsettings-info.c (imsettings_info_set_property):
+	Set properties for the user specific xinputrc too. (RH#431291)
+
+2008-01-30  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/imsettings-manager.c (_start_process): set an empty string
+	if args is null.
+	(imsettings_manager_real_start_im): reload the IM info.
+	(imsettings_manager_real_stop_im): likewise.
+
+	* imsettings/imsettings-request.c (imsettings_request_set_property):
+	remove the code to unref the dbus connection so far.
+	(imsettings_request_finalize): likewise.
+
+	* imsettings/imsettings-observer.c (imsettings_observer_set_property):
+	remove the code to unref the dbus connection so far.
+	(imsettings_observer_finalize): likewise.
+
+2008-01-28  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/imsettings-manager.c (_update_symlink): check the filename.
+	we don't expect the filename is NULL for the user specific conffile anymore.
+
+	* imsettings/imsettings-info-private.h (IMSETTINGS_USER_SPECIFIC_SHORT_DESC):
+	Fix a typo.
+
+	* imsettings/imsettings-info.c (imsettings_info_set_property):
+	check the filename much strictly.
+
+2008-01-25  Akira TAGOH  <tagoh@redhat.com>
+
+	* backends/gconf/Makefile.am (EXTRA_DIST): Fix a typo.
+
+	* src/imsettings-manager.c (_start_process): Inherit the environment
+	variables to bring up the child process.
+
+	* src/imsettings-manager.c (_collect_im_list): new.
+	(imsettings_manager_real_get_list): build the IM list dynamically.
+	(_start_process): set LC_CTYPE to run the programs.
+
+	* imsettings/imsettings-request.c (imsettings_request_set_locale): new.
+	(imsettings_request_is_system_default): new.
+	(imsettings_request_is_user_default): new.
+	(imsettings_request_is_xim): new.
+	(imsettings_request_get_supported_language): new.
+
+	* imsettings/imsettings-observer.c (imsettings_is_system_default): new.
+	(imsettings_is_user_default): new.
+	(imsettings_is_xim): new.
+	(imsettings_get_supported_language): new.
+
+	* imsettings/imsettings.xml (IsSystemDefault): new.
+	(IsUserDefault): new.
+	(IsXim): new.
+	(GetList): Add lang argument.
+	(StartIM): likewise.
+
+	* imsettings/imsettings-info.c (imsettings_info_notify_properties):
+	Fetch the informations from xinputinfo.sh instead of xinput.sh with some options.
+	(imsettings_info_set_property): Update the information against the locale.
+	(imsettings_info_set_property): always set XIM is visible no matter
+	what the status is, except the dead link.
+	(imsettings_info_new_with_lang): new.
+	(imsettings_info_is_xim): new.
+
+	* utils/imsettings-list.c (main): Get a different output against current locale.
+
+	* utils/imsettings-info.c (main): likewise.
+
+	* utils/imsettings-start.c (main): likewise.
+
+2008-01-24  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/imsettings-manager.c (_start_process): Fix a silly bug that
+	always create a pidfile no matter what the file exists.
+	(_start_process): do nothing if the program name is an empty.
+	(_stop_process): new.
+	(_update_symlink): new.
+	(imsettings_manager_real_start_im): Update .xinputrc.
+	(imsettings_manager_real_stop_im): Implement a lot.
+
+	* imsettings/imsettings.xml (StopIM): Add a boolean for force flag.
+
+	* imsettings/marshal.list: new.
+
+	* imsettings/imsettings-info.c (imsettings_info_set_property):
+	do not set an empty string to the property.
+	(imsettings_info_set_property): turn on an ignore property
+	if the conf file is invalid.
+
+	* utils/imsettings-restart.c (main): Add --force option to stop IM
+	forcibly.
+
+	* utils/imsettings-stop.c (main): likewise.
+
+2008-01-24  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/imsettings-manager.c (imsettings_manager_load_conf): Make
+	a condition to not segfault. user's .xinputrc is more likely to be
+	unavailable.
+
+	* imsettings/imsettings-info.c (imsettings_info_is_visible):
+	Fix a reverse flag.
+
+2008-01-23  Akira TAGOH  <tagoh@redhat.com>
+
+	* src/factory.c (main): Update to get a X display name.
+
+	* src/imsettings-manager.c (imsettings_manager_real_set_property): new.
+	(imsettings_manager_real_get_property): new.
+	(_remove_pidfile): new.
+	(_start_process): new.
+	(_build_pidfilename): new.
+	(imsettings_manager_real_start_im): Add an implementation to bring up
+	an auxiliary program and XIM server.
+
+	* imsettings/imsettings-request.c (imsettings_request_get_xim_program):
+	new function.
+
+	* imsettings/imsettings-observer.c (imsettings_get_xim_program): add
+	a callback to deal with GetXimProgram method.
+
+	* imsettings/imsettings.xml: add GetXimProgram method.
+
+	* imsettings/imsettings-info.c (imsettings_info_get_xim_program): new.
+	(imsettings_info_get_xim_args): new.
+
+	* utils/imsettings-info.c (main): output XIM server's configuration too.
+
+2008-01-22  Akira TAGOH  <tagoh@redhat.com>
+
+	* Initial commit for imsettings library.
