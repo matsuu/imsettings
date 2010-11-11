@@ -25,7 +25,6 @@
 #define __IMSETTINGS_IMSETTINGS_UTILS_H__
 
 #include <glib.h>
-#include <dbus/dbus.h>
 
 G_BEGIN_DECLS
 
