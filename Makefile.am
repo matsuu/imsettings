@@ -16,9 +16,6 @@ CONFIGURE_DEPENDENCIES =		\
 EXTRA_DIST =				\
 	$(pkgconfig_DATA)		\
 	$(noinst_DATA)			\
-	intltool-extract.in		\
-	intltool-merge.in		\
-	intltool-update.in		\
 	requires			\
 	$(NULL)
 
