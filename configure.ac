@@ -83,12 +83,12 @@ dnl ======================================================================
 PKG_CHECK_MODULES(IMSETTINGS, dbus-1 >= $DBUS_REQUIRED
 			      dbus-glib-1 >= $DBUS_GLIB_REQUIRED
 			      gio-2.0 >= $GIO_REQUIRED)
-PKG_CHECK_MODULES(GTK, gtk+-2.0 >= $GTK_REQUIRED)
 PKG_CHECK_MODULES(LIBNOTIFY, libnotify, [
 	save_CFLAGS="$CFLAGS"
 	CFLAGS="$(pkg-config --cflags --libs libnotify gtk+-2.0)"
 	AC_CHECK_FUNC(notify_notification_new_with_status_icon,[
 		has_status_icon=yes
+		PKG_CHECK_MODULES(GTK, gtk+-2.0 >= $GTK_REQUIRED)
 		AC_DEFINE(HAS_STATUS_ICON,, [status icon support in libnotify])
 		IMDAEMON_CFLAGS="$GTK_CFLAGS $LIBNOTIFY_CFLAGS"
 		IMDAEMON_LIBS="$GTK_LIBS $LIBNOTIFY_LIBS"],[
@@ -119,7 +119,7 @@ PKG_CHECK_MODULES(XFCE_XFCONF, gconf-2.0
 			libxfconf-0,
 	[use_xfce_xfconf="yes"],
 	[use_xfce_xfconf="no"])
-PKG_CHECK_MODULES(LXDE, gtk+-2.0,
+PKG_CHECK_MODULES(LXDE, gconf-2.0 glib-2.0,
 	[use_lxde="yes"],
 	[use_lxde="no"])
 PKG_CHECK_MODULES(XIM, libgxim >= $LIBGXIM_REQUIRED

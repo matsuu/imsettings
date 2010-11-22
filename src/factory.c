@@ -37,7 +37,6 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
-#include <gtk/gtk.h>
 #include <dbus/dbus-glib-lowlevel.h>
 #include <libnotify/notify.h>
 #include "monitor.h"
