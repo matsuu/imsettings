@@ -119,7 +119,7 @@ PKG_CHECK_MODULES(XFCE_XFCONF, gconf-2.0
 			libxfconf-0,
 	[use_xfce_xfconf="yes"],
 	[use_xfce_xfconf="no"])
-PKG_CHECK_MODULES(LXDE, gconf-2.0 glib-2.0,
+PKG_CHECK_MODULES(LXDE, gconf-2.0 gobject-2.0,
 	[use_lxde="yes"],
 	[use_lxde="no"])
 PKG_CHECK_MODULES(XIM, libgxim >= $LIBGXIM_REQUIRED
