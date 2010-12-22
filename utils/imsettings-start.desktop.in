@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Type=Application
 Version=1.0
-_Name=imsettings-start
+_Name=Input Method starter
 _Comment=Input Method starter
-Exec=imsettings-start --cond-start -n -q
+Exec=imsettings-switch -n -q -x
 Terminal=false

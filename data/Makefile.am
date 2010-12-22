@@ -45,7 +45,7 @@ $(xinput_DATA): $(xinput_in_files) $(builddir)/Makefile
 $(xinputsh_DATA): $(xinputsh_in) $(builddir)/Makefile
 	cp $(xinputsh_in) @XINPUTSH@
 #
-stamp-xinputinfosh: $(xinputinfosh_DATA)
+stamp-xinputinfosh: $(xinputinfosh_DATA) $(builddir)/Makefile
 	chmod a+x $(xinputinfosh_DATA)
 	echo timestamp > $(@F)
 

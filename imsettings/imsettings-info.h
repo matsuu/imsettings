@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * imsettings-info.h
- * Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2010 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -24,35 +24,57 @@
 #ifndef __IMSETTINGS_IMSETTINGS_INFO_H__
 #define __IMSETTINGS_IMSETTINGS_INFO_H__
 
-#include <imsettings/imsettings-object.h>
+#include <glib.h>
+#include <glib-object.h>
 
 G_BEGIN_DECLS
 
 #define IMSETTINGS_TYPE_INFO		(imsettings_info_get_type())
 #define IMSETTINGS_INFO(_o_)		(G_TYPE_CHECK_INSTANCE_CAST ((_o_), IMSETTINGS_TYPE_INFO, IMSettingsInfo))
 #define IMSETTINGS_INFO_CLASS(_c_)	(G_TYPE_CHECK_CLASS_CAST ((_c_), IMSETTINGS_TYPE_INFO, IMSettingsInfoClass))
+#define IMSETTINGS_INFO_GET_CLASS(_o_)	(G_TYPE_CHECK_INSTANCE_GET_CLASS ((_o_), IMSETTINGS_TYPE_INFO, IMSettingsInfoClass))
 #define IMSETTINGS_IS_INFO(_o_)		(G_TYPE_CHECK_INSTANCE_TYPE ((_o_), IMSETTINGS_TYPE_INFO))
 #define IMSETTINGS_IS_INFO_CLASS(_c_)	(G_TYPE_CHECK_CLASS_TYPE ((_c_), IMSETTINGS_TYPE_INFO))
-#define IMSETTINGS_INFO_GET_CLASS(_o_)	(G_TYPE_INSTANCE_GET_CLASS ((_o_), IMSETTINGS_TYPE_INFO, IMSettingsInfoClass))
 
 
 typedef struct _IMSettingsInfoClass	IMSettingsInfoClass;
 typedef struct _IMSettingsInfo		IMSettingsInfo;
+typedef struct _IMSettingsInfoPrivate	IMSettingsInfoPrivate;
+typedef enum _IMSettingsInfoType	IMSettingsInfoType;
 
 struct _IMSettingsInfoClass {
-	IMSettingsObjectClass parent_class;
+	GObjectClass parent_class;
 };
 struct _IMSettingsInfo {
-	IMSettingsObject parent_instance;
+	GObject                parent_instance;
+	IMSettingsInfoPrivate *priv;
+};
+enum _IMSettingsInfoType {
+	IMSETTINGS_INFO_GTK_IM_MODULE = 0,
+	IMSETTINGS_INFO_QT_IM_MODULE,
+	IMSETTINGS_INFO_XIM,
+	IMSETTINGS_INFO_IMSETTINGS_IGNORE_ME,
+	IMSETTINGS_INFO_XIM_PROGRAM,
+	IMSETTINGS_INFO_XIM_ARGS,
+	IMSETTINGS_INFO_PREFERENCE_PROGRAM,
+	IMSETTINGS_INFO_PREFERENCE_ARGS,
+	IMSETTINGS_INFO_AUXILIARY_PROGRAM,
+	IMSETTINGS_INFO_AUXILIARY_ARGS,
+	IMSETTINGS_INFO_SHORT_DESC,
+	IMSETTINGS_INFO_LONG_DESC,
+	IMSETTINGS_INFO_ICON,
+	IMSETTINGS_INFO_IMSETTINGS_IS_SCRIPT,
+	IMSETTINGS_INFO_LANG,
+	IMSETTINGS_INFO_FILENAME,
+	IMSETTINGS_INFO_IS_XIM,
+	LAST_IMSETTINGS_INFO
 };
 
 
 GType           imsettings_info_get_type              (void) G_GNUC_CONST;
-IMSettingsInfo *imsettings_info_new                   (const gchar          *filename);
-IMSettingsInfo *imsettings_info_new_with_lang         (const gchar          *filename,
-						       const gchar          *language);
-const gchar    *imsettings_info_get_language          (IMSettingsInfo       *info);
+IMSettingsInfo *imsettings_info_new                   (GVariant *parameters);
 const gchar    *imsettings_info_get_filename          (IMSettingsInfo       *info);
+const gchar    *imsettings_info_get_language          (IMSettingsInfo       *info);
 const gchar    *imsettings_info_get_gtkimm            (IMSettingsInfo       *info);
 const gchar    *imsettings_info_get_qtimm             (IMSettingsInfo       *info);
 const gchar    *imsettings_info_get_xim               (IMSettingsInfo       *info);
@@ -65,7 +87,6 @@ const gchar    *imsettings_info_get_aux_args          (IMSettingsInfo       *inf
 const gchar    *imsettings_info_get_short_desc        (IMSettingsInfo       *info);
 const gchar    *imsettings_info_get_long_desc         (IMSettingsInfo       *info);
 const gchar    *imsettings_info_get_icon_file         (IMSettingsInfo       *info);
-const gchar    *imsettings_info_get_supported_language(IMSettingsInfo       *info);
 gboolean        imsettings_info_is_script             (IMSettingsInfo       *info);
 gboolean        imsettings_info_is_visible            (IMSettingsInfo       *info);
 gboolean        imsettings_info_is_system_default     (IMSettingsInfo       *info);
@@ -74,6 +95,9 @@ gboolean        imsettings_info_is_xim                (IMSettingsInfo       *inf
 gboolean        imsettings_info_is_immodule_only      (IMSettingsInfo       *info);
 gboolean        imsettings_info_compare               (const IMSettingsInfo *info1,
                                                        const IMSettingsInfo *info2);
+
+GVariant       *imsettings_info_variant_new(const gchar *filename,
+					    const gchar *language);
 
 G_END_DECLS
 

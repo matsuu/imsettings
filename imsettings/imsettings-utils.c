@@ -27,7 +27,79 @@
 
 #include "imsettings-utils.h"
 
+static const gchar introspection_xml[] =
+	"<node name='/com/redhat/imsettings'>"
+	"  <interface name='com.redhat.imsettings'>"
+	"    <!-- Information APIs -->"
+	"    <method name='GetVersion'>"
+	"      <arg type='u' name='version' direction='out' />"
+	"    </method>"
+	"    <method name='GetInfoVariants'>"
+	"      <arg type='s' name='lang' direction='in' />"
+	"      <arg type='a{sv}' name='ret' direction='out' />"
+	"    </method>"
+	"    <method name='GetInfoVariant'>"
+	"      <arg type='s' name='lang' direction='in' />"
+	"      <arg type='s' name='name' direction='in' />"
+	"      <arg type='a{sv}' name='ret' direction='out' />"
+	"    </method>"
+	"    <method name='GetActiveVariant'>"
+	"      <arg type='a{sv}' name='ret' direction='out' />"
+	"    </method>"
+	"    <method name='GetUserIM'>"
+	"      <arg type='s' name='lang' direction='in' />"
+	"      <arg type='s' name='ret' direction='out'>"
+	"	<annotation name='org.freedesktop.DBus.GLib.Const' value='' />"
+	"      </arg>"
+	"    </method>"
+	"    <method name='GetSystemIM'>"
+	"      <arg type='s' name='lang' direction='in' />"
+	"      <arg type='s' name='ret' direction='out'>"
+	"	<annotation name='org.freedesktop.DBus.GLib.Const' value='' />"
+	"      </arg>"
+	"    </method>"
+	"    <method name='IsSystemDefault'>"
+	"      <arg type='s' name='lang' direction='in' />"
+	"      <arg type='s' name='imname' direction='in' />"
+	"      <arg type='b' name='ret' direction='out' />"
+	"    </method>"
+	"    <method name='IsUserDefault'>"
+	"      <arg type='s' name='lang' direction='in' />"
+	"      <arg type='s' name='imname' direction='in' />"
+	"      <arg type='b' name='ret' direction='out' />"
+	"    </method>"
+	"    <method name='IsXIM'>"
+	"      <arg type='s' name='lang' direction='in' />"
+	"      <arg type='s' name='imname' direction='in' />"
+	"      <arg type='b' name='ret' direction='out' />"
+	"    </method>"
+	"    <!-- Operation APIs -->"
+	"    <method name='SwitchIM'>"
+	"      <arg type='s' name='lang' direction='in' />"
+	"      <arg type='s' name='module' direction='in' />"
+	"      <arg type='b' name='update_xinputrc' direction='in' />"
+	"      <arg type='b' name='ret' direction='out' />"
+	"    </method>"
+	"    <signal name='Reload'>"
+	"      <arg type='b' name='ret' direction='out' />"
+	"    </signal>"
+	"    <method name='StopService'>"
+	"      <arg type='b' name='ret' direction='out' />"
+	"    </method>"
+	"  </interface>"
+	"</node>";
 
+/*< private >*/
+
+/*< public >*/
+
+/**
+ * imsettings_g_error_quark:
+ *
+ * FIXME
+ *
+ * Returns:
+ */
 GQuark
 imsettings_g_error_quark(void)
 {
@@ -39,17 +111,32 @@ imsettings_g_error_quark(void)
 	return quark;
 }
 
-gchar *
-imsettings_generate_dbus_path_from_interface(const gchar *interface)
+/**
+ * imsettings_get_interface_info:
+ *
+ * FIXME
+ *
+ * Returns:
+ */
+GDBusInterfaceInfo *
+imsettings_get_interface_info(void)
 {
-	GString *string = g_string_new(NULL);
-	gint i;
+	static gsize has_info = 0;
+	static GDBusInterfaceInfo *info = NULL;
 
-	g_string_printf(string, "/%s", interface);
-	for (i = 0; i < string->len; i++) {
-		if (string->str[i] == '.')
-			string->str[i] = '/';
+	if (g_once_init_enter(&has_info)) {
+		GError *err = NULL;
+		GDBusNodeInfo *introspection_data = g_dbus_node_info_new_for_xml(introspection_xml, &err);
+
+		if (err) {
+			g_warning(err->message);
+			return NULL;
+		}
+		info = g_dbus_interface_info_ref(introspection_data->interfaces[0]);
+		g_dbus_node_info_unref(introspection_data);
+
+		g_once_init_leave(&has_info, 1);
 	}
 
-	return g_string_free(string, FALSE);
+	return info;
 }

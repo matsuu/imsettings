@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=com.redhat.imsettings
+Exec=@libexecdir@/im-settings-daemon

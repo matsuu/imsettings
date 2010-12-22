@@ -1,6 +1,6 @@
 NULL =
 AUTOMAKE_OPTIONS = dist-bzip2
-SUBDIRS = imsettings backends utils src data po tests
+SUBDIRS = data imsettings imsettings-daemon utils po tests
 if ENABLE_APPLET
 SUBDIRS += applet
 endif

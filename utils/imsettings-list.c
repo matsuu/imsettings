@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * imsettings-list.c
- * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2010 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -26,69 +26,89 @@
 #include <string.h>
 #include <unistd.h>
 #include <glib/gi18n.h>
-#include "imsettings/imsettings.h"
-#include "imsettings/imsettings-request.h"
+#include "imsettings.h"
+#include "imsettings-info.h"
+#include "imsettings-client.h"
 
 int
 main(int    argc,
      char **argv)
 {
-	IMSettingsRequest *req;
-	DBusConnection *connection;
-	gchar *locale;
-	gchar *user_im, *system_im, *running_im;
+	IMSettingsClient *client = NULL;
+	IMSettingsInfo *info, *cinfo;
+	GVariant *v = NULL, *vv;
+	GVariantIter *iter;
+	const gchar *locale, *name, *key;
+	gchar *user_im = NULL, *system_im = NULL, *running_im = NULL;
+	gchar *xinput;
 	gint i;
 	GError *error = NULL;
-	GPtrArray *array;
+	int retval = 0;
+	gsize len, slen = strlen(XINPUT_SUFFIX);
 
 	setlocale(LC_ALL, "");
 	locale = setlocale(LC_CTYPE, NULL);
 
 	g_type_init();
 
-	connection = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	if (connection == NULL) {
-		g_printerr("Failed to get a session bus.\n");
-		return 1;
-	}
-	req = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
-	imsettings_request_set_locale(req, locale);
-
-	if (imsettings_request_get_version(req, NULL) != IMSETTINGS_SETTINGS_API_VERSION) {
+	client = imsettings_client_new(locale, NULL, &error);
+	if (error)
+		goto error;
+	if (imsettings_client_get_version(client, NULL, &error) != IMSETTINGS_SETTINGS_API_VERSION) {
 		g_printerr(_("Currently a different version of imsettings is running.\nRunning \"imsettings-reload -f\" may help but it will restart the Input Method\n"));
-		exit(1);
+		retval = 1;
+		goto end;
 	}
 
-	if ((array = imsettings_request_get_info_objects(req, &error)) == NULL) {
-		g_printerr("Failed to obtain an Input Method list.\n");
-	} else {
-		user_im = imsettings_request_get_current_user_im(req, &error);
-		system_im = imsettings_request_get_current_system_im(req, &error);
-		running_im = imsettings_request_whats_input_method_running(req, &error);
-		if (error) {
-			g_printerr("%s\n", error->message);
-			exit(1);
-		}
-		for (i = 0; i < array->len; i++) {
-			IMSettingsInfo *info = g_ptr_array_index(array, i);
-			const gchar *name = imsettings_info_get_short_desc(info);
-			gchar *xinput = g_path_get_basename(imsettings_info_get_filename(info));
-
-			g_print("%s %d: %s[%s] %s\n",
-				(strcmp(running_im, name) == 0 ? "*" : (strcmp(user_im, name) == 0 ? "-" : " ")),
-				i + 1,
-				name, xinput,
-				(strcmp(system_im, name) == 0 ? "(recommended)" : ""));
-			g_object_unref(info);
-			g_free(xinput);
-		}
-		g_ptr_array_free(array, TRUE);
-		g_free(user_im);
-		g_free(system_im);
-		g_free(running_im);
+	v = imsettings_client_get_info_variants(client, NULL, &error);
+	if (error)
+		goto error;
+	user_im = imsettings_client_get_user_im(client, NULL, &error);
+	if (error)
+		goto error;
+	system_im = imsettings_client_get_system_im(client, NULL, &error);
+	if (error)
+		goto error;
+	cinfo = imsettings_client_get_active_im_info(client, NULL, &error);
+	if (error) {
+	  error:
+		g_printerr("%s\n", error->message);
+		retval = 1;
+		g_clear_error(&error);
+		goto end;
 	}
-	g_object_unref(req);
-	dbus_connection_unref(connection);
+	running_im = g_strdup(imsettings_info_get_short_desc(cinfo));
+	g_object_unref(cinfo);
 
-	return 0;
+	i = 0;
+	g_variant_get(v, "a{sv}", &iter);
+	while (g_variant_iter_next(iter, "{&sv}", &key, &vv)) {
+		len = strlen(key);
+		if (len > slen &&
+		    strcmp(&key[len - slen], XINPUT_SUFFIX) == 0)
+			continue;
+		info = imsettings_info_new(vv);
+		name = imsettings_info_get_short_desc(info);
+		xinput = g_path_get_basename(imsettings_info_get_filename(info));
+
+		g_print("%s %d: %s[%s] %s\n",
+			(strcmp(running_im, name) == 0 ? "*" : (strcmp(user_im, name) == 0 ? "-" : " ")),
+			i + 1,
+			name, xinput,
+			(strcmp(system_im, name) == 0 ? "(recommended)" : ""));
+		g_object_unref(info);
+		g_free(xinput);
+		i++;
+	}
+	g_variant_iter_free(iter);
+  end:
+	g_free(user_im);
+	g_free(system_im);
+	g_free(running_im);
+	if (v)
+		g_variant_unref(v);
+	if (client)
+		g_object_unref(client);
+
+	return retval;
 }

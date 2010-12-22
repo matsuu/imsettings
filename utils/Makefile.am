@@ -4,6 +4,7 @@ NULL =
 INCLUDES =						\
 	-DIMSETTINGS_LOCALEDIR="\"$(datadir)/locale\""	\
 	$(IMSETTINGS_CFLAGS)				\
+	-DXINPUT_SUFFIX="\"$(XINPUT_SUFFIX)\""		\
 	-I$(top_srcdir)/imsettings			\
 	$(NULL)
 LIBS =							\
@@ -32,9 +33,7 @@ bin_PROGRAMS =						\
 	imsettings-info					\
 	imsettings-list					\
 	imsettings-reload				\
-	imsettings-restart				\
-	imsettings-start				\
-	imsettings-stop					\
+	imsettings-switch				\
 	$(NULL)
 #
 autostartdir = $(sysconfdir)/xdg/autostart
@@ -53,12 +52,6 @@ imsettings_list_SOURCES =				\
 imsettings_reload_SOURCES =				\
 	imsettings-reload.c				\
 	$(NULL)
-imsettings_restart_SOURCES =				\
-	imsettings-restart.c				\
-	$(NULL)
-imsettings_start_SOURCES =				\
-	imsettings-start.c				\
-	$(NULL)
-imsettings_stop_SOURCES =				\
-	imsettings-stop.c				\
+imsettings_switch_SOURCES =				\
+	imsettings-switch.c				\
 	$(NULL)

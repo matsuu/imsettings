@@ -25,6 +25,7 @@
 #define __IMSETTINGS_IMSETTINGS_UTILS_H__
 
 #include <glib.h>
+#include <gio/gio.h>
 
 G_BEGIN_DECLS
 
@@ -88,16 +89,18 @@ G_BEGIN_DECLS
 enum {
 	IMSETTINGS_GERROR_NOT_YET_IMPLEMENTED,
 	IMSETTINGS_GERROR_UNKNOWN,
-	IMSETTINGS_GERROR_NOT_AVAILABLE,
+	IMSETTINGS_GERROR_CONFIGURATION_ERROR,
 	IMSETTINGS_GERROR_IM_NOT_FOUND,
+	IMSETTINGS_GERROR_NOT_AVAILABLE,
 	IMSETTINGS_GERROR_INVALID_IMM,
 	IMSETTINGS_GERROR_UNABLE_TO_TRACK_IM,
 	IMSETTINGS_GERROR_OOM,
 	IMSETTINGS_GERROR_FAILED,
 };
 
-GQuark  imsettings_g_error_quark                    (void);
-gchar  *imsettings_generate_dbus_path_from_interface(const gchar *interface) G_GNUC_MALLOC;
+GQuark              imsettings_g_error_quark                    (void);
+GDBusInterfaceInfo *imsettings_get_interface_info               (void);
+gchar              *imsettings_generate_dbus_path_from_interface(const gchar *interface) G_GNUC_MALLOC;
 
 G_END_DECLS
 

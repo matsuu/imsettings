@@ -40,6 +40,7 @@ depcomp
 imsettings/*-bindings.h
 imsettings/*-glue.h
 imsettings/*-marshal.[ch]
+imsettings-daemon/imsettings-daemon
 install-sh
 intltool-*
 libtool
@@ -58,4 +59,4 @@ utils/imsettings-reload
 utils/imsettings-restart
 utils/imsettings-start
 utils/imsettings-stop
-
+utils/imsettings-switch

@@ -28,22 +28,23 @@
 #include <unistd.h>
 #include <glib.h>
 #include <glib/gi18n.h>
-#include "imsettings/imsettings.h"
-#include "imsettings/imsettings-request.h"
+#include "imsettings.h"
+#include "imsettings-client.h"
 
 int
 main(int    argc,
      char **argv)
 {
-	IMSettingsRequest *req, *req_gconf;
+	IMSettingsClient *client;
+	IMSettingsInfo *info = NULL;
 	gboolean arg_force = FALSE;
 	GOptionContext *ctx = g_option_context_new(NULL);
 	GOptionEntry entries[] = {
-		{"force", 'f', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_force, N_("Force reloading the configuration, including restarting the process.")},
+		{"force", 'f', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_force, N_("Force reloading imsettings-daemon (deprecated)."), NULL},
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};
 	GError *error = NULL;
-	DBusConnection *connection;
+	gint retval = 0;
 
 #ifdef ENABLE_NLS
 	bindtextdomain (GETTEXT_PACKAGE, IMSETTINGS_LOCALEDIR);
@@ -66,22 +67,38 @@ main(int    argc,
 	}
 	g_option_context_free(ctx);
 
-	connection = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	if (connection == NULL) {
-		g_printerr("Failed to get a session bus.\n");
-		return 1;
+	client = imsettings_client_new(NULL, NULL, &error);
+	if (error)
+		goto error;
+	if (imsettings_client_get_version(client, NULL, &error) != IMSETTINGS_SETTINGS_API_VERSION) {
+		imsettings_client_reload(client, TRUE, NULL, &error);
+	} else {
+		const gchar *module, *lang;
+
+		info = imsettings_client_get_active_im_info(client, NULL, &error);
+		module = imsettings_info_get_short_desc(info);
+		lang = imsettings_info_get_language(info);
+		imsettings_client_reload(client, FALSE, NULL, &error);
+		if (error)
+			goto error;
+		if (g_strcmp0(module, IMSETTINGS_NONE_CONF) != 0) {
+			/* this instance isn't valid anymore */
+			g_object_unref(client);
+			client = imsettings_client_new(lang, NULL, &error);
+			imsettings_client_switch_im(client, module, FALSE, NULL, &error);
+			if (error) {
+			  error:
+				g_object_unref(info);
+				g_printerr("E: %s\n", error->message);
+				retval = 1;
+				goto end;
+			}
+		}
+		g_object_unref(info);
 	}
-	req = imsettings_request_new(connection, IMSETTINGS_INTERFACE_DBUS);
-	req_gconf = imsettings_request_new(connection, IMSETTINGS_GCONF_INTERFACE_DBUS);
-	imsettings_request_reload(req, arg_force);
-	imsettings_request_reload(req_gconf, arg_force);
-	sleep(1);
+	g_print(_("Reloaded.\n"));
+  end:
+	g_object_unref(client);
 
-	g_print("Reloaded.\n");
-
-	g_object_unref(req);
-	g_object_unref(req_gconf);
-	dbus_connection_unref(connection);
-
-	return 0;
+	return retval;
 }

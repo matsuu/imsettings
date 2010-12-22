@@ -31,26 +31,25 @@ G_BEGIN_DECLS
 #define IMSETTINGS_SERVICE_DBUS		"com.redhat.imsettings"
 #define IMSETTINGS_PATH_DBUS		"/com/redhat/imsettings"
 #define IMSETTINGS_INTERFACE_DBUS	"com.redhat.imsettings"
-#define IMSETTINGS_GCONF_SERVICE_DBUS	"com.redhat.imsettings.GConf"
-#define IMSETTINGS_GCONF_PATH_DBUS	"/com/redhat/imsettings/GConf"
-#define IMSETTINGS_GCONF_INTERFACE_DBUS	"com.redhat.imsettings.GConf"
-#define IMSETTINGS_QT_SERVICE_DBUS	"com.redhat.imsettings.Qt"
-#define IMSETTINGS_QT_PATH_DBUS		"/com/redhat/imsettings/Qt"
-#define IMSETTINGS_QT_INTERFACE_DBUS	"com.redhat.imsettings.Qt"
-#define IMSETTINGS_LXDE_SERVICE_DBUS	"com.redhat.imsettings.LXDE"
-#define IMSETTINGS_LXDE_PATH_DBUS	"/com/redhat/imsettings/LXDE"
-#define IMSETTINGS_LXDE_INTERFACE_DBUS	"com.redhat.imsettings.LXDE"
-#define IMSETTINGS_XIM_SERVICE_DBUS	"com.redhat.imsettings.XIM"
-#define IMSETTINGS_XIM_PATH_DBUS	"/com/redhat/imsettings/XIM"
-#define IMSETTINGS_XIM_INTERFACE_DBUS	"com.redhat.imsettings.XIM"
 
-#define IMSETTINGS_SETTINGS_API_VERSION	3
+#define IMSETTINGS_SETTINGS_API_VERSION	4
 
 #ifdef GNOME_ENABLE_DEBUG
 #define d(e)	e
 #else
 #define d(e)
 #endif
+
+/* global config file */
+#define IMSETTINGS_GLOBAL_XINPUT_CONF		"xinputrc"
+/* user config file */
+#define IMSETTINGS_USER_XINPUT_CONF		".xinputrc"
+/* config file use to be determined that IM is never used no matter what */
+#define IMSETTINGS_NONE_CONF			"none"
+/* config file use to be determined that IM is always used no matter what */
+#define IMSETTINGS_XIM_CONF			"xim"
+#define IMSETTINGS_USER_SPECIFIC_SHORT_DESC	N_("User Specific")
+#define IMSETTINGS_USER_SPECIFIC_LONG_DESC	N_("xinputrc was modified by the user")
 
 enum IMSettingsIMModuleType {
 	IMSETTINGS_IMM_GTK,

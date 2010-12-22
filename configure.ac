@@ -40,9 +40,9 @@ dnl    then increment AGE.
 dnl 5. If any interfaces have been removed since the last public release,
 dnl    then set AGE to 0.
 dnl
-LT_CURRENT=6
+LT_CURRENT=5
 LT_REVISION=0
-LT_AGE=2
+LT_AGE=0
 
 LT_XIM_CURRENT=1
 LT_XIM_REVISION=3
@@ -80,9 +80,8 @@ AM_GLIB_GNU_GETTEXT
 dnl ======================================================================
 dnl check pkg-config stuff
 dnl ======================================================================
-PKG_CHECK_MODULES(IMSETTINGS, dbus-1 >= $DBUS_REQUIRED
-			      dbus-glib-1 >= $DBUS_GLIB_REQUIRED
-			      gio-2.0 >= $GIO_REQUIRED)
+PKG_CHECK_MODULES(IMSETTINGS, gio-2.0 >= $GIO_REQUIRED
+			      gobject-2.0 >= $GOBJECT_REQUIRED)
 PKG_CHECK_MODULES(LIBNOTIFY, libnotify, [
 	save_CFLAGS="$CFLAGS"
 	CFLAGS="$(pkg-config --cflags --libs libnotify gtk+-2.0)"
@@ -312,6 +311,7 @@ AC_CONFIG_FILES([
 	data/xinput.sh.in
 	data/xinputinfo.sh
 	imsettings/Makefile
+	imsettings-daemon/Makefile
 	po/Makefile.in
 	src/Makefile
 	utils/Makefile
