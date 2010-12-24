@@ -2,7 +2,7 @@
 # Korean translations for im-chooser package.
 # Copyright (C) 2006 Red Hat, Inc. All rights reserved.
 # This file is distributed under the same license as the im-chooser package.
-#
+# 
 # Automatically generated, 2006.
 # Eunju Kim <eukim@redhat.com>, 2006, 2007, 2008, 2009.
 # Hyunsok Oh <hoh@redhat.com>, 2010.
@@ -10,10 +10,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.ko\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-23 11:42+0900\n"
+"POT-Creation-Date: 2010-12-24 18:25+0900\n"
 "PO-Revision-Date: 2010-03-31 15:14+1000\n"
 "Last-Translator: Hyunsok Oh <hoh@redhat.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,247 +22,35 @@ msgstr ""
 "\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../applet/imsettings-applet.desktop.in.in.h:1
-msgid "IMSettings Applet"
-msgstr "IMSettings 애플릿  "
-
-#: ../applet/imsettings-applet.schemas.in.h:1
-msgid "A shortcut key to connect to/disconnect from Input Method"
-msgstr "입력 방식에서 연결/연결해제 하기 위한 단축키"
-
-#: ../applet/imsettings-applet.schemas.in.h:2
-msgid "Enable this when accelerator keys etc doesn't work"
-msgstr "가속키가 작동하지 않는 경우 이를 활성화 "
-
-#: ../applet/imsettings-applet.schemas.in.h:3
-msgid ""
-"If \"true\", all messages will be delivered through libnotify, otherwise "
-"only error and warning messages."
-msgstr ""
-"\"참(true)\"이면, 모든 정보는 libnotify를 통해 전송되며, 참이 아닌 경우 "
-"오류와 경고 메시지만 전달됩니다."
-
-#: ../applet/imsettings-applet.schemas.in.h:4
-msgid "If true, the icon will be displayed at the systray."
-msgstr "참(true)이면, 시스템 트레이에 아이콘이 표시됩니다."
-
-#: ../applet/imsettings-applet.schemas.in.h:5
-msgid "Show the status icon"
-msgstr "상태 아이콘 보기"
-
-#: ../applet/imsettings-applet.schemas.in.h:6
-msgid ""
-"The keybinding which connect to Input Method or disconnect from Input "
-"Method. The format looks like \"&lt;Control&gt;a\" or \"&lt;Shift&gt;&lt;"
-"Alt&gt;F1\". The parser is fairly liberal and allows lower or upper case, "
-"and also abbreviations such as \"&lt;Ctl&gt;\" and \"&lt;Ctrl&gt;\". If you "
-"set the option to the special string \"disabled\", then there will be no "
-"keybinding for this."
-msgstr ""
-"입력 방식에 연결 또는 연결 해제하는 키 바인딩. \"&lt;Control&gt;a\" 또는 "
-"\"&lt;Shift&gt;&lt;Alt&gt;F1\" 같은 형식을 사용할 수 있습니다. 구문 분석은 자"
-"유롭고 대소문자, \"&lt;Ctl&gt;\" 및 \"&lt;Ctrl&gt;\" 같은 약어를 허용합니다. "
-"특수 문자 \"disabled\"로 옵션을 설정하면 이 키 바인딩은 사용할 수 없습니다."
-
-#: ../applet/imsettings-applet.schemas.in.h:7 ../applet/main.c:714
-msgid ""
-"When this option is enabled, all of key events will be sent to Input Method "
-"synchronously. This might affects a performance."
-msgstr ""
-"이 옵션이 활성화되면, 모든 키 이벤트는 입력 방식에 동기식으로 전송됩니다. 이"
-"는 성능에 영향을 미칠 수 도 있습니다."
-
-#: ../applet/imsettings-applet.schemas.in.h:8
-msgid "Whether to notify informations with libnotify"
-msgstr "libnotify로 정보를 통지할 지에 대한 여부 "
-
-#: ../applet/main.c:148 ../applet/main.c:181 ../applet/main.c:221
-msgid "No detailed information"
-msgstr "상세 정보가 없음"
-
-#: ../applet/main.c:151
-msgid "Version-mismatch of im-settings-daemon"
-msgstr "im-settings-daemon 버전이 일치하지 않음"
-
-#: ../applet/main.c:178 ../applet/main.c:258
-#, c-format
-msgid "Unable to start %s"
-msgstr "%s 시작 불가능  "
-
-#: ../applet/main.c:192
-msgid ""
-" and the default Input Method has been changed. if you need to change that "
-"to anything else, please use im-chooser."
-msgstr ""
-"기본 입력 방식이 변경되었습니다. 다른 입력 방식으로 변경해야 할 경우, im-"
-"chooser를 사용하십시오.   "
-
-#: ../applet/main.c:198
-#, c-format
-msgid "Connected to %s.%s"
-msgstr "%s.%s에 연결했습니다"
-
-#: ../applet/main.c:203 ../applet/main.c:238 ../applet/main.c:911
-msgid "Information"
-msgstr "정보  "
-
-#: ../applet/main.c:218 ../applet/main.c:284
-#, c-format
-msgid "Unable to stop %s"
-msgstr "%s를 중지할 수 없음  "
-
-#: ../applet/main.c:235
-msgid "Disconnected from Input Method"
-msgstr "입력 방식에서 연결 해제  "
-
-#: ../applet/main.c:262 ../applet/main.c:288
-msgid "maybe DBus related issue."
-msgstr "DBus 관련 문제일 수 있습니다.  "
-
-#: ../applet/main.c:343 ../applet/main.c:369
-msgid "Unable to store a value to GConf"
-msgstr "GConf 값을 저장할 수 없습니다  "
-
-#: ../applet/main.c:472
-#, c-format
-msgid "The acceleration key %s may be invalid. disabled it temporarily."
-msgstr "%s 가속키가 잘못되었습니다. 임시로 비활성화합니다.  "
-
-#: ../applet/main.c:474
-msgid "Unable to set up the acceleration key"
-msgstr "가속키를 설정할 수 없음  "
-
-#: ../applet/main.c:615
-msgid "Unable to store the acceleration key into GConf"
-msgstr "가속키를 GConf에 저장할 수 없음  "
-
-#: ../applet/main.c:636
-msgid "Please press the acceleration key..."
-msgstr "가속키를 누르십시오..."
-
-#: ../applet/main.c:683
-msgid "IMSettings Applet Preferences"
-msgstr "IMSettings 애플릿 설정  "
-
-#: ../applet/main.c:695
-msgid "_Show the status icon"
-msgstr "상태 아이콘을 표시(_S)  "
-
-#: ../applet/main.c:704
-msgid "_Enable this when accelerator keys etc doesn't work"
-msgstr "가속키 등이 작동하지 않을 경우 이를 활성화(_E)"
-
-#: ../applet/main.c:723
-msgid "<b>Trigger key:</b>"
-msgstr "<b>트리거 키:</b>  "
-
-#: ../applet/main.c:735
-msgid "_Grab key"
-msgstr "키 가져오기(_G)  "
-
-#: ../applet/main.c:749
-msgid ""
-"Please click Grab key button and press the key combinations you want to "
-"assign for the acceleration key. Press Backspace key to disable this feature."
-msgstr ""
-"키 가져오기 버튼을 클릭하고 가속키에 할당할 키 조합을 누르십시오. 이 기능을 "
-"해제하려면 Backspace 키를 누르십시오.   "
-
-#: ../applet/main.c:826
-msgid "Disconnect"
-msgstr "연결 해제  "
-
-#: ../applet/main.c:885
-msgid "Click to connect to Input Method"
-msgstr "입력 방식으로 연결하기 위해 클릭 "
-
-#: ../applet/main.c:889
-msgid "Click to disconnect from Input Method"
-msgstr "입력 방식에서 연결 해제위해 클릭  "
-
-#: ../applet/main.c:912
-msgid ""
-"The default Input Method isn't yet configured. To get this working, you need "
-"to set up that on im-chooser or select one from the menu which appears by "
-"the right click first."
-msgstr ""
-"기본 입력 방식이 설정되지 않았습니다. 이를 작동시키기 위해서는 im-chooser에"
-"서 설정하거나 오른쪽 클릭하여 나타나는 메뉴에서 선택하십시오.  "
-
-#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
-#.
-#: ../applet/main.c:986
-msgid "Left-click on the icon to connect to/disconnect from Input Method."
-msgstr "입력 방식에서 연결/연결 해제하려면 아이콘에서 왼쪽 클릭"
-
-#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
-#.
-#: ../applet/main.c:990
-msgid ""
-"\n"
-"Right-click to show up the Input Method menu."
-msgstr ""
-"\n"
-"입력 방식 메뉴를 표시하려면 오른쪽 클릭"
-
-#. One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
-#.
-#: ../applet/main.c:994
-#, c-format
-msgid "Please %s%s"
-msgstr "%s%s 하십시오"
-
-#. Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
-#.
-#: ../applet/main.c:998
-#, c-format
-msgid "Please press %s or %s%s"
-msgstr "%s 또는 %s%s을(를) 누르십시오"
-
-#: ../applet/main.c:1002
-msgid "Tips"
-msgstr "정보  "
-
-#: ../applet/main.c:1008
-msgid "Do not show notifications again"
-msgstr "통지를 다시 표시하지 않음"
-
-#: ../applet/main.c:1054
-msgid "Unable to take an ownership for XIM server"
-msgstr "XIM 서버에 대한 소유권을 가질 수 없음  "
-
-#: ../applet/radiomenuitem.c:314
-msgid "Image widget"
-msgstr "이미지 위젯  "
-
-#: ../applet/radiomenuitem.c:315
-msgid "Child widget to appear next to the menu text"
-msgstr "메뉴 텍스트 옆에 표시되는 자식 위젯 "
-
-#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:700
-#: ../src/factory.c:1461
+#: ../backends/gconf/main.c:184
 msgid "Replace the running settings daemon with new instance."
 msgstr "실행 중인 설정 데몬을 새 인스턴스로 교체합니다. "
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:1488 ../utils/imsettings-reload.c:63
-#: ../utils/imsettings-restart.c:70 ../utils/imsettings-start.c:71
-#: ../utils/imsettings-stop.c:69
+#: ../imsettings-daemon/main.c:120 ../utils/imsettings-reload.c:64
+#: ../utils/imsettings-switch.c:78
 msgid "Unknown error in parsing the command lines."
 msgstr "명령행을 구문 분석하는 도중 알려지지 않은 오류가 발생했습니다. "
+
+#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:1
+#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:1
+msgid "Helper application for imsettings"
+msgstr "imsettings 용 지원 프로그램  "
+
+#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:2
+#, fuzzy
+msgid ""
+"Helper application that delivers GTK+ immodule name between GConf and lxde-"
+"settings-daemon"
+msgstr "GConf와 Xfconf 사이에서 GTK+ immodule 이름을 전송하는 지원 프로그램"
 
 #: ../backends/xfce_mcs/imsettings_plugin.c:88
 msgid "Button Label|Input Method"
 msgstr "버튼 레이블|입력 방식  "
 
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:1
-msgid "Helper application for imsettings"
-msgstr "imsettings 용 지원 프로그램  "
-
 #: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid "Helper application that delivers GTK+ immodule name between GConf and Xfconf"
+msgid ""
+"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
 msgstr "GConf와 Xfconf 사이에서 GTK+ immodule 이름을 전송하는 지원 프로그램"
 
 #: ../backends/xim/loopback.c:223
@@ -292,11 +81,11 @@ msgstr "디버깅 로그 출력  "
 msgid "XIM server connects to, for debugging purpose only"
 msgstr "XIM 서버 연결 (디버깅 목적 전용)  "
 
-#: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:693
+#: ../backends/xim/main.c:145
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:713
+#: ../backends/xim/proxy.c:2968
 msgid "XIM server name"
 msgstr "XIM 서버 이름 "
 
@@ -312,361 +101,141 @@ msgstr "프로토콜 클래스 용 신호"
 msgid "A structure of signals for Protocol class"
 msgstr "프로토콜 클래스 용 신호 구조"
 
-#: ../imsettings/imsettings-info.c:665 ../imsettings/imsettings-info.c:666
-msgid "Home directory"
-msgstr "홈 디렉토리  "
-
-#: ../imsettings/imsettings-info.c:672
-msgid "Language"
-msgstr "언어 "
-
-#: ../imsettings/imsettings-info.c:673
-msgid "A language to pull the information in."
-msgstr "정보를 입력하는데 사용할 언어 "
-
-#: ../imsettings/imsettings-info.c:679
-msgid "Filename"
-msgstr "파일 이름 "
-
-#: ../imsettings/imsettings-info.c:680
-msgid "A filename referring to the IM information."
-msgstr "IM 정보를 참조하는 파일 이름 "
-
-#: ../imsettings/imsettings-info.c:686 ../imsettings/imsettings-info.c:687
-msgid "Short Description"
-msgstr "간단한 설명 "
-
-#: ../imsettings/imsettings-info.c:694
-msgid "Whether or not IM is a XIM server."
-msgstr "IM을 XIM 서버로 할 지에 대한 여부 "
-
-#: ../imsettings/imsettings-info.c:700
-msgid "GTK+ immodule"
-msgstr "GTK+ immodule"
-
-#: ../imsettings/imsettings-info.c:701
-msgid "A module name used for GTK+"
-msgstr "GTK+ 용으로 사용할 모듈 이름 "
-
-#: ../imsettings/imsettings-info.c:706
-msgid "Qt immodule"
-msgstr "Qt immodule"
-
-#: ../imsettings/imsettings-info.c:707
-msgid "A module name used for Qt"
-msgstr "Qt 용으로 사용할 모듈 이름 "
-
-#: ../imsettings/imsettings-info.c:712
-msgid "XIM name"
-msgstr "XIM 이름 "
-
-#: ../imsettings/imsettings-info.c:718
-msgid "Ignore flag"
-msgstr "플래그 무시 "
-
-#: ../imsettings/imsettings-info.c:719
-msgid "A flag to not list up."
-msgstr "나열되지 않은 플래그"
-
-#: ../imsettings/imsettings-info.c:724
-msgid "XIM server program name"
-msgstr "XIM 서버 프로그램 이름 "
-
-#: ../imsettings/imsettings-info.c:725
-msgid "XIM server program to be run"
-msgstr "실행될 XIM 서버 프로그램 "
-
-#: ../imsettings/imsettings-info.c:730
-msgid "XIM server program's options"
-msgstr "XIM 서버 프로그램 옵션 "
-
-#: ../imsettings/imsettings-info.c:731
-msgid "Command line options for XIM server program"
-msgstr "XIM 서버 프로그램 용 명령행 옵션 "
-
-#: ../imsettings/imsettings-info.c:736
-msgid "Preference program name"
-msgstr "기본 설정 프로그램 이름 "
-
-#: ../imsettings/imsettings-info.c:737
-msgid "Preference program to be run"
-msgstr "실행될 기본 설정 프로그램 "
-
-#: ../imsettings/imsettings-info.c:742
-msgid "Preference program's options"
-msgstr "기본 설정 프로그램의 옵션 "
-
-#: ../imsettings/imsettings-info.c:743
-msgid "Command line options for preference program"
-msgstr "기본 설정 프로그램 용 명령행 옵션 "
-
-#: ../imsettings/imsettings-info.c:748
-msgid "Auxiliary program name"
-msgstr "외부 프로그램 이름 "
-
-#: ../imsettings/imsettings-info.c:749
-msgid "Auxiliary program to be run"
-msgstr "실행될 외부 프로그램 "
-
-#: ../imsettings/imsettings-info.c:754
-msgid "Auxiliary program's options"
-msgstr "보조 프로그램 옵션 "
-
-#: ../imsettings/imsettings-info.c:755
-msgid "Command line options for auxiliary program"
-msgstr "보조 프로그램 용 명령행 옵션 "
-
-#: ../imsettings/imsettings-info.c:760 ../imsettings/imsettings-info.c:761
-msgid "Long Description"
-msgstr "자세한 설명 "
-
-#: ../imsettings/imsettings-info.c:766
-msgid "Icon"
-msgstr "아이콘  "
-
-#: ../imsettings/imsettings-info.c:767
-msgid "Icon filename to be used on GUI"
-msgstr "GUI에서 사용할 아이콘 파일 이름  "
-
-#: ../imsettings/imsettings-info.c:778
-msgid "System Default"
-msgstr "시스템 기본값 "
-
-#: ../imsettings/imsettings-info.c:779
-msgid "Whether or not IM is a system default."
-msgstr "IM을 시스템 기본값으로 할 지에 대한 여부 "
-
-#: ../imsettings/imsettings-info.c:784
-msgid "User Default"
-msgstr "사용자 기본값 "
-
-#: ../imsettings/imsettings-info.c:785
-msgid "Whether or not IM is an user default."
-msgstr "IM을 사용자 기본값으로 할 지에 대한 여부 "
-
-#: ../imsettings/imsettings-observer.c:693
-msgid "IM module name"
-msgstr "IM 모듈 이름 "
-
-#: ../imsettings/imsettings-observer.c:694
-msgid "A target IM module name that to observe signals"
-msgstr "신호를 감지하기 위한 대상 IM 모듈 이름 "
-
-#: ../imsettings/imsettings-observer.c:699
-msgid "Replace"
-msgstr "교체 "
-
-#: ../imsettings/imsettings-observer.c:705
-#: ../imsettings/imsettings-request.c:175
-msgid "DBus connection"
-msgstr "DBus 연결 "
-
-#: ../imsettings/imsettings-observer.c:706
-#: ../imsettings/imsettings-request.c:176
-msgid "An object to be a DBus connection"
-msgstr "DBus 연결 대상 "
-
-#: ../imsettings/imsettings-request.c:169
-msgid "DBus Interface"
-msgstr "DBus 인터페이스 "
-
-#: ../imsettings/imsettings-request.c:170
-msgid "Interface name to connect to DBus"
-msgstr "DBus로 연결할 인터페이스 이름 "
-
-#: ../imsettings/imsettings-request.c:181
+#: ../imsettings/imsettings-client.c:143
 msgid "Locale"
 msgstr "로케일 "
 
-#: ../imsettings/imsettings-request.c:182
+#: ../imsettings/imsettings-client.c:144
 msgid "Locale to get the imsettings information"
 msgstr "imsettings 정보를 얻기 위한 로케일 "
 
-#: ../imsettings/imsettings-request.c:243
-#: ../imsettings/imsettings-request.c:270
-#: ../imsettings/imsettings-request.c:330
-#: ../imsettings/imsettings-request.c:624
-#, c-format
-msgid ""
-"Failed to invoke a method `%s' on %s:\n"
-"  %s"
-msgstr ""
-"`%s' 방식(%s 상에 있는) 불러오기 실패:\n"
-"  %s"
-
-#: ../imsettings/imsettings-request.c:378
-#: ../imsettings/imsettings-request.c:418
-#: ../imsettings/imsettings-request.c:440
-#: ../imsettings/imsettings-request.c:470
-#: ../imsettings/imsettings-request.c:524
-#: ../imsettings/imsettings-request.c:576
-#, c-format
-msgid ""
-"Failed to invoke a method `%s':\n"
-"  %s"
-msgstr ""
-"`%s' 방식 불러오기 실패:\n"
-"  %s"
-
-#: ../src/factory.c:456
+#: ../imsettings-daemon/imsettings-proc.c:192
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
 "rapidly died many times. See .imsettings.log for more details."
 msgstr ""
-"%s 입력 방식 프로세스(%s를 위한)가 여러번 중지되어 프로세스 시작을 포기합니다. 자세"
-"한 내용은 .imsettings.log를 참조하십시오.  "
+"%s 입력 방식 프로세스(%s를 위한)가 여러번 중지되어 프로세스 시작을 포기합니"
+"다. 자세한 내용은 .imsettings.log를 참조하십시오.  "
 
-#: ../src/factory.c:457
-msgid "Main"
-msgstr "메인  "
-
-#: ../src/factory.c:457
-msgid "AUX"
-msgstr "AUX"
-
-#: ../src/factory.c:459 ../src/factory.c:476
-msgid "Unable to keep Input Method running"
-msgstr "입력 방식 실행을 유지할 수 없음  "
-
-#: ../src/factory.c:667
+#: ../imsettings-daemon/imsettings-proc.c:276
 #, c-format
-msgid "No such Input Method is running: %s"
-msgstr "다음 입력 방식이 실행중이 아님: %s "
+msgid "[BUG] %s process is still running [pid: %d]\n"
+msgstr ""
 
-#: ../src/factory.c:678
+#: ../imsettings-daemon/imsettings-proc.c:400
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "%s 프로세스에게 신호를 보낼 수 없음  "
 
-#: ../src/factory.c:711 ../src/factory.c:1212
-#, c-format
-msgid "Failed to get a place of home directory."
-msgstr "홈 디렉토리 위치 지정 실패 "
+#: ../imsettings-daemon/imsettings-proc.c:504
+#, fuzzy
+msgid "IMSettingsInfo"
+msgstr "IMSettings 애플릿  "
 
-#: ../src/factory.c:728
-#, c-format
-msgid "Failed to revert the backup file: %s"
-msgstr "백업 파일로 되돌리기 실패: %s"
+#: ../imsettings-daemon/imsettings-proc.c:505
+#, fuzzy
+msgid "A GObject to be a IMSettingsInfo"
+msgstr "DBus 연결 대상 "
 
-#: ../src/factory.c:740
-#, c-format
-msgid "Failed to create a backup file: %s"
-msgstr "백업 파일 생성 실패: %s"
+#: ../imsettings-daemon/imsettings-server.c:366
+msgid "DBus connection"
+msgstr "DBus 연결 "
 
-#: ../src/factory.c:749
-#, c-format
-msgid "Failed to remove a .xinputrc file: %s"
-msgstr ".xinputrc 파일 삭제 실패: %s"
+#: ../imsettings-daemon/imsettings-server.c:367
+#, fuzzy
+msgid "A GObject to be a DBus connection"
+msgstr "DBus 연결 대상 "
 
-#: ../src/factory.c:760
-#, c-format
-msgid "Failed to make a symlink: %s"
-msgstr "심볼릭 링크 생성 실패: %s"
+#: ../imsettings-daemon/imsettings-server.c:372
+#, fuzzy
+msgid "Logging"
+msgstr "로깅  "
 
-#: ../src/factory.c:919 ../src/factory.c:958
-#, c-format
-msgid "No input methods available on your system."
-msgstr "시스템에 사용 가능한 입력 방식이 없음 "
+#: ../imsettings-daemon/imsettings-server.c:373
+#, fuzzy
+msgid "A boolean value whether the logging facility is enabled or not."
+msgstr "로깅 기능 활성화 여부에 대한 플래그  "
 
-#: ../src/factory.c:1003 ../src/factory.c:1068 ../src/factory.c:1106
-#: ../src/factory.c:1275
-#, c-format
-msgid ""
-"No such input method on your system: %s\n"
-"  Details: %s"
-msgstr ""
-"시스템에 없는 입력 방식: %s\n"
-"  상세 정보: %s "
+#: ../imsettings-daemon/imsettings-server.c:378
+#: ../imsettings-daemon/imsettings-server.c:379
+msgid "Home directory"
+msgstr "홈 디렉토리  "
 
-#: ../src/factory.c:1117
-#, c-format
-msgid "No XIM server is available in %s"
-msgstr "%s에 사용 가능한 XIM 서버가 없음 "
-
-#: ../src/factory.c:1347 ../src/monitor.c:237
+#: ../imsettings-daemon/imsettings-server.c:384
+#: ../imsettings-daemon/imsettings-server.c:385
 msgid "xinputrc directory"
 msgstr "xinputrc 디렉토리  "
 
-#: ../src/factory.c:1348
-msgid "The name of the directory for the system wide xinputrc file."
-msgstr "전체 시스템용 xinputrc이 있는 디렉토리  "
-
-#: ../src/factory.c:1353 ../src/monitor.c:243
+#: ../imsettings-daemon/imsettings-server.c:390
+#: ../imsettings-daemon/imsettings-server.c:391
 msgid "xinput directory"
 msgstr "xinput 디렉토리  "
 
-#: ../src/factory.c:1354
-msgid "The name of the directory for IM configurations."
-msgstr "IM 설정이 있는 디렉토리"
-
-#: ../src/factory.c:1359 ../src/factory.c:1360 ../src/monitor.c:249
-#: ../src/monitor.c:250
-msgid "home directory"
-msgstr "홈 디렉토리  "
-
-#: ../src/factory.c:1365
-msgid "logging"
-msgstr "로깅  "
-
-#: ../src/factory.c:1366
-msgid "A flag if logging facility is enabled or not."
-msgstr "로깅 기능 활성화 여부에 대한 플래그  "
-
-#: ../src/factory.c:1462
-msgid ""
-"Specify the name of the directory of the system-wide xinputrc file (for "
-"debugging only)"
-msgstr "전체 시스템용 xinputrc이 있는 디렉토리 이름을 지정 (디버깅 전용)"
-
-#: ../src/factory.c:1462 ../src/factory.c:1463 ../src/factory.c:1464
-msgid "DIR"
-msgstr "DIR"
-
-#: ../src/factory.c:1463
-msgid "Specify the name of the directory for IM configurations (for debugging only)"
-msgstr "IM 설정이 있는 디렉토리 이름을 지정 (디버깅 전용)  "
-
-#: ../src/factory.c:1464
-msgid "A home directory (debugging only)"
-msgstr "홈 디렉토리 (디버깅 전용)  "
-
-#: ../src/factory.c:1465
-msgid "Do not create a log file."
-msgstr "로그 파일을 생성하지 않음  "
-
-#: ../src/monitor.c:238
-msgid "A place to store xinputrc file"
-msgstr "xinputrc 파일을 저장할 위치"
-
-#: ../src/monitor.c:244
-msgid "A place to store xinput configuration files"
-msgstr "xinput 설정 파일을 저장할 위치"
-
-#: ../src/monitor.c:876
-#, c-format
-msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
-msgstr "항목 `%s'이 %s에서 중복되어 있습니다. SHORT_DESC은 유일한 것이어야 합니다. "
-
-#: ../src/monitor.c:1063
+#: ../imsettings-daemon/imsettings-server.c:613
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "시스템에 없는 입력 방식: %s"
 
-#: ../src/monitor.c:1265
+#: ../imsettings-daemon/imsettings-server.c:622
+#: ../imsettings-daemon/imsettings-server.c:666
+#: ../imsettings-daemon/imsettings-server.c:706
+#: ../imsettings-daemon/imsettings-server.c:857
 #, c-format
-msgid "No system default input method."
-msgstr "시스템 기본 입력 방식이 없음.   "
+msgid "Out of memory"
+msgstr ""
 
-#: ../utils/imsettings-info.c:55 ../utils/imsettings-restart.c:77
-#: ../utils/imsettings-start.c:78 ../utils/imsettings-stop.c:76
+#: ../imsettings-daemon/imsettings-server.c:659
 #, c-format
-msgid "Failed to get a session bus.\n"
-msgstr "세션 버스 가져오기 실패.\n"
+msgid "No system-wide xinputrc available"
+msgstr ""
 
-#: ../utils/imsettings-info.c:61 ../utils/imsettings-list.c:58
-#: ../utils/imsettings-restart.c:84 ../utils/imsettings-start.c:85
-#: ../utils/imsettings-stop.c:83
+#: ../imsettings-daemon/imsettings-server.c:698
+#, c-format
+msgid "No .xinputrc nor system-wide xinputrc available"
+msgstr ""
+
+#: ../imsettings-daemon/imsettings-server.c:849
+#, fuzzy, c-format
+msgid "No such input method: %s"
+msgstr "시스템에 없는 입력 방식: %s"
+
+#: ../imsettings-daemon/main.c:95
+#, fuzzy
+msgid "Replace the instance of the imsettings daemon."
+msgstr "실행 중인 설정 데몬을 새 인스턴스로 교체합니다. "
+
+#: ../imsettings-daemon/main.c:96
+#, fuzzy
+msgid "Set the system-wide xinputrc directory (for debugging purpose)"
+msgstr "전체 시스템용 xinputrc이 있는 디렉토리 이름을 지정 (디버깅 전용)"
+
+#: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
+#: ../imsettings-daemon/main.c:98
+msgid "DIR"
+msgstr "DIR"
+
+#: ../imsettings-daemon/main.c:97
+#, fuzzy
+msgid "Set the IM configuration directory (for debugging purpose)"
+msgstr "IM 설정이 있는 디렉토리 이름을 지정 (디버깅 전용)  "
+
+#: ../imsettings-daemon/main.c:98
+#, fuzzy
+msgid "Set a home directory (for debugging purpose)"
+msgstr "홈 디렉토리 (디버깅 전용)  "
+
+#: ../imsettings-daemon/main.c:99
+msgid "Do not create a log file."
+msgstr "로그 파일을 생성하지 않음  "
+
+#: ../utils/imsettings-info.c:58 ../utils/imsettings-list.c:56
+#: ../utils/imsettings-reload.c:72 ../utils/imsettings-switch.c:85
+#, fuzzy, c-format
+msgid "Unable to create a client instance."
+msgstr "가속키를 설정할 수 없음  "
+
+#: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:60
 #, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
@@ -674,97 +243,455 @@ msgid ""
 "Method\n"
 msgstr ""
 "현재 다른 버전의 imsettings이 실행중입니다.\n"
-"\"imsettings-reload -f\"를 실행하면 이 문제를 해결할 수 있지만, 입력 방식을 다시 "
-"시작할 것입니다\n"
+"\"imsettings-reload -f\"를 실행하면 이 문제를 해결할 수 있지만, 입력 방식을 "
+"다시 시작할 것입니다\n"
 
-#: ../utils/imsettings-info.c:77 ../utils/imsettings-restart.c:98
-#: ../utils/imsettings-stop.c:97
-#, c-format
-msgid ""
-"No Input Method running. please specify Input Method name explicitly if "
-"necessary.\n"
-msgstr "입력 방식이 실행되고 있지 않음. 필요할 경우 입력 방식 이름을 지정해 주십시오.\n"
-
-#: ../utils/imsettings-info.c:86
-#, c-format
-msgid "Unable to obtain an Input Method Information."
+#: ../utils/imsettings-info.c:82
+#, fuzzy, c-format
+msgid "Unable to obtain an Input Method Information: %s\n"
 msgstr "입력 방식 정보를 얻을 수 없음  "
 
-#: ../utils/imsettings-reload.c:42
-msgid "Force reloading the configuration, including restarting the process."
-msgstr "프로세스를 제시작하며, 설정 사항을 강제로 다시 읽어옴 "
+#: ../utils/imsettings-reload.c:43
+msgid "Force reloading imsettings-daemon (deprecated)."
+msgstr ""
 
-#: ../utils/imsettings-restart.c:42 ../utils/imsettings-start.c:43
-#: ../utils/imsettings-stop.c:42
-msgid "[Input Method name|xinput.conf]"
-msgstr "[입력 방식 이름|xinput.conf] "
-
-#: ../utils/imsettings-restart.c:44
-msgid "Force restarting the IM process regardless of any errors."
-msgstr "오류와 관계없이 IM 프로세스를 강제로 다시 시작함. "
-
-#: ../utils/imsettings-restart.c:45 ../utils/imsettings-start.c:45
-#: ../utils/imsettings-stop.c:45
-msgid "Do not update .xinputrc."
-msgstr ".xinputrc을 업데이트하지 않음 "
-
-#: ../utils/imsettings-restart.c:109 ../utils/imsettings-stop.c:109
+#: ../utils/imsettings-reload.c:101
 #, c-format
-msgid "Failed to stop IM process `%s'\n"
-msgstr "IM 프로세스 `%s' 중지 실패 \n"
-
-#: ../utils/imsettings-restart.c:117
-#, c-format
-msgid "Forcibly restarted %s, but maybe not completely\n"
-msgstr "강제로 %s을(를) 다시 시작하지만 완전하지 않을 수 있음\n"
-
-#: ../utils/imsettings-restart.c:119
-#, c-format
-msgid "Restarted %s\n"
-msgstr "%s 재시작\n"
-
-#: ../utils/imsettings-restart.c:122
-#, c-format
-msgid "Failed to restart IM process `%s'\n"
-msgstr "`%s' IM 프로세스 재시작 실패\n"
-
-#: ../utils/imsettings-start.c:46
-msgid "Start Input Method if not yet running."
-msgstr "아직 실행중이 아닌 경우, 입력 방식 시작.  "
-
-#: ../utils/imsettings-start.c:47
-msgid "Shut up the extra messages."
-msgstr "불필요한 메세지 없애기"
-
-#: ../utils/imsettings-start.c:104
-#, c-format
-msgid "No Input Method available\n"
-msgstr "사용 가능한 입력 방식이 없음\n"
-
-#: ../utils/imsettings-start.c:125
-#, c-format
-msgid "Started %s\n"
-msgstr " %s 시작됨\n"
-
-#: ../utils/imsettings-start.c:127
-#, c-format
-msgid "Failed to start IM process `%s'\n"
-msgstr "`%s' IM 프로세스 시작 실패\n"
+msgid "Reloaded.\n"
+msgstr ""
 
 #: ../utils/imsettings-start.desktop.in.h:1
 msgid "Input Method starter"
 msgstr "입력 방식 시작기 "
 
-#: ../utils/imsettings-start.desktop.in.h:2
-msgid "imsettings-start"
-msgstr "imsettings-start"
+#: ../utils/imsettings-switch.c:43
+msgid "[Input Method name|xinput.conf]"
+msgstr "[입력 방식 이름|xinput.conf] "
 
-#: ../utils/imsettings-stop.c:44
-msgid "Force stopping the IM process regardless of any errors."
-msgstr "오류와 관계없이 강제로 IM 프로세스를 중지함.  "
+#. For translators: this is a translation for the command-line option.
+#: ../utils/imsettings-switch.c:46
+msgid "Force restarting the IM process regardless of any errors."
+msgstr "오류와 관계없이 IM 프로세스를 강제로 다시 시작함. "
 
-#: ../utils/imsettings-stop.c:107
-#, c-format
-msgid "Stopped %s\n"
-msgstr " %s 중지됨\n"
+#. For translators: this is a translation for the command-line option.
+#: ../utils/imsettings-switch.c:48
+msgid "Do not update .xinputrc."
+msgstr ".xinputrc을 업데이트하지 않음 "
 
+#. For translators: this is a translation for the command-line option.
+#: ../utils/imsettings-switch.c:50
+msgid "Shut up the extra messages."
+msgstr "불필요한 메세지 없애기"
+
+#. For translators: this is a translation for the command-line option.
+#: ../utils/imsettings-switch.c:52
+#, fuzzy
+msgid "Restart input method"
+msgstr "시스템 기본 입력 방식이 없음.   "
+
+#. For translators: this is a translation for the command-line option.
+#: ../utils/imsettings-switch.c:54
+msgid "Read xinputrc to determine the input method"
+msgstr ""
+
+#: ../utils/imsettings-switch.c:89
+#, fuzzy, c-format
+msgid ""
+"Currently a different version of imsettings is running.\n"
+"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
+msgstr ""
+"현재 다른 버전의 imsettings이 실행중입니다.\n"
+"\"imsettings-reload -f\"를 실행하면 이 문제를 해결할 수 있지만, 입력 방식을 "
+"다시 시작할 것입니다\n"
+
+#: ../utils/imsettings-switch.c:104
+#, fuzzy, c-format
+msgid "No Input Method running to be restarted.\n"
+msgstr "다음 입력 방식이 실행중이 아님: %s "
+
+#: ../utils/imsettings-switch.c:117
+#, fuzzy, c-format
+msgid "Restarted %s"
+msgstr "%s 재시작\n"
+
+#~ msgid "A shortcut key to connect to/disconnect from Input Method"
+#~ msgstr "입력 방식에서 연결/연결해제 하기 위한 단축키"
+
+#~ msgid "Enable this when accelerator keys etc doesn't work"
+#~ msgstr "가속키가 작동하지 않는 경우 이를 활성화 "
+
+#~ msgid ""
+#~ "If \"true\", all messages will be delivered through libnotify, otherwise "
+#~ "only error and warning messages."
+#~ msgstr ""
+#~ "\"참(true)\"이면, 모든 정보는 libnotify를 통해 전송되며, 참이 아닌 경우 오"
+#~ "류와 경고 메시지만 전달됩니다."
+
+#~ msgid "If true, the icon will be displayed at the systray."
+#~ msgstr "참(true)이면, 시스템 트레이에 아이콘이 표시됩니다."
+
+#~ msgid "Show the status icon"
+#~ msgstr "상태 아이콘 보기"
+
+#~ msgid ""
+#~ "The keybinding which connect to Input Method or disconnect from Input "
+#~ "Method. The format looks like \"&lt;Control&gt;a\" or \"&lt;Shift&gt;&lt;"
+#~ "Alt&gt;F1\". The parser is fairly liberal and allows lower or upper case, "
+#~ "and also abbreviations such as \"&lt;Ctl&gt;\" and \"&lt;Ctrl&gt;\". If "
+#~ "you set the option to the special string \"disabled\", then there will be "
+#~ "no keybinding for this."
+#~ msgstr ""
+#~ "입력 방식에 연결 또는 연결 해제하는 키 바인딩. \"&lt;Control&gt;a\" 또는 "
+#~ "\"&lt;Shift&gt;&lt;Alt&gt;F1\" 같은 형식을 사용할 수 있습니다. 구문 분석"
+#~ "은 자유롭고 대소문자, \"&lt;Ctl&gt;\" 및 \"&lt;Ctrl&gt;\" 같은 약어를 허용"
+#~ "합니다. 특수 문자 \"disabled\"로 옵션을 설정하면 이 키 바인딩은 사용할 수 "
+#~ "없습니다."
+
+#~ msgid ""
+#~ "When this option is enabled, all of key events will be sent to Input "
+#~ "Method synchronously. This might affects a performance."
+#~ msgstr ""
+#~ "이 옵션이 활성화되면, 모든 키 이벤트는 입력 방식에 동기식으로 전송됩니다. "
+#~ "이는 성능에 영향을 미칠 수 도 있습니다."
+
+#~ msgid "Whether to notify informations with libnotify"
+#~ msgstr "libnotify로 정보를 통지할 지에 대한 여부 "
+
+#~ msgid "No detailed information"
+#~ msgstr "상세 정보가 없음"
+
+#~ msgid "Version-mismatch of im-settings-daemon"
+#~ msgstr "im-settings-daemon 버전이 일치하지 않음"
+
+#~ msgid "Unable to start %s"
+#~ msgstr "%s 시작 불가능  "
+
+#~ msgid ""
+#~ " and the default Input Method has been changed. if you need to change "
+#~ "that to anything else, please use im-chooser."
+#~ msgstr ""
+#~ "기본 입력 방식이 변경되었습니다. 다른 입력 방식으로 변경해야 할 경우, im-"
+#~ "chooser를 사용하십시오.   "
+
+#~ msgid "Connected to %s.%s"
+#~ msgstr "%s.%s에 연결했습니다"
+
+#~ msgid "Information"
+#~ msgstr "정보  "
+
+#~ msgid "Unable to stop %s"
+#~ msgstr "%s를 중지할 수 없음  "
+
+#~ msgid "Disconnected from Input Method"
+#~ msgstr "입력 방식에서 연결 해제  "
+
+#~ msgid "maybe DBus related issue."
+#~ msgstr "DBus 관련 문제일 수 있습니다.  "
+
+#~ msgid "Unable to store a value to GConf"
+#~ msgstr "GConf 값을 저장할 수 없습니다  "
+
+#~ msgid "The acceleration key %s may be invalid. disabled it temporarily."
+#~ msgstr "%s 가속키가 잘못되었습니다. 임시로 비활성화합니다.  "
+
+#~ msgid "Unable to store the acceleration key into GConf"
+#~ msgstr "가속키를 GConf에 저장할 수 없음  "
+
+#~ msgid "Please press the acceleration key..."
+#~ msgstr "가속키를 누르십시오..."
+
+#~ msgid "IMSettings Applet Preferences"
+#~ msgstr "IMSettings 애플릿 설정  "
+
+#~ msgid "_Show the status icon"
+#~ msgstr "상태 아이콘을 표시(_S)  "
+
+#~ msgid "_Enable this when accelerator keys etc doesn't work"
+#~ msgstr "가속키 등이 작동하지 않을 경우 이를 활성화(_E)"
+
+#~ msgid "<b>Trigger key:</b>"
+#~ msgstr "<b>트리거 키:</b>  "
+
+#~ msgid "_Grab key"
+#~ msgstr "키 가져오기(_G)  "
+
+#~ msgid ""
+#~ "Please click Grab key button and press the key combinations you want to "
+#~ "assign for the acceleration key. Press Backspace key to disable this "
+#~ "feature."
+#~ msgstr ""
+#~ "키 가져오기 버튼을 클릭하고 가속키에 할당할 키 조합을 누르십시오. 이 기능"
+#~ "을 해제하려면 Backspace 키를 누르십시오.   "
+
+#~ msgid "Disconnect"
+#~ msgstr "연결 해제  "
+
+#~ msgid "Click to connect to Input Method"
+#~ msgstr "입력 방식으로 연결하기 위해 클릭 "
+
+#~ msgid "Click to disconnect from Input Method"
+#~ msgstr "입력 방식에서 연결 해제위해 클릭  "
+
+#~ msgid ""
+#~ "The default Input Method isn't yet configured. To get this working, you "
+#~ "need to set up that on im-chooser or select one from the menu which "
+#~ "appears by the right click first."
+#~ msgstr ""
+#~ "기본 입력 방식이 설정되지 않았습니다. 이를 작동시키기 위해서는 im-chooser"
+#~ "에서 설정하거나 오른쪽 클릭하여 나타나는 메뉴에서 선택하십시오.  "
+
+#~ msgid "Left-click on the icon to connect to/disconnect from Input Method."
+#~ msgstr "입력 방식에서 연결/연결 해제하려면 아이콘에서 왼쪽 클릭"
+
+#~ msgid ""
+#~ "\n"
+#~ "Right-click to show up the Input Method menu."
+#~ msgstr ""
+#~ "\n"
+#~ "입력 방식 메뉴를 표시하려면 오른쪽 클릭"
+
+#~ msgid "Please %s%s"
+#~ msgstr "%s%s 하십시오"
+
+#~ msgid "Please press %s or %s%s"
+#~ msgstr "%s 또는 %s%s을(를) 누르십시오"
+
+#~ msgid "Tips"
+#~ msgstr "정보  "
+
+#~ msgid "Do not show notifications again"
+#~ msgstr "통지를 다시 표시하지 않음"
+
+#~ msgid "Unable to take an ownership for XIM server"
+#~ msgstr "XIM 서버에 대한 소유권을 가질 수 없음  "
+
+#~ msgid "Image widget"
+#~ msgstr "이미지 위젯  "
+
+#~ msgid "Child widget to appear next to the menu text"
+#~ msgstr "메뉴 텍스트 옆에 표시되는 자식 위젯 "
+
+#~ msgid "Language"
+#~ msgstr "언어 "
+
+#~ msgid "A language to pull the information in."
+#~ msgstr "정보를 입력하는데 사용할 언어 "
+
+#~ msgid "Filename"
+#~ msgstr "파일 이름 "
+
+#~ msgid "A filename referring to the IM information."
+#~ msgstr "IM 정보를 참조하는 파일 이름 "
+
+#~ msgid "Short Description"
+#~ msgstr "간단한 설명 "
+
+#~ msgid "Whether or not IM is a XIM server."
+#~ msgstr "IM을 XIM 서버로 할 지에 대한 여부 "
+
+#~ msgid "GTK+ immodule"
+#~ msgstr "GTK+ immodule"
+
+#~ msgid "A module name used for GTK+"
+#~ msgstr "GTK+ 용으로 사용할 모듈 이름 "
+
+#~ msgid "Qt immodule"
+#~ msgstr "Qt immodule"
+
+#~ msgid "A module name used for Qt"
+#~ msgstr "Qt 용으로 사용할 모듈 이름 "
+
+#~ msgid "XIM name"
+#~ msgstr "XIM 이름 "
+
+#~ msgid "Ignore flag"
+#~ msgstr "플래그 무시 "
+
+#~ msgid "A flag to not list up."
+#~ msgstr "나열되지 않은 플래그"
+
+#~ msgid "XIM server program name"
+#~ msgstr "XIM 서버 프로그램 이름 "
+
+#~ msgid "XIM server program to be run"
+#~ msgstr "실행될 XIM 서버 프로그램 "
+
+#~ msgid "XIM server program's options"
+#~ msgstr "XIM 서버 프로그램 옵션 "
+
+#~ msgid "Command line options for XIM server program"
+#~ msgstr "XIM 서버 프로그램 용 명령행 옵션 "
+
+#~ msgid "Preference program name"
+#~ msgstr "기본 설정 프로그램 이름 "
+
+#~ msgid "Preference program to be run"
+#~ msgstr "실행될 기본 설정 프로그램 "
+
+#~ msgid "Preference program's options"
+#~ msgstr "기본 설정 프로그램의 옵션 "
+
+#~ msgid "Command line options for preference program"
+#~ msgstr "기본 설정 프로그램 용 명령행 옵션 "
+
+#~ msgid "Auxiliary program name"
+#~ msgstr "외부 프로그램 이름 "
+
+#~ msgid "Auxiliary program to be run"
+#~ msgstr "실행될 외부 프로그램 "
+
+#~ msgid "Auxiliary program's options"
+#~ msgstr "보조 프로그램 옵션 "
+
+#~ msgid "Command line options for auxiliary program"
+#~ msgstr "보조 프로그램 용 명령행 옵션 "
+
+#~ msgid "Long Description"
+#~ msgstr "자세한 설명 "
+
+#~ msgid "Icon"
+#~ msgstr "아이콘  "
+
+#~ msgid "Icon filename to be used on GUI"
+#~ msgstr "GUI에서 사용할 아이콘 파일 이름  "
+
+#~ msgid "System Default"
+#~ msgstr "시스템 기본값 "
+
+#~ msgid "Whether or not IM is a system default."
+#~ msgstr "IM을 시스템 기본값으로 할 지에 대한 여부 "
+
+#~ msgid "User Default"
+#~ msgstr "사용자 기본값 "
+
+#~ msgid "Whether or not IM is an user default."
+#~ msgstr "IM을 사용자 기본값으로 할 지에 대한 여부 "
+
+#~ msgid "IM module name"
+#~ msgstr "IM 모듈 이름 "
+
+#~ msgid "A target IM module name that to observe signals"
+#~ msgstr "신호를 감지하기 위한 대상 IM 모듈 이름 "
+
+#~ msgid "Replace"
+#~ msgstr "교체 "
+
+#~ msgid "DBus Interface"
+#~ msgstr "DBus 인터페이스 "
+
+#~ msgid "Interface name to connect to DBus"
+#~ msgstr "DBus로 연결할 인터페이스 이름 "
+
+#~ msgid ""
+#~ "Failed to invoke a method `%s' on %s:\n"
+#~ "  %s"
+#~ msgstr ""
+#~ "`%s' 방식(%s 상에 있는) 불러오기 실패:\n"
+#~ "  %s"
+
+#~ msgid ""
+#~ "Failed to invoke a method `%s':\n"
+#~ "  %s"
+#~ msgstr ""
+#~ "`%s' 방식 불러오기 실패:\n"
+#~ "  %s"
+
+#~ msgid "Main"
+#~ msgstr "메인  "
+
+#~ msgid "AUX"
+#~ msgstr "AUX"
+
+#~ msgid "Unable to keep Input Method running"
+#~ msgstr "입력 방식 실행을 유지할 수 없음  "
+
+#~ msgid "Failed to get a place of home directory."
+#~ msgstr "홈 디렉토리 위치 지정 실패 "
+
+#~ msgid "Failed to revert the backup file: %s"
+#~ msgstr "백업 파일로 되돌리기 실패: %s"
+
+#~ msgid "Failed to create a backup file: %s"
+#~ msgstr "백업 파일 생성 실패: %s"
+
+#~ msgid "Failed to remove a .xinputrc file: %s"
+#~ msgstr ".xinputrc 파일 삭제 실패: %s"
+
+#~ msgid "Failed to make a symlink: %s"
+#~ msgstr "심볼릭 링크 생성 실패: %s"
+
+#~ msgid "No input methods available on your system."
+#~ msgstr "시스템에 사용 가능한 입력 방식이 없음 "
+
+#~ msgid ""
+#~ "No such input method on your system: %s\n"
+#~ "  Details: %s"
+#~ msgstr ""
+#~ "시스템에 없는 입력 방식: %s\n"
+#~ "  상세 정보: %s "
+
+#~ msgid "No XIM server is available in %s"
+#~ msgstr "%s에 사용 가능한 XIM 서버가 없음 "
+
+#~ msgid "The name of the directory for the system wide xinputrc file."
+#~ msgstr "전체 시스템용 xinputrc이 있는 디렉토리  "
+
+#~ msgid "The name of the directory for IM configurations."
+#~ msgstr "IM 설정이 있는 디렉토리"
+
+#~ msgid "home directory"
+#~ msgstr "홈 디렉토리  "
+
+#~ msgid "A place to store xinputrc file"
+#~ msgstr "xinputrc 파일을 저장할 위치"
+
+#~ msgid "A place to store xinput configuration files"
+#~ msgstr "xinput 설정 파일을 저장할 위치"
+
+#~ msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
+#~ msgstr ""
+#~ "항목 `%s'이 %s에서 중복되어 있습니다. SHORT_DESC은 유일한 것이어야 합니"
+#~ "다. "
+
+#~ msgid "Failed to get a session bus.\n"
+#~ msgstr "세션 버스 가져오기 실패.\n"
+
+#~ msgid ""
+#~ "No Input Method running. please specify Input Method name explicitly if "
+#~ "necessary.\n"
+#~ msgstr ""
+#~ "입력 방식이 실행되고 있지 않음. 필요할 경우 입력 방식 이름을 지정해 주십시"
+#~ "오.\n"
+
+#~ msgid "Force reloading the configuration, including restarting the process."
+#~ msgstr "프로세스를 제시작하며, 설정 사항을 강제로 다시 읽어옴 "
+
+#~ msgid "Failed to stop IM process `%s'\n"
+#~ msgstr "IM 프로세스 `%s' 중지 실패 \n"
+
+#~ msgid "Forcibly restarted %s, but maybe not completely\n"
+#~ msgstr "강제로 %s을(를) 다시 시작하지만 완전하지 않을 수 있음\n"
+
+#~ msgid "Failed to restart IM process `%s'\n"
+#~ msgstr "`%s' IM 프로세스 재시작 실패\n"
+
+#~ msgid "Start Input Method if not yet running."
+#~ msgstr "아직 실행중이 아닌 경우, 입력 방식 시작.  "
+
+#~ msgid "No Input Method available\n"
+#~ msgstr "사용 가능한 입력 방식이 없음\n"
+
+#~ msgid "Started %s\n"
+#~ msgstr " %s 시작됨\n"
+
+#~ msgid "Failed to start IM process `%s'\n"
+#~ msgstr "`%s' IM 프로세스 시작 실패\n"
+
+#~ msgid "imsettings-start"
+#~ msgstr "imsettings-start"
+
+#~ msgid "Force stopping the IM process regardless of any errors."
+#~ msgstr "오류와 관계없이 강제로 IM 프로세스를 중지함.  "
+
+#~ msgid "Stopped %s\n"
+#~ msgstr " %s 중지됨\n"

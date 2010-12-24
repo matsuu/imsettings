@@ -19,258 +19,42 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser 0.3.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-23 11:42+0900\n"
+"POT-Creation-Date: 2010-12-24 18:25+0900\n"
 "PO-Revision-Date: 2009-09-19 14:38+0900\n"
 "Last-Translator: Xavier Conde Rueda <xavi.conde@gmail.com>\n"
 "Language-Team: none\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../applet/imsettings-applet.desktop.in.in.h:1
-msgid "IMSettings Applet"
-msgstr "Miniaplicació IMSettings"
-
-#: ../applet/imsettings-applet.schemas.in.h:1
-msgid "A shortcut key to connect to/disconnect from Input Method"
-msgstr "Una drecera de teclat per connectar amb el mètode d'entrada"
-
-#: ../applet/imsettings-applet.schemas.in.h:2
-msgid "Enable this when accelerator keys etc doesn't work"
-msgstr "Habiliteu-ho quan no funcionin les dreceres de teclat"
-
-#: ../applet/imsettings-applet.schemas.in.h:3
-msgid ""
-"If \"true\", all messages will be delivered through libnotify, otherwise "
-"only error and warning messages."
-msgstr ""
-"Si és «cert», tots els missatges s'entregaran mitjançant libnotifiy, en cas "
-"contrari només els d'avís i error."
-
-#: ../applet/imsettings-applet.schemas.in.h:4
-msgid "If true, the icon will be displayed at the systray."
-msgstr "Si és cert, la icona es mostrarà a la safata del sistema."
-
-#: ../applet/imsettings-applet.schemas.in.h:5
-msgid "Show the status icon"
-msgstr "Mostra la icona d'estat"
-
-#: ../applet/imsettings-applet.schemas.in.h:6
-msgid ""
-"The keybinding which connect to Input Method or disconnect from Input "
-"Method. The format looks like \"&lt;Control&gt;a\" or \"&lt;Shift&gt;&lt;"
-"Alt&gt;F1\". The parser is fairly liberal and allows lower or upper case, "
-"and also abbreviations such as \"&lt;Ctl&gt;\" and \"&lt;Ctrl&gt;\". If you "
-"set the option to the special string \"disabled\", then there will be no "
-"keybinding for this."
-msgstr ""
-"La drecera de teclat que connecta o desconnecta el mètode d'entrada. El "
-"format és \"&lt;Control&gt;a\" o \"&lt;Shift&gt;&lt;Alt&gt;F1\". "
-"L'analitzador permet fer servir majúscules o minúscules, també abreviatures "
-"com ara \"&lt;Ctl&gt;\" i \"&lt;Ctrl&gt;\". Si feu servir la cadena especial "
-"\"disabled\", no hi haurà cap drecera de teclat per això."
-
-#: ../applet/imsettings-applet.schemas.in.h:7 ../applet/main.c:714
-msgid ""
-"When this option is enabled, all of key events will be sent to Input Method "
-"synchronously. This might affects a performance."
-msgstr ""
-"Quan aquesta icona estigui habilitada, tots els esdeveniments de tecles "
-"s'enviaran síncronament al mètode d'entrada. Això pot afectar el rendiment."
-
-#: ../applet/imsettings-applet.schemas.in.h:8
-msgid "Whether to notify informations with libnotify"
-msgstr "Si s'han de notificar les informacions amb libnotify"
-
-#: ../applet/main.c:148 ../applet/main.c:181 ../applet/main.c:221
-msgid "No detailed information"
-msgstr "Sense informació detallada"
-
-#: ../applet/main.c:151
-msgid "Version-mismatch of im-settings-daemon"
-msgstr "Versió incorrecta de l'im-settings-daemon"
-
-#: ../applet/main.c:178 ../applet/main.c:258
-#, c-format
-msgid "Unable to start %s"
-msgstr "No es pot iniciar %s"
-
-#: ../applet/main.c:192
-msgid ""
-" and the default Input Method has been changed. if you need to change that "
-"to anything else, please use im-chooser."
-msgstr ""
-" i el mètode d'entrada predeterminat s'ha canviat. Si necessiteu canviar-ho, "
-"feu servir l'im-chooser."
-
-#: ../applet/main.c:198
-#, c-format
-msgid "Connected to %s.%s"
-msgstr "Connectat a %s.%s"
-
-#: ../applet/main.c:203 ../applet/main.c:238 ../applet/main.c:911
-msgid "Information"
-msgstr "Informació"
-
-#: ../applet/main.c:218 ../applet/main.c:284
-#, c-format
-msgid "Unable to stop %s"
-msgstr "No es pot aturar %s"
-
-#: ../applet/main.c:235
-msgid "Disconnected from Input Method"
-msgstr "S'ha desconnectat del mètode d'entrada"
-
-#: ../applet/main.c:262 ../applet/main.c:288
-msgid "maybe DBus related issue."
-msgstr "pot estar relacionat amb el DBus."
-
-#: ../applet/main.c:343 ../applet/main.c:369
-msgid "Unable to store a value to GConf"
-msgstr "No es pot emmagatzemar un valor al GConf"
-
-#: ../applet/main.c:472
-#, c-format
-msgid "The acceleration key %s may be invalid. disabled it temporarily."
-msgstr ""
-"La drecera de teclat %s pot ser invàlida. S'ha inhabilitat temporalment."
-
-#: ../applet/main.c:474
-msgid "Unable to set up the acceleration key"
-msgstr "No es pot configurar la drecera de teclat"
-
-#: ../applet/main.c:615
-msgid "Unable to store the acceleration key into GConf"
-msgstr "No es pot emmagatzemar la drecera de teclat al GConf"
-
-#: ../applet/main.c:636
-msgid "Please press the acceleration key..."
-msgstr "Premeu la drecera de teclat..."
-
-#: ../applet/main.c:683
-msgid "IMSettings Applet Preferences"
-msgstr "Preferències de la miniaplicació IMSettings"
-
-#: ../applet/main.c:695
-msgid "_Show the status icon"
-msgstr "Mo_stra la icona d'estat"
-
-#: ../applet/main.c:704
-msgid "_Enable this when accelerator keys etc doesn't work"
-msgstr "_Habilita-ho quan no funcionin les dreceres"
-
-#: ../applet/main.c:723
-msgid "<b>Trigger key:</b>"
-msgstr "<b>Tecla activadora:</b>"
-
-#: ../applet/main.c:735
-msgid "_Grab key"
-msgstr "O_bté una tecla"
-
-#: ../applet/main.c:749
-msgid ""
-"Please click Grab key button and press the key combinations you want to "
-"assign for the acceleration key. Press Backspace key to disable this feature."
-msgstr ""
-"Cliqueu la tecla del botó Obté i premeu les combinacions de tecles a les "
-"quals voleu assignar la drecera de teclat. Premeu la tecla de retrocès per "
-"inhabilitar-ho."
-
-#: ../applet/main.c:826
-msgid "Disconnect"
-msgstr "Desconnecta"
-
-#: ../applet/main.c:885
-msgid "Click to connect to Input Method"
-msgstr "Cliqueu per connectar al mètode d'entrada"
-
-#: ../applet/main.c:889
-msgid "Click to disconnect from Input Method"
-msgstr "Cliqueu per desconnectar del mètode d'entrada"
-
-#: ../applet/main.c:912
-msgid ""
-"The default Input Method isn't yet configured. To get this working, you need "
-"to set up that on im-chooser or select one from the menu which appears by "
-"the right click first."
-msgstr ""
-"Encara no s'ha configurat el mètode d'entrada per defecte. Perquè funcioni, "
-"us cal configurar-ho en l'im-chooser o seleccionar-ne un del menú que "
-"apareix en fer clic amb el botó dret primer."
-
-#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
-#.
-#: ../applet/main.c:986
-msgid "Left-click on the icon to connect to/disconnect from Input Method."
-msgstr ""
-"Cliqueu amb el botó esquerre per connectar-se o deconnectar del mètode "
-"d'entrada."
-
-#. This is substituted as part of some strings below, eg: "Please press [blah] or Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n"
-#. or like "Please Left-click on the icon to connect to/disconnect from Input Method.\nRight-click to show up the Input Method menu.\n".
-#.
-#: ../applet/main.c:990
-msgid ""
-"\n"
-"Right-click to show up the Input Method menu."
-msgstr ""
-"\n"
-"Cliqueu amb el botó dret per mostrar el menú del mètode d'entrada."
-
-#. One substition with above strings "Please [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
-#.
-#: ../applet/main.c:994
-#, c-format
-msgid "Please %s%s"
-msgstr "%s%s"
-
-#. Another substition with above strings: "Please press [blah] or [Left-click on the icon to connect to/disconnect from Input Method.][\nRight-click to show up the Input Method menu.\n]"
-#.
-#: ../applet/main.c:998
-#, c-format
-msgid "Please press %s or %s%s"
-msgstr "Premeu %s o %s%s"
-
-#: ../applet/main.c:1002
-msgid "Tips"
-msgstr "Consells"
-
-#: ../applet/main.c:1008
-msgid "Do not show notifications again"
-msgstr "No mostris una altra vegada les notificacions"
-
-#: ../applet/main.c:1054
-msgid "Unable to take an ownership for XIM server"
-msgstr "No es pot obtenir la propietat del servidor XIM"
-
-#: ../applet/radiomenuitem.c:314
-msgid "Image widget"
-msgstr "Control d'imatge"
-
-#: ../applet/radiomenuitem.c:315
-msgid "Child widget to appear next to the menu text"
-msgstr "Control fill que apareixerà al costat del text del menú"
-
-#: ../backends/gconf/main.c:184 ../imsettings/imsettings-observer.c:700
-#: ../src/factory.c:1461
+#: ../backends/gconf/main.c:184
 msgid "Replace the running settings daemon with new instance."
 msgstr "Reemplaça el dimoni de configuració en execució amb la nova instància."
 
 #: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../src/factory.c:1488 ../utils/imsettings-reload.c:63
-#: ../utils/imsettings-restart.c:70 ../utils/imsettings-start.c:71
-#: ../utils/imsettings-stop.c:69
+#: ../imsettings-daemon/main.c:120 ../utils/imsettings-reload.c:64
+#: ../utils/imsettings-switch.c:78
 msgid "Unknown error in parsing the command lines."
 msgstr "Error desconegut en analitzar la línia d'ordres."
+
+#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:1
+#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:1
+msgid "Helper application for imsettings"
+msgstr "Aplicació ajudant per a l'imsettings"
+
+#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:2
+#, fuzzy
+msgid ""
+"Helper application that delivers GTK+ immodule name between GConf and lxde-"
+"settings-daemon"
+msgstr ""
+"Aplicació ajudant que proporciona el mòdul d'entrada GTK+ entre el GConf i "
+"l'Xfconf"
 
 #: ../backends/xfce_mcs/imsettings_plugin.c:88
 msgid "Button Label|Input Method"
 msgstr "Button Label|Mètode d'entrada"
-
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:1
-msgid "Helper application for imsettings"
-msgstr "Aplicació ajudant per a l'imsettings"
 
 #: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
 msgid ""
@@ -307,11 +91,11 @@ msgstr "Sortida dels registres de depuració"
 msgid "XIM server connects to, for debugging purpose only"
 msgstr "Servidor XIM al qual connectar-se, per motius de depuració"
 
-#: ../backends/xim/main.c:145 ../imsettings/imsettings-info.c:693
+#: ../backends/xim/main.c:145
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/proxy.c:2968 ../imsettings/imsettings-info.c:713
+#: ../backends/xim/proxy.c:2968
 msgid "XIM server name"
 msgstr "Nom del servidor XIM"
 
@@ -327,204 +111,16 @@ msgstr "Senyals per a la classe de protocol"
 msgid "A structure of signals for Protocol class"
 msgstr "Una estructura de senyals per a la classe de protocol"
 
-#: ../imsettings/imsettings-info.c:665 ../imsettings/imsettings-info.c:666
-msgid "Home directory"
-msgstr "Directori d'inici"
-
-#: ../imsettings/imsettings-info.c:672
-msgid "Language"
-msgstr "Idioma"
-
-#: ../imsettings/imsettings-info.c:673
-msgid "A language to pull the information in."
-msgstr "Un idioma on ficar-hi la informació."
-
-#: ../imsettings/imsettings-info.c:679
-msgid "Filename"
-msgstr "Nom de fitxer"
-
-#: ../imsettings/imsettings-info.c:680
-msgid "A filename referring to the IM information."
-msgstr "Un nom de fitxer que es refereix a la informació del mètode d'entrada."
-
-#: ../imsettings/imsettings-info.c:686 ../imsettings/imsettings-info.c:687
-msgid "Short Description"
-msgstr "Descripció breu"
-
-#: ../imsettings/imsettings-info.c:694
-msgid "Whether or not IM is a XIM server."
-msgstr "Si el mètode d'entrada és un servidor XIM."
-
-#: ../imsettings/imsettings-info.c:700
-msgid "GTK+ immodule"
-msgstr "Mòdul d'entrada GTK+"
-
-#: ../imsettings/imsettings-info.c:701
-msgid "A module name used for GTK+"
-msgstr "Un nom de mòdul usat pel GTK+"
-
-#: ../imsettings/imsettings-info.c:706
-msgid "Qt immodule"
-msgstr "Mètode d'entrada usat pel Qt"
-
-#: ../imsettings/imsettings-info.c:707
-msgid "A module name used for Qt"
-msgstr "Un nom de mòdul usat per Qt"
-
-#: ../imsettings/imsettings-info.c:712
-msgid "XIM name"
-msgstr "Nom de l'XIM"
-
-#: ../imsettings/imsettings-info.c:718
-msgid "Ignore flag"
-msgstr "Ignora el senyalador"
-
-#: ../imsettings/imsettings-info.c:719
-msgid "A flag to not list up."
-msgstr "Un senyalador que no es llistarà."
-
-#: ../imsettings/imsettings-info.c:724
-msgid "XIM server program name"
-msgstr "Nom del programa del servidor XIM"
-
-#: ../imsettings/imsettings-info.c:725
-msgid "XIM server program to be run"
-msgstr "Nom del programa servidor XIM a executar"
-
-#: ../imsettings/imsettings-info.c:730
-msgid "XIM server program's options"
-msgstr "Opcions del programa servidor XIM"
-
-#: ../imsettings/imsettings-info.c:731
-msgid "Command line options for XIM server program"
-msgstr "Opcions de la línia d'ordres per al programa servidor XIM"
-
-#: ../imsettings/imsettings-info.c:736
-msgid "Preference program name"
-msgstr "Nom del programa de preferència"
-
-#: ../imsettings/imsettings-info.c:737
-msgid "Preference program to be run"
-msgstr "Programa de preferència a executar"
-
-#: ../imsettings/imsettings-info.c:742
-msgid "Preference program's options"
-msgstr "Opcions del programa de preferència"
-
-#: ../imsettings/imsettings-info.c:743
-msgid "Command line options for preference program"
-msgstr "Opcions de línia d'ordres per al programa de preferència"
-
-#: ../imsettings/imsettings-info.c:748
-msgid "Auxiliary program name"
-msgstr "Nom del programa auxiliar"
-
-#: ../imsettings/imsettings-info.c:749
-msgid "Auxiliary program to be run"
-msgstr "Programa auxiliar a executar"
-
-#: ../imsettings/imsettings-info.c:754
-msgid "Auxiliary program's options"
-msgstr "Opcions del programa auxiliar"
-
-#: ../imsettings/imsettings-info.c:755
-msgid "Command line options for auxiliary program"
-msgstr "Opcions de línia d'ordres per al programa auxiliar"
-
-#: ../imsettings/imsettings-info.c:760 ../imsettings/imsettings-info.c:761
-msgid "Long Description"
-msgstr "Descripció llarga"
-
-#: ../imsettings/imsettings-info.c:766
-msgid "Icon"
-msgstr "Icona"
-
-#: ../imsettings/imsettings-info.c:767
-msgid "Icon filename to be used on GUI"
-msgstr "Nom de fitxer de la icona a emprar en la interfície"
-
-#: ../imsettings/imsettings-info.c:778
-msgid "System Default"
-msgstr "Predeterminat del sistema"
-
-#: ../imsettings/imsettings-info.c:779
-msgid "Whether or not IM is a system default."
-msgstr "Si el mètode d'entrada és el predeterminat del sistema."
-
-#: ../imsettings/imsettings-info.c:784
-msgid "User Default"
-msgstr "Predeterminat de l'usuari"
-
-#: ../imsettings/imsettings-info.c:785
-msgid "Whether or not IM is an user default."
-msgstr "Si el mètode d'entrada és el predeterminat de l'usuari."
-
-#: ../imsettings/imsettings-observer.c:693
-msgid "IM module name"
-msgstr "Nom del mòdul del mètode d'entrada"
-
-#: ../imsettings/imsettings-observer.c:694
-msgid "A target IM module name that to observe signals"
-msgstr "Un nom de mòdul de mètode d'entrada destí que observa els senyals"
-
-#: ../imsettings/imsettings-observer.c:699
-msgid "Replace"
-msgstr "Reemplaça"
-
-#: ../imsettings/imsettings-observer.c:705
-#: ../imsettings/imsettings-request.c:175
-msgid "DBus connection"
-msgstr "Connexió a DBus"
-
-#: ../imsettings/imsettings-observer.c:706
-#: ../imsettings/imsettings-request.c:176
-msgid "An object to be a DBus connection"
-msgstr "Un objecte que serà una connexió DBus"
-
-#: ../imsettings/imsettings-request.c:169
-msgid "DBus Interface"
-msgstr "Interfície DBus"
-
-#: ../imsettings/imsettings-request.c:170
-msgid "Interface name to connect to DBus"
-msgstr "Nom d'interfície a connectar a DBus"
-
-#: ../imsettings/imsettings-request.c:181
+#: ../imsettings/imsettings-client.c:143
 msgid "Locale"
 msgstr "Idioma"
 
-#: ../imsettings/imsettings-request.c:182
+#: ../imsettings/imsettings-client.c:144
 msgid "Locale to get the imsettings information"
 msgstr ""
 "Idioma del qual s'obtindrà la informació de configuració de mètodes d'entrada"
 
-#: ../imsettings/imsettings-request.c:243
-#: ../imsettings/imsettings-request.c:270
-#: ../imsettings/imsettings-request.c:330
-#: ../imsettings/imsettings-request.c:624
-#, c-format
-msgid ""
-"Failed to invoke a method `%s' on %s:\n"
-"  %s"
-msgstr ""
-"No s'ha pogut invocar el mètode «%s» a %s:\n"
-"  %s"
-
-#: ../imsettings/imsettings-request.c:378
-#: ../imsettings/imsettings-request.c:418
-#: ../imsettings/imsettings-request.c:440
-#: ../imsettings/imsettings-request.c:470
-#: ../imsettings/imsettings-request.c:524
-#: ../imsettings/imsettings-request.c:576
-#, c-format
-msgid ""
-"Failed to invoke a method `%s':\n"
-"  %s"
-msgstr ""
-"No s'ha pogut invocar el mètode «%s»:\n"
-"  %s"
-
-#: ../src/factory.c:456
+#: ../imsettings-daemon/imsettings-proc.c:192
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
@@ -533,161 +129,128 @@ msgstr ""
 "No s'ha pogut aixecar el procés perquè el procés %s del mètode d'entrada per "
 "a %s ha mort moltes vegades. Veieu .imsettings.log per a més detalls."
 
-#: ../src/factory.c:457
-msgid "Main"
-msgstr "Principal"
-
-#: ../src/factory.c:457
-msgid "AUX"
-msgstr "AUX"
-
-#: ../src/factory.c:459 ../src/factory.c:476
-msgid "Unable to keep Input Method running"
-msgstr "El mètode d'entrada no s'ha pogut executar"
-
-#: ../src/factory.c:667
+#: ../imsettings-daemon/imsettings-proc.c:276
 #, c-format
-msgid "No such Input Method is running: %s"
-msgstr "No s'està executant aquest mètode d'entrada: %s"
+msgid "[BUG] %s process is still running [pid: %d]\n"
+msgstr ""
 
-#: ../src/factory.c:678
+#: ../imsettings-daemon/imsettings-proc.c:400
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "No s'ha pogut enviar un senyal al procés %s correctament."
 
-#: ../src/factory.c:711 ../src/factory.c:1212
-#, c-format
-msgid "Failed to get a place of home directory."
-msgstr "No s'ha pogut obtenir un directori d'inici."
+#: ../imsettings-daemon/imsettings-proc.c:504
+#, fuzzy
+msgid "IMSettingsInfo"
+msgstr "Miniaplicació IMSettings"
 
-#: ../src/factory.c:728
-#, c-format
-msgid "Failed to revert the backup file: %s"
-msgstr "No s'ha pogut recuperar el fitxer de còpia de seguretat: %s"
+#: ../imsettings-daemon/imsettings-proc.c:505
+#, fuzzy
+msgid "A GObject to be a IMSettingsInfo"
+msgstr "Un objecte que serà una connexió DBus"
 
-#: ../src/factory.c:740
-#, c-format
-msgid "Failed to create a backup file: %s"
-msgstr "No s'ha ogut crear un fitxer de còpia de seguretat: %s"
+#: ../imsettings-daemon/imsettings-server.c:366
+msgid "DBus connection"
+msgstr "Connexió a DBus"
 
-#: ../src/factory.c:749
-#, c-format
-msgid "Failed to remove a .xinputrc file: %s"
-msgstr "No s'ha pogut suprimir un fitxer .xinputrc: %s"
+#: ../imsettings-daemon/imsettings-server.c:367
+#, fuzzy
+msgid "A GObject to be a DBus connection"
+msgstr "Un objecte que serà una connexió DBus"
 
-#: ../src/factory.c:760
-#, c-format
-msgid "Failed to make a symlink: %s"
-msgstr "No s'ha pogut crear l'enllaç simbòlic: %s"
+#: ../imsettings-daemon/imsettings-server.c:372
+#, fuzzy
+msgid "Logging"
+msgstr "registre"
 
-#: ../src/factory.c:919 ../src/factory.c:958
-#, c-format
-msgid "No input methods available on your system."
-msgstr "No hi ha cap mètode d'entrada disponible en el vostre sistema."
+#: ../imsettings-daemon/imsettings-server.c:373
+#, fuzzy
+msgid "A boolean value whether the logging facility is enabled or not."
+msgstr "Un indicador de si està habilitat el registre."
 
-#: ../src/factory.c:1003 ../src/factory.c:1068 ../src/factory.c:1106
-#: ../src/factory.c:1275
-#, c-format
-msgid ""
-"No such input method on your system: %s\n"
-"  Details: %s"
-msgstr ""
-"No existeix el mètode d'entrada en el vostre sistema: %s\n"
-"  Detalls: %s"
+#: ../imsettings-daemon/imsettings-server.c:378
+#: ../imsettings-daemon/imsettings-server.c:379
+msgid "Home directory"
+msgstr "Directori d'inici"
 
-#: ../src/factory.c:1117
-#, c-format
-msgid "No XIM server is available in %s"
-msgstr "No hi ha cap servidor XIM disponible a %s"
-
-#: ../src/factory.c:1347 ../src/monitor.c:237
+#: ../imsettings-daemon/imsettings-server.c:384
+#: ../imsettings-daemon/imsettings-server.c:385
 msgid "xinputrc directory"
 msgstr "Directori de l'xinputrc"
 
-#: ../src/factory.c:1348
-msgid "The name of the directory for the system wide xinputrc file."
-msgstr "El nom del directori per al fitxer xinputrc del sistema."
-
-#: ../src/factory.c:1353 ../src/monitor.c:243
+#: ../imsettings-daemon/imsettings-server.c:390
+#: ../imsettings-daemon/imsettings-server.c:391
 msgid "xinput directory"
 msgstr "directori de l'xinput"
 
-#: ../src/factory.c:1354
-msgid "The name of the directory for IM configurations."
-msgstr "El nom del directori per a les configuracions dels mètodes d'entrada."
-
-#: ../src/factory.c:1359 ../src/factory.c:1360 ../src/monitor.c:249
-#: ../src/monitor.c:250
-msgid "home directory"
-msgstr "directori d'inici"
-
-#: ../src/factory.c:1365
-msgid "logging"
-msgstr "registre"
-
-#: ../src/factory.c:1366
-msgid "A flag if logging facility is enabled or not."
-msgstr "Un indicador de si està habilitat el registre."
-
-#: ../src/factory.c:1462
-msgid ""
-"Specify the name of the directory of the system-wide xinputrc file (for "
-"debugging only)"
-msgstr ""
-"Especifiqueu el nom del directori del fitxer del sistema xinputrc (només per "
-"a depurar)"
-
-#: ../src/factory.c:1462 ../src/factory.c:1463 ../src/factory.c:1464
-msgid "DIR"
-msgstr "DIR"
-
-#: ../src/factory.c:1463
-msgid ""
-"Specify the name of the directory for IM configurations (for debugging only)"
-msgstr ""
-"Especifiqueu el nom del directori per a les configuracions dels mètodes "
-"d'entrada (només per a depuració)"
-
-#: ../src/factory.c:1464
-msgid "A home directory (debugging only)"
-msgstr "Un directori d'inici (només per depurar)"
-
-#: ../src/factory.c:1465
-msgid "Do not create a log file."
-msgstr "No creïs un fitxer de registre."
-
-#: ../src/monitor.c:238
-msgid "A place to store xinputrc file"
-msgstr "On emmagatzemar el fitxer xinputrc"
-
-#: ../src/monitor.c:244
-msgid "A place to store xinput configuration files"
-msgstr "On emmagatzemar els fitxers de configuració d'xinput"
-
-#: ../src/monitor.c:876
-#, c-format
-msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
-msgstr "Entrada duplicada «%s» de %s. SHORT_DESC ha de ser únic."
-
-#: ../src/monitor.c:1063
+#: ../imsettings-daemon/imsettings-server.c:613
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "No existeix el mètode d'entrada en el vostre sistema: %s"
 
-#: ../src/monitor.c:1265
+#: ../imsettings-daemon/imsettings-server.c:622
+#: ../imsettings-daemon/imsettings-server.c:666
+#: ../imsettings-daemon/imsettings-server.c:706
+#: ../imsettings-daemon/imsettings-server.c:857
 #, c-format
-msgid "No system default input method."
-msgstr "Cap mètode d'entrada per defecte en el sistema."
+msgid "Out of memory"
+msgstr ""
 
-#: ../utils/imsettings-info.c:55 ../utils/imsettings-restart.c:77
-#: ../utils/imsettings-start.c:78 ../utils/imsettings-stop.c:76
+#: ../imsettings-daemon/imsettings-server.c:659
 #, c-format
-msgid "Failed to get a session bus.\n"
-msgstr "No s'ha pogut obtenir un bus de sessió.\n"
+msgid "No system-wide xinputrc available"
+msgstr ""
 
-#: ../utils/imsettings-info.c:61 ../utils/imsettings-list.c:58
-#: ../utils/imsettings-restart.c:84 ../utils/imsettings-start.c:85
-#: ../utils/imsettings-stop.c:83
+#: ../imsettings-daemon/imsettings-server.c:698
+#, c-format
+msgid "No .xinputrc nor system-wide xinputrc available"
+msgstr ""
+
+#: ../imsettings-daemon/imsettings-server.c:849
+#, fuzzy, c-format
+msgid "No such input method: %s"
+msgstr "No existeix el mètode d'entrada en el vostre sistema: %s"
+
+#: ../imsettings-daemon/main.c:95
+#, fuzzy
+msgid "Replace the instance of the imsettings daemon."
+msgstr "Reemplaça el dimoni de configuració en execució amb la nova instància."
+
+#: ../imsettings-daemon/main.c:96
+#, fuzzy
+msgid "Set the system-wide xinputrc directory (for debugging purpose)"
+msgstr ""
+"Especifiqueu el nom del directori del fitxer del sistema xinputrc (només per "
+"a depurar)"
+
+#: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
+#: ../imsettings-daemon/main.c:98
+msgid "DIR"
+msgstr "DIR"
+
+#: ../imsettings-daemon/main.c:97
+#, fuzzy
+msgid "Set the IM configuration directory (for debugging purpose)"
+msgstr ""
+"Especifiqueu el nom del directori per a les configuracions dels mètodes "
+"d'entrada (només per a depuració)"
+
+#: ../imsettings-daemon/main.c:98
+#, fuzzy
+msgid "Set a home directory (for debugging purpose)"
+msgstr "Un directori d'inici (només per depurar)"
+
+#: ../imsettings-daemon/main.c:99
+msgid "Do not create a log file."
+msgstr "No creïs un fitxer de registre."
+
+#: ../utils/imsettings-info.c:58 ../utils/imsettings-list.c:56
+#: ../utils/imsettings-reload.c:72 ../utils/imsettings-switch.c:85
+#, fuzzy, c-format
+msgid "Unable to create a client instance."
+msgstr "No es pot configurar la drecera de teclat"
+
+#: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:60
 #, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
@@ -698,95 +261,459 @@ msgstr ""
 "Es pot solucionar si executeu \"imsettings-reload -f\", però això reiniciarà "
 "el mètode d'entrada\n"
 
-#: ../utils/imsettings-info.c:77 ../utils/imsettings-restart.c:98
-#: ../utils/imsettings-stop.c:97
-#, c-format
-msgid ""
-"No Input Method running. please specify Input Method name explicitly if "
-"necessary.\n"
-msgstr ""
-"Cap mètode d'entrada està corrent. Especifiqueu explícitament el nom del "
-"mètode d'entrada si calguès.\n"
-
-#: ../utils/imsettings-info.c:86
-#, c-format
-msgid "Unable to obtain an Input Method Information."
+#: ../utils/imsettings-info.c:82
+#, fuzzy, c-format
+msgid "Unable to obtain an Input Method Information: %s\n"
 msgstr "No es pot obtenir informació d'un mètode d'entrada."
 
-#: ../utils/imsettings-reload.c:42
-msgid "Force reloading the configuration, including restarting the process."
-msgstr "Força la recàrrega de la configuració, incloent reiniciar el procés."
+#: ../utils/imsettings-reload.c:43
+msgid "Force reloading imsettings-daemon (deprecated)."
+msgstr ""
 
-#: ../utils/imsettings-restart.c:42 ../utils/imsettings-start.c:43
-#: ../utils/imsettings-stop.c:42
-msgid "[Input Method name|xinput.conf]"
-msgstr "[Input Method name|xinput.conf]"
-
-#: ../utils/imsettings-restart.c:44
-msgid "Force restarting the IM process regardless of any errors."
-msgstr "Força el reinici del procés del ME tot i els errors."
-
-#: ../utils/imsettings-restart.c:45 ../utils/imsettings-start.c:45
-#: ../utils/imsettings-stop.c:45
-msgid "Do not update .xinputrc."
-msgstr "No actualitzis l'.xinputrc."
-
-#: ../utils/imsettings-restart.c:109 ../utils/imsettings-stop.c:109
+#: ../utils/imsettings-reload.c:101
 #, c-format
-msgid "Failed to stop IM process `%s'\n"
-msgstr "No s'ha pogut aturar el procés del ME «%s»\n"
-
-#: ../utils/imsettings-restart.c:117
-#, c-format
-msgid "Forcibly restarted %s, but maybe not completely\n"
-msgstr "S'ha forçat el reinici de %s, però potser no s'ha completat\n"
-
-#: ../utils/imsettings-restart.c:119
-#, c-format
-msgid "Restarted %s\n"
-msgstr "S'ha reiniciat %s\n"
-
-#: ../utils/imsettings-restart.c:122
-#, c-format
-msgid "Failed to restart IM process `%s'\n"
-msgstr "No s'ha pogut reiniciar el procés del ME «%s»\n"
-
-#: ../utils/imsettings-start.c:46
-msgid "Start Input Method if not yet running."
-msgstr "Inicia el mètode d'entrada si encara no s'està executant."
-
-#: ../utils/imsettings-start.c:47
-msgid "Shut up the extra messages."
-msgstr "Silencia els missatges addicionals."
-
-#: ../utils/imsettings-start.c:104
-#, c-format
-msgid "No Input Method available\n"
-msgstr "Cap mètode d'entrada disponible\n"
-
-#: ../utils/imsettings-start.c:125
-#, c-format
-msgid "Started %s\n"
-msgstr "S'ha iniciat %s\n"
-
-#: ../utils/imsettings-start.c:127
-#, c-format
-msgid "Failed to start IM process `%s'\n"
-msgstr "No s'ha pogut iniciar el procés del ME «%s»\n"
+msgid "Reloaded.\n"
+msgstr ""
 
 #: ../utils/imsettings-start.desktop.in.h:1
 msgid "Input Method starter"
 msgstr "Iniciador del mètode d'entrada"
 
-#: ../utils/imsettings-start.desktop.in.h:2
-msgid "imsettings-start"
-msgstr "imsettings-start"
+#: ../utils/imsettings-switch.c:43
+msgid "[Input Method name|xinput.conf]"
+msgstr "[Input Method name|xinput.conf]"
 
-#: ../utils/imsettings-stop.c:44
-msgid "Force stopping the IM process regardless of any errors."
-msgstr "Força l'aturada del procés del ME tot i els possibles errors."
+#. For translators: this is a translation for the command-line option.
+#: ../utils/imsettings-switch.c:46
+msgid "Force restarting the IM process regardless of any errors."
+msgstr "Força el reinici del procés del ME tot i els errors."
 
-#: ../utils/imsettings-stop.c:107
-#, c-format
-msgid "Stopped %s\n"
-msgstr "S'ha aturat %s\n"
+#. For translators: this is a translation for the command-line option.
+#: ../utils/imsettings-switch.c:48
+msgid "Do not update .xinputrc."
+msgstr "No actualitzis l'.xinputrc."
+
+#. For translators: this is a translation for the command-line option.
+#: ../utils/imsettings-switch.c:50
+msgid "Shut up the extra messages."
+msgstr "Silencia els missatges addicionals."
+
+#. For translators: this is a translation for the command-line option.
+#: ../utils/imsettings-switch.c:52
+#, fuzzy
+msgid "Restart input method"
+msgstr "Cap mètode d'entrada per defecte en el sistema."
+
+#. For translators: this is a translation for the command-line option.
+#: ../utils/imsettings-switch.c:54
+msgid "Read xinputrc to determine the input method"
+msgstr ""
+
+#: ../utils/imsettings-switch.c:89
+#, fuzzy, c-format
+msgid ""
+"Currently a different version of imsettings is running.\n"
+"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
+msgstr ""
+"S'està executant una versió diferent d'imsettings.\n"
+"Es pot solucionar si executeu \"imsettings-reload -f\", però això reiniciarà "
+"el mètode d'entrada\n"
+
+#: ../utils/imsettings-switch.c:104
+#, fuzzy, c-format
+msgid "No Input Method running to be restarted.\n"
+msgstr "No s'està executant aquest mètode d'entrada: %s"
+
+#: ../utils/imsettings-switch.c:117
+#, fuzzy, c-format
+msgid "Restarted %s"
+msgstr "S'ha reiniciat %s\n"
+
+#~ msgid "A shortcut key to connect to/disconnect from Input Method"
+#~ msgstr "Una drecera de teclat per connectar amb el mètode d'entrada"
+
+#~ msgid "Enable this when accelerator keys etc doesn't work"
+#~ msgstr "Habiliteu-ho quan no funcionin les dreceres de teclat"
+
+#~ msgid ""
+#~ "If \"true\", all messages will be delivered through libnotify, otherwise "
+#~ "only error and warning messages."
+#~ msgstr ""
+#~ "Si és «cert», tots els missatges s'entregaran mitjançant libnotifiy, en "
+#~ "cas contrari només els d'avís i error."
+
+#~ msgid "If true, the icon will be displayed at the systray."
+#~ msgstr "Si és cert, la icona es mostrarà a la safata del sistema."
+
+#~ msgid "Show the status icon"
+#~ msgstr "Mostra la icona d'estat"
+
+#~ msgid ""
+#~ "The keybinding which connect to Input Method or disconnect from Input "
+#~ "Method. The format looks like \"&lt;Control&gt;a\" or \"&lt;Shift&gt;&lt;"
+#~ "Alt&gt;F1\". The parser is fairly liberal and allows lower or upper case, "
+#~ "and also abbreviations such as \"&lt;Ctl&gt;\" and \"&lt;Ctrl&gt;\". If "
+#~ "you set the option to the special string \"disabled\", then there will be "
+#~ "no keybinding for this."
+#~ msgstr ""
+#~ "La drecera de teclat que connecta o desconnecta el mètode d'entrada. El "
+#~ "format és \"&lt;Control&gt;a\" o \"&lt;Shift&gt;&lt;Alt&gt;F1\". "
+#~ "L'analitzador permet fer servir majúscules o minúscules, també "
+#~ "abreviatures com ara \"&lt;Ctl&gt;\" i \"&lt;Ctrl&gt;\". Si feu servir la "
+#~ "cadena especial \"disabled\", no hi haurà cap drecera de teclat per això."
+
+#~ msgid ""
+#~ "When this option is enabled, all of key events will be sent to Input "
+#~ "Method synchronously. This might affects a performance."
+#~ msgstr ""
+#~ "Quan aquesta icona estigui habilitada, tots els esdeveniments de tecles "
+#~ "s'enviaran síncronament al mètode d'entrada. Això pot afectar el "
+#~ "rendiment."
+
+#~ msgid "Whether to notify informations with libnotify"
+#~ msgstr "Si s'han de notificar les informacions amb libnotify"
+
+#~ msgid "No detailed information"
+#~ msgstr "Sense informació detallada"
+
+#~ msgid "Version-mismatch of im-settings-daemon"
+#~ msgstr "Versió incorrecta de l'im-settings-daemon"
+
+#~ msgid "Unable to start %s"
+#~ msgstr "No es pot iniciar %s"
+
+#~ msgid ""
+#~ " and the default Input Method has been changed. if you need to change "
+#~ "that to anything else, please use im-chooser."
+#~ msgstr ""
+#~ " i el mètode d'entrada predeterminat s'ha canviat. Si necessiteu canviar-"
+#~ "ho, feu servir l'im-chooser."
+
+#~ msgid "Connected to %s.%s"
+#~ msgstr "Connectat a %s.%s"
+
+#~ msgid "Information"
+#~ msgstr "Informació"
+
+#~ msgid "Unable to stop %s"
+#~ msgstr "No es pot aturar %s"
+
+#~ msgid "Disconnected from Input Method"
+#~ msgstr "S'ha desconnectat del mètode d'entrada"
+
+#~ msgid "maybe DBus related issue."
+#~ msgstr "pot estar relacionat amb el DBus."
+
+#~ msgid "Unable to store a value to GConf"
+#~ msgstr "No es pot emmagatzemar un valor al GConf"
+
+#~ msgid "The acceleration key %s may be invalid. disabled it temporarily."
+#~ msgstr ""
+#~ "La drecera de teclat %s pot ser invàlida. S'ha inhabilitat temporalment."
+
+#~ msgid "Unable to store the acceleration key into GConf"
+#~ msgstr "No es pot emmagatzemar la drecera de teclat al GConf"
+
+#~ msgid "Please press the acceleration key..."
+#~ msgstr "Premeu la drecera de teclat..."
+
+#~ msgid "IMSettings Applet Preferences"
+#~ msgstr "Preferències de la miniaplicació IMSettings"
+
+#~ msgid "_Show the status icon"
+#~ msgstr "Mo_stra la icona d'estat"
+
+#~ msgid "_Enable this when accelerator keys etc doesn't work"
+#~ msgstr "_Habilita-ho quan no funcionin les dreceres"
+
+#~ msgid "<b>Trigger key:</b>"
+#~ msgstr "<b>Tecla activadora:</b>"
+
+#~ msgid "_Grab key"
+#~ msgstr "O_bté una tecla"
+
+#~ msgid ""
+#~ "Please click Grab key button and press the key combinations you want to "
+#~ "assign for the acceleration key. Press Backspace key to disable this "
+#~ "feature."
+#~ msgstr ""
+#~ "Cliqueu la tecla del botó Obté i premeu les combinacions de tecles a les "
+#~ "quals voleu assignar la drecera de teclat. Premeu la tecla de retrocès "
+#~ "per inhabilitar-ho."
+
+#~ msgid "Disconnect"
+#~ msgstr "Desconnecta"
+
+#~ msgid "Click to connect to Input Method"
+#~ msgstr "Cliqueu per connectar al mètode d'entrada"
+
+#~ msgid "Click to disconnect from Input Method"
+#~ msgstr "Cliqueu per desconnectar del mètode d'entrada"
+
+#~ msgid ""
+#~ "The default Input Method isn't yet configured. To get this working, you "
+#~ "need to set up that on im-chooser or select one from the menu which "
+#~ "appears by the right click first."
+#~ msgstr ""
+#~ "Encara no s'ha configurat el mètode d'entrada per defecte. Perquè "
+#~ "funcioni, us cal configurar-ho en l'im-chooser o seleccionar-ne un del "
+#~ "menú que apareix en fer clic amb el botó dret primer."
+
+#~ msgid "Left-click on the icon to connect to/disconnect from Input Method."
+#~ msgstr ""
+#~ "Cliqueu amb el botó esquerre per connectar-se o deconnectar del mètode "
+#~ "d'entrada."
+
+#~ msgid ""
+#~ "\n"
+#~ "Right-click to show up the Input Method menu."
+#~ msgstr ""
+#~ "\n"
+#~ "Cliqueu amb el botó dret per mostrar el menú del mètode d'entrada."
+
+#~ msgid "Please %s%s"
+#~ msgstr "%s%s"
+
+#~ msgid "Please press %s or %s%s"
+#~ msgstr "Premeu %s o %s%s"
+
+#~ msgid "Tips"
+#~ msgstr "Consells"
+
+#~ msgid "Do not show notifications again"
+#~ msgstr "No mostris una altra vegada les notificacions"
+
+#~ msgid "Unable to take an ownership for XIM server"
+#~ msgstr "No es pot obtenir la propietat del servidor XIM"
+
+#~ msgid "Image widget"
+#~ msgstr "Control d'imatge"
+
+#~ msgid "Child widget to appear next to the menu text"
+#~ msgstr "Control fill que apareixerà al costat del text del menú"
+
+#~ msgid "Language"
+#~ msgstr "Idioma"
+
+#~ msgid "A language to pull the information in."
+#~ msgstr "Un idioma on ficar-hi la informació."
+
+#~ msgid "Filename"
+#~ msgstr "Nom de fitxer"
+
+#~ msgid "A filename referring to the IM information."
+#~ msgstr ""
+#~ "Un nom de fitxer que es refereix a la informació del mètode d'entrada."
+
+#~ msgid "Short Description"
+#~ msgstr "Descripció breu"
+
+#~ msgid "Whether or not IM is a XIM server."
+#~ msgstr "Si el mètode d'entrada és un servidor XIM."
+
+#~ msgid "GTK+ immodule"
+#~ msgstr "Mòdul d'entrada GTK+"
+
+#~ msgid "A module name used for GTK+"
+#~ msgstr "Un nom de mòdul usat pel GTK+"
+
+#~ msgid "Qt immodule"
+#~ msgstr "Mètode d'entrada usat pel Qt"
+
+#~ msgid "A module name used for Qt"
+#~ msgstr "Un nom de mòdul usat per Qt"
+
+#~ msgid "XIM name"
+#~ msgstr "Nom de l'XIM"
+
+#~ msgid "Ignore flag"
+#~ msgstr "Ignora el senyalador"
+
+#~ msgid "A flag to not list up."
+#~ msgstr "Un senyalador que no es llistarà."
+
+#~ msgid "XIM server program name"
+#~ msgstr "Nom del programa del servidor XIM"
+
+#~ msgid "XIM server program to be run"
+#~ msgstr "Nom del programa servidor XIM a executar"
+
+#~ msgid "XIM server program's options"
+#~ msgstr "Opcions del programa servidor XIM"
+
+#~ msgid "Command line options for XIM server program"
+#~ msgstr "Opcions de la línia d'ordres per al programa servidor XIM"
+
+#~ msgid "Preference program name"
+#~ msgstr "Nom del programa de preferència"
+
+#~ msgid "Preference program to be run"
+#~ msgstr "Programa de preferència a executar"
+
+#~ msgid "Preference program's options"
+#~ msgstr "Opcions del programa de preferència"
+
+#~ msgid "Command line options for preference program"
+#~ msgstr "Opcions de línia d'ordres per al programa de preferència"
+
+#~ msgid "Auxiliary program name"
+#~ msgstr "Nom del programa auxiliar"
+
+#~ msgid "Auxiliary program to be run"
+#~ msgstr "Programa auxiliar a executar"
+
+#~ msgid "Auxiliary program's options"
+#~ msgstr "Opcions del programa auxiliar"
+
+#~ msgid "Command line options for auxiliary program"
+#~ msgstr "Opcions de línia d'ordres per al programa auxiliar"
+
+#~ msgid "Long Description"
+#~ msgstr "Descripció llarga"
+
+#~ msgid "Icon"
+#~ msgstr "Icona"
+
+#~ msgid "Icon filename to be used on GUI"
+#~ msgstr "Nom de fitxer de la icona a emprar en la interfície"
+
+#~ msgid "System Default"
+#~ msgstr "Predeterminat del sistema"
+
+#~ msgid "Whether or not IM is a system default."
+#~ msgstr "Si el mètode d'entrada és el predeterminat del sistema."
+
+#~ msgid "User Default"
+#~ msgstr "Predeterminat de l'usuari"
+
+#~ msgid "Whether or not IM is an user default."
+#~ msgstr "Si el mètode d'entrada és el predeterminat de l'usuari."
+
+#~ msgid "IM module name"
+#~ msgstr "Nom del mòdul del mètode d'entrada"
+
+#~ msgid "A target IM module name that to observe signals"
+#~ msgstr "Un nom de mòdul de mètode d'entrada destí que observa els senyals"
+
+#~ msgid "Replace"
+#~ msgstr "Reemplaça"
+
+#~ msgid "DBus Interface"
+#~ msgstr "Interfície DBus"
+
+#~ msgid "Interface name to connect to DBus"
+#~ msgstr "Nom d'interfície a connectar a DBus"
+
+#~ msgid ""
+#~ "Failed to invoke a method `%s' on %s:\n"
+#~ "  %s"
+#~ msgstr ""
+#~ "No s'ha pogut invocar el mètode «%s» a %s:\n"
+#~ "  %s"
+
+#~ msgid ""
+#~ "Failed to invoke a method `%s':\n"
+#~ "  %s"
+#~ msgstr ""
+#~ "No s'ha pogut invocar el mètode «%s»:\n"
+#~ "  %s"
+
+#~ msgid "Main"
+#~ msgstr "Principal"
+
+#~ msgid "AUX"
+#~ msgstr "AUX"
+
+#~ msgid "Unable to keep Input Method running"
+#~ msgstr "El mètode d'entrada no s'ha pogut executar"
+
+#~ msgid "Failed to get a place of home directory."
+#~ msgstr "No s'ha pogut obtenir un directori d'inici."
+
+#~ msgid "Failed to revert the backup file: %s"
+#~ msgstr "No s'ha pogut recuperar el fitxer de còpia de seguretat: %s"
+
+#~ msgid "Failed to create a backup file: %s"
+#~ msgstr "No s'ha ogut crear un fitxer de còpia de seguretat: %s"
+
+#~ msgid "Failed to remove a .xinputrc file: %s"
+#~ msgstr "No s'ha pogut suprimir un fitxer .xinputrc: %s"
+
+#~ msgid "Failed to make a symlink: %s"
+#~ msgstr "No s'ha pogut crear l'enllaç simbòlic: %s"
+
+#~ msgid "No input methods available on your system."
+#~ msgstr "No hi ha cap mètode d'entrada disponible en el vostre sistema."
+
+#~ msgid ""
+#~ "No such input method on your system: %s\n"
+#~ "  Details: %s"
+#~ msgstr ""
+#~ "No existeix el mètode d'entrada en el vostre sistema: %s\n"
+#~ "  Detalls: %s"
+
+#~ msgid "No XIM server is available in %s"
+#~ msgstr "No hi ha cap servidor XIM disponible a %s"
+
+#~ msgid "The name of the directory for the system wide xinputrc file."
+#~ msgstr "El nom del directori per al fitxer xinputrc del sistema."
+
+#~ msgid "The name of the directory for IM configurations."
+#~ msgstr ""
+#~ "El nom del directori per a les configuracions dels mètodes d'entrada."
+
+#~ msgid "home directory"
+#~ msgstr "directori d'inici"
+
+#~ msgid "A place to store xinputrc file"
+#~ msgstr "On emmagatzemar el fitxer xinputrc"
+
+#~ msgid "A place to store xinput configuration files"
+#~ msgstr "On emmagatzemar els fitxers de configuració d'xinput"
+
+#~ msgid "Duplicate entry `%s' from %s. SHORT_DESC has to be unique."
+#~ msgstr "Entrada duplicada «%s» de %s. SHORT_DESC ha de ser únic."
+
+#~ msgid "Failed to get a session bus.\n"
+#~ msgstr "No s'ha pogut obtenir un bus de sessió.\n"
+
+#~ msgid ""
+#~ "No Input Method running. please specify Input Method name explicitly if "
+#~ "necessary.\n"
+#~ msgstr ""
+#~ "Cap mètode d'entrada està corrent. Especifiqueu explícitament el nom del "
+#~ "mètode d'entrada si calguès.\n"
+
+#~ msgid "Force reloading the configuration, including restarting the process."
+#~ msgstr ""
+#~ "Força la recàrrega de la configuració, incloent reiniciar el procés."
+
+#~ msgid "Failed to stop IM process `%s'\n"
+#~ msgstr "No s'ha pogut aturar el procés del ME «%s»\n"
+
+#~ msgid "Forcibly restarted %s, but maybe not completely\n"
+#~ msgstr "S'ha forçat el reinici de %s, però potser no s'ha completat\n"
+
+#~ msgid "Failed to restart IM process `%s'\n"
+#~ msgstr "No s'ha pogut reiniciar el procés del ME «%s»\n"
+
+#~ msgid "Start Input Method if not yet running."
+#~ msgstr "Inicia el mètode d'entrada si encara no s'està executant."
+
+#~ msgid "No Input Method available\n"
+#~ msgstr "Cap mètode d'entrada disponible\n"
+
+#~ msgid "Started %s\n"
+#~ msgstr "S'ha iniciat %s\n"
+
+#~ msgid "Failed to start IM process `%s'\n"
+#~ msgstr "No s'ha pogut iniciar el procés del ME «%s»\n"
+
+#~ msgid "imsettings-start"
+#~ msgstr "imsettings-start"
+
+#~ msgid "Force stopping the IM process regardless of any errors."
+#~ msgstr "Força l'aturada del procés del ME tot i els possibles errors."
+
+#~ msgid "Stopped %s\n"
+#~ msgstr "S'ha aturat %s\n"
