@@ -445,6 +445,7 @@ imsettings_server_cb_get_info_variants(IMSettingsServer  *server,
 		gchar *path, *conf, *p;
 		const gchar *n, *module;
 		gsize len, slen = strlen(XINPUT_SUFFIX), i;
+		gchar *im = imsettings_server_cb_get_system_im(server, lang, error);
 
 		path = g_file_get_path(file);
 		while (1) {
@@ -478,9 +479,7 @@ imsettings_server_cb_get_info_variants(IMSettingsServer  *server,
 
 			info = imsettings_info_new(v);
 			if (imsettings_info_is_visible(info)) {
-				gchar *im = imsettings_server_cb_get_system_im(server, lang, error);
-
-				if (g_ascii_strcasecmp(im, imsettings_info_get_short_desc(info)) == 0) {
+				if (im && g_ascii_strcasecmp(im, imsettings_info_get_short_desc(info)) == 0) {
 					if (sys_v) {
 						g_warning("the system default should be only one: [%s vs %s]",
 							  imsettings_info_get_short_desc(sys_info),
@@ -493,7 +492,6 @@ imsettings_server_cb_get_info_variants(IMSettingsServer  *server,
 				} else {
 					g_ptr_array_add(a, v);
 				}
-				g_free(im);
 			} else {
 				g_variant_unref(v);
 			}
@@ -502,7 +500,9 @@ imsettings_server_cb_get_info_variants(IMSettingsServer  *server,
 			if (finfo)
 				g_object_unref(finfo);
 		}
+		g_free(im);
 		g_free(path);
+		g_file_enumerator_close(e, NULL, NULL);
 		g_object_unref(e);
 
 		vb = g_variant_builder_new(G_VARIANT_TYPE ("a{sv}"));
@@ -646,12 +646,13 @@ imsettings_server_cb_get_system_im(IMSettingsServer  *server,
 				   GError           **error)
 {
 	gchar *f, *retval = NULL;
-	GVariant *v;
+	GVariant *v = NULL;
 	IMSettingsInfo *info;
 
 	f = g_build_filename(imsettings_server_get_xinputrcdir(server),
 			     IMSETTINGS_GLOBAL_XINPUT_CONF, NULL);
-	v = imsettings_info_variant_new(f, lang);
+	if (g_file_test(f, G_FILE_TEST_EXISTS))
+		v = imsettings_info_variant_new(f, lang);
 	g_free(f);
 	if (!v) {
 		g_set_error(error, IMSETTINGS_GERROR,
@@ -690,7 +691,8 @@ imsettings_server_cb_get_user_im(IMSettingsServer  *server,
 	if (!v) {
 		f = g_build_filename(imsettings_server_get_xinputrcdir(server),
 				     IMSETTINGS_GLOBAL_XINPUT_CONF, NULL);
-		v = imsettings_info_variant_new(f, lang);
+		if (g_file_test(f, G_FILE_TEST_EXISTS))
+			v = imsettings_info_variant_new(f, lang);
 		g_free(f);
 		if (!v) {
 			g_set_error(error, IMSETTINGS_GERROR,
@@ -877,14 +879,15 @@ imsettings_server_bus_method_call(GDBusConnection       *connection,
 
 		value = g_variant_new("(b)", ret);
 	} else if (g_strcmp0(method_name, "GetActiveVariant") == 0) {
-		GVariant *v;
+		GVariant *v = NULL;
 		gchar *f;
 
 		if (!priv->current_im ||
 		    !imsettings_proc_is_alive(priv->current_im)) {
 			f = g_build_filename(imsettings_server_get_xinputdir(server),
 					     IMSETTINGS_NONE_CONF XINPUT_SUFFIX, NULL);
-			v = imsettings_info_variant_new(f, NULL);
+			if (g_file_test(f, G_FILE_TEST_EXISTS))
+				v = imsettings_info_variant_new(f, NULL);
 			g_free(f);
 		} else {
 			IMSettingsInfo *info = imsettings_proc_info(priv->current_im);
@@ -892,7 +895,12 @@ imsettings_server_bus_method_call(GDBusConnection       *connection,
 			v = imsettings_info_variant_new(imsettings_info_get_filename(info),
 							imsettings_info_get_language(info));
 		}
-		value = g_variant_new_tuple(&v, 1);
+		if (!v) {
+			g_set_error(&err, IMSETTINGS_GERROR, IMSETTINGS_GERROR_CONFIGURATION_ERROR,
+				    "none.conf isn't installed.");
+		} else {
+			value = g_variant_new_tuple(&v, 1);
+		}
 	}
   finalize:
 	if (err) {
