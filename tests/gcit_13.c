@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * gcit_13.c
- * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2010 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -27,13 +27,12 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "imsettings/imsettings.h"
-#include "imsettings/imsettings-info.h"
-#include "imsettings/imsettings-request.h"
+#include "imsettings.h"
+#include "imsettings-info.h"
+#include "imsettings-client.h"
 #include "main.h"
 
-DBusConnection *conn;
-IMSettingsRequest *req;
+IMSettingsClient *client;
 
 /************************************************************/
 /* common functions                                         */
@@ -41,8 +40,7 @@ IMSettingsRequest *req;
 void
 setup(void)
 {
-	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(conn, IMSETTINGS_INTERFACE_DBUS);
+	client = imsettings_client_new(NULL, NULL, NULL);
 }
 
 void
@@ -50,8 +48,7 @@ teardown(void)
 {
 //	imsettings_test_reload_daemons();
 
-	g_object_unref(req);
-	dbus_connection_unref(conn);
+	g_object_unref(client);
 }
 
 /************************************************************/
@@ -67,7 +64,7 @@ TDEF (issue) {
 	imsettings_test_restart_daemons("issue_13" G_DIR_SEPARATOR_S "case1");
 	g_usleep(2 * G_USEC_PER_SEC);
 
-	imsettings_request_set_locale(req, "ja_JP.UTF-8");
+	imsettings_client_set_locale(client, "ja_JP.UTF-8");
 	list = imsettings_request_get_input_method_list(req, &error);
 	fail_unless(list != NULL, "Unable to get the IM list (take 1)");
 	for (i = 0; list[i] != NULL; i++) {

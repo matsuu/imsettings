@@ -47,13 +47,8 @@ noinst_PROGRAMS =					\
 	$(NULL)
 if ENABLE_UNIT_TEST
 noinst_PROGRAMS +=					\
-	test-imsettings-object				\
 	test-imsettings-info				\
-	test-imsettings-request				\
-	test-gcit-5					\
-	test-gcit-7					\
 	test-gcit-11					\
-	test-gcit-13					\
 	test-rhbz-431291				\
 	test-rhbz-453358				\
 	test-rhbz-455363				\
@@ -66,11 +61,6 @@ noinst_PROGRAMS +=					\
 	test-rhbz-599924				\
 	$(NULL)
 endif
-#
-test_imsettings_object_SOURCES =			\
-	imsettings-object.c				\
-	$(common_sources)				\
-	$(NULL)
 #
 test_imsettings_info_SOURCES =				\
 	imsettings-info.c				\

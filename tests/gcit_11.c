@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * gcit_11.c
- * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2010 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -27,13 +27,12 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "imsettings/imsettings.h"
-#include "imsettings/imsettings-info.h"
-#include "imsettings/imsettings-request.h"
+#include "imsettings.h"
+#include "imsettings-info.h"
+#include "imsettings-client.h"
 #include "main.h"
 
-DBusConnection *conn;
-IMSettingsRequest *req;
+IMSettingsClient *client;
 
 /************************************************************/
 /* common functions                                         */
@@ -43,8 +42,7 @@ setup(void)
 {
 	imsettings_test_restart_daemons("issue_11");
 
-	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(conn, IMSETTINGS_INTERFACE_DBUS);
+	client = imsettings_client_new(NULL);
 }
 
 void
@@ -52,22 +50,21 @@ teardown(void)
 {
 	imsettings_test_reload_daemons();
 
-	g_object_unref(req);
-	dbus_connection_unref(conn);
+	g_object_unref(client);
 }
 
 /************************************************************/
 /* Test cases                                               */
 /************************************************************/
 TDEF (issue) {
-	IMSettingsInfo *i;
+	GVariant *v;
 	GError *error = NULL;
 	gchar *suffix = XINPUT_SUFFIX;
 
 	/* XXX: testcase needs to be renamed dynamically? */
 	if (suffix[0] != 0 && strcmp(suffix, ".conf_") != 0) {
-		i = imsettings_request_get_info_object(req, "SCIM", &error);
-		fail_unless(i == NULL, "the info object shouldn't be get for the config without %s suffix.", suffix);
+		v = imsettings_client_get_info_variant(client, "SCIM", NULL, &error);
+		fail_unless(v == NULL, "the info object shouldn't be get for the config without %s suffix.", suffix);
 	}
 } TEND
 

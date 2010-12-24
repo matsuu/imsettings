@@ -1,8 +1,8 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * main.c
- * Copyright (C) 2007-2009 Akira TAGOH
- * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2007-2010 Akira TAGOH
+ * Copyright (C) 2008-2010 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -141,7 +141,7 @@ imsettings_test_restart_daemons_full(const gchar *xinputrcdir,
 		xhomedir = g_strdup(homedir);
 
 	if (getenv("IMSETTINGS_DAEMON") == NULL) {
-		p = g_build_filename(IMSETTINGS_BUILDDIR, "src", "im-settings-daemon", NULL);
+		p = g_build_filename(IMSETTINGS_BUILDDIR, "imsettings-daemon", "imsettings-daemon", NULL);
 	} else {
 		p = g_strdup(getenv("IMSETTINGS_DAEMON"));
 	}
