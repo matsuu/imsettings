@@ -125,12 +125,6 @@ PKG_CHECK_MODULES(XIM, libgxim >= $LIBGXIM_REQUIRED
 		       gdk-2.0 >= $GDK_REQUIRED,
 	[use_xim="yes"],
 	[use_xim="no"])
-PKG_CHECK_MODULES(APPLET, gtk+-2.0
-			  libnotify
-			  gconf-2.0
-			  x11,
-	[use_applet="yes"],
-	[use_applet="no"])
 
 AC_SUBST(IMDAEMON_CFLAGS)
 AC_SUBST(IMDAEMON_LIBS)
@@ -154,8 +148,6 @@ AC_SUBST(XIM_CFLAGS)
 AC_SUBST(XIM_LIBS)
 AC_SUBST(XSETTINGS_CFLAGS)
 AC_SUBST(XSETTINGS_LIBS)
-AC_SUBST(APPLET_CFLAGS)
-AC_SUBST(APPLET_LIBS)
 AC_SUBST(CHECK_CFLAGS)
 AC_SUBST(CHECK_LIBS)
 
@@ -166,7 +158,6 @@ AM_CONDITIONAL(ENABLE_XFCE_MCS, test x$use_xfce_mcs != xno)
 AM_CONDITIONAL(ENABLE_XFCE_XFCONF, test x$use_xfce_xfconf != xno)
 AM_CONDITIONAL(ENABLE_LXDE, test x$use_lxde != xno)
 AM_CONDITIONAL(ENABLE_XIM, test x$use_xim != xno)
-AM_CONDITIONAL(ENABLE_APPLET, test x$use_applet != xno)
 
 dnl ======================================================================
 dnl check another libraries
@@ -295,8 +286,6 @@ AC_CONFIG_FILES([
 	Makefile
 	imsettings.pc
 	imsettings-uninstalled.pc
-	applet/Makefile
-	applet/imsettings-applet.desktop.in
 	backends/Makefile
 	backends/gconf/Makefile
 	backends/lxde/Makefile
@@ -356,11 +345,6 @@ echo " XIM support:            $use_xim"
 if test "x$use_xim" = "xyes"; then
    echo "   CFLAGS:               $XIM_CFLAGS"
    echo "   LDFLAGS:              $XIM_LIBS"
-fi
-echo " Applet support:         $use_applet"
-if test "x$use_applet" = "xyes"; then
-   echo "   CFLAGS:               $APPLET_CFLAGS"
-   echo "   LDFLAGS:              $APPLET_LIBS"
 fi
 echo " XINPUT_PATH:            $XINPUT_PATH"
 echo " XINPUTRC_PATH:          $XINPUTRC_PATH"

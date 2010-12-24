@@ -1,9 +1,6 @@
 NULL =
 AUTOMAKE_OPTIONS = dist-bzip2
 SUBDIRS = data imsettings imsettings-daemon utils po tests
-if ENABLE_APPLET
-SUBDIRS += applet
-endif
 
 ACLOCAL_AMFLAGS =			\
 	-I m4macros			\

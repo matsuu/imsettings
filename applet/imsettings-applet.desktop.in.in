@@ -1,9 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-Type=Application
-_Name=IMSettings Applet
-_Comment=IMSettings Applet
-Icon=imsettings-applet
-Exec=imsettings-applet
-Terminal=false
-Categories=TrayIcon;
