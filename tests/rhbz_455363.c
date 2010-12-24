@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * rhbz_455363.c
- * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2010 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -28,12 +28,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "imsettings/imsettings.h"
-#include "imsettings/imsettings-request.h"
+#include "imsettings.h"
+#include "imsettings-client.h"
 #include "main.h"
 
-DBusConnection *dbus_conn;
-IMSettingsRequest *req;
+IMSettingsClient *client;
 
 /************************************************************/
 /* common functions                                         */
@@ -41,8 +40,7 @@ IMSettingsRequest *req;
 void
 setup(void)
 {
-	dbus_conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
+	client = imsettings_client_new(NULL);
 }
 
 void
@@ -50,8 +48,7 @@ teardown(void)
 {
 	imsettings_test_reload_daemons();
 
-	g_object_unref(req);
-	dbus_connection_unref(dbus_conn);
+	g_object_unref(client);
 }
 
 /************************************************************/
@@ -65,10 +62,12 @@ TDEF (issue) {
 	gchar *dest = g_build_filename(IMSETTINGS_SRCDIR, "testcases", "rhbz_455363", "case1", NULL);
 	gchar *xinputd, *xinputrc;
 	gchar *conf;
-	GPtrArray *list;
 	IMSettingsInfo *info;
-	gint i;
 	FILE *fp;
+	GVariant *v, *vv;
+	GVariantIter *iter;
+	const gchar *key;
+	gsize len, slen = strlen(XINPUT_SUFFIX);
 
 	d = mkdtemp(tmpl);
 	fail_unless(d != NULL, "Unable to create a temporary directory.");
@@ -86,10 +85,15 @@ TDEF (issue) {
 
 	g_usleep(5 * G_USEC_PER_SEC);
 
-	list = imsettings_request_get_info_objects(req, &error);
-	fail_unless(list != NULL, "Unable to get the IM objects (take 1)");
-	for (i = 0; i < list->len; i++) {
-		info = g_ptr_array_index(list, i);
+	v = imsettings_client_get_info_variants(client, NULL, &error);
+	fail_unless(v != NULL, "Unable to get the IM objects (take 1)");
+	g_variant_get(v, "a{sv}", &iter);
+	while (g_variant_iter_next(iter, "{&sv}", &key, &vv)) {
+		len = strlen(key);
+		if (len > slen &&
+		    strcmp(&key[len - slen], XINPUT_SUFFIX) == 0)
+			continue;
+		info = imsettings_info_new(vv);
 		if (imsettings_info_is_system_default(info)) {
 			fail_unless(sim == NULL, "Duplicate status for the system default (take 1): %s, %s",
 				    sim, imsettings_info_get_short_desc(info));
@@ -97,10 +101,11 @@ TDEF (issue) {
 		}
 		g_object_unref(info);
 	}
-	g_ptr_array_free(list, TRUE);
+	g_variant_iter_free(iter);
 	fail_unless(sim != NULL, "No default system IM (take 1)");
 	fail_unless(strcmp(sim, "S C I M") == 0, "Unexpected default IM for system (take 1)");
 	g_free(sim);
+	g_variant_unref(v);
 	sim = NULL;
 
 	fp = fopen(conf, "a");
@@ -112,10 +117,15 @@ TDEF (issue) {
 
 	g_usleep(5 * G_USEC_PER_SEC);
 
-	list = imsettings_request_get_info_objects(req, &error);
-	fail_unless(list != NULL, "Unable to get the IM objects (take 2)");
-	for (i = 0; i < list->len; i++) {
-		info = g_ptr_array_index(list, i);
+	v = imsettings_client_get_info_variants(client, NULL, &error);
+	fail_unless(v != NULL, "Unable to get the IM objects (take 2)");
+	g_variant_get(v, "a{sv}", &iter);
+	while (g_variant_iter_next(iter, "{&sv}", &key, &vv)) {
+		len = strlen(key);
+		if (len > slen &&
+		    strcmp(&key[len - slen], XINPUT_SUFFIX) == 0)
+			continue;
+		info = imsettings_info_new(vv);
 		if (imsettings_info_is_system_default(info)) {
 			fail_unless(sim == NULL, "Duplicate status for the system default (take 2): %s, %s",
 				    sim, imsettings_info_get_short_desc(info));
@@ -123,7 +133,7 @@ TDEF (issue) {
 		}
 		g_object_unref(info);
 	}
-	g_ptr_array_free(list, TRUE);
+	g_variant_unref(v);
 	fail_unless(sim != NULL, "No default system IM (take 2)");
 	fail_unless(strcmp(sim, "S C I M") == 0, "Unexpected default IM for system (take 2)");
 	g_free(sim);
@@ -138,10 +148,15 @@ TDEF (issue) {
 		abort();
 	g_usleep(5 * G_USEC_PER_SEC);
 
-	list = imsettings_request_get_info_objects(req, &error);
-	fail_unless(list != NULL, "Unable to get the IM objects (take 3)");
-	for (i = 0; i < list->len; i++) {
-		info = g_ptr_array_index(list, i);
+	v = imsettings_client_get_info_variants(client, NULL, &error);
+	fail_unless(v != NULL, "Unable to get the IM objects (take 3)");
+	g_variant_get(v, "a{sv}", &iter);
+	while (g_variant_iter_next(iter, "{&sv}", &key, &vv)) {
+		len = strlen(key);
+		if (len > slen &&
+		    strcmp(&key[len - slen], XINPUT_SUFFIX) == 0)
+			continue;
+		info = imsettings_info_new(vv);
 		if (imsettings_info_is_system_default(info)) {
 			fail_unless(sim == NULL, "Duplicate status for the system default (take 3): %s, %s",
 				    sim, imsettings_info_get_short_desc(info));
@@ -149,7 +164,7 @@ TDEF (issue) {
 		}
 		g_object_unref(info);
 	}
-	g_ptr_array_free(list, TRUE);
+	g_variant_unref(v);
 	fail_unless(sim != NULL, "No default system IM (take 3)");
 	fail_unless(strcmp(sim, "S C I M") == 0, "Unexpected default IM for system (take 3)");
 
