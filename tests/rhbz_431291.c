@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * rhbz_431291.c
- * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2010 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -26,15 +26,13 @@
 #endif
 
 #include <string.h>
-#include "imsettings/imsettings.h"
-#include "imsettings/imsettings-info-private.h"
-#include "imsettings/imsettings-request.h"
+#include "imsettings.h"
+#include "imsettings-client.h"
 #include "main.h"
 
 #define N_(s)	s
 
-DBusConnection *dbus_conn;
-IMSettingsRequest *req;
+IMSettingsClient *client;
 
 /************************************************************/
 /* common functions                                         */
@@ -42,8 +40,7 @@ IMSettingsRequest *req;
 void
 setup(void)
 {
-	dbus_conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
+	client = imsettings_client_new(NULL);
 }
 
 void
@@ -51,8 +48,7 @@ teardown(void)
 {
 	imsettings_test_reload_daemons();
 
-	g_object_unref(req);
-	dbus_connection_unref(dbus_conn);
+	g_object_unref(client);
 }
 
 /************************************************************/
@@ -66,8 +62,8 @@ TDEF (issue) {
 
 	g_usleep(5 * G_USEC_PER_SEC);
 
-	p = imsettings_request_get_current_user_im(req, &error);
-	fail_unless(p != NULL, "Unable to get current user IM");
+	p = imsettings_client_get_user_im(client, NULL, &error);
+	fail_unless(p != NULL, "Unable to get current user IM: %s", error ? error->message : "unknown reason");
 	fail_unless(error == NULL, "error: %s", error ? error->message : "none");
 	fail_unless(strcmp(p, IMSETTINGS_USER_SPECIFIC_SHORT_DESC) == 0, "Unexpected current user IM: %s", p);
 

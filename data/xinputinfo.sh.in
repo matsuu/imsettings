@@ -62,6 +62,7 @@ else
 	IMSETTINGS_FILENAME=$SYS_XINPUTRC
     fi
 fi
+[ "$(basename $IMSETTINGS_FILENAME)" = "$(basename $USER_XINPUTRC)" -a ! -h "$IMSETTINGS_FILENAME" ] && SHORT_DESC="User Specific"
 
 [ -z "$XIM" ] && XIM=none
 [ -n "$GTK_IM_MODULE" ] && export GTK_IM_MODULE

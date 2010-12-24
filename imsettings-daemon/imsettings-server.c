@@ -522,6 +522,20 @@ imsettings_server_cb_get_info_variants(IMSettingsServer  *server,
 			g_variant_builder_add(vb, "{sv}", n, v);
 			g_object_unref(info);
 		}
+		p = g_build_filename(imsettings_server_get_homedir(server), IMSETTINGS_USER_XINPUT_CONF, NULL);
+		if (g_file_test(p, G_FILE_TEST_EXISTS)) {
+			if (!g_file_test(p, G_FILE_TEST_IS_SYMLINK)) {
+				v = imsettings_info_variant_new(p, lang);
+				info = imsettings_info_new(v);
+				module = imsettings_info_get_short_desc(info);
+				n = imsettings_info_get_filename(info);
+				if (g_strcmp0(module, IMSETTINGS_USER_SPECIFIC_SHORT_DESC) == 0) {
+					g_variant_builder_add(vb, "{sv}", module, v);
+				}
+				g_object_unref(info);
+			}
+		}
+		g_free(p);
 		value = g_variant_builder_end(vb);
 		g_variant_builder_unref(vb);
 		g_ptr_array_free(a, TRUE);
