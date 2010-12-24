@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * rhbz_453358.c
- * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2010 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -28,12 +28,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "imsettings/imsettings.h"
-#include "imsettings/imsettings-request.h"
+#include "imsettings.h"
+#include "imsettings-client.h"
 #include "main.h"
 
-DBusConnection *dbus_conn;
-IMSettingsRequest *req;
+IMSettingsClient *client;
 
 /************************************************************/
 /* common functions                                         */
@@ -41,8 +40,7 @@ IMSettingsRequest *req;
 void
 setup(void)
 {
-	dbus_conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
+	client = imsettings_client_new(NULL);
 }
 
 void
@@ -50,8 +48,7 @@ teardown(void)
 {
 	imsettings_test_reload_daemons();
 
-	g_object_unref(req);
-	dbus_connection_unref(dbus_conn);
+	g_object_unref(client);
 }
 
 /************************************************************/
@@ -82,8 +79,8 @@ TDEF (issue) {
 	
 	imsettings_test_restart_daemons_full("rhbz_453358" G_DIR_SEPARATOR_S "case1",
 					     xinputd, tmpl);
-	uim = imsettings_request_get_current_user_im(req, &error);
-	sim = imsettings_request_get_current_system_im(req, &error);
+	uim = imsettings_client_get_user_im(client, NULL, &error);
+	sim = imsettings_client_get_system_im(client, NULL, &error);
 	fail_unless(strcmp(uim, "S C I M") == 0, "Failed to build the test environment.");
 	fail_unless(strcmp(sim, "SCIM") == 0, "Failed to build the test environment.");
 
@@ -94,8 +91,8 @@ TDEF (issue) {
 	g_free(uim);
 	g_free(sim);
 
-	uim = imsettings_request_get_current_user_im(req, &error);
-	sim = imsettings_request_get_current_system_im(req, &error);
+	uim = imsettings_client_get_user_im(client, NULL, &error);
+	sim = imsettings_client_get_system_im(client, NULL, &error);
 	fail_unless(strcmp(uim, sim) == 0, "User IM and System IM has to be the same: %s vs %s.",
 		    uim, sim);
 

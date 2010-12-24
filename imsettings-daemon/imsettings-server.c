@@ -679,12 +679,13 @@ imsettings_server_cb_get_user_im(IMSettingsServer  *server,
 				 GError           **error)
 {
 	gchar *f, *retval = NULL;
-	GVariant *v;
+	GVariant *v = NULL;
 	IMSettingsInfo *info;
 
 	f = g_build_filename(imsettings_server_get_homedir(server),
 			     IMSETTINGS_USER_XINPUT_CONF, NULL);
-	v = imsettings_info_variant_new(f, lang);
+	if (g_file_test(f, G_FILE_TEST_EXISTS))
+		v = imsettings_info_variant_new(f, lang);
 	g_free(f);
 	if (!v) {
 		f = g_build_filename(imsettings_server_get_xinputrcdir(server),
