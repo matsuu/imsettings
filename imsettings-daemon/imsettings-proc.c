@@ -555,7 +555,7 @@ imsettings_proc_spawn(IMSettingsProc  *proc,
 	if (!_start_main_process(proc, error))
 		return FALSE;
 
-	return FALSE;
+	return TRUE;
 }
 
 /**
