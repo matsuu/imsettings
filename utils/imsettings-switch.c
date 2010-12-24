@@ -80,9 +80,11 @@ main(int    argc,
 		return 1;
 	}
 
-	client = imsettings_client_new(locale, NULL, &error);
-	if (error)
-		goto error;
+	client = imsettings_client_new(locale);
+	if (!client) {
+		g_printerr(_("Unable to create a client instance."));
+		goto end;
+	}
 	if (imsettings_client_get_version(client, NULL, &error) != IMSETTINGS_SETTINGS_API_VERSION) {
 		g_printerr(_("Currently a different version of imsettings is running.\nRunning \"imsettings-reload\" may help but it will restart the Input Method\n"));
 		retval = 1;

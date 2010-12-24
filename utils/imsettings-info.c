@@ -53,9 +53,11 @@ main(int    argc,
 
 	locale = setlocale(LC_CTYPE, NULL);
 
-	client = imsettings_client_new(locale, NULL, &error);
-	if (error)
-		goto error;
+	client = imsettings_client_new(locale);
+	if (!client) {
+		g_printerr(_("Unable to create a client instance."));
+		goto end;
+	}
 	if (imsettings_client_get_version(client, NULL, &error) != IMSETTINGS_SETTINGS_API_VERSION) {
 		if (error)
 			goto error;

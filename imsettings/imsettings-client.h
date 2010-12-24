@@ -38,11 +38,12 @@ G_BEGIN_DECLS
 #define IMSETTINGS_IS_CLIENT(_o_)		(G_TYPE_CHECK_INSTANCE_TYPE ((_o_), IMSETTINGS_TYPE_CLIENT))
 #define IMSETTINGS_IS_CLIENT_CLASS(_c_)		(G_TYPE_CHECK_CLASS_TYPE ((_c_), IMSETTINGS_TYPE_CLIENT))
 
-typedef struct _IMSettingsClientClass	IMSettingsClientClass;
-typedef struct _IMSettingsClient	IMSettingsClient;
+typedef struct _IMSettingsClientClass		IMSettingsClientClass;
+typedef struct _IMSettingsClient		IMSettingsClient;
+typedef struct _IMSettingsClientPrivate		IMSettingsClientPrivate;
 
 struct _IMSettingsClientClass {
-	GDBusProxyClass parent_class;
+	GObjectClass parent_class;
 
 	void (*reserved1) (void);
 	void (*reserved2) (void);
@@ -50,15 +51,13 @@ struct _IMSettingsClientClass {
 	void (*reserved4) (void);
 };
 struct _IMSettingsClient {
-	GDBusProxy  parent_instance;
-	gchar      *locale;
+	GObject                  parent_instance;
+	IMSettingsClientPrivate *priv;
 };
 
 
 GType             imsettings_client_get_type  (void) G_GNUC_CONST;
-IMSettingsClient *imsettings_client_new       (const gchar       *locale,
-					       GCancellable      *cancellable,
-					       GError           **error);
+IMSettingsClient *imsettings_client_new       (const gchar       *locale);
 gboolean          imsettings_client_set_locale(IMSettingsClient  *client,
 					       const gchar       *locale);
 const gchar      *imsettings_client_get_locale(IMSettingsClient  *client);
@@ -75,6 +74,10 @@ GVariant       *imsettings_client_get_info_variant    (IMSettingsClient  *client
                                                        const gchar       *module,
                                                        GCancellable      *cancellable,
                                                        GError           **error);
+IMSettingsInfo *imsettings_client_get_info_object     (IMSettingsClient  *client,
+						       const gchar       *module,
+						       GCancellable      *cancellable,
+						       GError           **error);
 gchar          *imsettings_client_get_user_im         (IMSettingsClient  *client,
                                                        GCancellable      *cancellable,
                                                        GError           **error);

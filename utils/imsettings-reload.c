@@ -67,9 +67,11 @@ main(int    argc,
 	}
 	g_option_context_free(ctx);
 
-	client = imsettings_client_new(NULL, NULL, &error);
-	if (error)
-		goto error;
+	client = imsettings_client_new(NULL);
+	if (!client) {
+		g_printerr(_("Unable to create a client instance."));
+		goto end;
+	}
 	if (imsettings_client_get_version(client, NULL, &error) != IMSETTINGS_SETTINGS_API_VERSION) {
 		imsettings_client_reload(client, TRUE, NULL, &error);
 	} else {
@@ -84,7 +86,7 @@ main(int    argc,
 		if (g_strcmp0(module, IMSETTINGS_NONE_CONF) != 0) {
 			/* this instance isn't valid anymore */
 			g_object_unref(client);
-			client = imsettings_client_new(lang, NULL, &error);
+			client = imsettings_client_new(lang);
 			imsettings_client_switch_im(client, module, FALSE, NULL, &error);
 			if (error) {
 			  error:

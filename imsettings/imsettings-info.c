@@ -503,8 +503,7 @@ imsettings_info_is_system_default(IMSettingsInfo *info)
 	g_return_val_if_fail (IMSETTINGS_IS_INFO (info), FALSE);
 
 	priv = info->priv;
-	client = imsettings_client_new(imsettings_info_get_language(info),
-				       NULL, NULL);
+	client = imsettings_client_new(imsettings_info_get_language(info));
 	g_return_val_if_fail (IMSETTINGS_IS_CLIENT (client), FALSE);
 
 	retval = imsettings_client_im_is_system_default(client,
@@ -539,8 +538,7 @@ imsettings_info_is_user_default(IMSettingsInfo *info)
 	g_return_val_if_fail (IMSETTINGS_IS_INFO (info), FALSE);
 
 	priv = info->priv;
-	client = imsettings_client_new(imsettings_info_get_language(info),
-				       NULL, NULL);
+	client = imsettings_client_new(imsettings_info_get_language(info));
 	g_return_val_if_fail (IMSETTINGS_IS_CLIENT (client), FALSE);
 
 	retval = imsettings_client_im_is_user_default(client,
@@ -611,8 +609,13 @@ imsettings_info_compare(const IMSettingsInfo *i1,
 	while (g_hash_table_iter_next(&iter, &key, &v1)) {
 		if (!g_hash_table_lookup_extended(p2->info_table, key, NULL, &v2))
 			return FALSE;
-		if (v1 != v2)
-			return FALSE;
+		if ((gulong)v1 % 2 == 0 && (gulong)v2 % 2 == 0) {
+			if (g_strcmp0(v1, v2) != 0)
+				return FALSE;
+		} else {
+			if (v1 != v2)
+				return FALSE;
+		}
 	}
 
 	return TRUE;
