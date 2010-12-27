@@ -607,9 +607,18 @@ imsettings_info_compare(const IMSettingsInfo *i1,
 	g_hash_table_iter_init(&iter, p1->info_table);
 
 	while (g_hash_table_iter_next(&iter, &key, &v1)) {
+		GQuark q = (GQuark)GPOINTER_TO_INT (key);
+
+		if (q == __xinput_tokens[IMSETTINGS_INFO_IMSETTINGS_IS_SCRIPT] ||
+		    q == __xinput_tokens[IMSETTINGS_INFO_LANG] ||
+		    q == __xinput_tokens[IMSETTINGS_INFO_FILENAME] ||
+		    q == __xinput_tokens[IMSETTINGS_INFO_IS_XIM]) {
+			/* ignore */
+			continue;
+		}
 		if (!g_hash_table_lookup_extended(p2->info_table, key, NULL, &v2))
 			return FALSE;
-		if ((gulong)v1 % 2 == 0 && (gulong)v2 % 2 == 0) {
+		if (v1 && v2 && (gulong)v1 % 2 == 0 && (gulong)v2 % 2 == 0) {
 			if (g_strcmp0(v1, v2) != 0)
 				return FALSE;
 		} else {

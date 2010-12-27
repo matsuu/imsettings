@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * rhbz_599924.c
- * Copyright (C) 2008-20010 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2010 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -28,7 +28,7 @@
 #include <unistd.h>
 #include <glib.h>
 #include <glib/gthread.h>
-#include "imsettings/imsettings-info.h"
+#include "imsettings-info.h"
 #include "main.h"
 
 #define N_(s)	s
@@ -51,6 +51,7 @@ static gpointer
 _thread(gpointer data)
 {
 	IMSettingsInfo **info = (IMSettingsInfo **)data;
+	GVariant *v;
 	gchar *xinputrc;
 	static gboolean first = FALSE;
 	static gint i = 0;
@@ -64,9 +65,11 @@ _thread(gpointer data)
 	}
 	g_print("creating...%d\n", ++i);
 	j = i;
-	*info = imsettings_info_new(xinputrc);
-	if (*info == NULL)
+	v = imsettings_info_variant_new(xinputrc, NULL);
+	if (v == NULL)
 		g_print("failing %d\n", j);
+	*info = imsettings_info_new(v);
+	g_variant_unref(v);
 
 	g_free(xinputrc);
 
