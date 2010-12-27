@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * rhbz_523349.c
- * Copyright (C) 2009 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2009-2010 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -28,13 +28,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "imsettings/imsettings.h"
-#include "imsettings/imsettings-request.h"
-#include "imsettings/imsettings-info.h"
+#include "imsettings.h"
+#include "imsettings-client.h"
+#include "imsettings-info.h"
 #include "main.h"
 
-DBusConnection *dbus_conn;
-IMSettingsRequest *req;
+IMSettingsClient *client;
 
 /************************************************************/
 /* common functions                                         */
@@ -42,8 +41,7 @@ IMSettingsRequest *req;
 void
 setup(void)
 {
-	dbus_conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
+	client = imsettings_client_new(NULL);
 }
 
 void
@@ -51,8 +49,7 @@ teardown(void)
 {
 	imsettings_test_reload_daemons();
 
-	g_object_unref(req);
-	dbus_connection_unref(dbus_conn);
+	g_object_unref(client);
 }
 
 /************************************************************/
@@ -82,7 +79,7 @@ TDEF (issue) {
 
 	g_usleep(5 * G_USEC_PER_SEC);
 
-	info = imsettings_request_get_info_object(req, "SCIM", &error);
+	info = imsettings_client_get_info_object(client, "SCIM", NULL, &error);
 	fail_unless(info != NULL, "Unable to obtain IMSettingsInfo for SCIM");
 	fail_unless(imsettings_info_is_script(info), "Invalid testcase or just failed to determine if the conf file is a script file");
 	v = imsettings_info_get_gtkimm(info);
@@ -93,6 +90,9 @@ TDEF (issue) {
 	fail_unless(fp != NULL, "Unable to open a file.");
 	fclose(fp);
 	g_free(p);
+	g_object_unref(info);
+	info = imsettings_client_get_info_object(client, "SCIM", NULL, &error);
+	fail_unless(info != NULL, "Unable to obtain IMSettingsInfo for SCIM (take 2)");
 	v = imsettings_info_get_gtkimm(info);
 	fail_unless(v != NULL, "Unable to obtain gtk immodule from IMSettingsInfo");
 	fail_unless(strcmp("scim", v) == 0, "Unexpected value: %s but %s", v, "scim");
