@@ -88,7 +88,7 @@ main(int argc, char **argv)
 {
 	GError *err = NULL;
 	gboolean arg_replace = FALSE, arg_no_logfile = FALSE;
-	gchar *arg_xinputrcdir = NULL, *arg_xinputdir = NULL, *arg_homedir = NULL;
+	gchar *arg_xinputrcdir = NULL, *arg_xinputdir = NULL, *arg_homedir = NULL, *arg_moduledir = NULL;
 	GMainLoop *loop;
 	GOptionContext *ctx = g_option_context_new(NULL);
 	GOptionEntry entries[] = {
@@ -96,6 +96,7 @@ main(int argc, char **argv)
 		{"xinputrcdir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_xinputrcdir, N_("Set the system-wide xinputrc directory (for debugging purpose)"), N_("DIR")},
 		{"xinputdir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_xinputdir, N_("Set the IM configuration directory (for debugging purpose)"), N_("DIR")},
 		{"homedir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_homedir, N_("Set a home directory (for debugging purpose)"), N_("DIR")},
+		{"moduledir", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_FILENAME, G_OPTION_ARG_STRING, &arg_moduledir, N_("Set the imsettings module directory (for debugging purpose)"), N_("DIR")},
 		{"no-logfile", 0, G_OPTION_FLAG_HIDDEN|G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_no_logfile, N_("Do not create a log file."), NULL},
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};
@@ -140,7 +141,8 @@ main(int argc, char **argv)
 	server = imsettings_server_new(connection,
 				       arg_homedir,
 				       arg_xinputrcdir,
-				       arg_xinputdir);
+				       arg_xinputdir,
+				       arg_moduledir);
 	if (!server) {
 		g_printerr("Unable to create a server instance.\n");
 		exit(1);
@@ -165,5 +167,10 @@ main(int argc, char **argv)
 	g_object_unref(server);
 	g_object_unref(connection);
 
-	return 0;
+	/* invoking _exit(2) instead of just returning or invoking exit(2)
+	 * to avoid segfault in a function added by atexit(3) in GConf.
+	 * Since GConf is dlopen'd, the function pointer isn't a valid
+	 * at atexit(2) anymore.
+	 */
+	_exit(0);
 }

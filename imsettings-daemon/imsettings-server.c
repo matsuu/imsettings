@@ -32,6 +32,7 @@
 #include <glib/gstdio.h>
 #include "imsettings.h"
 #include "imsettings-info.h"
+#include "imsettings-module.h"
 #include "imsettings-proc.h"
 #include "imsettings-utils.h"
 #include "imsettings-server.h"
@@ -43,6 +44,8 @@ struct _IMSettingsServerPrivate {
 	gchar           *homedir;
 	gchar           *xinputrcdir;
 	gchar           *xinputdir;
+	gchar           *moduledir;
+	GHashTable      *modules;
 	IMSettingsProc  *current_im;
 	GLogFunc         old_log_handler;
 	guint            id;
@@ -58,11 +61,11 @@ enum {
 	PROP_HOMEDIR,
 	PROP_XINPUTRCDIR,
 	PROP_XINPUTDIR,
+	PROP_MODULEDIR,
 	LAST_PROP
 };
 enum {
 	SIG_DISCONNECTED,
-	SIG_CHANGE_IM,
 	LAST_SIGNAL
 };
 
@@ -96,6 +99,7 @@ static gboolean  imsettings_server_bus_set_property(GDBusConnection       *conne
 static const gchar *imsettings_server_get_homedir    (IMSettingsServer *server);
 static const gchar *imsettings_server_get_xinputrcdir(IMSettingsServer *server);
 static const gchar *imsettings_server_get_xinputdir  (IMSettingsServer *server);
+static const gchar *imsettings_server_get_moduledir  (IMSettingsServer *server);
 
 GDBusInterfaceVTable __iface_vtable = {
 	imsettings_server_bus_method_call,
@@ -283,6 +287,16 @@ imsettings_server_set_property(GObject      *object,
 			    g_object_unref(f);
 		    }
 		    break;
+	    case PROP_MODULEDIR:
+		    p = g_value_get_string(value);
+		    if (!p) {
+			    g_free(priv->moduledir);
+			    priv->moduledir = NULL;
+			    break;
+		    }
+		    priv->moduledir = g_strdup(p);
+		    g_setenv("IMSETTINGS_MODULE_PATH", p, TRUE);
+		    break;
 	    default:
 		    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		    break;
@@ -314,6 +328,9 @@ imsettings_server_get_property(GObject    *object,
 	    case PROP_XINPUTDIR:
 		    g_value_set_string(value, imsettings_server_get_xinputdir(server));
 		    break;
+	    case PROP_MODULEDIR:
+		    g_value_set_string(value, imsettings_server_get_moduledir(server));
+		    break;
 	    default:
 		    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		    break;
@@ -326,6 +343,8 @@ imsettings_server_finalize(GObject *object)
 	IMSettingsServer *server = IMSETTINGS_SERVER (object);
 	IMSettingsServerPrivate *priv = server->priv;
 
+	if (priv->modules)
+		g_hash_table_destroy(priv->modules);
 	if (priv->current_im)
 		g_object_unref(priv->current_im);
 	if (priv->owner != 0)
@@ -340,6 +359,7 @@ imsettings_server_finalize(GObject *object)
 	g_free(priv->homedir);
 	g_free(priv->xinputrcdir);
 	g_free(priv->xinputdir);
+	g_free(priv->moduledir);
 
 	g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
 	      "imsettings-daemon is shut down.");
@@ -394,6 +414,12 @@ imsettings_server_class_init(IMSettingsServerClass *klass)
 							    _("xinput directory"),
 							    NULL,
 							    G_PARAM_READWRITE));
+	g_object_class_install_property(object_class, PROP_MODULEDIR,
+					g_param_spec_string("moduledir",
+							    _("module directory"),
+							    _("IMSettings module directory"),
+							    NULL,
+							    G_PARAM_READWRITE));
 
 	/* signals */
 
@@ -404,14 +430,6 @@ imsettings_server_class_init(IMSettingsServerClass *klass)
 						 NULL, NULL,
 						 g_cclosure_marshal_VOID__VOID,
 						 G_TYPE_NONE, 0);
-	signals[SIG_CHANGE_IM] = g_signal_new("changed_im",
-					      G_OBJECT_CLASS_TYPE (klass),
-					      G_SIGNAL_RUN_FIRST,
-					      G_STRUCT_OFFSET (IMSettingsServerClass, changed_im),
-					      NULL, NULL,
-					      g_cclosure_marshal_VOID__OBJECT,
-					      G_TYPE_NONE, 1,
-					      IMSETTINGS_TYPE_INFO);
 }
 
 static void
@@ -423,6 +441,10 @@ imsettings_server_init(IMSettingsServer *server)
 
 	priv->active = FALSE;
 	priv->logging = TRUE;
+	priv->modules = g_hash_table_new_full(g_str_hash,
+					      g_str_equal,
+					      g_free,
+					      g_object_unref);
 }
 
 static GVariant *
@@ -784,6 +806,45 @@ imsettings_server_cb_get_user_im(IMSettingsServer  *server,
 	return retval;
 }
 
+static gboolean
+imsettings_server_cb_load_module(IMSettingsServer *server,
+				 const gchar      *modname)
+{
+	IMSettingsServerPrivate *priv = server->priv;
+	IMSettingsModule *module;
+
+	module = imsettings_module_new(modname);
+	if (!module)
+		return FALSE;
+
+	if (!imsettings_module_load(module)) {
+		g_object_unref(module);
+		return FALSE;
+	}
+	g_hash_table_insert(priv->modules,
+			    g_strdup(imsettings_module_get_name(module)),
+			    module);
+
+	return TRUE;
+}
+
+static gboolean
+imsettings_server_cb_unload_module(IMSettingsServer *server,
+				   const gchar      *modname)
+{
+	IMSettingsServerPrivate *priv = server->priv;
+	IMSettingsModule *module;
+	gboolean retval = TRUE;
+
+	if ((module = g_hash_table_lookup(priv->modules, modname)) != NULL) {
+		g_hash_table_remove(priv->modules, modname);
+	} else {
+		retval = FALSE;
+	}
+
+	return retval;
+}
+
 static void
 imsettings_server_bus_signal(GDBusConnection *connection,
 			     const gchar     *sender,
@@ -941,7 +1002,16 @@ imsettings_server_bus_method_call(GDBusConnection       *connection,
 			      &lang, &module, &update);
 		ret = imsettings_server_cb_switch_im(server, lang, module, update, &info, &err);
 		if (ret) {
-			g_signal_emit(server, signals[SIG_CHANGE_IM], 0, info);
+			GHashTableIter iter;
+			gpointer key, val;
+			IMSettingsModule *mod;
+
+			g_hash_table_iter_init(&iter, priv->modules);
+			while (g_hash_table_iter_next(&iter, &key, &val)) {
+				mod = IMSETTINGS_MODULE (val);
+				if (mod)
+					imsettings_module_switch_im(mod, info);
+			}
 		}
 		if (info)
 			g_object_unref(info);
@@ -970,6 +1040,22 @@ imsettings_server_bus_method_call(GDBusConnection       *connection,
 		} else {
 			value = g_variant_new_tuple(&v, 1);
 		}
+	} else if (g_strcmp0(method_name, "LoadModule") == 0) {
+		const gchar *modname;
+		gboolean ret;
+
+		g_variant_get(parameters, "(&s)", &modname);
+
+		ret = imsettings_server_cb_load_module(server, modname);
+		value = g_variant_new("(b)", ret);
+	} else if (g_strcmp0(method_name, "UnloadModule") == 0) {
+		const gchar *modname;
+		gboolean ret;
+
+		g_variant_get(parameters, "(&s)", &modname);
+
+		ret = imsettings_server_cb_unload_module(server, modname);
+		value = g_variant_new("(b)", ret);
 	}
   finalize:
 	if (err) {
@@ -1045,6 +1131,8 @@ imsettings_server_bus_on_name_acquired(GDBusConnection *connection,
 	      "  [XINPUTRC=%s]", imsettings_server_get_xinputrcdir(server));
 	g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
 	      "  [XINPUT=%s]\n", imsettings_server_get_xinputdir(server));
+	g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
+	      "  [MODULE=%s]\n", imsettings_server_get_moduledir(server));
 }
 
 static void
@@ -1097,6 +1185,68 @@ imsettings_server_get_xinputdir(IMSettingsServer *server)
 	return priv->xinputdir;
 }
 
+static const gchar *
+imsettings_server_get_moduledir(IMSettingsServer *server)
+{
+	IMSettingsServerPrivate *priv = server->priv;
+
+	if (!priv->moduledir) {
+		priv->moduledir = g_strdup(IMSETTINGS_MODULE_PATH);
+	}
+	return priv->moduledir;
+}
+
+static void
+imsettings_server_load_modules(IMSettingsServer *server)
+{
+	GFile *file;
+	GFileEnumerator *e;
+	gchar **path_list;
+	gint i;
+	gboolean flag = FALSE;
+
+	path_list = g_strsplit(imsettings_server_get_moduledir(server),
+			       G_SEARCHPATH_SEPARATOR_S,
+			       -1);
+	for (i = 0; !flag && path_list[i] != NULL; i++) {
+		file = g_file_new_for_path(path_list[i]);
+		e = g_file_enumerate_children(file, "standard::*",
+					      G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
+					      NULL, NULL);
+		if (e) {
+			GFileInfo *info = NULL;
+			GError *err = NULL;
+			const gchar *n;
+			gchar *filename;
+
+			while (!flag) {
+				info = g_file_enumerator_next_file(e, NULL, &err);
+				if (!info && !err)
+					break;
+				if (err) {
+					g_warning("Unable to obtain the module information: %s",
+						  err->message);
+					g_clear_error(&err);
+					goto next;
+				}
+				n = g_file_info_get_name(info);
+				if (!n)
+					goto next;
+				g_print("%s\n", n);
+				filename = g_path_get_basename(n);
+
+				flag = imsettings_server_cb_load_module(server, filename);
+			  next:
+				if (info)
+					g_object_unref(info);
+			}
+			g_file_enumerator_close(e, NULL, NULL);
+			g_object_unref(e);
+		}
+		g_object_unref(file);
+	}
+}
+
 /*< public >*/
 
 /**
@@ -1114,7 +1264,8 @@ IMSettingsServer *
 imsettings_server_new(GDBusConnection *connection,
 		      const gchar     *homedir,
 		      const gchar     *xinputrcdir,
-		      const gchar     *xinputdir)
+		      const gchar     *xinputdir,
+		      const gchar     *moduledir)
 {
 	g_return_val_if_fail (G_IS_DBUS_CONNECTION (connection), NULL);
 
@@ -1123,6 +1274,7 @@ imsettings_server_new(GDBusConnection *connection,
 					       "homedir", homedir,
 					       "xinputrcdir", xinputrcdir,
 					       "xinputdir", xinputdir,
+					       "moduledir", moduledir,
 					       NULL));
 }
 
@@ -1145,6 +1297,8 @@ imsettings_server_start(IMSettingsServer *server,
 	g_return_if_fail (IMSETTINGS_IS_SERVER (server));
 
 	priv = server->priv;
+	imsettings_server_load_modules(server);
+
 	if (priv->owner == 0) {
 		if (replace)
 			flags |= G_BUS_NAME_OWNER_FLAGS_REPLACE;

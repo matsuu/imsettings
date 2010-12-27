@@ -5,17 +5,17 @@ if ENABLE_GCONF
 SUBDIRS += gconf
 endif
 if ENABLE_QT
-SUBDIRS += qt
+#SUBDIRS += qt
 endif
 if ENABLE_XFCE_MCS
-SUBDIRS += xfce_mcs
+#SUBDIRS += xfce_mcs
 endif
 if ENABLE_XFCE_XFCONF
-SUBDIRS += xfce_xfconf
+#SUBDIRS += xfce_xfconf
 endif
 if ENABLE_LXDE
-SUBDIRS += lxde
+#SUBDIRS += lxde
 endif
 if ENABLE_XIM
-SUBDIRS += xim
+#SUBDIRS += xim
 endif

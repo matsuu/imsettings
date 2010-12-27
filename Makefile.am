@@ -1,6 +1,6 @@
 NULL =
 AUTOMAKE_OPTIONS = dist-bzip2
-SUBDIRS = data imsettings imsettings-daemon utils po tests
+SUBDIRS = data imsettings imsettings-daemon backends utils po tests
 
 ACLOCAL_AMFLAGS =			\
 	-I m4macros			\

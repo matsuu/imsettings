@@ -66,7 +66,8 @@ GType             imsettings_server_get_type  (void) G_GNUC_CONST;
 IMSettingsServer *imsettings_server_new       (GDBusConnection *connection,
 					       const gchar     *homedir,
 					       const gchar     *xinputrcdir,
-					       const gchar     *xinputdir);
+					       const gchar     *xinputdir,
+					       const gchar     *moduledir);
 void              imsettings_server_start     (IMSettingsServer *server,
 					       gboolean          replace);
 

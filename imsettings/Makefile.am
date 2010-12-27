@@ -8,6 +8,7 @@ INCLUDES =							\
 	-DXINPUT_SUFFIX="\"$(XINPUT_SUFFIX)\""			\
 	-DXINPUTINFO_PATH="\"$(libexecdir)\""			\
 	-DICONDIR="\"$(datadir)/pixmaps\""			\
+	-DIMSETTINGS_MODULE_PATH="\"$(IMSETTINGS_MODULEDIR)\""	\
 	-I$(top_srcdir)/imsettings/				\
 	$(IMSETTINGS_CFLAGS)					\
 	$(NULL)
@@ -40,6 +41,7 @@ imsettings_public_headers =					\
 	imsettings.h						\
 	imsettings-client.h					\
 	imsettings-info.h					\
+	imsettings-module.h					\
 	imsettings-utils.h					\
 	$(NULL)	
 imsettings_private_headers =					\
@@ -54,6 +56,7 @@ imsettings_built_sources =					\
 imsettings_sources =						\
 	imsettings-client.c					\
 	imsettings-info.c					\
+	imsettings-module.c					\
 	imsettings-utils.c					\
 	$(imsettings_built_sources)				\
 	$(NULL)

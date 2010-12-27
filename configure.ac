@@ -63,6 +63,8 @@ AC_SUBST(DBUS_SERVICE_DIR)
 MOC=`pkg-config --variable moc_location QtCore`
 [ -z $MOC ] && MOC=/bin/true
 AC_SUBST(MOC)
+IMSETTINGS_MODULEDIR="${libdir}/imsettings"
+AC_SUBST(IMSETTINGS_MODULEDIR)
 
 dnl ======================================================================
 dnl functions testing
