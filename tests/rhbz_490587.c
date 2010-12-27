@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * rhbz_455363.c
- * Copyright (C) 2008-2009 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2010 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -28,14 +28,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "imsettings/imsettings.h"
-#include "imsettings/imsettings-request.h"
-#include "imsettings/imsettings-info-private.h"
-#include "imsettings/imsettings-utils.h"
+#include "imsettings.h"
+#include "imsettings-client.h"
+#include "imsettings-utils.h"
 #include "main.h"
 
-DBusConnection *dbus_conn;
-IMSettingsRequest *req;
+IMSettingsClient *client;
 
 /************************************************************/
 /* common functions                                         */
@@ -43,8 +41,7 @@ IMSettingsRequest *req;
 void
 setup(void)
 {
-	dbus_conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
+	client = imsettings_client_new(NULL);
 }
 
 void
@@ -52,8 +49,7 @@ teardown(void)
 {
 	imsettings_test_reload_daemons();
 
-	g_object_unref(req);
-	dbus_connection_unref(dbus_conn);
+	g_object_unref(client);
 }
 
 /************************************************************/
@@ -84,8 +80,7 @@ TDEF (issue) {
 
 	g_usleep(5 * G_USEC_PER_SEC);
 
-	fail_unless(imsettings_request_start_im(req, "SCIM", TRUE, &error), "Unable to start IM");
-	fail_unless(imsettings_request_stop_im(req, "SCIM", TRUE, TRUE, &error), "Unable to stop IM");
+	fail_unless(imsettings_client_switch_im(client, "none", TRUE, NULL, &error), "Unable to switch IM");
 	fail_unless(error == NULL, "Unable to stop IM: %s", error ? error->message : "unknown");
 
 	fail_unless(g_file_test(dot_xinputrc, G_FILE_TEST_EXISTS), "No .xinputrc created");

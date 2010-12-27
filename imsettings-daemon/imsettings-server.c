@@ -25,8 +25,11 @@
 #include "config.h"
 #endif
 
+#include <errno.h>
 #include <stdio.h>
+#include <sys/stat.h>
 #include <glib/gi18n-lib.h>
+#include <glib/gstdio.h>
 #include "imsettings.h"
 #include "imsettings-info.h"
 #include "imsettings-proc.h"
@@ -592,6 +595,10 @@ imsettings_server_cb_switch_im(IMSettingsServer  *server,
 {
 	IMSettingsServerPrivate *priv = server->priv;
 	GVariant *v;
+	gchar *conffile, *backupfile, *p, *n;
+	const gchar *homedir, *xinputfile;
+	struct stat st;
+	gint save_errno;
 
 	g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
 	      "Attempting to switch IM to %s [lang=%s, update=%s]",
@@ -636,6 +643,68 @@ imsettings_server_cb_switch_im(IMSettingsServer  *server,
 
 	priv->current_im = imsettings_proc_new(*info);
 	g_object_add_weak_pointer(G_OBJECT (priv->current_im), (gpointer *)&priv->current_im);
+
+	homedir = imsettings_server_get_homedir(server);
+	conffile = g_build_filename(homedir,
+				    IMSETTINGS_USER_XINPUT_CONF,
+				    NULL);
+	backupfile = g_build_filename(homedir,
+				      IMSETTINGS_USER_XINPUT_CONF ".bak",
+				      NULL);
+	xinputfile = imsettings_info_get_filename(*info);
+	p = g_path_get_dirname(xinputfile);
+	n = g_path_get_basename(xinputfile);
+	if (g_strcmp0(p, homedir) == 0 &&
+	    g_strcmp0(n, IMSETTINGS_USER_XINPUT_CONF ".bak") == 0) {
+		/* try to revert the backup file for the user specific conf file */
+		if (g_rename(backupfile, conffile) == -1) {
+			save_errno = errno;
+
+			g_set_error(error, G_FILE_ERROR,
+				    g_file_error_from_errno(save_errno),
+				    _("Failed to revert the backup file: %s"),
+				    g_strerror(save_errno));
+			goto end;
+		}
+	} else {
+		if (lstat(conffile, &st) == 0) {
+			if (!S_ISLNK (st.st_mode)) {
+				/* .xinputrc was maybe created by the hand. */
+				if (g_rename(conffile, backupfile) == -1) {
+					save_errno = errno;
+
+					g_set_error(error, G_FILE_ERROR,
+						    g_file_error_from_errno(save_errno),
+						    _("Failed to create a backup file: %s"),
+						    g_strerror(save_errno));
+					goto end;
+				}
+			} else {
+				if (g_unlink(conffile) == -1) {
+					save_errno = errno;
+
+					g_set_error(error, G_FILE_ERROR,
+						    g_file_error_from_errno(save_errno),
+						    _("Failed to remove a .xinputrc file: %s"),
+						    g_strerror(save_errno));
+					goto end;
+				}
+			}
+		}
+		if (symlink(xinputfile, conffile) == -1) {
+			save_errno = errno;
+
+			g_set_error(error, G_FILE_ERROR,
+				    g_file_error_from_errno(save_errno),
+				    _("Failed to create a symlink: %s"),
+				    g_strerror(save_errno));
+		}
+	}
+  end:
+	g_free(n);
+	g_free(p);
+	g_free(backupfile);
+	g_free(conffile);
 
 	return imsettings_proc_spawn(priv->current_im, error);
 }
