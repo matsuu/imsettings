@@ -4,12 +4,12 @@ NULL =
 INCLUDES =						\
 	-DIMSETTINGS_LOCALEDIR="\"$(datadir)/locale\""	\
 	-I$(top_srcdir)/imsettings			\
-	$(GCONF_CFLAGS)					\
+	$(XFCE_CFLAGS)					\
 	$(NULL)
 LIBS =							\
 	@LDFLAGS@					\
 	$(top_builddir)/imsettings/libimsettings.la	\
-	$(GCONF_LIBS)					\
+	$(XFCE_LIBS)					\
 	$(NULL)
 EXTRA_DIST =						\
 	$(NULL)
@@ -25,21 +25,21 @@ EXTRA_DIST =						\
 # Target platform
 imsettingsdir = $(IMSETTINGS_MODULEDIR)
 imsettings_LTLIBRARIES =				\
-	libimsettings-gconf.la				\
+	libimsettings-xfce.la				\
 	$(NULL)
 #
-libimsettings_gconf_la_SOURCES =			\
-	gconf-module.c					\
+libimsettings_xfce_la_SOURCES =				\
+	xfce-module.c					\
 	$(NULL)
-libimsettings_gconf_la_CFLAGS =				\
-	-DG_LOG_DOMAIN="\"IMSettings-GConf backend\""	\
+libimsettings_xfce_la_CFLAGS =				\
+	-DG_LOG_DOMAIN="\"IMSettings-XFCE backend\""	\
 	$(CFLAGS)					\
 	$(NULL)
-libimsettings_gconf_la_LDFLAGS =			\
+libimsettings_xfce_la_LDFLAGS =				\
 	-avoid-version					\
 	-module						\
 	$(LDFLAGS)					\
 	$(NULL)
-libimsettings_gconf_la_LIBADD =				\
+libimsettings_xfce_la_LIBADD =				\
 	$(LDADDS)					\
 	$(NULL)

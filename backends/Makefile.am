@@ -7,14 +7,11 @@ endif
 if ENABLE_QT
 #SUBDIRS += qt
 endif
-if ENABLE_XFCE_MCS
-#SUBDIRS += xfce_mcs
-endif
-if ENABLE_XFCE_XFCONF
-#SUBDIRS += xfce_xfconf
+if ENABLE_XFCE
+SUBDIRS += xfce
 endif
 if ENABLE_LXDE
-#SUBDIRS += lxde
+SUBDIRS += lxde
 endif
 if ENABLE_XIM
 #SUBDIRS += xim

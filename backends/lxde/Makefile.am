@@ -4,47 +4,42 @@ NULL =
 INCLUDES =						\
 	-DIMSETTINGS_LOCALEDIR="\"$(datadir)/locale\""	\
 	-DLXDE_CONFIGDIR="\"$(sysconfdir)/lxde\""	\
-	$(GCONF_CFLAGS)					\
+	-I$(top_srcdir)/imsettings			\
 	$(LXDE_CFLAGS)					\
 	$(NULL)
 LIBS =							\
 	@LDFLAGS@					\
-	$(GCONF_LIBS)					\
+	$(top_builddir)/imsettings/libimsettings.la	\
 	$(LXDE_LIBS)					\
 	$(NULL)
 EXTRA_DIST =						\
-	$(autostart_in_files)				\
-	$(NULL)
-DISTCLEANFILES =					\
-	$(autostart_DATA)				\
 	$(NULL)
 
 ##
 # Local definitions
-lxde_sources =						\
-	main.c						\
-	$(NULL)
-
 
 ##
 # Local Rules
-@INTLTOOL_DESKTOP_RULE@
 
 ##
 # Target platform
-bin_PROGRAMS =						\
-	imsettings-lxde-helper				\
+imsettingsdir = $(IMSETTINGS_MODULEDIR)
+imsettings_LTLIBRARIES =				\
+	libimsettings-lxde.la				\
 	$(NULL)
 #
-imsettings_lxde_helper_SOURCES =			\
-	$(lxde_sources)					\
+libimsettings_lxde_la_SOURCES =				\
+	lxde-module.c					\
 	$(NULL)
-imsettings_lxde_helper_CFLAGS =				\
-	-DG_LOG_DOMAIN="\"imsettings-lxde-helper\""	\
+libimsettings_lxde_la_CFLAGS =				\
+	-DG_LOG_DOMAIN="\"IMSettings-LXDE backend\""	\
+	$(CFLAGS)					\
 	$(NULL)
-#
-autostartdir = $(sysconfdir)/xdg/autostart
-autostart_in_files =					\
-	imsettings-lxde-helper.desktop.in		\
+libimsettings_lxde_la_LDFLAGS =				\
+	-avoid-version					\
+	-module						\
+	$(LDFLAGS)					\
 	$(NULL)
-autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
+libimsettings_lxde_la_LIBADD =				\
+	$(LDADDS)					\
+	$(NULL)

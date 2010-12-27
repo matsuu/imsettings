@@ -98,66 +98,58 @@ PKG_CHECK_MODULES(LIBNOTIFY, libnotify, [
 		IMDAEMON_LIBS="$LIBNOTIFY_LIBS"])
 	CFLAGS="$save_CFLAGS"
 ])
-PKG_CHECK_MODULES(GTHREAD, gthread-2.0)
 PKG_CHECK_MODULES(X11, x11)
-PKG_CHECK_MODULES(CHECK, check >= $CHECK_REQUIRED,
-	[use_check="yes"],
-	[use_check="no"])
+# for gconf backend
 PKG_CHECK_MODULES(GCONF, gconf-2.0,
 	[use_gconf="yes"],
 	[use_gconf="no"])
+# for lxde backend
+PKG_CHECK_MODULES(LXDE, glib-2.0,
+	[use_lxde="yes"],
+	[use_lxde="no"])
+# for xfce backend
+PKG_CHECK_MODULES(XFCE,	libxfconf-0,
+	[use_xfce="yes"],
+	[use_xfce="no"])
 PKG_CHECK_MODULES(QT, QtCore
 		      QtDBus,
 	[use_qt="yes"],
 	[use_qt="no"])
-PKG_CHECK_MODULES(XFCE_MCS, gconf-2.0
-			libxfce4mcs-manager-1.0
-			libxfce4util-1.0
-			xfce-mcs-manager,
-	[use_xfce_mcs="yes"],
-	[use_xfce_mcs="no"])
-PKG_CHECK_MODULES(XFCE_XFCONF, gconf-2.0
-			libxfconf-0,
-	[use_xfce_xfconf="yes"],
-	[use_xfce_xfconf="no"])
-PKG_CHECK_MODULES(LXDE, gconf-2.0 gobject-2.0,
-	[use_lxde="yes"],
-	[use_lxde="no"])
 PKG_CHECK_MODULES(XIM, libgxim >= $LIBGXIM_REQUIRED
 		       gdk-2.0 >= $GDK_REQUIRED,
 	[use_xim="yes"],
 	[use_xim="no"])
+# for unit tests
+PKG_CHECK_MODULES(GTHREAD, gthread-2.0)
+PKG_CHECK_MODULES(CHECK, check >= $CHECK_REQUIRED,
+	[use_check="yes"],
+	[use_check="no"])
 
 AC_SUBST(IMDAEMON_CFLAGS)
 AC_SUBST(IMDAEMON_LIBS)
 AC_SUBST(IMSETTINGS_CFLAGS)
 AC_SUBST(IMSETTINGS_LIBS)
-AC_SUBST(IMINFO_CFLAGS)
-AC_SUBST(IMINFO_LIBS)
 AC_SUBST(X11_CFLAGS)
 AC_SUBST(X11_LIBS)
 AC_SUBST(GCONF_CFLAGS)
 AC_SUBST(GCONF_LIBS)
 AC_SUBST(QT_CFLAGS)
 AC_SUBST(QT_LIBS)
-AC_SUBST(XFCE_MCS_CFLAGS)
-AC_SUBST(XFCE_MCS_LIBS)
-AC_SUBST(XFCE_XFCONF_CFLAGS)
-AC_SUBST(XFCE_XFCONF_LIBS)
+AC_SUBST(XFCE_CFLAGS)
+AC_SUBST(XFCE_LIBS)
 AC_SUBST(LXDE_CFLAGS)
 AC_SUBST(LXDE_LIBS)
 AC_SUBST(XIM_CFLAGS)
 AC_SUBST(XIM_LIBS)
-AC_SUBST(XSETTINGS_CFLAGS)
-AC_SUBST(XSETTINGS_LIBS)
 AC_SUBST(CHECK_CFLAGS)
 AC_SUBST(CHECK_LIBS)
+AC_SUBST(GTHREAD_CFLAGS)
+AC_SUBST(GTHREAD_LIBS)
 
 AM_CONDITIONAL(ENABLE_UNIT_TEST, test x$use_check != xno)
 AM_CONDITIONAL(ENABLE_GCONF, test x$use_gconf != xno)
 AM_CONDITIONAL(ENABLE_QT, test x$use_qt != xno)
-AM_CONDITIONAL(ENABLE_XFCE_MCS, test x$use_xfce_mcs != xno)
-AM_CONDITIONAL(ENABLE_XFCE_XFCONF, test x$use_xfce_xfconf != xno)
+AM_CONDITIONAL(ENABLE_XFCE, test x$use_xfce != xno)
 AM_CONDITIONAL(ENABLE_LXDE, test x$use_lxde != xno)
 AM_CONDITIONAL(ENABLE_XIM, test x$use_xim != xno)
 
@@ -292,8 +284,7 @@ AC_CONFIG_FILES([
 	backends/gconf/Makefile
 	backends/lxde/Makefile
 	backends/qt/Makefile
-	backends/xfce_mcs/Makefile
-	backends/xfce_xfconf/Makefile
+	backends/xfce/Makefile
 	backends/xim/Makefile
 	data/Makefile
 	data/none.in

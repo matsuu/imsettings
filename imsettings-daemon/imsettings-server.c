@@ -1208,7 +1208,7 @@ imsettings_server_load_modules(IMSettingsServer *server)
 	path_list = g_strsplit(imsettings_server_get_moduledir(server),
 			       G_SEARCHPATH_SEPARATOR_S,
 			       -1);
-	for (i = 0; !flag && path_list[i] != NULL; i++) {
+	for (i = 0; path_list[i] != NULL; i++) {
 		file = g_file_new_for_path(path_list[i]);
 		e = g_file_enumerate_children(file, "standard::*",
 					      G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
@@ -1219,7 +1219,7 @@ imsettings_server_load_modules(IMSettingsServer *server)
 			const gchar *n;
 			gchar *filename;
 
-			while (!flag) {
+			while (1) {
 				info = g_file_enumerator_next_file(e, NULL, &err);
 				if (!info && !err)
 					break;
@@ -1232,10 +1232,10 @@ imsettings_server_load_modules(IMSettingsServer *server)
 				n = g_file_info_get_name(info);
 				if (!n)
 					goto next;
-				g_print("%s\n", n);
 				filename = g_path_get_basename(n);
 
 				flag = imsettings_server_cb_load_module(server, filename);
+				g_free(filename);
 			  next:
 				if (info)
 					g_object_unref(info);
