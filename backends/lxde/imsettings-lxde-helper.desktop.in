@@ -1,9 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-Version=1.0
-Type=Application
-_Name=Helper application for imsettings
-_Comment=Helper application that delivers GTK+ immodule name between GConf and lxde-settings-daemon
-OnlyShowIn=LXDE;
-Exec=imsettings-lxde-helper
-Terminal=false
