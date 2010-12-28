@@ -57,7 +57,7 @@ main(int    argc,
 		goto end;
 	}
 	if (imsettings_client_get_version(client, NULL, &error) != IMSETTINGS_SETTINGS_API_VERSION) {
-		g_printerr(_("Currently a different version of imsettings is running.\nRunning \"imsettings-reload -f\" may help but it will restart the Input Method\n"));
+		g_printerr(_("Currently a different version of imsettings is running.\nRunning \"imsettings-reload\" may help but it will restart the Input Method\n"));
 		retval = 1;
 		goto end;
 	}
