@@ -5,7 +5,7 @@ if ENABLE_GCONF
 SUBDIRS += gconf
 endif
 if ENABLE_QT
-#SUBDIRS += qt
+SUBDIRS += qt
 endif
 if ENABLE_XFCE
 SUBDIRS += xfce

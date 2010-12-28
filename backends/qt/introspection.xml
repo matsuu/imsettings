@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<node name="/com/redhat/imsettings/Qt">
-  <interface name="com.redhat.imsettings.Qt">
-    <method name="ChangeTo">
-      <arg type="s" name="module" direction="in" />
-      <arg type="b" name="ret" direction="out" />
-    </method>
-  </interface>
-</node>

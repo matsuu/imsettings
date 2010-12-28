@@ -37,18 +37,6 @@ G_BEGIN_DECLS
 #define IMSETTINGS_IS_INFO_CLASS(_c_)	(G_TYPE_CHECK_CLASS_TYPE ((_c_), IMSETTINGS_TYPE_INFO))
 
 
-typedef struct _IMSettingsInfoClass	IMSettingsInfoClass;
-typedef struct _IMSettingsInfo		IMSettingsInfo;
-typedef struct _IMSettingsInfoPrivate	IMSettingsInfoPrivate;
-typedef enum _IMSettingsInfoType	IMSettingsInfoType;
-
-struct _IMSettingsInfoClass {
-	GObjectClass parent_class;
-};
-struct _IMSettingsInfo {
-	GObject                parent_instance;
-	IMSettingsInfoPrivate *priv;
-};
 enum _IMSettingsInfoType {
 	IMSETTINGS_INFO_GTK_IM_MODULE = 0,
 	IMSETTINGS_INFO_QT_IM_MODULE,
@@ -68,6 +56,19 @@ enum _IMSettingsInfoType {
 	IMSETTINGS_INFO_FILENAME,
 	IMSETTINGS_INFO_IS_XIM,
 	LAST_IMSETTINGS_INFO
+};
+
+typedef struct _IMSettingsInfoClass	IMSettingsInfoClass;
+typedef struct _IMSettingsInfo		IMSettingsInfo;
+typedef struct _IMSettingsInfoPrivate	IMSettingsInfoPrivate;
+typedef enum _IMSettingsInfoType	IMSettingsInfoType;
+
+struct _IMSettingsInfoClass {
+	GObjectClass parent_class;
+};
+struct _IMSettingsInfo {
+	GObject                parent_instance;
+	IMSettingsInfoPrivate *priv;
 };
 
 
