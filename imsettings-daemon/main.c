@@ -34,6 +34,7 @@ static void _sig_handler(int signum);
 
 static IMSettingsServer *server = NULL;
 static GQuark __loop_quark = 0;
+static gboolean running = TRUE;
 
 /*< private >*/
 static int
@@ -51,8 +52,6 @@ _setup_signal(int signum)
 static void
 _sig_handler(int signum)
 {
-	GMainLoop *loop;
-
 	if (!server) {
 		g_print("\nReceived a signal %d. exiting...\n", signum);
 		exit(1);
@@ -62,9 +61,7 @@ _sig_handler(int signum)
 		    _setup_signal(SIGTERM);
 		    break;
 	    case SIGINT:
-		    loop = g_object_get_qdata(G_OBJECT (server),
-					      __loop_quark);
-		    g_main_loop_quit(loop);
+		    running = FALSE;
 		    _setup_signal(SIGINT);
 		    break;
 	    default:
@@ -76,10 +73,21 @@ _sig_handler(int signum)
 static void
 _disconnected_cb(IMSettingsServer *server)
 {
-	GMainLoop *loop = g_object_get_qdata(G_OBJECT (server),
-					     __loop_quark);
+	running = FALSE;
+}
 
-	g_main_loop_quit(loop);
+static gboolean
+_loop_cb(gpointer data)
+{
+	if (!running) {
+		GMainLoop *loop = data;
+
+		g_main_loop_quit(loop);
+
+		return FALSE;
+	}
+
+	return TRUE;
 }
 
 /*< public >*/
@@ -158,12 +166,12 @@ main(int argc, char **argv)
 		     "logging", !arg_no_logfile,
 		     NULL);
 
+	g_idle_add(_loop_cb, loop);
 	imsettings_server_start(server, arg_replace);
 	g_main_loop_run(loop);
 
 	g_print("\nExiting...\n");
 
-	g_main_loop_unref(loop);
 	g_object_unref(server);
 	g_object_unref(connection);
 
