@@ -111,8 +111,8 @@ PKG_CHECK_MODULES(LXDE, glib-2.0,
 PKG_CHECK_MODULES(XFCE,	libxfconf-0,
 	[use_xfce="yes"],
 	[use_xfce="no"])
-PKG_CHECK_MODULES(QT, QtCore
-		      QtDBus,
+# for qt backend
+PKG_CHECK_MODULES(QT, QtCore,
 	[use_qt="yes"],
 	[use_qt="no"])
 PKG_CHECK_MODULES(XIM, libgxim >= $LIBGXIM_REQUIRED
