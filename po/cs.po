@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: anaconda.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-24 18:25+0900\n"
+"POT-Creation-Date: 2010-12-28 13:36+0900\n"
 "PO-Revision-Date: 2008-04-07 21:57+0200\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <fedora-cs-list@redhat.com>\n"
@@ -20,37 +20,6 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-
-#: ../backends/gconf/main.c:184
-msgid "Replace the running settings daemon with new instance."
-msgstr ""
-
-#: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../imsettings-daemon/main.c:120 ../utils/imsettings-reload.c:64
-#: ../utils/imsettings-switch.c:78
-#, fuzzy
-msgid "Unknown error in parsing the command lines."
-msgstr "Neznámá chyba při zpracovávání řádků %%ksappend: %s"
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:1
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:1
-msgid "Helper application for imsettings"
-msgstr ""
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:2
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and lxde-"
-"settings-daemon"
-msgstr ""
-
-#: ../backends/xfce_mcs/imsettings_plugin.c:88
-msgid "Button Label|Input Method"
-msgstr ""
-
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
-msgstr ""
 
 #: ../backends/xim/loopback.c:223
 msgid "Synchronous"
@@ -84,6 +53,12 @@ msgstr ""
 msgid "XIM"
 msgstr ""
 
+#: ../backends/xim/main.c:179 ../imsettings-daemon/main.c:121
+#: ../utils/imsettings-reload.c:64 ../utils/imsettings-switch.c:78
+#, fuzzy
+msgid "Unknown error in parsing the command lines."
+msgstr "Neznámá chyba při zpracovávání řádků %%ksappend: %s"
+
 #: ../backends/xim/proxy.c:2968
 #, fuzzy
 msgid "XIM server name"
@@ -108,6 +83,14 @@ msgstr ""
 
 #: ../imsettings/imsettings-client.c:144
 msgid "Locale to get the imsettings information"
+msgstr ""
+
+#: ../imsettings/imsettings-module.c:121
+msgid "Name"
+msgstr ""
+
+#: ../imsettings/imsettings-module.c:122
+msgid "A module name for imsettings backend"
 msgstr ""
 
 #: ../imsettings-daemon/imsettings-proc.c:192
@@ -135,66 +118,96 @@ msgstr ""
 msgid "A GObject to be a IMSettingsInfo"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:366
+#: ../imsettings-daemon/imsettings-server.c:390
 #, fuzzy
 msgid "DBus connection"
 msgstr "Výběr myši"
 
-#: ../imsettings-daemon/imsettings-server.c:367
+#: ../imsettings-daemon/imsettings-server.c:391
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "Výběr myši"
 
-#: ../imsettings-daemon/imsettings-server.c:372
+#: ../imsettings-daemon/imsettings-server.c:396
 msgid "Logging"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:373
+#: ../imsettings-daemon/imsettings-server.c:397
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:378
-#: ../imsettings-daemon/imsettings-server.c:379
+#: ../imsettings-daemon/imsettings-server.c:402
+#: ../imsettings-daemon/imsettings-server.c:403
 #, fuzzy
 msgid "Home directory"
 msgstr "NFS adresář"
 
-#: ../imsettings-daemon/imsettings-server.c:384
-#: ../imsettings-daemon/imsettings-server.c:385
+#: ../imsettings-daemon/imsettings-server.c:408
+#: ../imsettings-daemon/imsettings-server.c:409
 #, fuzzy
 msgid "xinputrc directory"
 msgstr "NFS adresář"
 
-#: ../imsettings-daemon/imsettings-server.c:390
-#: ../imsettings-daemon/imsettings-server.c:391
+#: ../imsettings-daemon/imsettings-server.c:414
+#: ../imsettings-daemon/imsettings-server.c:415
 #, fuzzy
 msgid "xinput directory"
 msgstr "NFS adresář"
 
-#: ../imsettings-daemon/imsettings-server.c:613
+#: ../imsettings-daemon/imsettings-server.c:420
+#, fuzzy
+msgid "module directory"
+msgstr "NFS adresář"
+
+#: ../imsettings-daemon/imsettings-server.c:421
+#, fuzzy
+msgid "IMSettings module directory"
+msgstr "NFS adresář"
+
+#: ../imsettings-daemon/imsettings-server.c:644
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:622
-#: ../imsettings-daemon/imsettings-server.c:666
-#: ../imsettings-daemon/imsettings-server.c:706
-#: ../imsettings-daemon/imsettings-server.c:857
+#: ../imsettings-daemon/imsettings-server.c:653
+#: ../imsettings-daemon/imsettings-server.c:760
+#: ../imsettings-daemon/imsettings-server.c:801
+#: ../imsettings-daemon/imsettings-server.c:991
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:659
+#: ../imsettings-daemon/imsettings-server.c:689
+#, fuzzy, c-format
+msgid "Failed to revert the backup file: %s"
+msgstr "Chci _vytvořit odkládací soubor"
+
+#: ../imsettings-daemon/imsettings-server.c:702
+#, fuzzy, c-format
+msgid "Failed to create a backup file: %s"
+msgstr "Chci _vytvořit odkládací soubor"
+
+#: ../imsettings-daemon/imsettings-server.c:712
+#, fuzzy, c-format
+msgid "Failed to remove a .xinputrc file: %s"
+msgstr "Nemohu číst adresář %s: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:723
+#, fuzzy, c-format
+msgid "Failed to create a symlink: %s"
+msgstr "Nemohu číst adresář %s: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:753
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:698
+#: ../imsettings-daemon/imsettings-server.c:793
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:849
+#: ../imsettings-daemon/imsettings-server.c:983
 #, c-format
 msgid "No such input method: %s"
 msgstr ""
@@ -208,7 +221,7 @@ msgid "Set the system-wide xinputrc directory (for debugging purpose)"
 msgstr ""
 
 #: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
-#: ../imsettings-daemon/main.c:98
+#: ../imsettings-daemon/main.c:98 ../imsettings-daemon/main.c:99
 msgid "DIR"
 msgstr ""
 
@@ -224,6 +237,11 @@ msgstr "_Pokročilé nastavení ukládání dat"
 
 #: ../imsettings-daemon/main.c:99
 #, fuzzy
+msgid "Set the imsettings module directory (for debugging purpose)"
+msgstr "_Pokročilé nastavení ukládání dat"
+
+#: ../imsettings-daemon/main.c:100
+#, fuzzy
 msgid "Do not create a log file."
 msgstr "_Nechci vytvořit odkládací soubor"
 
@@ -234,11 +252,11 @@ msgid "Unable to create a client instance."
 msgstr "Nemohu přenést instalační obraz."
 
 #: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:60
+#: ../utils/imsettings-switch.c:89
 #, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload -f\" may help but it will restart the Input "
-"Method\n"
+"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
 msgstr ""
 
 #: ../utils/imsettings-info.c:82
@@ -288,13 +306,6 @@ msgstr "Metoda zotavení"
 #. For translators: this is a translation for the command-line option.
 #: ../utils/imsettings-switch.c:54
 msgid "Read xinputrc to determine the input method"
-msgstr ""
-
-#: ../utils/imsettings-switch.c:89
-#, c-format
-msgid ""
-"Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
 msgstr ""
 
 #: ../utils/imsettings-switch.c:104
@@ -381,18 +392,6 @@ msgstr "Začátek"
 
 #, fuzzy
 #~ msgid "Failed to get a place of home directory."
-#~ msgstr "Nemohu číst adresář %s: %s"
-
-#, fuzzy
-#~ msgid "Failed to create a backup file: %s"
-#~ msgstr "Chci _vytvořit odkládací soubor"
-
-#, fuzzy
-#~ msgid "Failed to remove a .xinputrc file: %s"
-#~ msgstr "Nemohu číst adresář %s: %s"
-
-#, fuzzy
-#~ msgid "Failed to make a symlink: %s"
 #~ msgstr "Nemohu číst adresář %s: %s"
 
 #, fuzzy

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser 0.3.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-24 18:25+0900\n"
+"POT-Creation-Date: 2010-12-28 13:36+0900\n"
 "PO-Revision-Date: 2007-02-23 04:43+0700\n"
 "Last-Translator: Teguh DC <dheche@bradjamoesti.or.id>\n"
 "Language-Team: Indonesian\n"
@@ -16,37 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: ../backends/gconf/main.c:184
-msgid "Replace the running settings daemon with new instance."
-msgstr ""
-
-#: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../imsettings-daemon/main.c:120 ../utils/imsettings-reload.c:64
-#: ../utils/imsettings-switch.c:78
-msgid "Unknown error in parsing the command lines."
-msgstr ""
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:1
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:1
-msgid "Helper application for imsettings"
-msgstr ""
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:2
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and lxde-"
-"settings-daemon"
-msgstr ""
-
-#: ../backends/xfce_mcs/imsettings_plugin.c:88
-#, fuzzy
-msgid "Button Label|Input Method"
-msgstr "Metode Masukan"
-
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
-msgstr ""
 
 #: ../backends/xim/loopback.c:223
 msgid "Synchronous"
@@ -80,6 +49,11 @@ msgstr ""
 msgid "XIM"
 msgstr ""
 
+#: ../backends/xim/main.c:179 ../imsettings-daemon/main.c:121
+#: ../utils/imsettings-reload.c:64 ../utils/imsettings-switch.c:78
+msgid "Unknown error in parsing the command lines."
+msgstr ""
+
 #: ../backends/xim/proxy.c:2968
 msgid "XIM server name"
 msgstr ""
@@ -102,6 +76,14 @@ msgstr ""
 
 #: ../imsettings/imsettings-client.c:144
 msgid "Locale to get the imsettings information"
+msgstr ""
+
+#: ../imsettings/imsettings-module.c:121
+msgid "Name"
+msgstr ""
+
+#: ../imsettings/imsettings-module.c:122
+msgid "A module name for imsettings backend"
 msgstr ""
 
 #: ../imsettings-daemon/imsettings-proc.c:192
@@ -129,61 +111,89 @@ msgstr ""
 msgid "A GObject to be a IMSettingsInfo"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:366
+#: ../imsettings-daemon/imsettings-server.c:390
 msgid "DBus connection"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:367
+#: ../imsettings-daemon/imsettings-server.c:391
 msgid "A GObject to be a DBus connection"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:372
+#: ../imsettings-daemon/imsettings-server.c:396
 msgid "Logging"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:373
+#: ../imsettings-daemon/imsettings-server.c:397
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:378
-#: ../imsettings-daemon/imsettings-server.c:379
+#: ../imsettings-daemon/imsettings-server.c:402
+#: ../imsettings-daemon/imsettings-server.c:403
 msgid "Home directory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:384
-#: ../imsettings-daemon/imsettings-server.c:385
+#: ../imsettings-daemon/imsettings-server.c:408
+#: ../imsettings-daemon/imsettings-server.c:409
 msgid "xinputrc directory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:390
-#: ../imsettings-daemon/imsettings-server.c:391
+#: ../imsettings-daemon/imsettings-server.c:414
+#: ../imsettings-daemon/imsettings-server.c:415
 msgid "xinput directory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:613
+#: ../imsettings-daemon/imsettings-server.c:420
+msgid "module directory"
+msgstr ""
+
+#: ../imsettings-daemon/imsettings-server.c:421
+msgid "IMSettings module directory"
+msgstr ""
+
+#: ../imsettings-daemon/imsettings-server.c:644
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:622
-#: ../imsettings-daemon/imsettings-server.c:666
-#: ../imsettings-daemon/imsettings-server.c:706
-#: ../imsettings-daemon/imsettings-server.c:857
+#: ../imsettings-daemon/imsettings-server.c:653
+#: ../imsettings-daemon/imsettings-server.c:760
+#: ../imsettings-daemon/imsettings-server.c:801
+#: ../imsettings-daemon/imsettings-server.c:991
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:659
+#: ../imsettings-daemon/imsettings-server.c:689
+#, fuzzy, c-format
+msgid "Failed to revert the backup file: %s"
+msgstr "Jangan pernah gunakan metode masukan"
+
+#: ../imsettings-daemon/imsettings-server.c:702
+#, fuzzy, c-format
+msgid "Failed to create a backup file: %s"
+msgstr "Jangan pernah gunakan metode masukan"
+
+#: ../imsettings-daemon/imsettings-server.c:712
+#, c-format
+msgid "Failed to remove a .xinputrc file: %s"
+msgstr ""
+
+#: ../imsettings-daemon/imsettings-server.c:723
+#, fuzzy, c-format
+msgid "Failed to create a symlink: %s"
+msgstr "Jangan pernah gunakan metode masukan"
+
+#: ../imsettings-daemon/imsettings-server.c:753
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:698
+#: ../imsettings-daemon/imsettings-server.c:793
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:849
+#: ../imsettings-daemon/imsettings-server.c:983
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "Metode Masukan"
@@ -197,7 +207,7 @@ msgid "Set the system-wide xinputrc directory (for debugging purpose)"
 msgstr ""
 
 #: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
-#: ../imsettings-daemon/main.c:98
+#: ../imsettings-daemon/main.c:98 ../imsettings-daemon/main.c:99
 msgid "DIR"
 msgstr ""
 
@@ -210,6 +220,10 @@ msgid "Set a home directory (for debugging purpose)"
 msgstr ""
 
 #: ../imsettings-daemon/main.c:99
+msgid "Set the imsettings module directory (for debugging purpose)"
+msgstr ""
+
+#: ../imsettings-daemon/main.c:100
 msgid "Do not create a log file."
 msgstr ""
 
@@ -220,11 +234,11 @@ msgid "Unable to create a client instance."
 msgstr ""
 
 #: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:60
+#: ../utils/imsettings-switch.c:89
 #, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload -f\" may help but it will restart the Input "
-"Method\n"
+"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
 msgstr ""
 
 #: ../utils/imsettings-info.c:82
@@ -275,13 +289,6 @@ msgstr ""
 msgid "Read xinputrc to determine the input method"
 msgstr ""
 
-#: ../utils/imsettings-switch.c:89
-#, c-format
-msgid ""
-"Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
-msgstr ""
-
 #: ../utils/imsettings-switch.c:104
 #, fuzzy, c-format
 msgid "No Input Method running to be restarted.\n"
@@ -291,6 +298,10 @@ msgstr "Metode Masukan"
 #, fuzzy, c-format
 msgid "Restarted %s"
 msgstr "Jangan pernah gunakan metode masukan"
+
+#, fuzzy
+#~ msgid "Button Label|Input Method"
+#~ msgstr "Metode Masukan"
 
 #, fuzzy
 #~ msgid "A shortcut key to connect to/disconnect from Input Method"
@@ -303,14 +314,6 @@ msgstr "Jangan pernah gunakan metode masukan"
 #, fuzzy
 #~ msgid "Left-click on the icon to connect to/disconnect from Input Method."
 #~ msgstr "Pergunakan metode masukan kustom"
-
-#, fuzzy
-#~ msgid "Failed to get a session bus.\n"
-#~ msgstr "Jangan pernah gunakan metode masukan"
-
-#, fuzzy
-#~ msgid "Failed to restart IM process `%s'\n"
-#~ msgstr "Jangan pernah gunakan metode masukan"
 
 #, fuzzy
 #~ msgid "Start Input Method if not yet running."

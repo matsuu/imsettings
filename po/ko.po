@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.ko\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-24 18:25+0900\n"
+"POT-Creation-Date: 2010-12-28 13:36+0900\n"
 "PO-Revision-Date: 2010-03-31 15:14+1000\n"
 "Last-Translator: Hyunsok Oh <hoh@redhat.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -21,37 +21,6 @@ msgstr ""
 "Plural-Forms:  nplurals=1; plural=0;\n"
 "\n"
 "X-Generator: KBabel 1.11.4\n"
-
-#: ../backends/gconf/main.c:184
-msgid "Replace the running settings daemon with new instance."
-msgstr "실행 중인 설정 데몬을 새 인스턴스로 교체합니다. "
-
-#: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../imsettings-daemon/main.c:120 ../utils/imsettings-reload.c:64
-#: ../utils/imsettings-switch.c:78
-msgid "Unknown error in parsing the command lines."
-msgstr "명령행을 구문 분석하는 도중 알려지지 않은 오류가 발생했습니다. "
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:1
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:1
-msgid "Helper application for imsettings"
-msgstr "imsettings 용 지원 프로그램  "
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:2
-#, fuzzy
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and lxde-"
-"settings-daemon"
-msgstr "GConf와 Xfconf 사이에서 GTK+ immodule 이름을 전송하는 지원 프로그램"
-
-#: ../backends/xfce_mcs/imsettings_plugin.c:88
-msgid "Button Label|Input Method"
-msgstr "버튼 레이블|입력 방식  "
-
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
-msgstr "GConf와 Xfconf 사이에서 GTK+ immodule 이름을 전송하는 지원 프로그램"
 
 #: ../backends/xim/loopback.c:223
 msgid "Synchronous"
@@ -85,6 +54,11 @@ msgstr "XIM 서버 연결 (디버깅 목적 전용)  "
 msgid "XIM"
 msgstr "XIM"
 
+#: ../backends/xim/main.c:179 ../imsettings-daemon/main.c:121
+#: ../utils/imsettings-reload.c:64 ../utils/imsettings-switch.c:78
+msgid "Unknown error in parsing the command lines."
+msgstr "명령행을 구문 분석하는 도중 알려지지 않은 오류가 발생했습니다. "
+
 #: ../backends/xim/proxy.c:2968
 msgid "XIM server name"
 msgstr "XIM 서버 이름 "
@@ -108,6 +82,15 @@ msgstr "로케일 "
 #: ../imsettings/imsettings-client.c:144
 msgid "Locale to get the imsettings information"
 msgstr "imsettings 정보를 얻기 위한 로케일 "
+
+#: ../imsettings/imsettings-module.c:121
+msgid "Name"
+msgstr ""
+
+#: ../imsettings/imsettings-module.c:122
+#, fuzzy
+msgid "A module name for imsettings backend"
+msgstr "Qt 용으로 사용할 모듈 이름 "
 
 #: ../imsettings-daemon/imsettings-proc.c:192
 #, c-format
@@ -138,64 +121,94 @@ msgstr "IMSettings 애플릿  "
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "DBus 연결 대상 "
 
-#: ../imsettings-daemon/imsettings-server.c:366
+#: ../imsettings-daemon/imsettings-server.c:390
 msgid "DBus connection"
 msgstr "DBus 연결 "
 
-#: ../imsettings-daemon/imsettings-server.c:367
+#: ../imsettings-daemon/imsettings-server.c:391
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "DBus 연결 대상 "
 
-#: ../imsettings-daemon/imsettings-server.c:372
+#: ../imsettings-daemon/imsettings-server.c:396
 #, fuzzy
 msgid "Logging"
 msgstr "로깅  "
 
-#: ../imsettings-daemon/imsettings-server.c:373
+#: ../imsettings-daemon/imsettings-server.c:397
 #, fuzzy
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr "로깅 기능 활성화 여부에 대한 플래그  "
 
-#: ../imsettings-daemon/imsettings-server.c:378
-#: ../imsettings-daemon/imsettings-server.c:379
+#: ../imsettings-daemon/imsettings-server.c:402
+#: ../imsettings-daemon/imsettings-server.c:403
 msgid "Home directory"
 msgstr "홈 디렉토리  "
 
-#: ../imsettings-daemon/imsettings-server.c:384
-#: ../imsettings-daemon/imsettings-server.c:385
+#: ../imsettings-daemon/imsettings-server.c:408
+#: ../imsettings-daemon/imsettings-server.c:409
 msgid "xinputrc directory"
 msgstr "xinputrc 디렉토리  "
 
-#: ../imsettings-daemon/imsettings-server.c:390
-#: ../imsettings-daemon/imsettings-server.c:391
+#: ../imsettings-daemon/imsettings-server.c:414
+#: ../imsettings-daemon/imsettings-server.c:415
 msgid "xinput directory"
 msgstr "xinput 디렉토리  "
 
-#: ../imsettings-daemon/imsettings-server.c:613
+#: ../imsettings-daemon/imsettings-server.c:420
+#, fuzzy
+msgid "module directory"
+msgstr "홈 디렉토리  "
+
+#: ../imsettings-daemon/imsettings-server.c:421
+#, fuzzy
+msgid "IMSettings module directory"
+msgstr "IMSettings 애플릿 설정  "
+
+#: ../imsettings-daemon/imsettings-server.c:644
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "시스템에 없는 입력 방식: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:622
-#: ../imsettings-daemon/imsettings-server.c:666
-#: ../imsettings-daemon/imsettings-server.c:706
-#: ../imsettings-daemon/imsettings-server.c:857
+#: ../imsettings-daemon/imsettings-server.c:653
+#: ../imsettings-daemon/imsettings-server.c:760
+#: ../imsettings-daemon/imsettings-server.c:801
+#: ../imsettings-daemon/imsettings-server.c:991
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:659
+#: ../imsettings-daemon/imsettings-server.c:689
+#, c-format
+msgid "Failed to revert the backup file: %s"
+msgstr "백업 파일로 되돌리기 실패: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:702
+#, c-format
+msgid "Failed to create a backup file: %s"
+msgstr "백업 파일 생성 실패: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:712
+#, c-format
+msgid "Failed to remove a .xinputrc file: %s"
+msgstr ".xinputrc 파일 삭제 실패: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:723
+#, fuzzy, c-format
+msgid "Failed to create a symlink: %s"
+msgstr "심볼릭 링크 생성 실패: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:753
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:698
+#: ../imsettings-daemon/imsettings-server.c:793
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:849
+#: ../imsettings-daemon/imsettings-server.c:983
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "시스템에 없는 입력 방식: %s"
@@ -211,7 +224,7 @@ msgid "Set the system-wide xinputrc directory (for debugging purpose)"
 msgstr "전체 시스템용 xinputrc이 있는 디렉토리 이름을 지정 (디버깅 전용)"
 
 #: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
-#: ../imsettings-daemon/main.c:98
+#: ../imsettings-daemon/main.c:98 ../imsettings-daemon/main.c:99
 msgid "DIR"
 msgstr "DIR"
 
@@ -226,6 +239,11 @@ msgid "Set a home directory (for debugging purpose)"
 msgstr "홈 디렉토리 (디버깅 전용)  "
 
 #: ../imsettings-daemon/main.c:99
+#, fuzzy
+msgid "Set the imsettings module directory (for debugging purpose)"
+msgstr "홈 디렉토리 (디버깅 전용)  "
+
+#: ../imsettings-daemon/main.c:100
 msgid "Do not create a log file."
 msgstr "로그 파일을 생성하지 않음  "
 
@@ -236,11 +254,11 @@ msgid "Unable to create a client instance."
 msgstr "가속키를 설정할 수 없음  "
 
 #: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:60
-#, c-format
+#: ../utils/imsettings-switch.c:89
+#, fuzzy, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload -f\" may help but it will restart the Input "
-"Method\n"
+"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
 msgstr ""
 "현재 다른 버전의 imsettings이 실행중입니다.\n"
 "\"imsettings-reload -f\"를 실행하면 이 문제를 해결할 수 있지만, 입력 방식을 "
@@ -294,16 +312,6 @@ msgstr "시스템 기본 입력 방식이 없음.   "
 msgid "Read xinputrc to determine the input method"
 msgstr ""
 
-#: ../utils/imsettings-switch.c:89
-#, fuzzy, c-format
-msgid ""
-"Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
-msgstr ""
-"현재 다른 버전의 imsettings이 실행중입니다.\n"
-"\"imsettings-reload -f\"를 실행하면 이 문제를 해결할 수 있지만, 입력 방식을 "
-"다시 시작할 것입니다\n"
-
 #: ../utils/imsettings-switch.c:104
 #, fuzzy, c-format
 msgid "No Input Method running to be restarted.\n"
@@ -313,6 +321,35 @@ msgstr "다음 입력 방식이 실행중이 아님: %s "
 #, fuzzy, c-format
 msgid "Restarted %s"
 msgstr "%s 재시작\n"
+
+#~ msgid "Replace the running settings daemon with new instance."
+#~ msgstr "실행 중인 설정 데몬을 새 인스턴스로 교체합니다. "
+
+#~ msgid "Helper application for imsettings"
+#~ msgstr "imsettings 용 지원 프로그램  "
+
+#, fuzzy
+#~ msgid ""
+#~ "Helper application that delivers GTK+ immodule name between GConf and "
+#~ "lxde-settings-daemon"
+#~ msgstr "GConf와 Xfconf 사이에서 GTK+ immodule 이름을 전송하는 지원 프로그램"
+
+#~ msgid "Button Label|Input Method"
+#~ msgstr "버튼 레이블|입력 방식  "
+
+#~ msgid ""
+#~ "Helper application that delivers GTK+ immodule name between GConf and "
+#~ "Xfconf"
+#~ msgstr "GConf와 Xfconf 사이에서 GTK+ immodule 이름을 전송하는 지원 프로그램"
+
+#~ msgid ""
+#~ "Currently a different version of imsettings is running.\n"
+#~ "Running \"imsettings-reload -f\" may help but it will restart the Input "
+#~ "Method\n"
+#~ msgstr ""
+#~ "현재 다른 버전의 imsettings이 실행중입니다.\n"
+#~ "\"imsettings-reload -f\"를 실행하면 이 문제를 해결할 수 있지만, 입력 방식"
+#~ "을 다시 시작할 것입니다\n"
 
 #~ msgid "A shortcut key to connect to/disconnect from Input Method"
 #~ msgstr "입력 방식에서 연결/연결해제 하기 위한 단축키"
@@ -399,9 +436,6 @@ msgstr "%s 재시작\n"
 
 #~ msgid "Please press the acceleration key..."
 #~ msgstr "가속키를 누르십시오..."
-
-#~ msgid "IMSettings Applet Preferences"
-#~ msgstr "IMSettings 애플릿 설정  "
 
 #~ msgid "_Show the status icon"
 #~ msgstr "상태 아이콘을 표시(_S)  "
@@ -497,9 +531,6 @@ msgstr "%s 재시작\n"
 
 #~ msgid "Qt immodule"
 #~ msgstr "Qt immodule"
-
-#~ msgid "A module name used for Qt"
-#~ msgstr "Qt 용으로 사용할 모듈 이름 "
 
 #~ msgid "XIM name"
 #~ msgstr "XIM 이름 "
@@ -607,18 +638,6 @@ msgstr "%s 재시작\n"
 
 #~ msgid "Failed to get a place of home directory."
 #~ msgstr "홈 디렉토리 위치 지정 실패 "
-
-#~ msgid "Failed to revert the backup file: %s"
-#~ msgstr "백업 파일로 되돌리기 실패: %s"
-
-#~ msgid "Failed to create a backup file: %s"
-#~ msgstr "백업 파일 생성 실패: %s"
-
-#~ msgid "Failed to remove a .xinputrc file: %s"
-#~ msgstr ".xinputrc 파일 삭제 실패: %s"
-
-#~ msgid "Failed to make a symlink: %s"
-#~ msgstr "심볼릭 링크 생성 실패: %s"
 
 #~ msgid "No input methods available on your system."
 #~ msgstr "시스템에 사용 가능한 입력 방식이 없음 "

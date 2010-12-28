@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-24 18:25+0900\n"
+"POT-Creation-Date: 2010-12-28 13:36+0900\n"
 "PO-Revision-Date: 2009-12-10 10:02+1000\n"
 "Last-Translator: Leah Liu <lliu@redhat.com>\n"
 "Language-Team: Simplified Chinese <zh@li.org>\n"
@@ -20,37 +20,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-
-#: ../backends/gconf/main.c:184
-msgid "Replace the running settings daemon with new instance."
-msgstr "使用新实例替换执行的设置守护程序。"
-
-#: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../imsettings-daemon/main.c:120 ../utils/imsettings-reload.c:64
-#: ../utils/imsettings-switch.c:78
-msgid "Unknown error in parsing the command lines."
-msgstr "在解析命令行时出现未知错误。"
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:1
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:1
-msgid "Helper application for imsettings"
-msgstr "imsettings的帮助程序"
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:2
-#, fuzzy
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and lxde-"
-"settings-daemon"
-msgstr "提供 GConf 和 Xfconf 间 GTK+ 输入法模块名称的帮助程序"
-
-#: ../backends/xfce_mcs/imsettings_plugin.c:88
-msgid "Button Label|Input Method"
-msgstr "按键标记|输入法"
-
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
-msgstr "提供 GConf 和 Xfconf 间 GTK+ 输入法模块名称的帮助程序"
 
 #: ../backends/xim/loopback.c:223
 msgid "Synchronous"
@@ -84,6 +53,11 @@ msgstr "XIM 服务器只为调式目的连接到"
 msgid "XIM"
 msgstr "XIM"
 
+#: ../backends/xim/main.c:179 ../imsettings-daemon/main.c:121
+#: ../utils/imsettings-reload.c:64 ../utils/imsettings-switch.c:78
+msgid "Unknown error in parsing the command lines."
+msgstr "在解析命令行时出现未知错误。"
+
 #: ../backends/xim/proxy.c:2968
 msgid "XIM server name"
 msgstr "XIM 服务器名称"
@@ -107,6 +81,15 @@ msgstr "地点信息"
 #: ../imsettings/imsettings-client.c:144
 msgid "Locale to get the imsettings information"
 msgstr "获得输入法设置信息的地点信息"
+
+#: ../imsettings/imsettings-module.c:121
+msgid "Name"
+msgstr ""
+
+#: ../imsettings/imsettings-module.c:122
+#, fuzzy
+msgid "A module name for imsettings backend"
+msgstr "Qt 使用的模块名称"
 
 #: ../imsettings-daemon/imsettings-proc.c:192
 #, c-format
@@ -137,64 +120,94 @@ msgstr "IMSetting 小程序"
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "要使用 DBus 连接的对象"
 
-#: ../imsettings-daemon/imsettings-server.c:366
+#: ../imsettings-daemon/imsettings-server.c:390
 msgid "DBus connection"
 msgstr "DBus 连接"
 
-#: ../imsettings-daemon/imsettings-server.c:367
+#: ../imsettings-daemon/imsettings-server.c:391
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "要使用 DBus 连接的对象"
 
-#: ../imsettings-daemon/imsettings-server.c:372
+#: ../imsettings-daemon/imsettings-server.c:396
 #, fuzzy
 msgid "Logging"
 msgstr "记录中"
 
-#: ../imsettings-daemon/imsettings-server.c:373
+#: ../imsettings-daemon/imsettings-server.c:397
 #, fuzzy
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr "这个标志显示纪录设备有否被启用。"
 
-#: ../imsettings-daemon/imsettings-server.c:378
-#: ../imsettings-daemon/imsettings-server.c:379
+#: ../imsettings-daemon/imsettings-server.c:402
+#: ../imsettings-daemon/imsettings-server.c:403
 msgid "Home directory"
 msgstr "主目录"
 
-#: ../imsettings-daemon/imsettings-server.c:384
-#: ../imsettings-daemon/imsettings-server.c:385
+#: ../imsettings-daemon/imsettings-server.c:408
+#: ../imsettings-daemon/imsettings-server.c:409
 msgid "xinputrc directory"
 msgstr "xinputrc 目录"
 
-#: ../imsettings-daemon/imsettings-server.c:390
-#: ../imsettings-daemon/imsettings-server.c:391
+#: ../imsettings-daemon/imsettings-server.c:414
+#: ../imsettings-daemon/imsettings-server.c:415
 msgid "xinput directory"
 msgstr "xinput 目录"
 
-#: ../imsettings-daemon/imsettings-server.c:613
+#: ../imsettings-daemon/imsettings-server.c:420
+#, fuzzy
+msgid "module directory"
+msgstr "主目录"
+
+#: ../imsettings-daemon/imsettings-server.c:421
+#, fuzzy
+msgid "IMSettings module directory"
+msgstr "IMSetting 小程序首选项"
+
+#: ../imsettings-daemon/imsettings-server.c:644
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "在您的系统中没有这个输入法：%s"
 
-#: ../imsettings-daemon/imsettings-server.c:622
-#: ../imsettings-daemon/imsettings-server.c:666
-#: ../imsettings-daemon/imsettings-server.c:706
-#: ../imsettings-daemon/imsettings-server.c:857
+#: ../imsettings-daemon/imsettings-server.c:653
+#: ../imsettings-daemon/imsettings-server.c:760
+#: ../imsettings-daemon/imsettings-server.c:801
+#: ../imsettings-daemon/imsettings-server.c:991
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:659
+#: ../imsettings-daemon/imsettings-server.c:689
+#, c-format
+msgid "Failed to revert the backup file: %s"
+msgstr "恢复备份文件失败：%s"
+
+#: ../imsettings-daemon/imsettings-server.c:702
+#, c-format
+msgid "Failed to create a backup file: %s"
+msgstr "创建备份文件失败：%s"
+
+#: ../imsettings-daemon/imsettings-server.c:712
+#, c-format
+msgid "Failed to remove a .xinputrc file: %s"
+msgstr "删除 .xinputrc 文件失败：%s"
+
+#: ../imsettings-daemon/imsettings-server.c:723
+#, fuzzy, c-format
+msgid "Failed to create a symlink: %s"
+msgstr "生成符号链接失败：%s"
+
+#: ../imsettings-daemon/imsettings-server.c:753
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:698
+#: ../imsettings-daemon/imsettings-server.c:793
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:849
+#: ../imsettings-daemon/imsettings-server.c:983
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "在您的系统中没有这个输入法：%s"
@@ -210,7 +223,7 @@ msgid "Set the system-wide xinputrc directory (for debugging purpose)"
 msgstr "指定系统范围 xinputrc 文件的目录名称（只用于调试）"
 
 #: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
-#: ../imsettings-daemon/main.c:98
+#: ../imsettings-daemon/main.c:98 ../imsettings-daemon/main.c:99
 msgid "DIR"
 msgstr "DIR"
 
@@ -225,6 +238,11 @@ msgid "Set a home directory (for debugging purpose)"
 msgstr "主目录（只用于调试）"
 
 #: ../imsettings-daemon/main.c:99
+#, fuzzy
+msgid "Set the imsettings module directory (for debugging purpose)"
+msgstr "主目录（只用于调试）"
+
+#: ../imsettings-daemon/main.c:100
 msgid "Do not create a log file."
 msgstr "不要创建纪录档。"
 
@@ -235,11 +253,11 @@ msgid "Unable to create a client instance."
 msgstr "未能设置加速键"
 
 #: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:60
-#, c-format
+#: ../utils/imsettings-switch.c:89
+#, fuzzy, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload -f\" may help but it will restart the Input "
-"Method\n"
+"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
 msgstr ""
 "目前正在运行 imsettings 的不同版本。\n"
 "运行 \"imsettings-reload -f\" 可有帮助但将重启输入法。\n"
@@ -292,15 +310,6 @@ msgstr "没有系统缺省输入法。"
 msgid "Read xinputrc to determine the input method"
 msgstr ""
 
-#: ../utils/imsettings-switch.c:89
-#, fuzzy, c-format
-msgid ""
-"Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
-msgstr ""
-"目前正在运行 imsettings 的不同版本。\n"
-"运行 \"imsettings-reload -f\" 可有帮助但将重启输入法。\n"
-
 #: ../utils/imsettings-switch.c:104
 #, fuzzy, c-format
 msgid "No Input Method running to be restarted.\n"
@@ -311,6 +320,34 @@ msgstr "在您的系统中，以下输入法并非运行中：%s"
 #, fuzzy, c-format
 msgid "Restarted %s"
 msgstr "%s 已重新引导\n"
+
+#~ msgid "Replace the running settings daemon with new instance."
+#~ msgstr "使用新实例替换执行的设置守护程序。"
+
+#~ msgid "Helper application for imsettings"
+#~ msgstr "imsettings的帮助程序"
+
+#, fuzzy
+#~ msgid ""
+#~ "Helper application that delivers GTK+ immodule name between GConf and "
+#~ "lxde-settings-daemon"
+#~ msgstr "提供 GConf 和 Xfconf 间 GTK+ 输入法模块名称的帮助程序"
+
+#~ msgid "Button Label|Input Method"
+#~ msgstr "按键标记|输入法"
+
+#~ msgid ""
+#~ "Helper application that delivers GTK+ immodule name between GConf and "
+#~ "Xfconf"
+#~ msgstr "提供 GConf 和 Xfconf 间 GTK+ 输入法模块名称的帮助程序"
+
+#~ msgid ""
+#~ "Currently a different version of imsettings is running.\n"
+#~ "Running \"imsettings-reload -f\" may help but it will restart the Input "
+#~ "Method\n"
+#~ msgstr ""
+#~ "目前正在运行 imsettings 的不同版本。\n"
+#~ "运行 \"imsettings-reload -f\" 可有帮助但将重启输入法。\n"
 
 #~ msgid "A shortcut key to connect to/disconnect from Input Method"
 #~ msgstr "连结/终止连结到输入法的快速键"
@@ -390,9 +427,6 @@ msgstr "%s 已重新引导\n"
 
 #~ msgid "Please press the acceleration key..."
 #~ msgstr "请按加速键……"
-
-#~ msgid "IMSettings Applet Preferences"
-#~ msgstr "IMSetting 小程序首选项"
 
 #~ msgid "_Show the status icon"
 #~ msgstr "显示状态图标（_S）"
@@ -488,9 +522,6 @@ msgstr "%s 已重新引导\n"
 
 #~ msgid "Qt immodule"
 #~ msgstr "Qt 输入模块"
-
-#~ msgid "A module name used for Qt"
-#~ msgstr "Qt 使用的模块名称"
 
 #~ msgid "XIM name"
 #~ msgstr "XIM 名称"
@@ -598,18 +629,6 @@ msgstr "%s 已重新引导\n"
 
 #~ msgid "Failed to get a place of home directory."
 #~ msgstr "不能获得主目录空间。"
-
-#~ msgid "Failed to revert the backup file: %s"
-#~ msgstr "恢复备份文件失败：%s"
-
-#~ msgid "Failed to create a backup file: %s"
-#~ msgstr "创建备份文件失败：%s"
-
-#~ msgid "Failed to remove a .xinputrc file: %s"
-#~ msgstr "删除 .xinputrc 文件失败：%s"
-
-#~ msgid "Failed to make a symlink: %s"
-#~ msgstr "生成符号链接失败：%s"
 
 #~ msgid "No input methods available on your system."
 #~ msgstr "在您的系统中没有输入法。"

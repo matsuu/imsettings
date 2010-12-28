@@ -1,13 +1,9 @@
-backends/gconf/main.c
-backends/lxde/imsettings-lxde-helper.desktop.in
-backends/lxde/main.c
-backends/xfce_mcs/imsettings_plugin.c
-backends/xfce_xfconf/imsettings-xfce-helper.desktop.in
 backends/xim/loopback.c
 backends/xim/main.c
 backends/xim/proxy.c
 imsettings/imsettings-client.c
 imsettings/imsettings-info.c
+imsettings/imsettings-module.c
 imsettings-daemon/imsettings-proc.c
 imsettings-daemon/imsettings-server.c
 imsettings-daemon/main.c

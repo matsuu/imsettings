@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-24 18:25+0900\n"
+"POT-Creation-Date: 2010-12-28 13:36+0900\n"
 "PO-Revision-Date: 2009-09-16 01:02+0100\n"
 "Last-Translator: Rui Gouveia <rui.gouveia@globaltek.pt>\n"
 "Language-Team: pt <fedora-trans-pt@redhat.com>\n"
@@ -19,37 +19,6 @@ msgstr ""
 "X-POFile-SpellExtra: IM Method\n"
 "X-Poedit-Language: Portuguese\n"
 "X-Poedit-Country: PORTUGAL\n"
-
-#: ../backends/gconf/main.c:184
-msgid "Replace the running settings daemon with new instance."
-msgstr ""
-
-#: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../imsettings-daemon/main.c:120 ../utils/imsettings-reload.c:64
-#: ../utils/imsettings-switch.c:78
-msgid "Unknown error in parsing the command lines."
-msgstr ""
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:1
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:1
-msgid "Helper application for imsettings"
-msgstr ""
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:2
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and lxde-"
-"settings-daemon"
-msgstr ""
-
-#: ../backends/xfce_mcs/imsettings_plugin.c:88
-#, fuzzy
-msgid "Button Label|Input Method"
-msgstr "Método de Introdução de Dados"
-
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
-msgstr ""
 
 #: ../backends/xim/loopback.c:223
 msgid "Synchronous"
@@ -83,6 +52,11 @@ msgstr ""
 msgid "XIM"
 msgstr "XIM"
 
+#: ../backends/xim/main.c:179 ../imsettings-daemon/main.c:121
+#: ../utils/imsettings-reload.c:64 ../utils/imsettings-switch.c:78
+msgid "Unknown error in parsing the command lines."
+msgstr ""
+
 #: ../backends/xim/proxy.c:2968
 #, fuzzy
 msgid "XIM server name"
@@ -106,6 +80,14 @@ msgstr "Local"
 
 #: ../imsettings/imsettings-client.c:144
 msgid "Locale to get the imsettings information"
+msgstr ""
+
+#: ../imsettings/imsettings-module.c:121
+msgid "Name"
+msgstr ""
+
+#: ../imsettings/imsettings-module.c:122
+msgid "A module name for imsettings backend"
 msgstr ""
 
 #: ../imsettings-daemon/imsettings-proc.c:192
@@ -134,66 +116,96 @@ msgstr "Applet do IMsettings"
 msgid "A GObject to be a IMSettingsInfo"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:366
+#: ../imsettings-daemon/imsettings-server.c:390
 #, fuzzy
 msgid "DBus connection"
 msgstr "<b>Informação de Ligação</b>"
 
-#: ../imsettings-daemon/imsettings-server.c:367
+#: ../imsettings-daemon/imsettings-server.c:391
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "<b>Informação de Ligação</b>"
 
-#: ../imsettings-daemon/imsettings-server.c:372
+#: ../imsettings-daemon/imsettings-server.c:396
 #, fuzzy
 msgid "Logging"
 msgstr "a registar"
 
-#: ../imsettings-daemon/imsettings-server.c:373
+#: ../imsettings-daemon/imsettings-server.c:397
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:378
-#: ../imsettings-daemon/imsettings-server.c:379
+#: ../imsettings-daemon/imsettings-server.c:402
+#: ../imsettings-daemon/imsettings-server.c:403
 msgid "Home directory"
 msgstr "Directório Pessoal"
 
-#: ../imsettings-daemon/imsettings-server.c:384
-#: ../imsettings-daemon/imsettings-server.c:385
+#: ../imsettings-daemon/imsettings-server.c:408
+#: ../imsettings-daemon/imsettings-server.c:409
 #, fuzzy
 msgid "xinputrc directory"
 msgstr "Opções da Pasta"
 
-#: ../imsettings-daemon/imsettings-server.c:390
-#: ../imsettings-daemon/imsettings-server.c:391
+#: ../imsettings-daemon/imsettings-server.c:414
+#: ../imsettings-daemon/imsettings-server.c:415
 #, fuzzy
 msgid "xinput directory"
 msgstr "Opções da Pasta"
 
-#: ../imsettings-daemon/imsettings-server.c:613
+#: ../imsettings-daemon/imsettings-server.c:420
+#, fuzzy
+msgid "module directory"
+msgstr "Directório Pessoal"
+
+#: ../imsettings-daemon/imsettings-server.c:421
+#, fuzzy
+msgid "IMSettings module directory"
+msgstr "Preferências do Applet IMSettings"
+
+#: ../imsettings-daemon/imsettings-server.c:644
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:622
-#: ../imsettings-daemon/imsettings-server.c:666
-#: ../imsettings-daemon/imsettings-server.c:706
-#: ../imsettings-daemon/imsettings-server.c:857
+#: ../imsettings-daemon/imsettings-server.c:653
+#: ../imsettings-daemon/imsettings-server.c:760
+#: ../imsettings-daemon/imsettings-server.c:801
+#: ../imsettings-daemon/imsettings-server.c:991
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:659
+#: ../imsettings-daemon/imsettings-server.c:689
+#, fuzzy, c-format
+msgid "Failed to revert the backup file: %s"
+msgstr "Não foi possível salvaguardar o ficheiro de imagem de arranque %1"
+
+#: ../imsettings-daemon/imsettings-server.c:702
+#, fuzzy, c-format
+msgid "Failed to create a backup file: %s"
+msgstr "Não foi possível salvaguardar o ficheiro de imagem de arranque %1"
+
+#: ../imsettings-daemon/imsettings-server.c:712
+#, fuzzy, c-format
+msgid "Failed to remove a .xinputrc file: %s"
+msgstr "Falha ao remover ficheiro de exclusividade `%s': %s"
+
+#: ../imsettings-daemon/imsettings-server.c:723
+#, fuzzy, c-format
+msgid "Failed to create a symlink: %s"
+msgstr "não foi possível criar a ligação simbólica %s: %s\n"
+
+#: ../imsettings-daemon/imsettings-server.c:753
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:698
+#: ../imsettings-daemon/imsettings-server.c:793
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:849
+#: ../imsettings-daemon/imsettings-server.c:983
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "Método de Introdução de Dados"
@@ -207,7 +219,7 @@ msgid "Set the system-wide xinputrc directory (for debugging purpose)"
 msgstr ""
 
 #: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
-#: ../imsettings-daemon/main.c:98
+#: ../imsettings-daemon/main.c:98 ../imsettings-daemon/main.c:99
 #, fuzzy
 msgid "DIR"
 msgstr "DIR"
@@ -221,6 +233,10 @@ msgid "Set a home directory (for debugging purpose)"
 msgstr ""
 
 #: ../imsettings-daemon/main.c:99
+msgid "Set the imsettings module directory (for debugging purpose)"
+msgstr ""
+
+#: ../imsettings-daemon/main.c:100
 msgid "Do not create a log file."
 msgstr "Não criar um ficheiro de registo."
 
@@ -231,11 +247,11 @@ msgid "Unable to create a client instance."
 msgstr "Falha ao criar o ficheiro “%s”: %s"
 
 #: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:60
+#: ../utils/imsettings-switch.c:89
 #, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload -f\" may help but it will restart the Input "
-"Method\n"
+"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
 msgstr ""
 
 #: ../utils/imsettings-info.c:82
@@ -287,13 +303,6 @@ msgstr ""
 msgid "Read xinputrc to determine the input method"
 msgstr ""
 
-#: ../utils/imsettings-switch.c:89
-#, c-format
-msgid ""
-"Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
-msgstr ""
-
 #: ../utils/imsettings-switch.c:104
 #, fuzzy, c-format
 msgid "No Input Method running to be restarted.\n"
@@ -303,6 +312,10 @@ msgstr "Método de Introdução de Dados"
 #, fuzzy, c-format
 msgid "Restarted %s"
 msgstr "Reiniciado %s\n"
+
+#, fuzzy
+#~ msgid "Button Label|Input Method"
+#~ msgstr "Método de Introdução de Dados"
 
 #, fuzzy
 #~ msgid "A shortcut key to connect to/disconnect from Input Method"
@@ -329,9 +342,6 @@ msgstr "Reiniciado %s\n"
 #, fuzzy
 #~ msgid "Please press the acceleration key..."
 #~ msgstr "Por favor, pressione a nova combinação de teclas"
-
-#~ msgid "IMSettings Applet Preferences"
-#~ msgstr "Preferências do Applet IMSettings"
 
 #~ msgid "_Show the status icon"
 #~ msgstr "_Mostrar o ícone de estado"
@@ -437,18 +447,6 @@ msgstr "Reiniciado %s\n"
 #, fuzzy
 #~ msgid "Unable to keep Input Method running"
 #~ msgstr "Método de Introdução de Dados"
-
-#, fuzzy
-#~ msgid "Failed to revert the backup file: %s"
-#~ msgstr "Não foi possível salvaguardar o ficheiro de imagem de arranque %1"
-
-#, fuzzy
-#~ msgid "Failed to remove a .xinputrc file: %s"
-#~ msgstr "Falha ao remover ficheiro de exclusividade `%s': %s"
-
-#, fuzzy
-#~ msgid "Failed to make a symlink: %s"
-#~ msgstr "não foi possível criar a ligação simbólica %s: %s\n"
 
 #~ msgid "home directory"
 #~ msgstr "directório pessoal"

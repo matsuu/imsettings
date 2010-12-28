@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.trunk.ml\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-24 18:25+0900\n"
+"POT-Creation-Date: 2010-12-28 13:36+0900\n"
 "PO-Revision-Date: 2009-09-10 16:03+0530\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -22,39 +22,6 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "\n"
-
-#: ../backends/gconf/main.c:184
-msgid "Replace the running settings daemon with new instance."
-msgstr "പ്രവര്‍ത്തനത്തിലുള്ള ക്രമികരണങ്ങളുടെ ഡെണിനെ പുതിയ ഇന്‍സ്റ്റന്‍സ് ഉപയോഗിച്ച് മാറ്റുക."
-
-#: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../imsettings-daemon/main.c:120 ../utils/imsettings-reload.c:64
-#: ../utils/imsettings-switch.c:78
-msgid "Unknown error in parsing the command lines."
-msgstr "കമാന്‍ഡ് ലൈനുകള്‍ പാഴ്സ് ചെയ്യുന്നതില്‍ അപരിചിതമായ പിശക്."
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:1
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:1
-msgid "Helper application for imsettings"
-msgstr "imsettings-നുള്ള സഹായ പ്രയോഗം"
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:2
-#, fuzzy
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and lxde-"
-"settings-daemon"
-msgstr ""
-"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
-
-#: ../backends/xfce_mcs/imsettings_plugin.c:88
-msgid "Button Label|Input Method"
-msgstr "ഇന്‍പുട്ട് മെഥേഡ്"
-
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
-msgstr ""
-"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
 
 #: ../backends/xim/loopback.c:223
 msgid "Synchronous"
@@ -88,6 +55,11 @@ msgstr "XIM സര്‍വര്‍ കണക്ട് ചെയ്യുന്
 msgid "XIM"
 msgstr "XIM"
 
+#: ../backends/xim/main.c:179 ../imsettings-daemon/main.c:121
+#: ../utils/imsettings-reload.c:64 ../utils/imsettings-switch.c:78
+msgid "Unknown error in parsing the command lines."
+msgstr "കമാന്‍ഡ് ലൈനുകള്‍ പാഴ്സ് ചെയ്യുന്നതില്‍ അപരിചിതമായ പിശക്."
+
 #: ../backends/xim/proxy.c:2968
 msgid "XIM server name"
 msgstr "XIM സര്‍വര്‍ നാമം"
@@ -111,6 +83,15 @@ msgstr "ലൊക്കെയില്‍"
 #: ../imsettings/imsettings-client.c:144
 msgid "Locale to get the imsettings information"
 msgstr "ഐഎം വിവരങ്ങള്‍ ലഭ്യമാകുന്നതിനുള്ള ലൊക്കെയില്‍"
+
+#: ../imsettings/imsettings-module.c:121
+msgid "Name"
+msgstr ""
+
+#: ../imsettings/imsettings-module.c:122
+#, fuzzy
+msgid "A module name for imsettings backend"
+msgstr "Qt-യ്ക്ക് ഉപയോഗിക്കുന്ന ഘടകനാമം"
 
 #: ../imsettings-daemon/imsettings-proc.c:192
 #, c-format
@@ -141,64 +122,94 @@ msgstr "IMSettings ആപ്ലെറ്റ്"
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "ഡിബസ് കണക്ഷനാകുന്നതിനുള്ള ഒരു ഒബ്ജക്ട്"
 
-#: ../imsettings-daemon/imsettings-server.c:366
+#: ../imsettings-daemon/imsettings-server.c:390
 msgid "DBus connection"
 msgstr "ഡിബസ് കണക്ഷന്‍"
 
-#: ../imsettings-daemon/imsettings-server.c:367
+#: ../imsettings-daemon/imsettings-server.c:391
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "ഡിബസ് കണക്ഷനാകുന്നതിനുള്ള ഒരു ഒബ്ജക്ട്"
 
-#: ../imsettings-daemon/imsettings-server.c:372
+#: ../imsettings-daemon/imsettings-server.c:396
 #, fuzzy
 msgid "Logging"
 msgstr "ലോഗ് ചെയ്യുന്നു"
 
-#: ../imsettings-daemon/imsettings-server.c:373
+#: ../imsettings-daemon/imsettings-server.c:397
 #, fuzzy
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr "ലോഗ്ഗിങ് സംവിധാനം സജ്ജമാണോ എന്നറിയുന്നതിനുള്ള ഫ്ലാഗ്."
 
-#: ../imsettings-daemon/imsettings-server.c:378
-#: ../imsettings-daemon/imsettings-server.c:379
+#: ../imsettings-daemon/imsettings-server.c:402
+#: ../imsettings-daemon/imsettings-server.c:403
 msgid "Home directory"
 msgstr "ഹോം ഡയറക്ടറി"
 
-#: ../imsettings-daemon/imsettings-server.c:384
-#: ../imsettings-daemon/imsettings-server.c:385
+#: ../imsettings-daemon/imsettings-server.c:408
+#: ../imsettings-daemon/imsettings-server.c:409
 msgid "xinputrc directory"
 msgstr "xinputrc ഡയറക്ടറി"
 
-#: ../imsettings-daemon/imsettings-server.c:390
-#: ../imsettings-daemon/imsettings-server.c:391
+#: ../imsettings-daemon/imsettings-server.c:414
+#: ../imsettings-daemon/imsettings-server.c:415
 msgid "xinput directory"
 msgstr "xinput ഡയറക്ടറി"
 
-#: ../imsettings-daemon/imsettings-server.c:613
+#: ../imsettings-daemon/imsettings-server.c:420
+#, fuzzy
+msgid "module directory"
+msgstr "ഹോം ഡയറക്ടറി"
+
+#: ../imsettings-daemon/imsettings-server.c:421
+#, fuzzy
+msgid "IMSettings module directory"
+msgstr "IMSettings ആപ്ലെറ്റ് മുന്‍ഗണനകള്‍"
+
+#: ../imsettings-daemon/imsettings-server.c:644
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "നിങ്ങളുടെ സിസ്റ്റമില്‍ അത്തരം ഒരു ഇന്‍പുട്ട് രീതിയില്ല: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:622
-#: ../imsettings-daemon/imsettings-server.c:666
-#: ../imsettings-daemon/imsettings-server.c:706
-#: ../imsettings-daemon/imsettings-server.c:857
+#: ../imsettings-daemon/imsettings-server.c:653
+#: ../imsettings-daemon/imsettings-server.c:760
+#: ../imsettings-daemon/imsettings-server.c:801
+#: ../imsettings-daemon/imsettings-server.c:991
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:659
+#: ../imsettings-daemon/imsettings-server.c:689
+#, c-format
+msgid "Failed to revert the backup file: %s"
+msgstr "ബാക്കപ്പ് ഫയല്‍ തിരികെ ലഭ്യമാക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:702
+#, c-format
+msgid "Failed to create a backup file: %s"
+msgstr "ഒരു ബാക്കപ്പ് ഫയല്‍ ഉണ്ടാക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:712
+#, c-format
+msgid "Failed to remove a .xinputrc file: %s"
+msgstr "ഒരു .xinputrc ഫയല്‍ നീക്കം ചെയ്യുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:723
+#, fuzzy, c-format
+msgid "Failed to create a symlink: %s"
+msgstr "ഒരു സിംലിങ്ക് ഉണ്ടാക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:753
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:698
+#: ../imsettings-daemon/imsettings-server.c:793
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:849
+#: ../imsettings-daemon/imsettings-server.c:983
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "നിങ്ങളുടെ സിസ്റ്റമില്‍ അത്തരം ഒരു ഇന്‍പുട്ട് രീതിയില്ല: %s"
@@ -214,7 +225,7 @@ msgid "Set the system-wide xinputrc directory (for debugging purpose)"
 msgstr "system-wide xinputrc-നുള്ള ഡയറക്ടറിയുടെ പേരു് നല്‍കുക  (ഡീബഗ്ഗിങ് മാത്രം)"
 
 #: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
-#: ../imsettings-daemon/main.c:98
+#: ../imsettings-daemon/main.c:98 ../imsettings-daemon/main.c:99
 msgid "DIR"
 msgstr "DIR"
 
@@ -229,6 +240,11 @@ msgid "Set a home directory (for debugging purpose)"
 msgstr "ഒരു ഹോം ഡയറക്ടറി (ഡീബഗ്ഗിങ് മാത്രം)"
 
 #: ../imsettings-daemon/main.c:99
+#, fuzzy
+msgid "Set the imsettings module directory (for debugging purpose)"
+msgstr "ഒരു ഹോം ഡയറക്ടറി (ഡീബഗ്ഗിങ് മാത്രം)"
+
+#: ../imsettings-daemon/main.c:100
 msgid "Do not create a log file."
 msgstr "ഒരു ലോഗ് ഫയല്‍ ഉണ്ടാക്കേണ്ട."
 
@@ -239,11 +255,11 @@ msgid "Unable to create a client instance."
 msgstr "ആക്സിലറേഷന്‍ കീ സജ്ജമാക്കുവാന്‍ സാധ്യമല്ല"
 
 #: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:60
-#, c-format
+#: ../utils/imsettings-switch.c:89
+#, fuzzy, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload -f\" may help but it will restart the Input "
-"Method\n"
+"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
 msgstr ""
 "imsettings-ന്റെ മറ്റൊരു പതിപ്പു് ഇപ്പോള്‍ പ്രവര്‍ത്തിക്കുന്നു.\n"
 "\"imsettings-reload -f\" പ്രവര്‍ത്തിപ്പിച്ചു് ഇതു് പരിഹരിക്കാം, പക്ഷേ നിങ്ങള്‍ ഇന്‍പുട്ട് മെഥേഡ് "
@@ -297,16 +313,6 @@ msgstr "സിസ്റ്റം സഹജമായ ഇന്‍പുട്ട�
 msgid "Read xinputrc to determine the input method"
 msgstr ""
 
-#: ../utils/imsettings-switch.c:89
-#, fuzzy, c-format
-msgid ""
-"Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
-msgstr ""
-"imsettings-ന്റെ മറ്റൊരു പതിപ്പു് ഇപ്പോള്‍ പ്രവര്‍ത്തിക്കുന്നു.\n"
-"\"imsettings-reload -f\" പ്രവര്‍ത്തിപ്പിച്ചു് ഇതു് പരിഹരിക്കാം, പക്ഷേ നിങ്ങള്‍ ഇന്‍പുട്ട് മെഥേഡ് "
-"വീണ്ടും ആരംഭിക്കേണ്ടതുണ്ടു്\n"
-
 #: ../utils/imsettings-switch.c:104
 #, fuzzy, c-format
 msgid "No Input Method running to be restarted.\n"
@@ -316,6 +322,39 @@ msgstr "അത്തരം ഇന്‍പുട്ട് മെഥേഡ് പ
 #, fuzzy, c-format
 msgid "Restarted %s"
 msgstr "%s വീണ്ടും ആരംഭിച്ചിരിക്കുന്നു\n"
+
+#~ msgid "Replace the running settings daemon with new instance."
+#~ msgstr "പ്രവര്‍ത്തനത്തിലുള്ള ക്രമികരണങ്ങളുടെ ഡെണിനെ പുതിയ ഇന്‍സ്റ്റന്‍സ് ഉപയോഗിച്ച് മാറ്റുക."
+
+#~ msgid "Helper application for imsettings"
+#~ msgstr "imsettings-നുള്ള സഹായ പ്രയോഗം"
+
+#, fuzzy
+#~ msgid ""
+#~ "Helper application that delivers GTK+ immodule name between GConf and "
+#~ "lxde-settings-daemon"
+#~ msgstr ""
+#~ "Helper application that delivers GTK+ immodule name between GConf and "
+#~ "Xfconf"
+
+#~ msgid "Button Label|Input Method"
+#~ msgstr "ഇന്‍പുട്ട് മെഥേഡ്"
+
+#~ msgid ""
+#~ "Helper application that delivers GTK+ immodule name between GConf and "
+#~ "Xfconf"
+#~ msgstr ""
+#~ "Helper application that delivers GTK+ immodule name between GConf and "
+#~ "Xfconf"
+
+#~ msgid ""
+#~ "Currently a different version of imsettings is running.\n"
+#~ "Running \"imsettings-reload -f\" may help but it will restart the Input "
+#~ "Method\n"
+#~ msgstr ""
+#~ "imsettings-ന്റെ മറ്റൊരു പതിപ്പു് ഇപ്പോള്‍ പ്രവര്‍ത്തിക്കുന്നു.\n"
+#~ "\"imsettings-reload -f\" പ്രവര്‍ത്തിപ്പിച്ചു് ഇതു് പരിഹരിക്കാം, പക്ഷേ നിങ്ങള്‍ ഇന്‍പുട്ട് "
+#~ "മെഥേഡ് വീണ്ടും ആരംഭിക്കേണ്ടതുണ്ടു്\n"
 
 #~ msgid "A shortcut key to connect to/disconnect from Input Method"
 #~ msgstr "ഇന്‍പുട്ട് മെഥേഡിലേക്ക് കണക്ട് ചെയ്യുവാനോ വിഛേദിക്കുവാനോ ഉള്ളൊരു എളുപ്പവഴി"
@@ -403,9 +442,6 @@ msgstr "%s വീണ്ടും ആരംഭിച്ചിരിക്കു�
 
 #~ msgid "Please press the acceleration key..."
 #~ msgstr "ദയവായി ആക്സിലറേഷന്‍ കീ അമര്‍ത്തുക..."
-
-#~ msgid "IMSettings Applet Preferences"
-#~ msgstr "IMSettings ആപ്ലെറ്റ് മുന്‍ഗണനകള്‍"
 
 #~ msgid "_Show the status icon"
 #~ msgstr "അവസ്ഥയ്ക്കുള്ള ചിഹ്നം _കാണിക്കുക"
@@ -503,9 +539,6 @@ msgstr "%s വീണ്ടും ആരംഭിച്ചിരിക്കു�
 
 #~ msgid "Qt immodule"
 #~ msgstr "Qt immodule"
-
-#~ msgid "A module name used for Qt"
-#~ msgstr "Qt-യ്ക്ക് ഉപയോഗിക്കുന്ന ഘടകനാമം"
 
 #~ msgid "XIM name"
 #~ msgstr "XIM നാമം"
@@ -613,18 +646,6 @@ msgstr "%s വീണ്ടും ആരംഭിച്ചിരിക്കു�
 
 #~ msgid "Failed to get a place of home directory."
 #~ msgstr "ഹോം ഡയറക്ടറിയില്‍ ഒരു സ്ഥലം ലഭിക്കുന്നതില്‍ പരാജയപ്പെട്ടു."
-
-#~ msgid "Failed to revert the backup file: %s"
-#~ msgstr "ബാക്കപ്പ് ഫയല്‍ തിരികെ ലഭ്യമാക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
-
-#~ msgid "Failed to create a backup file: %s"
-#~ msgstr "ഒരു ബാക്കപ്പ് ഫയല്‍ ഉണ്ടാക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
-
-#~ msgid "Failed to remove a .xinputrc file: %s"
-#~ msgstr "ഒരു .xinputrc ഫയല്‍ നീക്കം ചെയ്യുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
-
-#~ msgid "Failed to make a symlink: %s"
-#~ msgstr "ഒരു സിംലിങ്ക് ഉണ്ടാക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
 
 #~ msgid "No input methods available on your system."
 #~ msgstr "നിങ്ങളുടെ സിസ്റ്റമില്‍ ഒരു ഇന്‍പുട്ട് രീതിയും ലഭ്യമല്ല."

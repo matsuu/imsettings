@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-24 18:25+0900\n"
+"POT-Creation-Date: 2010-12-28 13:36+0900\n"
 "PO-Revision-Date: 2009-09-10 18:55+0900\n"
 "Last-Translator: Hyu_gabaru Ryu_ichi <hyu_gabaru@yahoo.co.jp>\n"
 "Language-Team: Japanese <fedora-trasn-ja@redhat.com>\n"
@@ -22,37 +22,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: ../backends/gconf/main.c:184
-msgid "Replace the running settings daemon with new instance."
-msgstr "実行中の設定デーモンを新規のインスタンスで入れ替える"
-
-#: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../imsettings-daemon/main.c:120 ../utils/imsettings-reload.c:64
-#: ../utils/imsettings-switch.c:78
-msgid "Unknown error in parsing the command lines."
-msgstr "コマンドラインの構文解析中に不明なエラー"
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:1
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:1
-msgid "Helper application for imsettings"
-msgstr "imsettingsのヘルパーアプリケーション"
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:2
-#, fuzzy
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and lxde-"
-"settings-daemon"
-msgstr "GConfとXfconf間でGTK+ immodule名を配送するヘルパーアプリケーション"
-
-#: ../backends/xfce_mcs/imsettings_plugin.c:88
-msgid "Button Label|Input Method"
-msgstr "入力メソッド"
-
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
-msgstr "GConfとXfconf間でGTK+ immodule名を配送するヘルパーアプリケーション"
 
 #: ../backends/xim/loopback.c:223
 msgid "Synchronous"
@@ -86,6 +55,11 @@ msgstr "接続するXIMサーバー (デバッグ目的専用)"
 msgid "XIM"
 msgstr "XIM"
 
+#: ../backends/xim/main.c:179 ../imsettings-daemon/main.c:121
+#: ../utils/imsettings-reload.c:64 ../utils/imsettings-switch.c:78
+msgid "Unknown error in parsing the command lines."
+msgstr "コマンドラインの構文解析中に不明なエラー"
+
 #: ../backends/xim/proxy.c:2968
 msgid "XIM server name"
 msgstr "XIM サーバー名"
@@ -109,6 +83,15 @@ msgstr "言語地域"
 #: ../imsettings/imsettings-client.c:144
 msgid "Locale to get the imsettings information"
 msgstr "imsettings情報を得る為の言語地域"
+
+#: ../imsettings/imsettings-module.c:121
+msgid "Name"
+msgstr ""
+
+#: ../imsettings/imsettings-module.c:122
+#, fuzzy
+msgid "A module name for imsettings backend"
+msgstr "Qt 用に使用されるモジュール名"
 
 #: ../imsettings-daemon/imsettings-proc.c:192
 #, c-format
@@ -139,64 +122,94 @@ msgstr "IMSettingsアプレット"
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "DBus 接続となるオブジェクト"
 
-#: ../imsettings-daemon/imsettings-server.c:366
+#: ../imsettings-daemon/imsettings-server.c:390
 msgid "DBus connection"
 msgstr "DBus 接続"
 
-#: ../imsettings-daemon/imsettings-server.c:367
+#: ../imsettings-daemon/imsettings-server.c:391
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "DBus 接続となるオブジェクト"
 
-#: ../imsettings-daemon/imsettings-server.c:372
+#: ../imsettings-daemon/imsettings-server.c:396
 #, fuzzy
 msgid "Logging"
 msgstr "ロギング"
 
-#: ../imsettings-daemon/imsettings-server.c:373
+#: ../imsettings-daemon/imsettings-server.c:397
 #, fuzzy
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr "ロギング設備を有効にするかどうかのフラグ。"
 
-#: ../imsettings-daemon/imsettings-server.c:378
-#: ../imsettings-daemon/imsettings-server.c:379
+#: ../imsettings-daemon/imsettings-server.c:402
+#: ../imsettings-daemon/imsettings-server.c:403
 msgid "Home directory"
 msgstr "ホームディレクトリー"
 
-#: ../imsettings-daemon/imsettings-server.c:384
-#: ../imsettings-daemon/imsettings-server.c:385
+#: ../imsettings-daemon/imsettings-server.c:408
+#: ../imsettings-daemon/imsettings-server.c:409
 msgid "xinputrc directory"
 msgstr "xinputrcディレクトリー"
 
-#: ../imsettings-daemon/imsettings-server.c:390
-#: ../imsettings-daemon/imsettings-server.c:391
+#: ../imsettings-daemon/imsettings-server.c:414
+#: ../imsettings-daemon/imsettings-server.c:415
 msgid "xinput directory"
 msgstr "xinputディレクトリー"
 
-#: ../imsettings-daemon/imsettings-server.c:613
+#: ../imsettings-daemon/imsettings-server.c:420
+#, fuzzy
+msgid "module directory"
+msgstr "ホームディレクトリー"
+
+#: ../imsettings-daemon/imsettings-server.c:421
+#, fuzzy
+msgid "IMSettings module directory"
+msgstr "IMSettingsアプレットの設定"
+
+#: ../imsettings-daemon/imsettings-server.c:644
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "使用中のシステム上にそのような入力メソッドはありません: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:622
-#: ../imsettings-daemon/imsettings-server.c:666
-#: ../imsettings-daemon/imsettings-server.c:706
-#: ../imsettings-daemon/imsettings-server.c:857
+#: ../imsettings-daemon/imsettings-server.c:653
+#: ../imsettings-daemon/imsettings-server.c:760
+#: ../imsettings-daemon/imsettings-server.c:801
+#: ../imsettings-daemon/imsettings-server.c:991
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:659
+#: ../imsettings-daemon/imsettings-server.c:689
+#, c-format
+msgid "Failed to revert the backup file: %s"
+msgstr "バックアップファイルの復元に失敗しました: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:702
+#, c-format
+msgid "Failed to create a backup file: %s"
+msgstr "バックアップファイルの作成に失敗しました: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:712
+#, c-format
+msgid "Failed to remove a .xinputrc file: %s"
+msgstr ".xinputrc ファイルの削除に失敗しました: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:723
+#, fuzzy, c-format
+msgid "Failed to create a symlink: %s"
+msgstr "symlink するのに失敗しました: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:753
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:698
+#: ../imsettings-daemon/imsettings-server.c:793
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:849
+#: ../imsettings-daemon/imsettings-server.c:983
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "使用中のシステム上にそのような入力メソッドはありません: %s"
@@ -213,7 +226,7 @@ msgstr ""
 "システム全体のxinputrcファイルが置かれているディレクトリー名 (デバッグ専用)"
 
 #: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
-#: ../imsettings-daemon/main.c:98
+#: ../imsettings-daemon/main.c:98 ../imsettings-daemon/main.c:99
 msgid "DIR"
 msgstr "DIR"
 
@@ -228,6 +241,11 @@ msgid "Set a home directory (for debugging purpose)"
 msgstr "ホームディレクトリー (デバッグ専用)"
 
 #: ../imsettings-daemon/main.c:99
+#, fuzzy
+msgid "Set the imsettings module directory (for debugging purpose)"
+msgstr "ホームディレクトリー (デバッグ専用)"
+
+#: ../imsettings-daemon/main.c:100
 msgid "Do not create a log file."
 msgstr "ログファイルを作成しない"
 
@@ -238,11 +256,11 @@ msgid "Unable to create a client instance."
 msgstr "アクセラレーションキーの設定が出来ませんでした"
 
 #: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:60
-#, c-format
+#: ../utils/imsettings-switch.c:89
+#, fuzzy, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload -f\" may help but it will restart the Input "
-"Method\n"
+"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
 msgstr ""
 "現在、異なるバージョンのimsettingsが動作しています。\n"
 "\"imsettings-reload -f\"が助けてくれるかもしれませんが、入力メソッドを再起動"
@@ -296,16 +314,6 @@ msgstr "システムデフォルトの入力メソッドがありません"
 msgid "Read xinputrc to determine the input method"
 msgstr ""
 
-#: ../utils/imsettings-switch.c:89
-#, fuzzy, c-format
-msgid ""
-"Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
-msgstr ""
-"現在、異なるバージョンのimsettingsが動作しています。\n"
-"\"imsettings-reload -f\"が助けてくれるかもしれませんが、入力メソッドを再起動"
-"してしまいます。\n"
-
 #: ../utils/imsettings-switch.c:104
 #, fuzzy, c-format
 msgid "No Input Method running to be restarted.\n"
@@ -317,6 +325,35 @@ msgid "Restarted %s"
 msgstr ""
 "%sを再起動しました\n"
 "\n"
+
+#~ msgid "Replace the running settings daemon with new instance."
+#~ msgstr "実行中の設定デーモンを新規のインスタンスで入れ替える"
+
+#~ msgid "Helper application for imsettings"
+#~ msgstr "imsettingsのヘルパーアプリケーション"
+
+#, fuzzy
+#~ msgid ""
+#~ "Helper application that delivers GTK+ immodule name between GConf and "
+#~ "lxde-settings-daemon"
+#~ msgstr "GConfとXfconf間でGTK+ immodule名を配送するヘルパーアプリケーション"
+
+#~ msgid "Button Label|Input Method"
+#~ msgstr "入力メソッド"
+
+#~ msgid ""
+#~ "Helper application that delivers GTK+ immodule name between GConf and "
+#~ "Xfconf"
+#~ msgstr "GConfとXfconf間でGTK+ immodule名を配送するヘルパーアプリケーション"
+
+#~ msgid ""
+#~ "Currently a different version of imsettings is running.\n"
+#~ "Running \"imsettings-reload -f\" may help but it will restart the Input "
+#~ "Method\n"
+#~ msgstr ""
+#~ "現在、異なるバージョンのimsettingsが動作しています。\n"
+#~ "\"imsettings-reload -f\"が助けてくれるかもしれませんが、入力メソッドを再起"
+#~ "動してしまいます。\n"
 
 #~ msgid "A shortcut key to connect to/disconnect from Input Method"
 #~ msgstr "入力メソッドへの接続/切断をするショートカットキー"
@@ -404,9 +441,6 @@ msgstr ""
 
 #~ msgid "Please press the acceleration key..."
 #~ msgstr "アクセラレーションキーを押してください..."
-
-#~ msgid "IMSettings Applet Preferences"
-#~ msgstr "IMSettingsアプレットの設定"
 
 #~ msgid "_Show the status icon"
 #~ msgstr "ステータスアイコンを表示(_S)"
@@ -504,9 +538,6 @@ msgstr ""
 
 #~ msgid "Qt immodule"
 #~ msgstr "Qt immodule"
-
-#~ msgid "A module name used for Qt"
-#~ msgstr "Qt 用に使用されるモジュール名"
 
 #~ msgid "XIM name"
 #~ msgstr "XIM 名"
@@ -614,18 +645,6 @@ msgstr ""
 
 #~ msgid "Failed to get a place of home directory."
 #~ msgstr "ホームディレクトリーの場所確保に失敗しました。"
-
-#~ msgid "Failed to revert the backup file: %s"
-#~ msgstr "バックアップファイルの復元に失敗しました: %s"
-
-#~ msgid "Failed to create a backup file: %s"
-#~ msgstr "バックアップファイルの作成に失敗しました: %s"
-
-#~ msgid "Failed to remove a .xinputrc file: %s"
-#~ msgstr ".xinputrc ファイルの削除に失敗しました: %s"
-
-#~ msgid "Failed to make a symlink: %s"
-#~ msgstr "symlink するのに失敗しました: %s"
 
 #~ msgid "No input methods available on your system."
 #~ msgstr "使用中のシステム上には入力メソッドがありません。"

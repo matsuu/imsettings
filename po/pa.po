@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2imsettings.trunk.pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-24 18:25+0900\n"
+"POT-Creation-Date: 2010-12-28 13:36+0900\n"
 "PO-Revision-Date: 2009-09-10 16:59+0530\n"
 "Last-Translator: Jaswinder Singh <jsingh@redhat.com>\n"
 "Language-Team: Punjabi <Punjabi-users@lists.sourceforge.net>\n"
@@ -21,37 +21,6 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "\n"
-
-#: ../backends/gconf/main.c:184
-msgid "Replace the running settings daemon with new instance."
-msgstr "ਚੱਲ ਰਹੇ ਸੈਟਿੰਗ ਡੈਮਨ ਨੂੰ ਨਵੇਂ ਨਿਰਧਾਰਨ ਨਾਲ ਤਬਦੀਲ ਕਰੋ।"
-
-#: ../backends/gconf/main.c:206 ../backends/xim/main.c:179
-#: ../imsettings-daemon/main.c:120 ../utils/imsettings-reload.c:64
-#: ../utils/imsettings-switch.c:78
-msgid "Unknown error in parsing the command lines."
-msgstr "ਕਮਾਂਡ ਲਾਈਵ ਪਾਰਸ ਕਰਨ ਵੇਲੇ ਅਣਜਾਣੀ ਗਲਤੀ।"
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:1
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:1
-msgid "Helper application for imsettings"
-msgstr "imsettings ਲਈ ਸਹਾਇਕ ਐਪਲੀਕੇਸ਼ਨਾਂ"
-
-#: ../backends/lxde/imsettings-lxde-helper.desktop.in.h:2
-#, fuzzy
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and lxde-"
-"settings-daemon"
-msgstr "ਸਹਾਇਕ ਐਪਲੀਕੇਸ਼ਨਾਂ ਜੋ GConf ਅਤੇ Xfconf ਵਿਚਕਾਰ GTK+ immodule ਦਿੰਦੀਆਂ ਹਨ"
-
-#: ../backends/xfce_mcs/imsettings_plugin.c:88
-msgid "Button Label|Input Method"
-msgstr "ਬਟਨ ਲੇਬਲ|ਇੰਪੁੱਟ ਢੰਗ"
-
-#: ../backends/xfce_xfconf/imsettings-xfce-helper.desktop.in.h:2
-msgid ""
-"Helper application that delivers GTK+ immodule name between GConf and Xfconf"
-msgstr "ਸਹਾਇਕ ਐਪਲੀਕੇਸ਼ਨਾਂ ਜੋ GConf ਅਤੇ Xfconf ਵਿਚਕਾਰ GTK+ immodule ਦਿੰਦੀਆਂ ਹਨ"
 
 #: ../backends/xim/loopback.c:223
 msgid "Synchronous"
@@ -85,6 +54,11 @@ msgstr "ਸਿਰਫ ਡੀਬੱਗਿੰਗ ਉਦੇਸ਼ ਲਈ ਜੁੜਨ �
 msgid "XIM"
 msgstr "XIM"
 
+#: ../backends/xim/main.c:179 ../imsettings-daemon/main.c:121
+#: ../utils/imsettings-reload.c:64 ../utils/imsettings-switch.c:78
+msgid "Unknown error in parsing the command lines."
+msgstr "ਕਮਾਂਡ ਲਾਈਵ ਪਾਰਸ ਕਰਨ ਵੇਲੇ ਅਣਜਾਣੀ ਗਲਤੀ।"
+
 #: ../backends/xim/proxy.c:2968
 msgid "XIM server name"
 msgstr "XIM ਸਰਵਰ ਨਾਂ"
@@ -108,6 +82,15 @@ msgstr "ਲੋਕੇਲ"
 #: ../imsettings/imsettings-client.c:144
 msgid "Locale to get the imsettings information"
 msgstr "im-ਸੈਟਿੰਗ ਜਾਣਕਾਰੀ ਲੈਣ ਲਈ ਲੋਕੇਲ"
+
+#: ../imsettings/imsettings-module.c:121
+msgid "Name"
+msgstr ""
+
+#: ../imsettings/imsettings-module.c:122
+#, fuzzy
+msgid "A module name for imsettings backend"
+msgstr "Qt ਲਈ ਵਰਤਿਆ ਜਾਂਦਾ ਇੱਕ ਮੈਡਿਊਲ ਨਾਂ"
 
 #: ../imsettings-daemon/imsettings-proc.c:192
 #, c-format
@@ -138,64 +121,94 @@ msgstr "IMSettings ਐਪਲਿਟ"
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "ਇੱਕ ਆਬਜੈਕਟ ਜੋ DBus ਕੁਨੈਕਸ਼ਨ ਹੋਵੇਗਾ"
 
-#: ../imsettings-daemon/imsettings-server.c:366
+#: ../imsettings-daemon/imsettings-server.c:390
 msgid "DBus connection"
 msgstr "DBus ਕੁਨੈਕਸ਼ਨ"
 
-#: ../imsettings-daemon/imsettings-server.c:367
+#: ../imsettings-daemon/imsettings-server.c:391
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "ਇੱਕ ਆਬਜੈਕਟ ਜੋ DBus ਕੁਨੈਕਸ਼ਨ ਹੋਵੇਗਾ"
 
-#: ../imsettings-daemon/imsettings-server.c:372
+#: ../imsettings-daemon/imsettings-server.c:396
 #, fuzzy
 msgid "Logging"
 msgstr "ਲਾਗਿੰਗ"
 
-#: ../imsettings-daemon/imsettings-server.c:373
+#: ../imsettings-daemon/imsettings-server.c:397
 #, fuzzy
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr "ਇੱਕ ਫਲੈਗ ਕਿ ਲਾਗਿੰਗ ਸਹੂਲਤ ਯੋਗ ਹੈ ਜਾਂ ਨਹੀਂ।"
 
-#: ../imsettings-daemon/imsettings-server.c:378
-#: ../imsettings-daemon/imsettings-server.c:379
+#: ../imsettings-daemon/imsettings-server.c:402
+#: ../imsettings-daemon/imsettings-server.c:403
 msgid "Home directory"
 msgstr "ਘਰੇਲੂ ਡਾਇਰੈਕਟਰੀ"
 
-#: ../imsettings-daemon/imsettings-server.c:384
-#: ../imsettings-daemon/imsettings-server.c:385
+#: ../imsettings-daemon/imsettings-server.c:408
+#: ../imsettings-daemon/imsettings-server.c:409
 msgid "xinputrc directory"
 msgstr "xinputrc ਡਾਇਰੈਕਟਰੀ"
 
-#: ../imsettings-daemon/imsettings-server.c:390
-#: ../imsettings-daemon/imsettings-server.c:391
+#: ../imsettings-daemon/imsettings-server.c:414
+#: ../imsettings-daemon/imsettings-server.c:415
 msgid "xinput directory"
 msgstr "xinput ਡਾਇਰੈਕਟਰੀ"
 
-#: ../imsettings-daemon/imsettings-server.c:613
+#: ../imsettings-daemon/imsettings-server.c:420
+#, fuzzy
+msgid "module directory"
+msgstr "ਘਰੇਲੂ ਡਾਇਰੈਕਟਰੀ"
+
+#: ../imsettings-daemon/imsettings-server.c:421
+#, fuzzy
+msgid "IMSettings module directory"
+msgstr "IMSettings ਐਪਲਿਟ ਪਸੰਦਾਂ"
+
+#: ../imsettings-daemon/imsettings-server.c:644
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "ਤੁਹਾਡੇ ਸਿਸਟਮ ਉੱਪਰ ਕੋਈ ਅਜਿਹਾ ਇੰਪੁੱਟ ਢੰਗ ਨਹੀਂ ਹੈ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:622
-#: ../imsettings-daemon/imsettings-server.c:666
-#: ../imsettings-daemon/imsettings-server.c:706
-#: ../imsettings-daemon/imsettings-server.c:857
+#: ../imsettings-daemon/imsettings-server.c:653
+#: ../imsettings-daemon/imsettings-server.c:760
+#: ../imsettings-daemon/imsettings-server.c:801
+#: ../imsettings-daemon/imsettings-server.c:991
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:659
+#: ../imsettings-daemon/imsettings-server.c:689
+#, c-format
+msgid "Failed to revert the backup file: %s"
+msgstr "ਬੈਕਅੱਪ ਫਾਇਲ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਫੇਲ : %s"
+
+#: ../imsettings-daemon/imsettings-server.c:702
+#, c-format
+msgid "Failed to create a backup file: %s"
+msgstr "ਬੈਕਅੱਪ ਫਾਇਲ ਬਣਾਉਣ ਵਿੱਚ ਫੇਲ: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:712
+#, c-format
+msgid "Failed to remove a .xinputrc file: %s"
+msgstr "ਇੱਕ .xinputrc ਫਾਇਲ ਹਟਾਉਣ ਵਿੱਚ ਫੇਲ: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:723
+#, fuzzy, c-format
+msgid "Failed to create a symlink: %s"
+msgstr "symlink ਬਣਾਉਣ ਵਿੱਚ ਫੇਲ: %s"
+
+#: ../imsettings-daemon/imsettings-server.c:753
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:698
+#: ../imsettings-daemon/imsettings-server.c:793
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:849
+#: ../imsettings-daemon/imsettings-server.c:983
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "ਤੁਹਾਡੇ ਸਿਸਟਮ ਉੱਪਰ ਕੋਈ ਅਜਿਹਾ ਇੰਪੁੱਟ ਢੰਗ ਨਹੀਂ ਹੈ: %s"
@@ -211,7 +224,7 @@ msgid "Set the system-wide xinputrc directory (for debugging purpose)"
 msgstr "ਸਿਸਟਮ-ਸੰਬੰਧੀ xinputrc ਫਾਇਲ ਲਈ ਇੱਕ ਡਾਇਰੈਕਟਰੀ ਦਾ ਨਾਂ ਦਿਓ (ਸਿਰਫ ਡੀਬੱਗਿੰਗ)"
 
 #: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
-#: ../imsettings-daemon/main.c:98
+#: ../imsettings-daemon/main.c:98 ../imsettings-daemon/main.c:99
 msgid "DIR"
 msgstr "DIR"
 
@@ -226,6 +239,11 @@ msgid "Set a home directory (for debugging purpose)"
 msgstr "ਇੱਕ ਘਰੇਲੂ ਡਾਇਰੈਕਟਰੀ (ਸਿਰਫ ਡੀਬੱਗਿੰਗ)"
 
 #: ../imsettings-daemon/main.c:99
+#, fuzzy
+msgid "Set the imsettings module directory (for debugging purpose)"
+msgstr "ਇੱਕ ਘਰੇਲੂ ਡਾਇਰੈਕਟਰੀ (ਸਿਰਫ ਡੀਬੱਗਿੰਗ)"
+
+#: ../imsettings-daemon/main.c:100
 msgid "Do not create a log file."
 msgstr "ਲਾਗ ਫਾਇਲ ਨਾ ਬਣਾਓ।"
 
@@ -236,11 +254,11 @@ msgid "Unable to create a client instance."
 msgstr "ਪ੍ਰਵੇਗ ਕੁੰਜੀ ਸੈੱਟਅੱਪ ਕਰਨ ਵਿੱਚ ਅਸਫਲ"
 
 #: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:60
-#, c-format
+#: ../utils/imsettings-switch.c:89
+#, fuzzy, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload -f\" may help but it will restart the Input "
-"Method\n"
+"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
 msgstr ""
 "ਹੁਣ imsettings ਦਾ ਵੱਖਰਾਂ ਵਰਜਨ ਚੱਲ ਰਿਹਾ ਹੈ।\n"
 "\"imsettings-reload -f\" ਚਲਾਉਣ ਨਾਲ ਇਹ ਮੁੱਦਾ ਹੱਲ ਹੋ ਸਕਦਾ ਹੈ ਪਰ ਧਿਆਨ ਰੱਖੋ ਕਿ ਇਸ ਨਾਲ "
@@ -294,16 +312,6 @@ msgstr "ਕੋਈ ਸਿਸਟਮ ਮੂਲ ਇੰਪੁੱਟ ਢੰਗ ਨਹ�
 msgid "Read xinputrc to determine the input method"
 msgstr ""
 
-#: ../utils/imsettings-switch.c:89
-#, fuzzy, c-format
-msgid ""
-"Currently a different version of imsettings is running.\n"
-"Running \"imsettings-reload\" may help but it will restart the Input Method\n"
-msgstr ""
-"ਹੁਣ imsettings ਦਾ ਵੱਖਰਾਂ ਵਰਜਨ ਚੱਲ ਰਿਹਾ ਹੈ।\n"
-"\"imsettings-reload -f\" ਚਲਾਉਣ ਨਾਲ ਇਹ ਮੁੱਦਾ ਹੱਲ ਹੋ ਸਕਦਾ ਹੈ ਪਰ ਧਿਆਨ ਰੱਖੋ ਕਿ ਇਸ ਨਾਲ "
-"ਇੰਪੁੱਟ ਢੰਗ ਵੀ ਮੁੜ-ਚਾਲੂ ਹੋਵੇਗਾ\n"
-
 #: ../utils/imsettings-switch.c:104
 #, fuzzy, c-format
 msgid "No Input Method running to be restarted.\n"
@@ -313,6 +321,35 @@ msgstr "ਕੋਈ ਇੰਪੁੱਟ ਢੰਗ ਨਹੀਂ ਚੱਲ ਰਿਹ�
 #, fuzzy, c-format
 msgid "Restarted %s"
 msgstr "%s ਨੂੰ ਮੁੜ-ਚਾਲੂ ਕੀਤਾ ਗਿਆ\n"
+
+#~ msgid "Replace the running settings daemon with new instance."
+#~ msgstr "ਚੱਲ ਰਹੇ ਸੈਟਿੰਗ ਡੈਮਨ ਨੂੰ ਨਵੇਂ ਨਿਰਧਾਰਨ ਨਾਲ ਤਬਦੀਲ ਕਰੋ।"
+
+#~ msgid "Helper application for imsettings"
+#~ msgstr "imsettings ਲਈ ਸਹਾਇਕ ਐਪਲੀਕੇਸ਼ਨਾਂ"
+
+#, fuzzy
+#~ msgid ""
+#~ "Helper application that delivers GTK+ immodule name between GConf and "
+#~ "lxde-settings-daemon"
+#~ msgstr "ਸਹਾਇਕ ਐਪਲੀਕੇਸ਼ਨਾਂ ਜੋ GConf ਅਤੇ Xfconf ਵਿਚਕਾਰ GTK+ immodule ਦਿੰਦੀਆਂ ਹਨ"
+
+#~ msgid "Button Label|Input Method"
+#~ msgstr "ਬਟਨ ਲੇਬਲ|ਇੰਪੁੱਟ ਢੰਗ"
+
+#~ msgid ""
+#~ "Helper application that delivers GTK+ immodule name between GConf and "
+#~ "Xfconf"
+#~ msgstr "ਸਹਾਇਕ ਐਪਲੀਕੇਸ਼ਨਾਂ ਜੋ GConf ਅਤੇ Xfconf ਵਿਚਕਾਰ GTK+ immodule ਦਿੰਦੀਆਂ ਹਨ"
+
+#~ msgid ""
+#~ "Currently a different version of imsettings is running.\n"
+#~ "Running \"imsettings-reload -f\" may help but it will restart the Input "
+#~ "Method\n"
+#~ msgstr ""
+#~ "ਹੁਣ imsettings ਦਾ ਵੱਖਰਾਂ ਵਰਜਨ ਚੱਲ ਰਿਹਾ ਹੈ।\n"
+#~ "\"imsettings-reload -f\" ਚਲਾਉਣ ਨਾਲ ਇਹ ਮੁੱਦਾ ਹੱਲ ਹੋ ਸਕਦਾ ਹੈ ਪਰ ਧਿਆਨ ਰੱਖੋ ਕਿ ਇਸ "
+#~ "ਨਾਲ ਇੰਪੁੱਟ ਢੰਗ ਵੀ ਮੁੜ-ਚਾਲੂ ਹੋਵੇਗਾ\n"
 
 #~ msgid "A shortcut key to connect to/disconnect from Input Method"
 #~ msgstr "ਇੰਪੁੱਟ ਢੰਗ ਨਾਲ ਜੁੜਨ/ਹਟਣ ਲਈ ਸ਼ਾਰਟਕੱਟ ਕੁੰਜੀ"
@@ -398,9 +435,6 @@ msgstr "%s ਨੂੰ ਮੁੜ-ਚਾਲੂ ਕੀਤਾ ਗਿਆ\n"
 
 #~ msgid "Please press the acceleration key..."
 #~ msgstr "ਕਿਰਪਾ ਕਰਕੇ ਪ੍ਰਵੇਗ ਕੁੰਜੀ ਦਬਾਓ..."
-
-#~ msgid "IMSettings Applet Preferences"
-#~ msgstr "IMSettings ਐਪਲਿਟ ਪਸੰਦਾਂ"
 
 #~ msgid "_Show the status icon"
 #~ msgstr "ਸਥਿਤੀ ਆਈਕਾਨ ਵੇਖਾਓ(_S)"
@@ -496,9 +530,6 @@ msgstr "%s ਨੂੰ ਮੁੜ-ਚਾਲੂ ਕੀਤਾ ਗਿਆ\n"
 
 #~ msgid "Qt immodule"
 #~ msgstr "Qt immodule"
-
-#~ msgid "A module name used for Qt"
-#~ msgstr "Qt ਲਈ ਵਰਤਿਆ ਜਾਂਦਾ ਇੱਕ ਮੈਡਿਊਲ ਨਾਂ"
 
 #~ msgid "XIM name"
 #~ msgstr "XIM ਨਾਂ"
@@ -606,18 +637,6 @@ msgstr "%s ਨੂੰ ਮੁੜ-ਚਾਲੂ ਕੀਤਾ ਗਿਆ\n"
 
 #~ msgid "Failed to get a place of home directory."
 #~ msgstr "ਘਰੇਲੂ ਡਾਇਰੈਕਟਰੀ ਦਾ ਥਾਂ ਪਤਾ ਕਰਨ ਵਿੱਚ ਫੇਲ ਹੋਇਆ।"
-
-#~ msgid "Failed to revert the backup file: %s"
-#~ msgstr "ਬੈਕਅੱਪ ਫਾਇਲ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਫੇਲ : %s"
-
-#~ msgid "Failed to create a backup file: %s"
-#~ msgstr "ਬੈਕਅੱਪ ਫਾਇਲ ਬਣਾਉਣ ਵਿੱਚ ਫੇਲ: %s"
-
-#~ msgid "Failed to remove a .xinputrc file: %s"
-#~ msgstr "ਇੱਕ .xinputrc ਫਾਇਲ ਹਟਾਉਣ ਵਿੱਚ ਫੇਲ: %s"
-
-#~ msgid "Failed to make a symlink: %s"
-#~ msgstr "symlink ਬਣਾਉਣ ਵਿੱਚ ਫੇਲ: %s"
 
 #~ msgid "No input methods available on your system."
 #~ msgstr "ਤੁਹਾਡੇ ਸਿਸਟਮ ਉੱਪਰ ਕੋਈ ਇੰਪੁੱਟ ਵਿਧੀ ਉਪਲੱਬਧ ਨਹੀਂ ਹੈ।"
