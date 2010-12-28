@@ -473,6 +473,7 @@ imsettings_server_cb_get_info_variants(IMSettingsServer  *server,
 		gsize len, slen = strlen(XINPUT_SUFFIX), i;
 		gchar *im = imsettings_server_cb_get_system_im(server, lang, error);
 
+		g_clear_error(error);
 		path = g_file_get_path(file);
 		while (1) {
 			finfo = g_file_enumerator_next_file(e, NULL, error);

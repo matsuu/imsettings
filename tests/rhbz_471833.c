@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * rhbz_471833.c
- * Copyright (C) 2009 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2009-2010 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
@@ -25,13 +25,12 @@
 #include "config.h"
 #endif
 
-#include "imsettings/imsettings-info.h"
-#include "imsettings/imsettings-request.h"
-#include "imsettings/imsettings.h"
+#include "imsettings.h"
+#include "imsettings-info.h"
+#include "imsettings-client.h"
 #include "main.h"
 
-DBusConnection *dbus_conn;
-IMSettingsRequest *req;
+IMSettingsClient *client;
 
 /************************************************************/
 /* common functions                                         */
@@ -39,8 +38,7 @@ IMSettingsRequest *req;
 void
 setup(void)
 {
-	dbus_conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(dbus_conn, IMSETTINGS_INTERFACE_DBUS);
+	client = imsettings_client_new(NULL);
 }
 
 void
@@ -48,43 +46,61 @@ teardown(void)
 {
 	imsettings_test_reload_daemons();
 
-	g_object_unref(req);
-	dbus_connection_unref(dbus_conn);
+	g_object_unref(client);
 }
 
 /************************************************************/
 /* Test cases                                               */
 /************************************************************/
 TDEF (issue) {
+	GVariant *v;
 	IMSettingsInfo *info1, *info2;
 	GError *error = NULL;
 
 	imsettings_test_restart_daemons("rhbz_471833" G_DIR_SEPARATOR_S "case1");
 
-	info1 = imsettings_request_get_info_object(req, "SCIM", &error);
+	v = imsettings_client_get_info_variant(client, "SCIM", NULL, &error);
+	fail_unless(v != NULL, "Failed to obtain a variant for SCIM");
+	info1 = imsettings_info_new(v);
+	g_variant_unref(v);
 	fail_unless(info1 != NULL, "Failed to obtain IMSettingsInfo for SCIM");
-	info2 = imsettings_request_get_info_object(req, "scim", &error);
-	fail_unless(info2 != NULL, "Failed to obtain IMSettingsInfo for scim");
+	v = imsettings_client_get_info_variant(client, "scim", NULL, &error);
+	fail_unless(v != NULL, "Failed to obtain a variant for scim");
+	info2 = imsettings_info_new(v);
+	g_variant_unref(v);
+	fail_unless(info1 != NULL, "Failed to obtain IMSettingsInfo for scim");
 	fail_unless(imsettings_info_compare(info1, info2), "Should be same object for SCIM and scim.");
 
 	g_object_unref(info2);
 
-	info2 = imsettings_request_get_info_object(req, "test-scim.conf", &error);
+	v = imsettings_client_get_info_variant(client, "test-scim.conf", NULL, &error);
+	fail_unless(v != NULL, "Failed to obtain a variant for test-scim.conf");
+	info2 = imsettings_info_new(v);
+	g_variant_unref(v);
 	fail_unless(info2 != NULL, "Failed to obtain IMSettingsInfo for test-scim.conf");
 	fail_unless(imsettings_info_compare(info1, info2), "Should be same object for SCIM and test-scim.conf");
 
 	g_object_unref(info1);
 	g_object_unref(info2);
 
-	info1 = imsettings_request_get_info_object(req, "S C I M", &error);
+	v = imsettings_client_get_info_variant(client, "S C I M", NULL, &error);
+	fail_unless(v != NULL, "Failed to obtain a variant for S C I M");
+	info1 = imsettings_info_new(v);
+	g_variant_unref(v);
 	fail_unless(info1 != NULL, "Failed to obtain IMSettingsInfo for S C I M");
-	info2 = imsettings_request_get_info_object(req, "s c i m", &error);
+	v = imsettings_client_get_info_variant(client, "s c i m", NULL, &error);
+	fail_unless(v != NULL, "Failed to obtain a variant for s c i m");
+	info2 = imsettings_info_new(v);
+	g_variant_unref(v);
 	fail_unless(info2 != NULL, "Failed to obtain IMSettingsInfo for s c i m");
 	fail_unless(imsettings_info_compare(info1, info2), "Should be same object for S C I M and s c i m.");
 
 	g_object_unref(info2);
 
-	info2 = imsettings_request_get_info_object(req, "test-scim2.conf", &error);
+	v = imsettings_client_get_info_variant(client, "test-scim2.conf", NULL, &error);
+	fail_unless(v != NULL, "Failed to obtain a variant for test-scim2.conf");
+	info2 = imsettings_info_new(v);
+	g_variant_unref(v);
 	fail_unless(info2 != NULL, "Failed to obtain IMSettingsInfo for test-scim2.conf");
 	fail_unless(imsettings_info_compare(info1, info2), "Should be same object for S C I M and test-scim2.conf");
 
