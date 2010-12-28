@@ -135,11 +135,12 @@ imsettings_server_logger(IMSettingsServer *server,
 	fp = fopen(logfile, "ab");
 	if (fp == NULL) {
 		g_critical("Unable to open a log file: %s", logfile);
-		return;
+		goto finalize;
 	}
 	fwrite(buffer, length, sizeof (gchar), fp);
 	fclose(fp);
 
+  finalize:
 	G_UNLOCK (logger);
 
 	g_free(logfile);
@@ -854,7 +855,7 @@ imsettings_server_bus_signal(GDBusConnection *connection,
 			     GVariant        *parameters,
 			     gpointer         user_data)
 {
-	g_print("%s: sender[%s] path[%s] iface[%s] method[%s]\n", __PRETTY_FUNCTION__, sender, object_path, interface_name, signal_name);
+	d(g_print("%s: sender[%s] path[%s] iface[%s] method[%s]\n", __PRETTY_FUNCTION__, sender, object_path, interface_name, signal_name));
 
 	if (g_strcmp0(signal_name, "Reload") == 0) {
 		/* ignore it anyway.
@@ -880,7 +881,7 @@ imsettings_server_bus_method_call(GDBusConnection       *connection,
 	IMSettingsServerPrivate *priv = server->priv;
 	GError *err = NULL;
 
-	g_print("%s: sender[%s] path[%s] iface[%s] method[%s]\n", __PRETTY_FUNCTION__, sender, object_path, interface_name, method_name);
+	d(g_print("%s: sender[%s] path[%s] iface[%s] method[%s]\n", __PRETTY_FUNCTION__, sender, object_path, interface_name, method_name));
 
 	if (g_strcmp0(method_name, "StopService") == 0) {
 		g_dbus_method_invocation_return_value(invocation,
@@ -1083,7 +1084,7 @@ imsettings_server_bus_get_property(GDBusConnection  *connection,
 				   GError          **error,
 				   gpointer          user_data)
 {
-	g_print("%s\n", __PRETTY_FUNCTION__);
+	g_print("XXX: %s\n", __PRETTY_FUNCTION__);
 	return NULL;
 }
 
@@ -1097,7 +1098,7 @@ imsettings_server_bus_set_property(GDBusConnection  *connection,
 				   GError          **error,
 				   gpointer          user_data)
 {
-	g_print("%s\n", __PRETTY_FUNCTION__);
+	g_print("XXX: %s\n", __PRETTY_FUNCTION__);
 	return FALSE;
 }
 
@@ -1109,6 +1110,8 @@ imsettings_server_bus_on_name_acquired(GDBusConnection *connection,
 	IMSettingsServer *server = IMSETTINGS_SERVER (user_data);
 	IMSettingsServerPrivate *priv = server->priv;
 	GError *err = NULL;
+	GList *l, *ll;
+	GString *s;
 
 	priv->id = g_dbus_connection_register_object(priv->connection,
 						     IMSETTINGS_PATH_DBUS,
@@ -1128,11 +1131,25 @@ imsettings_server_bus_on_name_acquired(GDBusConnection *connection,
 	g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
 	      "  [HOME=%s]", imsettings_server_get_homedir(server));
 	g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
-	      "  [XINPUTRC=%s]", imsettings_server_get_xinputrcdir(server));
+	      "  [XINPUTRCDIR=%s]", imsettings_server_get_xinputrcdir(server));
 	g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
-	      "  [XINPUT=%s]\n", imsettings_server_get_xinputdir(server));
+	      "  [XINPUTDIR=%s]\n", imsettings_server_get_xinputdir(server));
 	g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
-	      "  [MODULE=%s]\n", imsettings_server_get_moduledir(server));
+	      "  [MODULEDIR=%s]\n", imsettings_server_get_moduledir(server));
+
+	l = g_hash_table_get_keys(priv->modules);
+	s = g_string_new(NULL);
+	for (ll = l; ll != NULL; ll = g_list_next(ll)) {
+		gchar *mn = ll->data;
+
+		if (s->len > 0)
+			g_string_append(s, ", ");
+		g_string_append(s, mn);
+	}
+	g_list_free(l);
+	g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
+	      "  [MODULES=%s]\n", s->str);
+	g_string_free(s, TRUE);
 }
 
 static void
