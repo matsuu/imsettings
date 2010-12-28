@@ -16,18 +16,7 @@ Makefile
 Makefile.in
 a\.out
 aclocal\.m4
-applet/*\.in
-!applet/*\.in\.in
-applet/imsettings-applet
 autom4te\.cache
-backends/*/*-glue\.c
-backends/*/*-glue\.cpp
-backends/*/*-glue\.h
-backends/gconf/gconf-im-settings-daemon
-backends/lxde/imsettings-lxde-helper
-backends/qt/moc_*\.cpp
-backends/qt/qt-im-settings-daemon
-backends/xfce_xfconf/imsettings-xfce-helper
 backends/xim/imsettings-xim
 config\.*
 configure
@@ -37,9 +26,6 @@ data/*\.in
 data/*\.sh
 data/*\.conf
 depcomp
-imsettings/*-bindings.h
-imsettings/*-glue.h
-imsettings/*-marshal.[ch]
 imsettings-daemon/imsettings-daemon
 install-sh
 intltool-*
@@ -56,7 +42,4 @@ tests/test-*
 utils/imsettings-info
 utils/imsettings-list
 utils/imsettings-reload
-utils/imsettings-restart
-utils/imsettings-start
-utils/imsettings-stop
 utils/imsettings-switch
