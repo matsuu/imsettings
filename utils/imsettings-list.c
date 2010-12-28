@@ -38,7 +38,7 @@ main(int    argc,
 	IMSettingsInfo *info, *cinfo;
 	GVariant *v = NULL, *vv;
 	GVariantIter *iter;
-	const gchar *locale, *name, *key;
+	const gchar *locale, *name, *imname, *subimname, *key;
 	gchar *user_im = NULL, *system_im = NULL, *running_im = NULL;
 	gchar *xinput;
 	gint i;
@@ -79,27 +79,37 @@ main(int    argc,
 		g_clear_error(&error);
 		goto end;
 	}
-	running_im = g_strdup(imsettings_info_get_short_desc(cinfo));
+	running_im = g_strdup(imsettings_info_get_im_name(cinfo));
 	g_object_unref(cinfo);
 
 	i = 0;
 	g_variant_get(v, "a{sv}", &iter);
 	while (g_variant_iter_next(iter, "{&sv}", &key, &vv)) {
+		gchar *sub;
+
 		len = strlen(key);
 		if (len > slen &&
 		    strcmp(&key[len - slen], XINPUT_SUFFIX) == 0)
 			continue;
 		info = imsettings_info_new(vv);
 		name = imsettings_info_get_short_desc(info);
+		imname = imsettings_info_get_im_name(info);
+		subimname = imsettings_info_get_sub_im_name(info);
 		xinput = g_path_get_basename(imsettings_info_get_filename(info));
+		if (subimname) {
+			sub = g_strdup_printf("(%s)", subimname);
+		} else {
+			sub = g_strdup("");
+		}
 
-		g_print("%s %d: %s[%s] %s\n",
-			(strcmp(running_im, name) == 0 ? "*" : (strcmp(user_im, name) == 0 ? "-" : " ")),
+		g_print("%s %d: %s%s[%s] %s\n",
+			(strcmp(running_im, imname) == 0 ? "*" : (strcmp(user_im, name) == 0 ? "-" : " ")),
 			i + 1,
-			name, xinput,
+			imname, sub, xinput,
 			(strcmp(system_im, name) == 0 ? "(recommended)" : ""));
 		g_object_unref(info);
 		g_free(xinput);
+		g_free(sub);
 		i++;
 	}
 	g_variant_iter_free(iter);

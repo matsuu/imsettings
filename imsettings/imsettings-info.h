@@ -55,6 +55,8 @@ enum _IMSettingsInfoType {
 	IMSETTINGS_INFO_LANG,
 	IMSETTINGS_INFO_FILENAME,
 	IMSETTINGS_INFO_IS_XIM,
+	IMSETTINGS_INFO_IM_NAME,
+	IMSETTINGS_INFO_SUB_IM_NAME,
 	LAST_IMSETTINGS_INFO
 };
 
@@ -87,6 +89,8 @@ const gchar    *imsettings_info_get_aux_program       (IMSettingsInfo       *inf
 const gchar    *imsettings_info_get_aux_args          (IMSettingsInfo       *info);
 const gchar    *imsettings_info_get_short_desc        (IMSettingsInfo       *info);
 const gchar    *imsettings_info_get_long_desc         (IMSettingsInfo       *info);
+const gchar    *imsettings_info_get_im_name           (IMSettingsInfo       *info);
+const gchar    *imsettings_info_get_sub_im_name       (IMSettingsInfo       *info);
 const gchar    *imsettings_info_get_icon_file         (IMSettingsInfo       *info);
 gboolean        imsettings_info_is_script             (IMSettingsInfo       *info);
 gboolean        imsettings_info_is_visible            (IMSettingsInfo       *info);

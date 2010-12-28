@@ -168,6 +168,8 @@ _quark_init(void)
 		TOKEN2QUARK (IS_XIM);
 		TOKEN2QUARK (LANG);
 		TOKEN2QUARK (FILENAME);
+		TOKEN2QUARK (IM_NAME);
+		TOKEN2QUARK (SUB_IM_NAME);
 
 #undef TOKEN2QUARK
 	}
@@ -456,6 +458,14 @@ _DEFUNC_PROPERTY (const gchar *, get_aux_program, AUXILIARY_PROGRAM, (const gcha
 _DEFUNC_PROPERTY (const gchar *, get_aux_args, AUXILIARY_ARGS, (const gchar *), NULL)
 _DEFUNC_PROPERTY (const gchar *, get_icon_file, ICON, (const gchar *), NULL)
 
+/**
+ * imsettings_info_get_short_desc:
+ * @info:
+ *
+ * FIXME
+ *
+ * Returns:
+ */
 const gchar *
 imsettings_info_get_short_desc(IMSettingsInfo *info)
 {
@@ -473,6 +483,110 @@ imsettings_info_get_short_desc(IMSettingsInfo *info)
 		return imsettings_info_get_xim(info);
 	} else if (p == NULL || *(gchar *)p == 0) {
 		return imsettings_info_get_xim(info);
+	}
+	retval = (const gchar *)p;
+
+	return retval;
+}
+
+/**
+ * imsettings_info_get_im_name:
+ * @info:
+ *
+ * FIXME
+ *
+ * Returns:
+ */
+const gchar *
+imsettings_info_get_im_name(IMSettingsInfo *info)
+{
+	IMSettingsInfoPrivate *priv;
+	gpointer p = NULL;
+	gchar *im, *subim;
+	const gchar *retval, *sd;
+
+	g_return_val_if_fail (IMSETTINGS_IS_INFO (info), NULL);
+
+	priv = info->priv;
+	if (!g_hash_table_lookup_extended(priv->info_table,
+					  GUINT_TO_POINTER (__xinput_tokens[IMSETTINGS_INFO_IM_NAME]),
+					  NULL,
+					  &p)) {
+	  rebuild:
+		sd = imsettings_info_get_short_desc(info);
+		p = strchr(sd, ':');
+		if (!p) {
+			im = g_strdup(sd);
+			subim = NULL;
+		} else {
+			im = g_strndup(sd, (gulong)p - (gulong)sd);
+			subim = g_strdup(&((gchar *)p)[1]);
+		}
+
+		g_hash_table_insert(priv->info_table,
+				    GUINT_TO_POINTER (__xinput_tokens[IMSETTINGS_INFO_IM_NAME]),
+				    im);
+		g_hash_table_insert(priv->info_table,
+				    GUINT_TO_POINTER (__xinput_tokens[IMSETTINGS_INFO_SUB_IM_NAME]),
+				    subim);
+
+		return (const gchar *)im;
+	} else if (p == NULL || *(gchar *)p == 0) {
+		goto rebuild;
+	}
+	retval = (const gchar *)p;
+
+	return retval;
+}
+
+/**
+ * imsettings_info_get_sub_im_name:
+ * @info:
+ *
+ * FIXME
+ *
+ * Returns:
+ */
+const gchar *
+imsettings_info_get_sub_im_name(IMSettingsInfo *info)
+{
+	IMSettingsInfoPrivate *priv;
+	gpointer p = NULL;
+	gchar *im, *subim;
+	const gchar *retval, *sd;
+
+	g_return_val_if_fail (IMSETTINGS_IS_INFO (info), NULL);
+
+	priv = info->priv;
+	if (!g_hash_table_lookup_extended(priv->info_table,
+					  GUINT_TO_POINTER (__xinput_tokens[IMSETTINGS_INFO_SUB_IM_NAME]),
+					  NULL,
+					  &p)) {
+	  rebuild:
+		sd = imsettings_info_get_short_desc(info);
+		p = strchr(sd, ':');
+		if (!p) {
+			im = g_strdup(sd);
+			subim = NULL;
+		} else {
+			im = g_strndup(sd, (gulong)p - (gulong)sd);
+			subim = g_strdup(&((gchar *)p)[1]);
+		}
+
+		g_hash_table_insert(priv->info_table,
+				    GUINT_TO_POINTER (__xinput_tokens[IMSETTINGS_INFO_IM_NAME]),
+				    im);
+		g_hash_table_insert(priv->info_table,
+				    GUINT_TO_POINTER (__xinput_tokens[IMSETTINGS_INFO_SUB_IM_NAME]),
+				    subim);
+
+		return (const gchar *)subim;
+	} else if (p == NULL || *(gchar *)p == 0) {
+		if (!g_hash_table_lookup_extended(priv->info_table,
+						  GUINT_TO_POINTER (__xinput_tokens[IMSETTINGS_INFO_IM_NAME]),
+						  NULL,
+						  NULL))
+			goto rebuild;
 	}
 	retval = (const gchar *)p;
 
@@ -612,7 +726,9 @@ imsettings_info_compare(const IMSettingsInfo *i1,
 		if (q == __xinput_tokens[IMSETTINGS_INFO_IMSETTINGS_IS_SCRIPT] ||
 		    q == __xinput_tokens[IMSETTINGS_INFO_LANG] ||
 		    q == __xinput_tokens[IMSETTINGS_INFO_FILENAME] ||
-		    q == __xinput_tokens[IMSETTINGS_INFO_IS_XIM]) {
+		    q == __xinput_tokens[IMSETTINGS_INFO_IS_XIM] ||
+		    q == __xinput_tokens[IMSETTINGS_INFO_IM_NAME] ||
+		    q == __xinput_tokens[IMSETTINGS_INFO_SUB_IM_NAME]) {
 			/* ignore */
 			continue;
 		}
