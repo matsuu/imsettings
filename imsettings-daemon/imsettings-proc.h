@@ -26,6 +26,7 @@
 
 #include <glib-object.h>
 #include <imsettings/imsettings-info.h>
+#include <libnotify/notify.h>
 
 
 G_BEGIN_DECLS
@@ -43,6 +44,12 @@ typedef struct _IMSettingsProcPrivate	IMSettingsProcPrivate;
 
 struct _IMSettingsProcClass {
 	GObjectClass parent_class;
+
+	void (* notify) (IMSettingsProc *proc,
+			 NotifyUrgency   urgency,
+			 const gchar    *title,
+			 const gchar    *message,
+			 gint            timeout);
 
 	void (*reserved1) (void);
 	void (*reserved2) (void);

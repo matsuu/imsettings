@@ -27,6 +27,7 @@ data/*\.sh
 data/*\.conf
 depcomp
 imsettings-daemon/imsettings-daemon
+imsettings-daemon/imsettings-marshal.*
 install-sh
 intltool-*
 libtool

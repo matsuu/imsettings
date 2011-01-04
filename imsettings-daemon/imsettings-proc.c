@@ -30,6 +30,7 @@
 #include <glib/gi18n-lib.h>
 #include "imsettings-utils.h"
 #include "imsettings-info.h"
+#include "imsettings-marshal.h"
 #include "imsettings-proc.h"
 
 #define IMSETTINGS_PROC_GET_PRIVATE(_o_)	(G_TYPE_INSTANCE_GET_PRIVATE ((_o_), IMSETTINGS_TYPE_PROC, IMSettingsProcPrivate))
@@ -58,6 +59,11 @@ enum {
 	PROP_INFO,
 	LAST_PROP
 };
+enum {
+	SIG_0,
+	SIG_NOTIFY_NOTIFICATION,
+	LAST_SIGNAL
+};
 
 static gboolean _start_main_process(IMSettingsProc      *proc,
 				    GError             **error);
@@ -76,6 +82,8 @@ static gboolean _stop_process      (IMSettingsProc     *proc,
 				    GError            **error);
 
 G_DEFINE_TYPE (IMSettingsProc, imsettings_proc, G_TYPE_OBJECT);
+
+guint signals[LAST_SIGNAL] = { 0 };
 
 /*< private >*/
 static gboolean
@@ -181,6 +189,8 @@ _watch_im_status_cb(GPid     pid,
 		      "Stopped %s process for %s with %s [pid: %d]",
 		      type_names[type], module, status_message->str, pid);
 	} else {
+		gchar *title = g_strdup(_("Unable to keep Input Method running"));
+
 		g_get_current_time(&current);
 		/* XXX: This is Y2038 unsafe */
 		if (current.tv_sec - pinfo->started_time.tv_sec > RESTART_COUNTER_THRESHOLD) {
@@ -189,12 +199,12 @@ _watch_im_status_cb(GPid     pid,
 			pinfo->restart_counter++;
 		}
 		if (pinfo->restart_counter >= MAXRESTART) {
-			gchar *message = g_strdup_printf(N_("Giving up to bring the process up because %s Input Method process for %s rapidly died many times. See .imsettings.log for more details."),
+			gchar *message = g_strdup_printf(_("Giving up to bring the process up because %s Input Method process for %s rapidly died many times. See .imsettings.log for more details."),
 							 type_names[type],
 							 module);
 
 			g_critical(message);
-			/* notify */
+			g_signal_emit(proc, signals[SIG_NOTIFY_NOTIFICATION], 0, NOTIFY_URGENCY_CRITICAL, title, message, 0);
 			g_free(message);
 			unref = TRUE;
 		} else {
@@ -212,10 +222,11 @@ _watch_im_status_cb(GPid     pid,
 				    break;
 			}
 			if (err) {
-				/* notify */
+				g_signal_emit(proc, signals[SIG_NOTIFY_NOTIFICATION], 0, NOTIFY_URGENCY_CRITICAL, title, err->message, 0);
 				g_error_free(err);
 			}
 		}
+		g_free(title);
 	}
 
   finalize:
@@ -505,6 +516,17 @@ imsettings_proc_class_init(IMSettingsProcClass *klass)
 							    _("A GObject to be a IMSettingsInfo"),
 							    IMSETTINGS_TYPE_INFO,
 							    G_PARAM_READWRITE|G_PARAM_CONSTRUCT));
+
+	/* signals */
+
+	signals[SIG_NOTIFY_NOTIFICATION] = g_signal_new("notify_notification",
+							G_OBJECT_CLASS_TYPE (klass),
+							G_SIGNAL_RUN_FIRST,
+							G_STRUCT_OFFSET (IMSettingsProcClass, notify),
+							NULL, NULL,
+							imsettings_cclosure_marshal_VOID__ENUM_STRING_STRING_INT,
+							G_TYPE_NONE, 4,
+							G_TYPE_UINT, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT);
 }
 
 static void

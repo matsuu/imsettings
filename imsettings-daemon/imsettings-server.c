@@ -40,19 +40,20 @@
 #define IMSETTINGS_SERVER_GET_PRIVATE(_o_)	(G_TYPE_INSTANCE_GET_PRIVATE ((_o_), IMSETTINGS_TYPE_SERVER, IMSettingsServerPrivate))
 
 struct _IMSettingsServerPrivate {
-	GDBusConnection *connection;
-	gchar           *homedir;
-	gchar           *xinputrcdir;
-	gchar           *xinputdir;
-	gchar           *moduledir;
-	GHashTable      *modules;
-	IMSettingsProc  *current_im;
-	GLogFunc         old_log_handler;
-	guint            id;
-	guint            signal_id;
-	guint            owner;
-	gboolean         active:1;
-	gboolean         logging:1;
+	GDBusConnection    *connection;
+	NotifyNotification *notify;
+	gchar              *homedir;
+	gchar              *xinputrcdir;
+	gchar              *xinputdir;
+	gchar              *moduledir;
+	GHashTable         *modules;
+	IMSettingsProc     *current_im;
+	GLogFunc            old_log_handler;
+	guint               id;
+	guint               signal_id;
+	guint               owner;
+	gboolean            active:1;
+	gboolean            logging:1;
 };
 enum {
 	PROP_0,
@@ -112,6 +113,31 @@ G_DEFINE_TYPE (IMSettingsServer, imsettings_server, G_TYPE_OBJECT);
 G_LOCK_DEFINE_STATIC (logger);
 
 /*< private >*/
+static void
+_notify_cb(IMSettingsProc *proc,
+	   NotifyUrgency   urgency,
+	   const gchar    *title,
+	   const gchar    *message,
+	   gint            timeout,
+	   gpointer        user_data)
+{
+	IMSettingsServer *server = IMSETTINGS_SERVER (user_data);
+	IMSettingsServerPrivate *priv = server->priv;
+	GError *err = NULL;
+
+	notify_notification_set_urgency(priv->notify, urgency);
+	notify_notification_update(priv->notify, title, message, NULL);
+	notify_notification_clear_actions(priv->notify);
+	notify_notification_set_timeout(priv->notify, timeout * 1000);
+	notify_notification_set_category(priv->notify, "x-imsettings-notice");
+	notify_notification_show(priv->notify, &err);
+
+	if (err) {
+		g_warning(err->message);
+		g_error_free(err);
+	}
+}
+
 static void
 imsettings_server_logger(IMSettingsServer *server,
 			 const gchar      *buffer,
@@ -359,6 +385,7 @@ imsettings_server_finalize(GObject *object)
 	if (priv->owner != 0)
 		g_bus_unown_name(priv->owner);
 #endif
+	g_object_unref(priv->notify);
 	g_object_unref(priv->connection);
 	g_free(priv->homedir);
 	g_free(priv->xinputrcdir);
@@ -449,6 +476,17 @@ imsettings_server_init(IMSettingsServer *server)
 					      g_str_equal,
 					      g_free,
 					      g_object_unref);
+#ifdef HAS_STATUS_ICON
+	/* this is deprecated code */
+	priv->notify = notify_notification_new("imsettings-daemon notification",
+					       "messages from imsettings-daemon",
+					       NULL /* no icon */,
+					       NULL /* no GtkWidget supported */);
+#else
+	priv->notify = notify_notification_new("imsettings-daemon notification",
+					       "messages from imsettings-daemon",
+					       NULL /* no icon */);
+#endif
 }
 
 static GVariant *
@@ -670,6 +708,9 @@ imsettings_server_cb_switch_im(IMSettingsServer  *server,
 
 	priv->current_im = imsettings_proc_new(*info);
 	g_object_add_weak_pointer(G_OBJECT (priv->current_im), (gpointer *)&priv->current_im);
+	g_signal_connect(priv->current_im, "notify_notification",
+			 G_CALLBACK (_notify_cb),
+			 server);
 
 	homedir = imsettings_server_get_homedir(server);
 	conffile = g_build_filename(homedir,
@@ -682,6 +723,9 @@ imsettings_server_cb_switch_im(IMSettingsServer  *server,
 	p = g_path_get_dirname(xinputfile);
 	n = g_path_get_basename(xinputfile);
 	if (g_strcmp0(p, homedir) == 0 &&
+	    g_strcmp0(n, IMSETTINGS_USER_XINPUT_CONF) == 0) {
+		/* do not create/update a symlink */
+	} else if (g_strcmp0(p, homedir) == 0 &&
 	    g_strcmp0(n, IMSETTINGS_USER_XINPUT_CONF ".bak") == 0) {
 		/* try to revert the backup file for the user specific conf file */
 		if (g_rename(backupfile, conffile) == -1) {
