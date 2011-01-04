@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-28 13:36+0900\n"
+"POT-Creation-Date: 2011-01-04 16:39+0900\n"
 "PO-Revision-Date: 2010-04-07 16:24+1000\n"
 "Last-Translator: Yulia <ypoyarko@redhat.com>\n"
 "Language-Team: Russian\n"
@@ -32,31 +32,39 @@ msgstr "Синхронно"
 msgid "Request to send a key event synchronously"
 msgstr "Запрос синхронного отправления события клавиатуры"
 
-#: ../backends/xim/main.c:142
+#: ../backends/xim/main.c:143
+msgid "D-Bus address to use"
+msgstr ""
+
+#: ../backends/xim/main.c:143
+msgid "ADDRESS"
+msgstr ""
+
+#: ../backends/xim/main.c:144
 msgid "X display to use"
 msgstr "Дисплей Х для использования"
 
-#: ../backends/xim/main.c:142
+#: ../backends/xim/main.c:144
 msgid "DISPLAY"
 msgstr "ДИСПЛЕЙ"
 
-#: ../backends/xim/main.c:143
+#: ../backends/xim/main.c:145
 msgid "Replace the running XIM server with new instance."
 msgstr "Заменить выполняющийся сервер XIM новым экземпляром."
 
-#: ../backends/xim/main.c:144
+#: ../backends/xim/main.c:146
 msgid "Output the debugging logs"
 msgstr "Показать журналы отладки"
 
-#: ../backends/xim/main.c:145
+#: ../backends/xim/main.c:147
 msgid "XIM server connects to, for debugging purpose only"
 msgstr "Сервер XIM подключается к ним (только для отладки)"
 
-#: ../backends/xim/main.c:145
+#: ../backends/xim/main.c:147
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/main.c:179 ../imsettings-daemon/main.c:121
+#: ../backends/xim/main.c:175 ../imsettings-daemon/main.c:129
 #: ../utils/imsettings-reload.c:64 ../utils/imsettings-switch.c:78
 msgid "Unknown error in parsing the command lines."
 msgstr "Неизвестная ошибка при разборе строк команд."
@@ -95,6 +103,10 @@ msgid "A module name for imsettings backend"
 msgstr "Имя модуля для Qt"
 
 #: ../imsettings-daemon/imsettings-proc.c:192
+msgid "Unable to keep Input Method running"
+msgstr "Работа метода ввода нарушена"
+
+#: ../imsettings-daemon/imsettings-proc.c:202
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
@@ -103,150 +115,150 @@ msgstr ""
 "Отказ от попыток запуска процесса вследствие повторных сбоев процесса метода "
 "ввода %s для %s. Подробную информацию можно найти в файле .imsettings.log."
 
-#: ../imsettings-daemon/imsettings-proc.c:276
+#: ../imsettings-daemon/imsettings-proc.c:287
 #, c-format
 msgid "[BUG] %s process is still running [pid: %d]\n"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-proc.c:400
+#: ../imsettings-daemon/imsettings-proc.c:411
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "Не удалось отправить сигнал процессу %s."
 
-#: ../imsettings-daemon/imsettings-proc.c:504
+#: ../imsettings-daemon/imsettings-proc.c:515
 #, fuzzy
 msgid "IMSettingsInfo"
 msgstr "Апплет IMSettings"
 
-#: ../imsettings-daemon/imsettings-proc.c:505
+#: ../imsettings-daemon/imsettings-proc.c:516
 #, fuzzy
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "Объект соединения DBus"
 
-#: ../imsettings-daemon/imsettings-server.c:390
+#: ../imsettings-daemon/imsettings-server.c:420
 msgid "DBus connection"
 msgstr "Соединение DBus"
 
-#: ../imsettings-daemon/imsettings-server.c:391
+#: ../imsettings-daemon/imsettings-server.c:421
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "Объект соединения DBus"
 
-#: ../imsettings-daemon/imsettings-server.c:396
+#: ../imsettings-daemon/imsettings-server.c:426
 #, fuzzy
 msgid "Logging"
 msgstr "Журнал"
 
-#: ../imsettings-daemon/imsettings-server.c:397
+#: ../imsettings-daemon/imsettings-server.c:427
 #, fuzzy
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr "Включает и отключает возможность журналирования."
 
-#: ../imsettings-daemon/imsettings-server.c:402
-#: ../imsettings-daemon/imsettings-server.c:403
+#: ../imsettings-daemon/imsettings-server.c:432
+#: ../imsettings-daemon/imsettings-server.c:433
 msgid "Home directory"
 msgstr "Домашний каталог"
 
-#: ../imsettings-daemon/imsettings-server.c:408
-#: ../imsettings-daemon/imsettings-server.c:409
+#: ../imsettings-daemon/imsettings-server.c:438
+#: ../imsettings-daemon/imsettings-server.c:439
 msgid "xinputrc directory"
 msgstr "Каталог xinputrc"
 
-#: ../imsettings-daemon/imsettings-server.c:414
-#: ../imsettings-daemon/imsettings-server.c:415
+#: ../imsettings-daemon/imsettings-server.c:444
+#: ../imsettings-daemon/imsettings-server.c:445
 msgid "xinput directory"
 msgstr "Каталог xinput"
 
-#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:450
 #, fuzzy
 msgid "module directory"
 msgstr "Домашний каталог"
 
-#: ../imsettings-daemon/imsettings-server.c:421
+#: ../imsettings-daemon/imsettings-server.c:451
 #, fuzzy
 msgid "IMSettings module directory"
 msgstr "Параметры апплета IMSettings"
 
-#: ../imsettings-daemon/imsettings-server.c:644
+#: ../imsettings-daemon/imsettings-server.c:685
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "В системе нет такого метода ввода: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:653
-#: ../imsettings-daemon/imsettings-server.c:760
-#: ../imsettings-daemon/imsettings-server.c:801
-#: ../imsettings-daemon/imsettings-server.c:991
+#: ../imsettings-daemon/imsettings-server.c:694
+#: ../imsettings-daemon/imsettings-server.c:807
+#: ../imsettings-daemon/imsettings-server.c:848
+#: ../imsettings-daemon/imsettings-server.c:1038
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:689
+#: ../imsettings-daemon/imsettings-server.c:736
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "Не удалось восстановить файл из резервной копии: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:702
+#: ../imsettings-daemon/imsettings-server.c:749
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "Не удалось создать резервную копию файла: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:712
+#: ../imsettings-daemon/imsettings-server.c:759
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "Не удалось удалить файл .xinputrc: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:723
+#: ../imsettings-daemon/imsettings-server.c:770
 #, fuzzy, c-format
 msgid "Failed to create a symlink: %s"
 msgstr "Не удалось создать символьную ссылку: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:753
+#: ../imsettings-daemon/imsettings-server.c:800
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:793
+#: ../imsettings-daemon/imsettings-server.c:840
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:983
+#: ../imsettings-daemon/imsettings-server.c:1030
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "В системе нет такого метода ввода: %s"
 
-#: ../imsettings-daemon/main.c:95
+#: ../imsettings-daemon/main.c:103
 #, fuzzy
 msgid "Replace the instance of the imsettings daemon."
 msgstr "Заменить выполняющийся демон настроек новым экземпляром."
 
-#: ../imsettings-daemon/main.c:96
+#: ../imsettings-daemon/main.c:104
 #, fuzzy
 msgid "Set the system-wide xinputrc directory (for debugging purpose)"
 msgstr "Укажите каталог для хранения файла xinputrc (только для отладки)"
 
-#: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
-#: ../imsettings-daemon/main.c:98 ../imsettings-daemon/main.c:99
+#: ../imsettings-daemon/main.c:104 ../imsettings-daemon/main.c:105
+#: ../imsettings-daemon/main.c:106 ../imsettings-daemon/main.c:107
 msgid "DIR"
 msgstr "Каталог"
 
-#: ../imsettings-daemon/main.c:97
+#: ../imsettings-daemon/main.c:105
 #, fuzzy
 msgid "Set the IM configuration directory (for debugging purpose)"
 msgstr ""
 "Укажите каталог для хранения конфигурации методов ввода (только для отладки)"
 
-#: ../imsettings-daemon/main.c:98
+#: ../imsettings-daemon/main.c:106
 #, fuzzy
 msgid "Set a home directory (for debugging purpose)"
 msgstr "Домашний каталог (только для отладки)"
 
-#: ../imsettings-daemon/main.c:99
+#: ../imsettings-daemon/main.c:107
 #, fuzzy
 msgid "Set the imsettings module directory (for debugging purpose)"
 msgstr "Домашний каталог (только для отладки)"
 
-#: ../imsettings-daemon/main.c:100
+#: ../imsettings-daemon/main.c:108
 msgid "Do not create a log file."
 msgstr "Не создавать журнал."
 
@@ -645,9 +657,6 @@ msgstr "Перезапущен %s\n"
 
 #~ msgid "AUX"
 #~ msgstr "AUX"
-
-#~ msgid "Unable to keep Input Method running"
-#~ msgstr "Работа метода ввода нарушена"
 
 #~ msgid "Failed to get a place of home directory."
 #~ msgstr "Не удалось получить расположение домашнего каталога."

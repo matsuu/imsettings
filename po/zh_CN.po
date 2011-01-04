@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-28 13:36+0900\n"
+"POT-Creation-Date: 2011-01-04 16:39+0900\n"
 "PO-Revision-Date: 2009-12-10 10:02+1000\n"
 "Last-Translator: Leah Liu <lliu@redhat.com>\n"
 "Language-Team: Simplified Chinese <zh@li.org>\n"
@@ -29,31 +29,39 @@ msgstr "同步"
 msgid "Request to send a key event synchronously"
 msgstr "请求同步发送键事件"
 
-#: ../backends/xim/main.c:142
+#: ../backends/xim/main.c:143
+msgid "D-Bus address to use"
+msgstr ""
+
+#: ../backends/xim/main.c:143
+msgid "ADDRESS"
+msgstr ""
+
+#: ../backends/xim/main.c:144
 msgid "X display to use"
 msgstr "要使用的 X 显示"
 
-#: ../backends/xim/main.c:142
+#: ../backends/xim/main.c:144
 msgid "DISPLAY"
 msgstr "DISPLAY"
 
-#: ../backends/xim/main.c:143
+#: ../backends/xim/main.c:145
 msgid "Replace the running XIM server with new instance."
 msgstr "使用新事件替换运行的 XIM 服务器。"
 
-#: ../backends/xim/main.c:144
+#: ../backends/xim/main.c:146
 msgid "Output the debugging logs"
 msgstr "输出调试纪录"
 
-#: ../backends/xim/main.c:145
+#: ../backends/xim/main.c:147
 msgid "XIM server connects to, for debugging purpose only"
 msgstr "XIM 服务器只为调式目的连接到"
 
-#: ../backends/xim/main.c:145
+#: ../backends/xim/main.c:147
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/main.c:179 ../imsettings-daemon/main.c:121
+#: ../backends/xim/main.c:175 ../imsettings-daemon/main.c:129
 #: ../utils/imsettings-reload.c:64 ../utils/imsettings-switch.c:78
 msgid "Unknown error in parsing the command lines."
 msgstr "在解析命令行时出现未知错误。"
@@ -92,6 +100,10 @@ msgid "A module name for imsettings backend"
 msgstr "Qt 使用的模块名称"
 
 #: ../imsettings-daemon/imsettings-proc.c:192
+msgid "Unable to keep Input Method running"
+msgstr "不能保持输入法於执行状态"
+
+#: ../imsettings-daemon/imsettings-proc.c:202
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
@@ -100,149 +112,149 @@ msgstr ""
 "放弃启动该进程因为用于 %s 的输入法进程 %s 迅速终结多次。查看 .imsettings.log "
 "中的详细记录。"
 
-#: ../imsettings-daemon/imsettings-proc.c:276
+#: ../imsettings-daemon/imsettings-proc.c:287
 #, c-format
 msgid "[BUG] %s process is still running [pid: %d]\n"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-proc.c:400
+#: ../imsettings-daemon/imsettings-proc.c:411
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "不能成功将信号传送给 %s 程序。"
 
-#: ../imsettings-daemon/imsettings-proc.c:504
+#: ../imsettings-daemon/imsettings-proc.c:515
 #, fuzzy
 msgid "IMSettingsInfo"
 msgstr "IMSetting 小程序"
 
-#: ../imsettings-daemon/imsettings-proc.c:505
+#: ../imsettings-daemon/imsettings-proc.c:516
 #, fuzzy
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "要使用 DBus 连接的对象"
 
-#: ../imsettings-daemon/imsettings-server.c:390
+#: ../imsettings-daemon/imsettings-server.c:420
 msgid "DBus connection"
 msgstr "DBus 连接"
 
-#: ../imsettings-daemon/imsettings-server.c:391
+#: ../imsettings-daemon/imsettings-server.c:421
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "要使用 DBus 连接的对象"
 
-#: ../imsettings-daemon/imsettings-server.c:396
+#: ../imsettings-daemon/imsettings-server.c:426
 #, fuzzy
 msgid "Logging"
 msgstr "记录中"
 
-#: ../imsettings-daemon/imsettings-server.c:397
+#: ../imsettings-daemon/imsettings-server.c:427
 #, fuzzy
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr "这个标志显示纪录设备有否被启用。"
 
-#: ../imsettings-daemon/imsettings-server.c:402
-#: ../imsettings-daemon/imsettings-server.c:403
+#: ../imsettings-daemon/imsettings-server.c:432
+#: ../imsettings-daemon/imsettings-server.c:433
 msgid "Home directory"
 msgstr "主目录"
 
-#: ../imsettings-daemon/imsettings-server.c:408
-#: ../imsettings-daemon/imsettings-server.c:409
+#: ../imsettings-daemon/imsettings-server.c:438
+#: ../imsettings-daemon/imsettings-server.c:439
 msgid "xinputrc directory"
 msgstr "xinputrc 目录"
 
-#: ../imsettings-daemon/imsettings-server.c:414
-#: ../imsettings-daemon/imsettings-server.c:415
+#: ../imsettings-daemon/imsettings-server.c:444
+#: ../imsettings-daemon/imsettings-server.c:445
 msgid "xinput directory"
 msgstr "xinput 目录"
 
-#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:450
 #, fuzzy
 msgid "module directory"
 msgstr "主目录"
 
-#: ../imsettings-daemon/imsettings-server.c:421
+#: ../imsettings-daemon/imsettings-server.c:451
 #, fuzzy
 msgid "IMSettings module directory"
 msgstr "IMSetting 小程序首选项"
 
-#: ../imsettings-daemon/imsettings-server.c:644
+#: ../imsettings-daemon/imsettings-server.c:685
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "在您的系统中没有这个输入法：%s"
 
-#: ../imsettings-daemon/imsettings-server.c:653
-#: ../imsettings-daemon/imsettings-server.c:760
-#: ../imsettings-daemon/imsettings-server.c:801
-#: ../imsettings-daemon/imsettings-server.c:991
+#: ../imsettings-daemon/imsettings-server.c:694
+#: ../imsettings-daemon/imsettings-server.c:807
+#: ../imsettings-daemon/imsettings-server.c:848
+#: ../imsettings-daemon/imsettings-server.c:1038
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:689
+#: ../imsettings-daemon/imsettings-server.c:736
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "恢复备份文件失败：%s"
 
-#: ../imsettings-daemon/imsettings-server.c:702
+#: ../imsettings-daemon/imsettings-server.c:749
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "创建备份文件失败：%s"
 
-#: ../imsettings-daemon/imsettings-server.c:712
+#: ../imsettings-daemon/imsettings-server.c:759
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "删除 .xinputrc 文件失败：%s"
 
-#: ../imsettings-daemon/imsettings-server.c:723
+#: ../imsettings-daemon/imsettings-server.c:770
 #, fuzzy, c-format
 msgid "Failed to create a symlink: %s"
 msgstr "生成符号链接失败：%s"
 
-#: ../imsettings-daemon/imsettings-server.c:753
+#: ../imsettings-daemon/imsettings-server.c:800
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:793
+#: ../imsettings-daemon/imsettings-server.c:840
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:983
+#: ../imsettings-daemon/imsettings-server.c:1030
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "在您的系统中没有这个输入法：%s"
 
-#: ../imsettings-daemon/main.c:95
+#: ../imsettings-daemon/main.c:103
 #, fuzzy
 msgid "Replace the instance of the imsettings daemon."
 msgstr "使用新实例替换执行的设置守护程序。"
 
-#: ../imsettings-daemon/main.c:96
+#: ../imsettings-daemon/main.c:104
 #, fuzzy
 msgid "Set the system-wide xinputrc directory (for debugging purpose)"
 msgstr "指定系统范围 xinputrc 文件的目录名称（只用于调试）"
 
-#: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
-#: ../imsettings-daemon/main.c:98 ../imsettings-daemon/main.c:99
+#: ../imsettings-daemon/main.c:104 ../imsettings-daemon/main.c:105
+#: ../imsettings-daemon/main.c:106 ../imsettings-daemon/main.c:107
 msgid "DIR"
 msgstr "DIR"
 
-#: ../imsettings-daemon/main.c:97
+#: ../imsettings-daemon/main.c:105
 #, fuzzy
 msgid "Set the IM configuration directory (for debugging purpose)"
 msgstr "指名 IM 信息文件名引用（作调试用途）"
 
-#: ../imsettings-daemon/main.c:98
+#: ../imsettings-daemon/main.c:106
 #, fuzzy
 msgid "Set a home directory (for debugging purpose)"
 msgstr "主目录（只用于调试）"
 
-#: ../imsettings-daemon/main.c:99
+#: ../imsettings-daemon/main.c:107
 #, fuzzy
 msgid "Set the imsettings module directory (for debugging purpose)"
 msgstr "主目录（只用于调试）"
 
-#: ../imsettings-daemon/main.c:100
+#: ../imsettings-daemon/main.c:108
 msgid "Do not create a log file."
 msgstr "不要创建纪录档。"
 
@@ -623,9 +635,6 @@ msgstr "%s 已重新引导\n"
 
 #~ msgid "AUX"
 #~ msgstr "AUX"
-
-#~ msgid "Unable to keep Input Method running"
-#~ msgstr "不能保持输入法於执行状态"
 
 #~ msgid "Failed to get a place of home directory."
 #~ msgstr "不能获得主目录空间。"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.ko\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-28 13:36+0900\n"
+"POT-Creation-Date: 2011-01-04 16:39+0900\n"
 "PO-Revision-Date: 2010-03-31 15:14+1000\n"
 "Last-Translator: Hyunsok Oh <hoh@redhat.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -30,31 +30,39 @@ msgstr "동기식"
 msgid "Request to send a key event synchronously"
 msgstr "키 이벤트를 동기식으로 전송할 것을 요청"
 
-#: ../backends/xim/main.c:142
+#: ../backends/xim/main.c:143
+msgid "D-Bus address to use"
+msgstr ""
+
+#: ../backends/xim/main.c:143
+msgid "ADDRESS"
+msgstr ""
+
+#: ../backends/xim/main.c:144
 msgid "X display to use"
 msgstr "사용할 X 디스플레이 "
 
-#: ../backends/xim/main.c:142
+#: ../backends/xim/main.c:144
 msgid "DISPLAY"
 msgstr "DISPLAY"
 
-#: ../backends/xim/main.c:143
+#: ../backends/xim/main.c:145
 msgid "Replace the running XIM server with new instance."
 msgstr "새 인스턴스로 실행 중인 XIM 서버를 교체합니다."
 
-#: ../backends/xim/main.c:144
+#: ../backends/xim/main.c:146
 msgid "Output the debugging logs"
 msgstr "디버깅 로그 출력  "
 
-#: ../backends/xim/main.c:145
+#: ../backends/xim/main.c:147
 msgid "XIM server connects to, for debugging purpose only"
 msgstr "XIM 서버 연결 (디버깅 목적 전용)  "
 
-#: ../backends/xim/main.c:145
+#: ../backends/xim/main.c:147
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/main.c:179 ../imsettings-daemon/main.c:121
+#: ../backends/xim/main.c:175 ../imsettings-daemon/main.c:129
 #: ../utils/imsettings-reload.c:64 ../utils/imsettings-switch.c:78
 msgid "Unknown error in parsing the command lines."
 msgstr "명령행을 구문 분석하는 도중 알려지지 않은 오류가 발생했습니다. "
@@ -93,6 +101,10 @@ msgid "A module name for imsettings backend"
 msgstr "Qt 용으로 사용할 모듈 이름 "
 
 #: ../imsettings-daemon/imsettings-proc.c:192
+msgid "Unable to keep Input Method running"
+msgstr "입력 방식 실행을 유지할 수 없음  "
+
+#: ../imsettings-daemon/imsettings-proc.c:202
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
@@ -101,149 +113,149 @@ msgstr ""
 "%s 입력 방식 프로세스(%s를 위한)가 여러번 중지되어 프로세스 시작을 포기합니"
 "다. 자세한 내용은 .imsettings.log를 참조하십시오.  "
 
-#: ../imsettings-daemon/imsettings-proc.c:276
+#: ../imsettings-daemon/imsettings-proc.c:287
 #, c-format
 msgid "[BUG] %s process is still running [pid: %d]\n"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-proc.c:400
+#: ../imsettings-daemon/imsettings-proc.c:411
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "%s 프로세스에게 신호를 보낼 수 없음  "
 
-#: ../imsettings-daemon/imsettings-proc.c:504
+#: ../imsettings-daemon/imsettings-proc.c:515
 #, fuzzy
 msgid "IMSettingsInfo"
 msgstr "IMSettings 애플릿  "
 
-#: ../imsettings-daemon/imsettings-proc.c:505
+#: ../imsettings-daemon/imsettings-proc.c:516
 #, fuzzy
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "DBus 연결 대상 "
 
-#: ../imsettings-daemon/imsettings-server.c:390
+#: ../imsettings-daemon/imsettings-server.c:420
 msgid "DBus connection"
 msgstr "DBus 연결 "
 
-#: ../imsettings-daemon/imsettings-server.c:391
+#: ../imsettings-daemon/imsettings-server.c:421
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "DBus 연결 대상 "
 
-#: ../imsettings-daemon/imsettings-server.c:396
+#: ../imsettings-daemon/imsettings-server.c:426
 #, fuzzy
 msgid "Logging"
 msgstr "로깅  "
 
-#: ../imsettings-daemon/imsettings-server.c:397
+#: ../imsettings-daemon/imsettings-server.c:427
 #, fuzzy
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr "로깅 기능 활성화 여부에 대한 플래그  "
 
-#: ../imsettings-daemon/imsettings-server.c:402
-#: ../imsettings-daemon/imsettings-server.c:403
+#: ../imsettings-daemon/imsettings-server.c:432
+#: ../imsettings-daemon/imsettings-server.c:433
 msgid "Home directory"
 msgstr "홈 디렉토리  "
 
-#: ../imsettings-daemon/imsettings-server.c:408
-#: ../imsettings-daemon/imsettings-server.c:409
+#: ../imsettings-daemon/imsettings-server.c:438
+#: ../imsettings-daemon/imsettings-server.c:439
 msgid "xinputrc directory"
 msgstr "xinputrc 디렉토리  "
 
-#: ../imsettings-daemon/imsettings-server.c:414
-#: ../imsettings-daemon/imsettings-server.c:415
+#: ../imsettings-daemon/imsettings-server.c:444
+#: ../imsettings-daemon/imsettings-server.c:445
 msgid "xinput directory"
 msgstr "xinput 디렉토리  "
 
-#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:450
 #, fuzzy
 msgid "module directory"
 msgstr "홈 디렉토리  "
 
-#: ../imsettings-daemon/imsettings-server.c:421
+#: ../imsettings-daemon/imsettings-server.c:451
 #, fuzzy
 msgid "IMSettings module directory"
 msgstr "IMSettings 애플릿 설정  "
 
-#: ../imsettings-daemon/imsettings-server.c:644
+#: ../imsettings-daemon/imsettings-server.c:685
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "시스템에 없는 입력 방식: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:653
-#: ../imsettings-daemon/imsettings-server.c:760
-#: ../imsettings-daemon/imsettings-server.c:801
-#: ../imsettings-daemon/imsettings-server.c:991
+#: ../imsettings-daemon/imsettings-server.c:694
+#: ../imsettings-daemon/imsettings-server.c:807
+#: ../imsettings-daemon/imsettings-server.c:848
+#: ../imsettings-daemon/imsettings-server.c:1038
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:689
+#: ../imsettings-daemon/imsettings-server.c:736
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "백업 파일로 되돌리기 실패: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:702
+#: ../imsettings-daemon/imsettings-server.c:749
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "백업 파일 생성 실패: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:712
+#: ../imsettings-daemon/imsettings-server.c:759
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr ".xinputrc 파일 삭제 실패: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:723
+#: ../imsettings-daemon/imsettings-server.c:770
 #, fuzzy, c-format
 msgid "Failed to create a symlink: %s"
 msgstr "심볼릭 링크 생성 실패: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:753
+#: ../imsettings-daemon/imsettings-server.c:800
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:793
+#: ../imsettings-daemon/imsettings-server.c:840
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:983
+#: ../imsettings-daemon/imsettings-server.c:1030
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "시스템에 없는 입력 방식: %s"
 
-#: ../imsettings-daemon/main.c:95
+#: ../imsettings-daemon/main.c:103
 #, fuzzy
 msgid "Replace the instance of the imsettings daemon."
 msgstr "실행 중인 설정 데몬을 새 인스턴스로 교체합니다. "
 
-#: ../imsettings-daemon/main.c:96
+#: ../imsettings-daemon/main.c:104
 #, fuzzy
 msgid "Set the system-wide xinputrc directory (for debugging purpose)"
 msgstr "전체 시스템용 xinputrc이 있는 디렉토리 이름을 지정 (디버깅 전용)"
 
-#: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
-#: ../imsettings-daemon/main.c:98 ../imsettings-daemon/main.c:99
+#: ../imsettings-daemon/main.c:104 ../imsettings-daemon/main.c:105
+#: ../imsettings-daemon/main.c:106 ../imsettings-daemon/main.c:107
 msgid "DIR"
 msgstr "DIR"
 
-#: ../imsettings-daemon/main.c:97
+#: ../imsettings-daemon/main.c:105
 #, fuzzy
 msgid "Set the IM configuration directory (for debugging purpose)"
 msgstr "IM 설정이 있는 디렉토리 이름을 지정 (디버깅 전용)  "
 
-#: ../imsettings-daemon/main.c:98
+#: ../imsettings-daemon/main.c:106
 #, fuzzy
 msgid "Set a home directory (for debugging purpose)"
 msgstr "홈 디렉토리 (디버깅 전용)  "
 
-#: ../imsettings-daemon/main.c:99
+#: ../imsettings-daemon/main.c:107
 #, fuzzy
 msgid "Set the imsettings module directory (for debugging purpose)"
 msgstr "홈 디렉토리 (디버깅 전용)  "
 
-#: ../imsettings-daemon/main.c:100
+#: ../imsettings-daemon/main.c:108
 msgid "Do not create a log file."
 msgstr "로그 파일을 생성하지 않음  "
 
@@ -632,9 +644,6 @@ msgstr "%s 재시작\n"
 
 #~ msgid "AUX"
 #~ msgstr "AUX"
-
-#~ msgid "Unable to keep Input Method running"
-#~ msgstr "입력 방식 실행을 유지할 수 없음  "
 
 #~ msgid "Failed to get a place of home directory."
 #~ msgstr "홈 디렉토리 위치 지정 실패 "

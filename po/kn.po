@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.trunk.kn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-28 13:36+0900\n"
+"POT-Creation-Date: 2011-01-04 16:39+0900\n"
 "PO-Revision-Date: 2009-09-22 16:16+0530\n"
 "Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
 "Language-Team: Kannada <en@li.org>\n"
@@ -32,31 +32,39 @@ msgstr "ಹೊಂದಿಕೊಳ್ಳುವಂತೆ"
 msgid "Request to send a key event synchronously"
 msgstr "ಒಂದು ಕೀಲಿ ಘಟನೆಯನ್ನು ಹೊಂದಿಕೊಳ್ಳುವಂತೆ ಕಳುಹಿಸುವ ಮನವಿ"
 
-#: ../backends/xim/main.c:142
+#: ../backends/xim/main.c:143
+msgid "D-Bus address to use"
+msgstr ""
+
+#: ../backends/xim/main.c:143
+msgid "ADDRESS"
+msgstr ""
+
+#: ../backends/xim/main.c:144
 msgid "X display to use"
 msgstr "ಬಳಕೆಗಾಗಿ X ಪ್ರದರ್ಶಕ"
 
-#: ../backends/xim/main.c:142
+#: ../backends/xim/main.c:144
 msgid "DISPLAY"
 msgstr "DISPLAY"
 
-#: ../backends/xim/main.c:143
+#: ../backends/xim/main.c:145
 msgid "Replace the running XIM server with new instance."
 msgstr "ಚಲಾಯಿಸಲ್ಪಡುತ್ತಿರುವ XIM ಪರಿಚಾರಕವನ್ನು ಹೊಸ ಸನ್ನಿವೇಶದಿಂದ(ಇನ್ಸನ್ಸ್‍) ಬದಲಾಯಿಸಿ."
 
-#: ../backends/xim/main.c:144
+#: ../backends/xim/main.c:146
 msgid "Output the debugging logs"
 msgstr "ದೋಷ ನಿವಾರಣಾ ದಾಖಲೆಗಳನ್ನು ಔಟ್‌ಪುಟ್ ಮಾಡು"
 
-#: ../backends/xim/main.c:145
+#: ../backends/xim/main.c:147
 msgid "XIM server connects to, for debugging purpose only"
 msgstr "ಸಂಪರ್ಕಸಾಧಿಸಬೇಕಿರುವ XIM ಪರಿಚಾರಕ, ದೋಷ ನಿವಾರಣೆಗಾಗಿ ಮಾತ್ರ"
 
-#: ../backends/xim/main.c:145
+#: ../backends/xim/main.c:147
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/main.c:179 ../imsettings-daemon/main.c:121
+#: ../backends/xim/main.c:175 ../imsettings-daemon/main.c:129
 #: ../utils/imsettings-reload.c:64 ../utils/imsettings-switch.c:78
 msgid "Unknown error in parsing the command lines."
 msgstr "ಆಜ್ಞಾ ಸಾಲುಗಳನ್ನು ವಿವರಿಸುವಲ್ಲಿ ಅಜ್ಞಾತ ದೋಷ."
@@ -95,6 +103,10 @@ msgid "A module name for imsettings backend"
 msgstr "Qt ಗಾಗಿ ಬಳಸಬೇಕಾದ ಒಂದು ಘಟಕದ ಹೆಸರು"
 
 #: ../imsettings-daemon/imsettings-proc.c:192
+msgid "Unable to keep Input Method running"
+msgstr "ಇನ್‌ಪುಟ್ ವಿಧಾನವನ್ನು ಚಾಲನೆಯಲ್ಲಿಡಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ"
+
+#: ../imsettings-daemon/imsettings-proc.c:202
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
@@ -104,150 +116,150 @@ msgstr ""
 "ಇನ್‌ಪುಟ್ ವಿಧಾನ ಪ್ರಕ್ರಿಯೆಯು ಹಲವು ಬಾರಿ ಶೀಘ್ಘ್ರವಾಗಿ ಕೊಲ್ಲಲ್ಪಟ್ಟಿದೆ. ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಳಿಗಾಗಿ ."
 "imsettings.log ಅನ್ನು ನೋಡಿ."
 
-#: ../imsettings-daemon/imsettings-proc.c:276
+#: ../imsettings-daemon/imsettings-proc.c:287
 #, c-format
 msgid "[BUG] %s process is still running [pid: %d]\n"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-proc.c:400
+#: ../imsettings-daemon/imsettings-proc.c:411
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "%s ಪ್ರಕ್ರಿಯೆಗೆ ಯಶಸ್ವಿಯಾಗಿ ಸೂಚನೆಯನ್ನು ಕಳುಹಿಸಲಾಗಲಿಲ್ಲ."
 
-#: ../imsettings-daemon/imsettings-proc.c:504
+#: ../imsettings-daemon/imsettings-proc.c:515
 #, fuzzy
 msgid "IMSettingsInfo"
 msgstr "IMSettings ಆಪ್ಲೆಟ್"
 
-#: ../imsettings-daemon/imsettings-proc.c:505
+#: ../imsettings-daemon/imsettings-proc.c:516
 #, fuzzy
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "ಒಂದು DBus ಸಂಪರ್ಕವಾಗಲು ಒಂದು ಆಬ್ಜೆಕ್ಟ್‍"
 
-#: ../imsettings-daemon/imsettings-server.c:390
+#: ../imsettings-daemon/imsettings-server.c:420
 msgid "DBus connection"
 msgstr "DBus ಸಂಪರ್ಕ"
 
-#: ../imsettings-daemon/imsettings-server.c:391
+#: ../imsettings-daemon/imsettings-server.c:421
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "ಒಂದು DBus ಸಂಪರ್ಕವಾಗಲು ಒಂದು ಆಬ್ಜೆಕ್ಟ್‍"
 
-#: ../imsettings-daemon/imsettings-server.c:396
+#: ../imsettings-daemon/imsettings-server.c:426
 #, fuzzy
 msgid "Logging"
 msgstr "ದಾಖಲಿಸುವಿಕೆ"
 
-#: ../imsettings-daemon/imsettings-server.c:397
+#: ../imsettings-daemon/imsettings-server.c:427
 #, fuzzy
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr "ದಾಖಲಿಸುವ ಸವಲತ್ತು ಶಕ್ತಗೊಂಡಿದೆಯೆ ಅಥವ ಇಲ್ಲವೆ ಎಂದು ಸೂಚಿಸುವ ಒಂದು ಫ್ಲಾಗ್."
 
-#: ../imsettings-daemon/imsettings-server.c:402
-#: ../imsettings-daemon/imsettings-server.c:403
+#: ../imsettings-daemon/imsettings-server.c:432
+#: ../imsettings-daemon/imsettings-server.c:433
 msgid "Home directory"
 msgstr "ನೆಲೆ ಕೋಶ"
 
-#: ../imsettings-daemon/imsettings-server.c:408
-#: ../imsettings-daemon/imsettings-server.c:409
+#: ../imsettings-daemon/imsettings-server.c:438
+#: ../imsettings-daemon/imsettings-server.c:439
 msgid "xinputrc directory"
 msgstr "xinputrc ಕೋಶ"
 
-#: ../imsettings-daemon/imsettings-server.c:414
-#: ../imsettings-daemon/imsettings-server.c:415
+#: ../imsettings-daemon/imsettings-server.c:444
+#: ../imsettings-daemon/imsettings-server.c:445
 msgid "xinput directory"
 msgstr "xinput ಕೋಶ"
 
-#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:450
 #, fuzzy
 msgid "module directory"
 msgstr "ನೆಲೆ ಕೋಶ"
 
-#: ../imsettings-daemon/imsettings-server.c:421
+#: ../imsettings-daemon/imsettings-server.c:451
 #, fuzzy
 msgid "IMSettings module directory"
 msgstr "IMSettings ಆಪ್ಲೆಟ್‌ನ ಆದ್ಯತೆಗಳು"
 
-#: ../imsettings-daemon/imsettings-server.c:644
+#: ../imsettings-daemon/imsettings-server.c:685
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "ಅಂತಹ ಯಾವುದೆ ಇನ್‌ಪುಟ್ ವಿಧಾನವು ನಿಮ್ಮ ಗಣಕದಲ್ಲಿ ಇಲ್ಲ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:653
-#: ../imsettings-daemon/imsettings-server.c:760
-#: ../imsettings-daemon/imsettings-server.c:801
-#: ../imsettings-daemon/imsettings-server.c:991
+#: ../imsettings-daemon/imsettings-server.c:694
+#: ../imsettings-daemon/imsettings-server.c:807
+#: ../imsettings-daemon/imsettings-server.c:848
+#: ../imsettings-daemon/imsettings-server.c:1038
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:689
+#: ../imsettings-daemon/imsettings-server.c:736
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "ಬ್ಯಾಕ್ಅಪ್ ಕಡತವನ್ನು ಮರಳಿಸುವಲ್ಲಿ ವಿಫಲವಾಗಿದೆ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:702
+#: ../imsettings-daemon/imsettings-server.c:749
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "ಒಂದು ಬ್ಯಾಕ್ಅಪ್ ಕಡತವನ್ನು ರಚಿಸುವಲ್ಲಿ ವಿಫಲವಾಗಿದೆ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:712
+#: ../imsettings-daemon/imsettings-server.c:759
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "ಒಂದು .xinputrc ಕಡತವನ್ನು ತೆಗೆದುಹಾಕುವಲ್ಲಿ ವಿಫಲವಾಗಿದೆ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:723
+#: ../imsettings-daemon/imsettings-server.c:770
 #, fuzzy, c-format
 msgid "Failed to create a symlink: %s"
 msgstr "ಒಂದು symlink ಅನ್ನು ಮಾಡುವಲ್ಲಿ ವಿಫಲಗೊಂಡಿದೆ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:753
+#: ../imsettings-daemon/imsettings-server.c:800
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:793
+#: ../imsettings-daemon/imsettings-server.c:840
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:983
+#: ../imsettings-daemon/imsettings-server.c:1030
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "ಅಂತಹ ಯಾವುದೆ ಇನ್‌ಪುಟ್ ವಿಧಾನವು ನಿಮ್ಮ ಗಣಕದಲ್ಲಿ ಇಲ್ಲ: %s"
 
-#: ../imsettings-daemon/main.c:95
+#: ../imsettings-daemon/main.c:103
 #, fuzzy
 msgid "Replace the instance of the imsettings daemon."
 msgstr "ಚಲಾಯಿಸಲ್ಪಡುತ್ತಿರುವ ಸಿದ್ಧತೆಗಳ ಡೆಮನ್ ಅನ್ನು ಹೊಸ ಸನ್ನಿವೇಶದಿಂದ(ಇನ್ಸನ್ಸ್‍) ಬದಲಾಯಿಸು."
 
-#: ../imsettings-daemon/main.c:96
+#: ../imsettings-daemon/main.c:104
 #, fuzzy
 msgid "Set the system-wide xinputrc directory (for debugging purpose)"
 msgstr ""
 "ವ್ಯವಸ್ಥೆಯಾದ್ಯಂತದ xinputrc ಕಡತಕ್ಕಾಗಿನ ಕೋಶದ ಹೆಸರನ್ನು ಸೂಚಿಸಿ (ದೋಷನಿವಾರಣೆಗಾಗಿ ಮಾತ್ರ)"
 
-#: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
-#: ../imsettings-daemon/main.c:98 ../imsettings-daemon/main.c:99
+#: ../imsettings-daemon/main.c:104 ../imsettings-daemon/main.c:105
+#: ../imsettings-daemon/main.c:106 ../imsettings-daemon/main.c:107
 msgid "DIR"
 msgstr "DIR"
 
-#: ../imsettings-daemon/main.c:97
+#: ../imsettings-daemon/main.c:105
 #, fuzzy
 msgid "Set the IM configuration directory (for debugging purpose)"
 msgstr "IM ಸಂರಚನೆಗಳಿಗಾಗಿನ ಕೋಶದ ಹೆಸರನ್ನು ಸೂಚಿಸಿ (ದೋಷನಿವಾರಣೆಗಾಗಿ ಮಾತ್ರ)"
 
-#: ../imsettings-daemon/main.c:98
+#: ../imsettings-daemon/main.c:106
 #, fuzzy
 msgid "Set a home directory (for debugging purpose)"
 msgstr "ಒಂದು ನೆಲೆ ಕೋಶ (ದೋಷನಿವಾರಣೆಗಾಗಿ ಮಾತ್ರ)"
 
-#: ../imsettings-daemon/main.c:99
+#: ../imsettings-daemon/main.c:107
 #, fuzzy
 msgid "Set the imsettings module directory (for debugging purpose)"
 msgstr "ಒಂದು ನೆಲೆ ಕೋಶ (ದೋಷನಿವಾರಣೆಗಾಗಿ ಮಾತ್ರ)"
 
-#: ../imsettings-daemon/main.c:100
+#: ../imsettings-daemon/main.c:108
 msgid "Do not create a log file."
 msgstr "ಒಂದು ದಾಖಲೆ ಕಡತವನ್ನು ರಚಿಸಬೇಡ."
 
@@ -640,9 +652,6 @@ msgstr "%s ಅನ್ನು ಮರಳಿ ಆರಂಭಿಸಲಾಗಿದೆ\n"
 
 #~ msgid "AUX"
 #~ msgstr "AUX"
-
-#~ msgid "Unable to keep Input Method running"
-#~ msgstr "ಇನ್‌ಪುಟ್ ವಿಧಾನವನ್ನು ಚಾಲನೆಯಲ್ಲಿಡಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ"
 
 #~ msgid "Failed to get a place of home directory."
 #~ msgstr "ನೆಲೆ ಕೋಶಕ್ಕೆ ಒಂದು ಜಾಗ ಪಡೆಯುವಲ್ಲಿ ವಿಫಲತೆ."

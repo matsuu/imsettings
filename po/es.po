@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser.trunk.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-28 13:36+0900\n"
+"POT-Creation-Date: 2011-01-04 16:39+0900\n"
 "PO-Revision-Date: 2009-10-14 12:04-0300\n"
 "Last-Translator: Domingo Becker <domingobecker@gmail.com>\n"
 "Language-Team: Spanish <fedora-trans-es@redhat.com>\n"
@@ -30,32 +30,40 @@ msgstr "Sincrónica"
 msgid "Request to send a key event synchronously"
 msgstr "Pedido de envío de un evento de tecla sincrónicamente"
 
-#: ../backends/xim/main.c:142
+#: ../backends/xim/main.c:143
+msgid "D-Bus address to use"
+msgstr ""
+
+#: ../backends/xim/main.c:143
+msgid "ADDRESS"
+msgstr ""
+
+#: ../backends/xim/main.c:144
 msgid "X display to use"
 msgstr "Salida X a usar"
 
-#: ../backends/xim/main.c:142
+#: ../backends/xim/main.c:144
 msgid "DISPLAY"
 msgstr "SALIDA"
 
-#: ../backends/xim/main.c:143
+#: ../backends/xim/main.c:145
 msgid "Replace the running XIM server with new instance."
 msgstr "Reemplazar el servidor XIM en ejecución con una nueva instancia."
 
-#: ../backends/xim/main.c:144
+#: ../backends/xim/main.c:146
 msgid "Output the debugging logs"
 msgstr "Mostrar la salida de depuración"
 
-#: ../backends/xim/main.c:145
+#: ../backends/xim/main.c:147
 msgid "XIM server connects to, for debugging purpose only"
 msgstr ""
 "El servidor XIM al que conectarse, para propósitos de depuración solamente"
 
-#: ../backends/xim/main.c:145
+#: ../backends/xim/main.c:147
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/main.c:179 ../imsettings-daemon/main.c:121
+#: ../backends/xim/main.c:175 ../imsettings-daemon/main.c:129
 #: ../utils/imsettings-reload.c:64 ../utils/imsettings-switch.c:78
 msgid "Unknown error in parsing the command lines."
 msgstr "Error desconocido al analizar sintácticamente la línea de comandos."
@@ -94,6 +102,10 @@ msgid "A module name for imsettings backend"
 msgstr "Un nombre de módulo usado por Qt"
 
 #: ../imsettings-daemon/imsettings-proc.c:192
+msgid "Unable to keep Input Method running"
+msgstr "Imposible mantener el Método de Entrada ejecutándose"
+
+#: ../imsettings-daemon/imsettings-proc.c:202
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
@@ -103,154 +115,154 @@ msgstr ""
 "Método de Entrada %s para %s murió rápidamente varias veces. Vea en ."
 "imsettings.log para más detalles."
 
-#: ../imsettings-daemon/imsettings-proc.c:276
+#: ../imsettings-daemon/imsettings-proc.c:287
 #, c-format
 msgid "[BUG] %s process is still running [pid: %d]\n"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-proc.c:400
+#: ../imsettings-daemon/imsettings-proc.c:411
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "No se pudo enviar exitosamente una señal al proceso %s."
 
-#: ../imsettings-daemon/imsettings-proc.c:504
+#: ../imsettings-daemon/imsettings-proc.c:515
 #, fuzzy
 msgid "IMSettingsInfo"
 msgstr "Applet IMSettings"
 
-#: ../imsettings-daemon/imsettings-proc.c:505
+#: ../imsettings-daemon/imsettings-proc.c:516
 #, fuzzy
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "Un objeto para que sea la conexión DBus"
 
-#: ../imsettings-daemon/imsettings-server.c:390
+#: ../imsettings-daemon/imsettings-server.c:420
 msgid "DBus connection"
 msgstr "Conexión DBus"
 
-#: ../imsettings-daemon/imsettings-server.c:391
+#: ../imsettings-daemon/imsettings-server.c:421
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "Un objeto para que sea la conexión DBus"
 
-#: ../imsettings-daemon/imsettings-server.c:396
+#: ../imsettings-daemon/imsettings-server.c:426
 #, fuzzy
 msgid "Logging"
 msgstr "registrado"
 
-#: ../imsettings-daemon/imsettings-server.c:397
+#: ../imsettings-daemon/imsettings-server.c:427
 #, fuzzy
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr "Una bandera que indica si el registrado está activado o no."
 
-#: ../imsettings-daemon/imsettings-server.c:402
-#: ../imsettings-daemon/imsettings-server.c:403
+#: ../imsettings-daemon/imsettings-server.c:432
+#: ../imsettings-daemon/imsettings-server.c:433
 msgid "Home directory"
 msgstr "Directorio de inicio"
 
-#: ../imsettings-daemon/imsettings-server.c:408
-#: ../imsettings-daemon/imsettings-server.c:409
+#: ../imsettings-daemon/imsettings-server.c:438
+#: ../imsettings-daemon/imsettings-server.c:439
 msgid "xinputrc directory"
 msgstr "directorio xinputrc"
 
-#: ../imsettings-daemon/imsettings-server.c:414
-#: ../imsettings-daemon/imsettings-server.c:415
+#: ../imsettings-daemon/imsettings-server.c:444
+#: ../imsettings-daemon/imsettings-server.c:445
 msgid "xinput directory"
 msgstr "directorio xinput"
 
-#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:450
 #, fuzzy
 msgid "module directory"
 msgstr "Directorio de inicio"
 
-#: ../imsettings-daemon/imsettings-server.c:421
+#: ../imsettings-daemon/imsettings-server.c:451
 #, fuzzy
 msgid "IMSettings module directory"
 msgstr "Preferencias del Applet IMSettings"
 
-#: ../imsettings-daemon/imsettings-server.c:644
+#: ../imsettings-daemon/imsettings-server.c:685
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "No existe tal método de entrada en su sistema: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:653
-#: ../imsettings-daemon/imsettings-server.c:760
-#: ../imsettings-daemon/imsettings-server.c:801
-#: ../imsettings-daemon/imsettings-server.c:991
+#: ../imsettings-daemon/imsettings-server.c:694
+#: ../imsettings-daemon/imsettings-server.c:807
+#: ../imsettings-daemon/imsettings-server.c:848
+#: ../imsettings-daemon/imsettings-server.c:1038
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:689
+#: ../imsettings-daemon/imsettings-server.c:736
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "No se pudo restaurar el archivo de respaldo: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:702
+#: ../imsettings-daemon/imsettings-server.c:749
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "No se pudo crear el archivo de respaldo: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:712
+#: ../imsettings-daemon/imsettings-server.c:759
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "No se pudo eliminar un archivo .xinputrc: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:723
+#: ../imsettings-daemon/imsettings-server.c:770
 #, fuzzy, c-format
 msgid "Failed to create a symlink: %s"
 msgstr "No se pudo hacer un enlace simbólico: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:753
+#: ../imsettings-daemon/imsettings-server.c:800
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:793
+#: ../imsettings-daemon/imsettings-server.c:840
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:983
+#: ../imsettings-daemon/imsettings-server.c:1030
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "No existe tal método de entrada en su sistema: %s"
 
-#: ../imsettings-daemon/main.c:95
+#: ../imsettings-daemon/main.c:103
 #, fuzzy
 msgid "Replace the instance of the imsettings daemon."
 msgstr ""
 "Reemplazar los parámetros del demonio en ejecución con la nueva instancia."
 
-#: ../imsettings-daemon/main.c:96
+#: ../imsettings-daemon/main.c:104
 #, fuzzy
 msgid "Set the system-wide xinputrc directory (for debugging purpose)"
 msgstr ""
 "Especifique el nombre del directorio del archivo xinputrc a nivel del "
 "sistema (para depurar solamente)"
 
-#: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
-#: ../imsettings-daemon/main.c:98 ../imsettings-daemon/main.c:99
+#: ../imsettings-daemon/main.c:104 ../imsettings-daemon/main.c:105
+#: ../imsettings-daemon/main.c:106 ../imsettings-daemon/main.c:107
 msgid "DIR"
 msgstr "DIR"
 
-#: ../imsettings-daemon/main.c:97
+#: ../imsettings-daemon/main.c:105
 #, fuzzy
 msgid "Set the IM configuration directory (for debugging purpose)"
 msgstr ""
 "Especifique un nombre para el directorio con las configuraciones de ME (sólo "
 "para depuración)"
 
-#: ../imsettings-daemon/main.c:98
+#: ../imsettings-daemon/main.c:106
 #, fuzzy
 msgid "Set a home directory (for debugging purpose)"
 msgstr "Un directorio de inicio (sólo depuración)"
 
-#: ../imsettings-daemon/main.c:99
+#: ../imsettings-daemon/main.c:107
 #, fuzzy
 msgid "Set the imsettings module directory (for debugging purpose)"
 msgstr "Un directorio de inicio (sólo depuración)"
 
-#: ../imsettings-daemon/main.c:100
+#: ../imsettings-daemon/main.c:108
 msgid "Do not create a log file."
 msgstr "No crear un archivo de registro."
 
@@ -650,9 +662,6 @@ msgstr "%s reiniciado\n"
 
 #~ msgid "AUX"
 #~ msgstr "AUX"
-
-#~ msgid "Unable to keep Input Method running"
-#~ msgstr "Imposible mantener el Método de Entrada ejecutándose"
 
 #~ msgid "Failed to get a place of home directory."
 #~ msgstr "No se pudo obtener un lugar en el directorio de inicio."

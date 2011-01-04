@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.trunk.or\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-28 13:36+0900\n"
+"POT-Creation-Date: 2011-01-04 16:39+0900\n"
 "PO-Revision-Date: 2009-09-25 14:34+0530\n"
 "Last-Translator: Manoj Kumar Giri <mgiri@redhat.com>\n"
 "Language-Team: Oriya <oriya-it@googlegroups.com>\n"
@@ -40,31 +40,39 @@ msgstr "ସମକାଳୀନ"
 msgid "Request to send a key event synchronously"
 msgstr "ଗୋଟିଏ କି ଘଟଣାକୁ ସମକାଳୀନ ଭାବରେ ପଠାଇବା ପାଇଁ ଅନୁରୋଧ"
 
-#: ../backends/xim/main.c:142
+#: ../backends/xim/main.c:143
+msgid "D-Bus address to use"
+msgstr ""
+
+#: ../backends/xim/main.c:143
+msgid "ADDRESS"
+msgstr ""
+
+#: ../backends/xim/main.c:144
 msgid "X display to use"
 msgstr "ବ୍ଯବହାର ପାଇଁ X ପ୍ରଦର୍ଶିକା"
 
-#: ../backends/xim/main.c:142
+#: ../backends/xim/main.c:144
 msgid "DISPLAY"
 msgstr "ପ୍ରଦର୍ଶିକା"
 
-#: ../backends/xim/main.c:143
+#: ../backends/xim/main.c:145
 msgid "Replace the running XIM server with new instance."
 msgstr "ଚାଲୁଥିବା XIM ସର୍ଭରକୁ ନୂତନ ପରିସ୍ଥିତି ସହିତ ବଦଳାନ୍ତୁ।"
 
-#: ../backends/xim/main.c:144
+#: ../backends/xim/main.c:146
 msgid "Output the debugging logs"
 msgstr "ଫଳାଫଳ ଲଗଗୁଡ଼ିକର ତ୍ରୁଟି ନିବାରଣ କରନ୍ତୁ"
 
-#: ../backends/xim/main.c:145
+#: ../backends/xim/main.c:147
 msgid "XIM server connects to, for debugging purpose only"
 msgstr "XIM ସର୍ଭର ସଂଯୋଗ କରିଥାଏ, କେବଳ ତ୍ରୁଟି ନିବାରଣ ଉଦ୍ଦେଶ୍ୟରେ"
 
-#: ../backends/xim/main.c:145
+#: ../backends/xim/main.c:147
 msgid "XIM"
 msgstr "XIM"
 
-#: ../backends/xim/main.c:179 ../imsettings-daemon/main.c:121
+#: ../backends/xim/main.c:175 ../imsettings-daemon/main.c:129
 #: ../utils/imsettings-reload.c:64 ../utils/imsettings-switch.c:78
 msgid "Unknown error in parsing the command lines."
 msgstr "ପାଠ୍ୟ ନିର୍ଦ୍ଦେଶ ବିଶ୍ଳେଷଣ କରିବା ସମୟରେ ଅଜଣା ତ୍ରୁଟି ।"
@@ -103,6 +111,10 @@ msgid "A module name for imsettings backend"
 msgstr "Qt ପାଇଁ ବ୍ୟବହୃତ ଗୋଟିଏ ଏକକାଂଶ ନାମ"
 
 #: ../imsettings-daemon/imsettings-proc.c:192
+msgid "Unable to keep Input Method running"
+msgstr "ନିବେଶ ପ୍ରଣାଳୀକୁ ଚଲାଇ ରଖିବାରେ ଅସମର୍ଥ"
+
+#: ../imsettings-daemon/imsettings-proc.c:202
 #, c-format
 msgid ""
 "Giving up to bring the process up because %s Input Method process for %s "
@@ -111,149 +123,149 @@ msgstr ""
 "ପଦ୍ଧତିକୁ ପରିତ୍ୟାଗ କରିବା ପାଇଁ ଅଣାଯାଇଛି କାରଣ %s ନିବେଶ ପଦ୍ଧତି %s ପାଇଁ ବାରମ୍ବାର ସମୟ ସମାପ୍ତ "
 "ହୋଇଥାଏ। ଅଧିକ ସୂଚନା ପାଇଁ .imsettings.log ଦେଖନ୍ତୁ।"
 
-#: ../imsettings-daemon/imsettings-proc.c:276
+#: ../imsettings-daemon/imsettings-proc.c:287
 #, c-format
 msgid "[BUG] %s process is still running [pid: %d]\n"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-proc.c:400
+#: ../imsettings-daemon/imsettings-proc.c:411
 #, c-format
 msgid "Couldn't send a signal to the %s process successfully."
 msgstr "%s ପ୍ରଣାଳୀକୁ ଗୋଟିଏ ସଂକେତ ସଫଳତାର ସହିତ ପଠାଇପାରିଲା ନାହିଁ।"
 
-#: ../imsettings-daemon/imsettings-proc.c:504
+#: ../imsettings-daemon/imsettings-proc.c:515
 #, fuzzy
 msgid "IMSettingsInfo"
 msgstr "IMSettings ଆପଲେଟ"
 
-#: ../imsettings-daemon/imsettings-proc.c:505
+#: ../imsettings-daemon/imsettings-proc.c:516
 #, fuzzy
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "DBus ସଂଯୋଗ ହେବାକୁ ଥିବା ଗୋଟିଏ ବସ୍ତୁ"
 
-#: ../imsettings-daemon/imsettings-server.c:390
+#: ../imsettings-daemon/imsettings-server.c:420
 msgid "DBus connection"
 msgstr "DBus ସଂଯୋଗ"
 
-#: ../imsettings-daemon/imsettings-server.c:391
+#: ../imsettings-daemon/imsettings-server.c:421
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "DBus ସଂଯୋଗ ହେବାକୁ ଥିବା ଗୋଟିଏ ବସ୍ତୁ"
 
-#: ../imsettings-daemon/imsettings-server.c:396
+#: ../imsettings-daemon/imsettings-server.c:426
 #, fuzzy
 msgid "Logging"
 msgstr "ଲଗଇନ କରୁଅଛି"
 
-#: ../imsettings-daemon/imsettings-server.c:397
+#: ../imsettings-daemon/imsettings-server.c:427
 #, fuzzy
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr "ଲଗଇନ ସୁବିଧାକୁ ସକ୍ରିୟ କରାଯାଇଛି କି ନାହିଁ ତାହା ପାଇଁ ଗୋଟିଏ ଫ୍ଲାଗ।"
 
-#: ../imsettings-daemon/imsettings-server.c:402
-#: ../imsettings-daemon/imsettings-server.c:403
+#: ../imsettings-daemon/imsettings-server.c:432
+#: ../imsettings-daemon/imsettings-server.c:433
 msgid "Home directory"
 msgstr "ମୂଳସ୍ଥାନ ପଞ୍ଜିକା"
 
-#: ../imsettings-daemon/imsettings-server.c:408
-#: ../imsettings-daemon/imsettings-server.c:409
+#: ../imsettings-daemon/imsettings-server.c:438
+#: ../imsettings-daemon/imsettings-server.c:439
 msgid "xinputrc directory"
 msgstr "xinputrc ଡିରେକ୍ଟୋରୀ"
 
-#: ../imsettings-daemon/imsettings-server.c:414
-#: ../imsettings-daemon/imsettings-server.c:415
+#: ../imsettings-daemon/imsettings-server.c:444
+#: ../imsettings-daemon/imsettings-server.c:445
 msgid "xinput directory"
 msgstr "xinput ଡିରେକ୍ଟୋରୀ"
 
-#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:450
 #, fuzzy
 msgid "module directory"
 msgstr "ମୂଳସ୍ଥାନ ପଞ୍ଜିକା"
 
-#: ../imsettings-daemon/imsettings-server.c:421
+#: ../imsettings-daemon/imsettings-server.c:451
 #, fuzzy
 msgid "IMSettings module directory"
 msgstr "IMSettings ଆପଲେଟ ପସନ୍ଦଗୁଡ଼ିକ"
 
-#: ../imsettings-daemon/imsettings-server.c:644
+#: ../imsettings-daemon/imsettings-server.c:685
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "ଆପଣଙ୍କର ତନ୍ତ୍ରରେ ଏପରି କିଛି ନିବେଶ ପଦ୍ଧତି ନାହିଁ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:653
-#: ../imsettings-daemon/imsettings-server.c:760
-#: ../imsettings-daemon/imsettings-server.c:801
-#: ../imsettings-daemon/imsettings-server.c:991
+#: ../imsettings-daemon/imsettings-server.c:694
+#: ../imsettings-daemon/imsettings-server.c:807
+#: ../imsettings-daemon/imsettings-server.c:848
+#: ../imsettings-daemon/imsettings-server.c:1038
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:689
+#: ../imsettings-daemon/imsettings-server.c:736
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "ନକଲ ସଂରକ୍ଷଣ ଫାଇଲକୁ ପ୍ରତ୍ୟାବୃତ କରିବାରେ ବିଫଳ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:702
+#: ../imsettings-daemon/imsettings-server.c:749
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "ନକଲ ସଂରକ୍ଷଣ ଫାଇଲକୁ ସୃଷ୍ଟି କରିବାରେ ବିଫଳ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:712
+#: ../imsettings-daemon/imsettings-server.c:759
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "xinputrc ଫାଇଲକୁ ହଟାଇବାରେ ବିଫଳ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:723
+#: ../imsettings-daemon/imsettings-server.c:770
 #, fuzzy, c-format
 msgid "Failed to create a symlink: %s"
 msgstr "ଗୋଟିଏ symlink ତିଆରି କରିବାରେ ବିଫଳ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:753
+#: ../imsettings-daemon/imsettings-server.c:800
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:793
+#: ../imsettings-daemon/imsettings-server.c:840
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:983
+#: ../imsettings-daemon/imsettings-server.c:1030
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "ଆପଣଙ୍କର ତନ୍ତ୍ରରେ ଏପରି କିଛି ନିବେଶ ପଦ୍ଧତି ନାହିଁ: %s"
 
-#: ../imsettings-daemon/main.c:95
+#: ../imsettings-daemon/main.c:103
 #, fuzzy
 msgid "Replace the instance of the imsettings daemon."
 msgstr "ଚଳନ୍ତି ବିନ୍ୟାସ କାର୍ଯ୍ୟ ସହାୟକକୁ ନୂତନ ଉଦାହରଣ ସହିତ ବଦଳାନ୍ତୁ।"
 
-#: ../imsettings-daemon/main.c:96
+#: ../imsettings-daemon/main.c:104
 #, fuzzy
 msgid "Set the system-wide xinputrc directory (for debugging purpose)"
 msgstr "ତନ୍ତ୍ର-ମୟ xinputrc ଫାଇଲର ଡିରେକ୍ଟୋରୀ ନାମ ଉଲ୍ଲେଖ କରନ୍ତୁ (କେବଳ ତ୍ରୁଟି ନିବାରଣ ପାଇଁ)"
 
-#: ../imsettings-daemon/main.c:96 ../imsettings-daemon/main.c:97
-#: ../imsettings-daemon/main.c:98 ../imsettings-daemon/main.c:99
+#: ../imsettings-daemon/main.c:104 ../imsettings-daemon/main.c:105
+#: ../imsettings-daemon/main.c:106 ../imsettings-daemon/main.c:107
 msgid "DIR"
 msgstr "DIR"
 
-#: ../imsettings-daemon/main.c:97
+#: ../imsettings-daemon/main.c:105
 #, fuzzy
 msgid "Set the IM configuration directory (for debugging purpose)"
 msgstr "IM ସଂରଚନାଗୁଡ଼ିକ ପାଇଁ ଡିରେକ୍ଟୋରୀ ନାମ ଉଲ୍ଲେଖ କରନ୍ତୁ (କେବଳ ତ୍ରୁଟି ନିବାରଣ ପାଇଁ)"
 
-#: ../imsettings-daemon/main.c:98
+#: ../imsettings-daemon/main.c:106
 #, fuzzy
 msgid "Set a home directory (for debugging purpose)"
 msgstr "ଗୋଟିଏ ମୂଖ୍ୟ ଚାଳକ ଡିରେକ୍ଟୋରୀ (କେବଳ ତ୍ରୁଟି ନିବାରଣ ପାଇଁ)"
 
-#: ../imsettings-daemon/main.c:99
+#: ../imsettings-daemon/main.c:107
 #, fuzzy
 msgid "Set the imsettings module directory (for debugging purpose)"
 msgstr "ଗୋଟିଏ ମୂଖ୍ୟ ଚାଳକ ଡିରେକ୍ଟୋରୀ (କେବଳ ତ୍ରୁଟି ନିବାରଣ ପାଇଁ)"
 
-#: ../imsettings-daemon/main.c:100
+#: ../imsettings-daemon/main.c:108
 msgid "Do not create a log file."
 msgstr "କୌଣସି ଲଗ ଫାଇଲ ସୃଷ୍ଟି କରନ୍ତୁ ନାହିଁ।"
 
@@ -647,9 +659,6 @@ msgstr "%s କୁ ପୁନଃ ପ୍ରାରମ୍ଭ କରିଅଛି\n"
 
 #~ msgid "AUX"
 #~ msgstr "AUX"
-
-#~ msgid "Unable to keep Input Method running"
-#~ msgstr "ନିବେଶ ପ୍ରଣାଳୀକୁ ଚଲାଇ ରଖିବାରେ ଅସମର୍ଥ"
 
 #~ msgid "Failed to get a place of home directory."
 #~ msgstr "ମୂଳ ଡିରେକ୍ଟରି ପାଇଁ ଗୋଟିଏ ସ୍ଥାନ ପାଇବାରେ ବିଫଳ।"
