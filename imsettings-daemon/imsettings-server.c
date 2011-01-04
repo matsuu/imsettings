@@ -622,6 +622,16 @@ imsettings_server_cb_get_info_variant(IMSettingsServer  *server,
 {
 	GVariant *v, *value = NULL;
 
+	if (g_strcmp0(module, IMSETTINGS_NONE_CONF) == 0 ||
+	    g_strcmp0(module, IMSETTINGS_NONE_CONF XINPUT_SUFFIX) == 0) {
+		gchar *p = g_build_filename(imsettings_server_get_xinputdir(server),
+					    IMSETTINGS_NONE_CONF XINPUT_SUFFIX, NULL);
+
+		value = imsettings_info_variant_new(p, lang);
+		g_free(p);
+
+		return value;
+	}
 	v = imsettings_server_cb_get_info_variants(server, lang, error);
 	if (!v) {
 		g_set_error(error, IMSETTINGS_GERROR,
