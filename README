@@ -47,8 +47,10 @@ IMSettings may helps when:
 
 Supported Toolkits
 ======================
-* GTK+ (with GConf backend)
-* Xfce (with GConf backend and a plugin for xfce-mcs-manager)
+* GTK+
+* LXDE
+* Qt
+* XFCE
 * X (with IMSettings XIM server; require libgxim)
 
 Information files for Input Method
@@ -114,13 +116,16 @@ environment variables like FOO=BAR in the information file.
 
   Qt immodule name that want to use.
 
-* SHORT_DESC=<string>
+* SHORT_DESC=<string>[:string]
 
   An optional short description to explain what this Input
   Method is. this variable is also sued for the key to do
   something on IMSettings. e.g. to start/stop Input Method
   and get the information and so on. so this parameter has
-  to be unique.
+  to be unique. for extra option; depends on the backends
+  supports though, this parameter is capable to tell
+  the backend a sub input method. which may be useful if
+  Input Method supports multiple engines.
 
 * XIM=<string>
 
@@ -161,21 +166,12 @@ Other variables used in xinput.sh
 Processes
 ============
 
-* im-settings-daemon
+* imsettings-daemon
 
   A DBus service that provide a imsettings facility to
-  start/stop IM processes and gather input methods information.
-
-* gconf-im-settings-daemon
-
-  A DBus service that provide a bridge to communicate GTK+ through GConf.
+  switch IM processes and gather input methods information.
 
 * imsettings-xim
 
   A XIM bridge between client applications and real XIM server.
 
-* imsettings-applet
-
-  An applet that provides a facility of changing IM temporarily. this also
-  supports XIM bridge. if imsettings-xim is running, this applet will sends
-  a signal to be terminated.
