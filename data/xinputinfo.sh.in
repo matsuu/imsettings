@@ -67,6 +67,7 @@ fi
 [ -z "$XIM" ] && XIM=none
 [ -n "$GTK_IM_MODULE" ] && export GTK_IM_MODULE
 [ -n "$QT_IM_MODULE" ] && export QT_IM_MODULE
+[ -z "$ICON" ] && ICON=imsettings-unknown
 # For backward compatibility
 [ -z "$IMSETTINGS_IGNORE_ME" ] && IMSETTINGS_IGNORE_ME=$IM_CHOOSER_IGNORE_ME
 
