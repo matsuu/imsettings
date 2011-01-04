@@ -31,6 +31,9 @@ G_BEGIN_DECLS
 #define IMSETTINGS_SERVICE_DBUS		"com.redhat.imsettings"
 #define IMSETTINGS_PATH_DBUS		"/com/redhat/imsettings"
 #define IMSETTINGS_INTERFACE_DBUS	"com.redhat.imsettings"
+#define IMSETTINGS_XIM_SERVICE_DBUS	"com.redhat.imsettings.xim"
+#define IMSETTINGS_XIM_PATH_DBUS	"/com/redhat/imsettings/xim"
+#define IMSETTINGS_XIM_INTERFACE_DBUS	"com.redhat.imsettings.xim"
 
 #define IMSETTINGS_SETTINGS_API_VERSION	4
 

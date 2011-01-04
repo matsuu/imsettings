@@ -14,5 +14,5 @@ if ENABLE_LXDE
 SUBDIRS += lxde
 endif
 if ENABLE_XIM
-#SUBDIRS += xim
+SUBDIRS += xim
 endif

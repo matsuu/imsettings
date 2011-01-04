@@ -4,48 +4,22 @@ NULL =
 INCLUDES =						\
 	-DIMSETTINGS_LOCALEDIR="\"$(datadir)/locale\""	\
 	-I$(top_srcdir)/imsettings			\
-	$(IMSETTINGS_CFLAGS)				\
-	$(XIM_CFLAGS)					\
 	$(NULL)
 LIBS =							\
 	@LDFLAGS@					\
-	$(IMSETTINGS_LIBS)				\
-	$(XIM_LIBS)					\
-	$(top_builddir)/imsettings/libimsettings.la	\
-	$(NULL)
-DEPS =							\
 	$(top_builddir)/imsettings/libimsettings.la	\
 	$(NULL)
 EXTRA_DIST =						\
 	$(NULL)
-MAINTAINERCLEANFILES =					\
-	$(xim_built_public_headers)			\
-	$(xim_built_private_headers)			\
-	$(xim_built_sources)				\
-	$(stamp_files)					\
-	$(NULL)
-CLEANFILES =						\
-	xgen-imh					\
-	xgen-imc					\
-	$(NULL)
 
 ##
 # Local definitions
-xim_public_headers =					\
-	$(NULL)
-xim_private_headers =					\
+xim_headers =						\
 	client.h					\
 	compose.h					\
 	loopback.h					\
 	proxy.h						\
 	utils.h						\
-	$(NULL)
-xim_built_public_headers =				\
-	$(NULL)
-xim_built_private_headers =				\
-	$(NULL)
-#
-xim_built_sources =					\
 	$(NULL)
 xim_sources =						\
 	client.c					\
@@ -53,48 +27,52 @@ xim_sources =						\
 	loopback.c					\
 	proxy.c						\
 	utils.c						\
-	$(xim_built_sources)				\
 	$(NULL)
-#
-stamp_files =						\
-	$(NULL)
-
 
 ##
 # Local Rules
 
 ##
 # Target platform
-
-bin_PROGRAMS = imsettings-xim
-#
-lib_LTLIBRARIES =					\
+imsettingsdir = $(IMSETTINGS_MODULEDIR)
+imsettings_LTLIBRARIES =				\
 	libimsettings-xim.la				\
 	$(NULL)
-#
-noinst_HEADERS =					\
-	$(xim_private_headers)				\
-	$(xim_built_private_headers)			\
-	$(NULL)
-#
-imsettings_xim_SOURCES =				\
-	main.c						\
-	$(NULL)
-imsettings_xim_CFLAGS =					\
-	-DG_LOG_DOMAIN="\"IMSettings-XIM\""		\
-	$(NULL)
-imsettings_xim_LDADD =					\
-	libimsettings-xim.la				\
+bin_PROGRAMS =						\
+	imsettings-xim					\
 	$(NULL)
 #
 libimsettings_xim_la_SOURCES =				\
-	$(xim_sources)					\
+	xim-module.c					\
 	$(NULL)
 libimsettings_xim_la_CFLAGS =				\
-	-DG_LOG_DOMAIN="\"libimsettings-xim\""		\
-	-DXLOCALEDIR="\"$(datadir)/X11/locale\""	\
+	-DG_LOG_DOMAIN="\"IMSettings-XIM backend\""	\
+	$(CFLAGS)					\
+	$(IMSETTINGS_CFLAGS)				\
 	$(NULL)
-libimsettings_xim_la_LDFLAGS =							\
-	$(LDFLAGS)								\
-	-version-info $(LT_XIM_CURRENT):$(LT_XIM_REVISION):$(LT_XIM_AGE)	\
+libimsettings_xim_la_LDFLAGS =				\
+	-avoid-version					\
+	-module						\
+	$(LDFLAGS)					\
+	$(NULL)
+libimsettings_xim_la_LIBADD =				\
+	$(LDADDS)					\
+	$(NULL)
+#
+imsettings_xim_SOURCES =				\
+	$(xim_headers)					\
+	$(xim_sources)					\
+	main.c						\
+	$(NULL)
+imsettings_xim_CFLAGS =					\
+	-DG_LOG_DOMAIN="\"IMSettings-XIM server\""	\
+	-DXLOCALEDIR="\"$(datadir)/X11/locale\""		\
+	$(CFLAGS)					\
+	$(XIM_CFLAGS)					\
+	$(X11_CFLAGS)					\
+	$(NULL)
+imsettings_xim_LDADD =					\
+	$(LDADDS)					\
+	$(XIM_LIBS)					\
+	$(X11_LIBS)					\
 	$(NULL)

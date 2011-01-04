@@ -1,24 +1,24 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * main.c
- * Copyright (C) 2008 Red Hat, Inc. All rights reserved.
+ * Copyright (C) 2008-2011 Red Hat, Inc. All rights reserved.
  * 
  * Authors:
  *   Akira TAGOH  <tagoh@redhat.com>
  * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330,
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
 #ifdef HAVE_CONFIG_H
@@ -27,39 +27,48 @@
 
 #include <locale.h>
 #include <stdlib.h>
-#include <string.h>
 #include <glib/gi18n.h>
 #include <libgxim/gximmessage.h>
 #include <libgxim/gximmisc.h>
-#include "imsettings/imsettings.h"
-#include "imsettings/imsettings-request.h"
+#include "imsettings.h"
+#include "imsettings-client.h"
 #include "client.h"
 #include "proxy.h"
 #include "utils.h"
 
-#ifdef GNOME_ENABLE_DEBUG
-#define d(e)	e
-#else
-#define d(e)
-#endif
-
-
 typedef struct _Proxy {
-	GMainLoop  *loop;
-	XimProxy   *server;
-	gchar      *server_name;
+	GMainLoop     *loop;
+	GDBusServer   *server;
+	GDBusNodeInfo *introspection_data;
+	XimProxy      *proxy;
+	gchar         *xim_name;
 } Proxy;
 
-static void     _quit_cb             (XimProxy          *proxy,
-                                      gpointer           data);
+static void handle_method_call(GDBusConnection       *connection,
+			       const gchar           *sender,
+			       const gchar           *object_path,
+			       const gchar           *interface_name,
+			       const gchar           *method_name,
+			       GVariant              *parameters,
+			       GDBusMethodInvocation *invocation,
+			       gpointer               user_data);
 
+static const gchar introspection_xml[] =
+	"<node>"
+	"  <interface name='com.redhat.imsettings.xim'>"
+	"    <method name='SwitchXIM'>"
+	"      <arg type='s' name='name' direction='in'/>"
+	"      <arg type='b' name='ret' direction='out'/>"
+	"    </method>"
+	"  </interface>"
+	"</node>";
+static const GDBusInterfaceVTable __iface_vtable = {
+	handle_method_call,
+	NULL,
+	NULL,
+};
 
-static GQuark quark_proxy = 0;
-
-
-/*
- * Private functions
- */
+/*< private >*/
 static void
 _quit_cb(XimProxy *proxy,
 	 gpointer  data)
@@ -71,88 +80,77 @@ _quit_cb(XimProxy *proxy,
 	g_main_loop_quit(loop);
 }
 
-static XimProxy *
-_create_proxy(GdkDisplay *dpy,
-	      Proxy      *proxy,
-	      gboolean    replace)
+static gboolean
+new_connection_cb(GDBusServer     *server,
+		  GDBusConnection *connection,
+		  gpointer         user_data)
 {
-	XimProxy *retval;
-	GError *error = NULL;
+	Proxy *proxy = user_data;
+	guint registration_id;
 
-	retval = xim_proxy_new(dpy, "imsettings", proxy->server_name);
-	if (retval == NULL)
-		return NULL;
-	g_signal_connect(retval, "destroy",
-			 G_CALLBACK (_quit_cb),
-			 proxy->loop);
-	if (!xim_proxy_take_ownership(retval, replace, &error)) {
-		g_print("Unable to take an ownership: %s\n",
-			error->message);
-		exit(1);
-	}
+	g_object_ref(connection);
+	registration_id = g_dbus_connection_register_object(connection,
+							    IMSETTINGS_XIM_PATH_DBUS,
+							    proxy->introspection_data->interfaces[0],
+							    &__iface_vtable,
+							    proxy, /* user_data */
+							    NULL, /* user_data_free_func */
+							    NULL /* GError */);
 
-	return retval;
+	return TRUE;
 }
 
-static DBusHandlerResult
-imsettings_xim_message_filter(DBusConnection *connection,
-			      DBusMessage    *message,
-			      void           *data)
+static void
+handle_method_call(GDBusConnection       *connection,
+		   const gchar           *sender,
+		   const gchar           *object_path,
+		   const gchar           *interface_name,
+		   const gchar           *method_name,
+		   GVariant              *parameters,
+		   GDBusMethodInvocation *invocation,
+		   gpointer               user_data)
 {
-	XimProxy *server = XIM_PROXY (data);
+	Proxy *proxy = user_data;
 
-	if (dbus_message_is_signal(message, IMSETTINGS_XIM_INTERFACE_DBUS, "ChangeTo")) {
-		gchar *module;
-		Proxy *proxy;
+	if (g_strcmp0(method_name, "StopService") == 0) {
+		g_dbus_method_invocation_return_value(invocation,
+						      g_variant_new("(b)", TRUE));
+		g_main_loop_quit(proxy->loop);
+	} else if (g_strcmp0(method_name, "SwitchXIM") == 0) {
+		const gchar *im;
 
-		proxy = g_object_get_qdata(G_OBJECT (server), quark_proxy);
-		dbus_message_get_args(message, NULL,
-				      DBUS_TYPE_STRING, &module,
-				      DBUS_TYPE_INVALID);
-		if (strcmp(module, proxy->server_name) == 0) {
-			/* No changes */
-			return DBUS_HANDLER_RESULT_HANDLED;
-		}
-		g_xim_message_debug(G_XIM_CORE (server)->message, "dbus/event",
-				    "Changing XIM server: `%s'->`%s'\n",
-				    (proxy->server_name && proxy->server_name[0] == 0 ? "none" : proxy->server_name),
-				    (module && module[0] == 0 ? "none" : module));
-		g_free(proxy->server_name);
-		proxy->server_name = g_strdup(module);
-		g_object_set(proxy->server, "connect_to", module, NULL);
-
-		return DBUS_HANDLER_RESULT_HANDLED;
+		g_variant_get(parameters, "(&s)", &im);
+		g_xim_message_debug(G_XIM_CORE (proxy->proxy)->message, "dbus/event",
+				    "Changing XIM server: '%s'->'%s'\n",
+				    proxy->xim_name, im);
+		g_free(proxy->xim_name);
+		proxy->xim_name = g_strdup(im);
+		g_object_set(proxy->proxy, "connect_to", im, NULL);
+		g_dbus_method_invocation_return_value(invocation,
+						      g_variant_new("(b)", TRUE));
 	}
-
-	return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 }
 
-/*
- * Public functions
- */
+/*< public >*/
 int
 main(int    argc,
      char **argv)
 {
-	Proxy *proxy;
-	gchar *arg_display_name = NULL, *arg_xim = NULL, *dpy_name;
+	gchar *arg_display_name = NULL, *arg_xim = NULL, *dpy_name, *arg_address = NULL;
 	gboolean arg_replace = FALSE, arg_verbose = FALSE;
 	GOptionContext *ctx = g_option_context_new(NULL);
 	GOptionEntry entries[] = {
+		{"address", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_STRING, &arg_address, N_("D-Bus address to use"), N_("ADDRESS")},
 		{"display", 0, G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_STRING, &arg_display_name, N_("X display to use"), N_("DISPLAY")},
 		{"replace", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_replace, N_("Replace the running XIM server with new instance."), NULL},
 		{"verbose", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_NONE, &arg_verbose, N_("Output the debugging logs"), NULL},
 		{"xim", 0, G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_STRING, &arg_xim, N_("XIM server connects to, for debugging purpose only"), N_("XIM")},
 		{NULL, 0, 0, 0, NULL, NULL, NULL}
 	};
-	GError *error = NULL;
+	GError *err = NULL;
+	gchar *guid;
 	GdkDisplay *dpy;
-	IMSettingsRequest *req;
-	IMSettingsInfo *info;
-	DBusConnection *conn;
-	gchar *locale, *module;
-	const gchar *xim;
-	DBusError derror;
+	Proxy *proxy;
 
 #ifdef ENABLE_NLS
 	bindtextdomain (GETTEXT_PACKAGE, IMSETTINGS_LOCALEDIR);
@@ -163,18 +161,16 @@ main(int    argc,
 #endif /* ENABLE_NLS */
 
 	setlocale(LC_ALL, "");
-	locale = setlocale(LC_CTYPE, NULL);
 
 	g_type_init();
 	gdk_init(&argc, &argv);
 	g_xim_init();
-	dbus_error_init(&derror);
 
 	/* deal with the arguments */
 	g_option_context_add_main_entries(ctx, entries, GETTEXT_PACKAGE);
-	if (!g_option_context_parse(ctx, &argc, &argv, &error)) {
-		if (error != NULL) {
-			g_print("%s\n", error->message);
+	if (!g_option_context_parse(ctx, &argc, &argv, &err)) {
+		if (err != NULL) {
+			g_print("%s\n", err->message);
 		} else {
 			g_warning(_("Unknown error in parsing the command lines."));
 		}
@@ -185,49 +181,66 @@ main(int    argc,
 	dpy_name = xim_substitute_display_name(arg_display_name);
 	dpy = gdk_display_open(dpy_name);
 	if (dpy == NULL) {
-		g_print("Can't open a X display: %s\n", dpy_name);
+		g_printerr("Can't open a X display: %s\n", dpy_name);
 		exit(1);
 	}
 	g_free(dpy_name);
-
-	quark_proxy = g_quark_from_static_string("imsettings-xim-proxy");
-
-	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-	req = imsettings_request_new(conn, IMSETTINGS_INTERFACE_DBUS);
-	imsettings_request_set_locale(req, locale);
-	module = imsettings_request_get_current_user_im(req, &error);
-	if (module == NULL) {
-		g_print("No default IM is available.\n");
+	if (arg_address == NULL) {
+		g_printerr("No D-Bus address\n");
 		exit(1);
 	}
-	info = imsettings_request_get_info_object(req, module, &error);
-	if (arg_xim == NULL)
-		xim = imsettings_info_get_xim(info);
-	else
-		xim = arg_xim;
-	g_free(module);
 
 	proxy = g_new0(Proxy, 1);
 	proxy->loop = g_main_loop_new(NULL, FALSE);
-	proxy->server_name = g_strdup(xim);
-	proxy->server = _create_proxy(dpy, proxy, arg_replace);
-	if (proxy->server == NULL)
-		exit(1);
-	g_object_set_qdata(G_OBJECT (proxy->server), quark_proxy, proxy);
+	proxy->xim_name = g_strdup("none");
+	proxy->proxy = xim_proxy_new(dpy, "imsettings", proxy->xim_name);
+	if (!proxy->proxy)
+		goto finalize;
+	g_signal_connect(proxy->proxy, "destroy",
+			 G_CALLBACK (_quit_cb),
+			 proxy->loop);
+	if (!xim_proxy_take_ownership(proxy->proxy, arg_replace, &err)) {
+		g_printerr("Unable to take an ownership: %s\n",
+			   err->message);
+		g_error_free(err);
+		goto finalize;
+	}
 
-	dbus_bus_add_match(conn,
-			   "type='signal',"
-			   "interface='" IMSETTINGS_XIM_INTERFACE_DBUS "'",
-			   &derror);
-	dbus_connection_add_filter(conn, imsettings_xim_message_filter, proxy->server, NULL);
+	proxy->introspection_data = g_dbus_node_info_new_for_xml(introspection_xml, NULL);
+	guid = g_dbus_generate_guid();
+	proxy->server = g_dbus_server_new_sync(arg_address,
+					       G_DBUS_SERVER_FLAGS_NONE,
+					       guid,
+					       NULL,
+					       NULL,
+					       &err);
+	g_dbus_server_start(proxy->server);
+	g_free(guid);
+
+	if (!proxy->server) {
+		g_printerr("Unable to create server at address %s: %s\n",
+			   arg_address,
+			   err->message);
+		g_error_free(err);
+		goto finalize;
+	}
+	g_print("IMSETTINGS_XIM_ADDRESS=%s\n", g_dbus_server_get_client_address(proxy->server));
+	g_signal_connect(proxy->server, "new-connection",
+			 G_CALLBACK (new_connection_cb),
+			 proxy);
 
 	g_main_loop_run(proxy->loop);
 
-	g_object_unref(info);
-	g_main_loop_unref(proxy->loop);
-	g_object_unref(proxy->server);
-	g_free(proxy->server_name);
+  finalize:
+	if (proxy->server)
+		g_object_unref(proxy->server);
+	if (proxy->proxy)
+		g_object_unref(proxy->proxy);
+	if (proxy->introspection_data)
+		g_object_unref(proxy->introspection_data);
+	g_free(proxy->xim_name);
 	g_free(proxy);
+
 	gdk_display_close(dpy);
 
 	g_xim_finalize();
