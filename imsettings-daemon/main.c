@@ -174,6 +174,7 @@ main(int argc, char **argv)
 
 	g_object_unref(server);
 	g_object_unref(connection);
+	g_main_loop_unref(loop);
 
 	/* invoking _exit(2) instead of just returning or invoking exit(2)
 	 * to avoid segfault in a function added by atexit(3) in GConf.

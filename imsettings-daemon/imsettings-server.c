@@ -370,22 +370,24 @@ imsettings_server_finalize(GObject *object)
 	IMSettingsServer *server = IMSETTINGS_SERVER (object);
 	IMSettingsServerPrivate *priv = server->priv;
 
-	if (priv->modules)
-		g_hash_table_destroy(priv->modules);
-	if (priv->current_im)
-		g_object_unref(priv->current_im);
 	if (priv->signal_id != 0)
 		g_dbus_connection_signal_unsubscribe(priv->connection,
 						     priv->signal_id);
 	if (priv->id != 0)
 		g_dbus_connection_unregister_object(priv->connection,
 						    priv->id);
-#if 0
-	/* XXX: This somehow causes the dead lock when loading/unloading qt module. */
 	if (priv->owner != 0)
 		g_bus_unown_name(priv->owner);
-#endif
 	g_object_unref(priv->notify);
+	/* This is quite weird but modules has to be closed
+	 * after any instances destroyed that possibly happens
+	 * dbus connection.
+	 * otherwise the deak lock occurs in pthread.
+	 */
+	if (priv->modules)
+		g_hash_table_destroy(priv->modules);
+	if (priv->current_im)
+		g_object_unref(priv->current_im);
 	g_object_unref(priv->connection);
 	g_free(priv->homedir);
 	g_free(priv->xinputrcdir);
