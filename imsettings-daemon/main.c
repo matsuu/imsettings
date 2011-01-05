@@ -85,6 +85,7 @@ _loop_cb(gpointer data)
 
 		return FALSE;
 	}
+	g_usleep(1 * G_USEC_PER_SEC);
 
 	return TRUE;
 }
