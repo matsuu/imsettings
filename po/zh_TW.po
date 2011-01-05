@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser.trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-04 16:39+0900\n"
+"POT-Creation-Date: 2011-01-05 19:38+0900\n"
 "PO-Revision-Date: 2010-05-28 16:27+0800\n"
 "Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Traditional Chinese <trans-zh_tw@lists.fedoraproject.org>\n"
@@ -133,94 +133,94 @@ msgstr "IMSettings 面板程式"
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "要使用 DBus 連線的物件"
 
-#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:408
 msgid "DBus connection"
 msgstr "DBus 連線"
 
-#: ../imsettings-daemon/imsettings-server.c:421
+#: ../imsettings-daemon/imsettings-server.c:409
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "要使用 DBus 連線的物件"
 
-#: ../imsettings-daemon/imsettings-server.c:426
+#: ../imsettings-daemon/imsettings-server.c:414
 #, fuzzy
 msgid "Logging"
 msgstr "記錄中"
 
-#: ../imsettings-daemon/imsettings-server.c:427
+#: ../imsettings-daemon/imsettings-server.c:415
 #, fuzzy
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr "這個旗標顯示紀錄設備有否被啟用。"
 
-#: ../imsettings-daemon/imsettings-server.c:432
-#: ../imsettings-daemon/imsettings-server.c:433
+#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:421
 msgid "Home directory"
 msgstr "主目錄"
 
-#: ../imsettings-daemon/imsettings-server.c:438
-#: ../imsettings-daemon/imsettings-server.c:439
+#: ../imsettings-daemon/imsettings-server.c:426
+#: ../imsettings-daemon/imsettings-server.c:427
 msgid "xinputrc directory"
 msgstr "xinputrc 目錄"
 
-#: ../imsettings-daemon/imsettings-server.c:444
-#: ../imsettings-daemon/imsettings-server.c:445
+#: ../imsettings-daemon/imsettings-server.c:432
+#: ../imsettings-daemon/imsettings-server.c:433
 msgid "xinput directory"
 msgstr "xinput 目錄"
 
-#: ../imsettings-daemon/imsettings-server.c:450
+#: ../imsettings-daemon/imsettings-server.c:438
 #, fuzzy
 msgid "module directory"
 msgstr "主目錄"
 
-#: ../imsettings-daemon/imsettings-server.c:451
+#: ../imsettings-daemon/imsettings-server.c:439
 #, fuzzy
 msgid "IMSettings module directory"
 msgstr "IMSettings 面板程式偏好設定"
 
-#: ../imsettings-daemon/imsettings-server.c:685
+#: ../imsettings-daemon/imsettings-server.c:683
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "在您的系統中沒有這個輸入法：%s"
 
-#: ../imsettings-daemon/imsettings-server.c:694
-#: ../imsettings-daemon/imsettings-server.c:807
-#: ../imsettings-daemon/imsettings-server.c:848
-#: ../imsettings-daemon/imsettings-server.c:1038
+#: ../imsettings-daemon/imsettings-server.c:692
+#: ../imsettings-daemon/imsettings-server.c:805
+#: ../imsettings-daemon/imsettings-server.c:846
+#: ../imsettings-daemon/imsettings-server.c:1036
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:736
+#: ../imsettings-daemon/imsettings-server.c:734
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "回復備份檔案失敗：%s"
 
-#: ../imsettings-daemon/imsettings-server.c:749
+#: ../imsettings-daemon/imsettings-server.c:747
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "建立備份檔案失敗：%s"
 
-#: ../imsettings-daemon/imsettings-server.c:759
+#: ../imsettings-daemon/imsettings-server.c:757
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "移除 .xinputrc 檔案失敗：%s"
 
-#: ../imsettings-daemon/imsettings-server.c:770
+#: ../imsettings-daemon/imsettings-server.c:768
 #, fuzzy, c-format
 msgid "Failed to create a symlink: %s"
 msgstr "生成象徵式鏈結失敗：%s"
 
-#: ../imsettings-daemon/imsettings-server.c:800
+#: ../imsettings-daemon/imsettings-server.c:798
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:840
+#: ../imsettings-daemon/imsettings-server.c:838
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:1030
+#: ../imsettings-daemon/imsettings-server.c:1028
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "在您的系統中沒有這個輸入法：%s"
@@ -265,8 +265,8 @@ msgstr "不要建立紀錄檔。"
 msgid "Unable to create a client instance."
 msgstr "無法設定快速鍵"
 
-#: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:60
-#: ../utils/imsettings-switch.c:89
+#: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:62
+#: ../utils/imsettings-switch.c:91
 #, fuzzy, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
@@ -323,13 +323,13 @@ msgstr "沒有系統預設輸入法。"
 msgid "Read xinputrc to determine the input method"
 msgstr ""
 
-#: ../utils/imsettings-switch.c:104
+#: ../utils/imsettings-switch.c:106
 #, fuzzy, c-format
 msgid "No Input Method running to be restarted.\n"
 msgstr "在您的系統中，以下輸入法並非運行中：%s"
 
 #  c-format
-#: ../utils/imsettings-switch.c:117
+#: ../utils/imsettings-switch.c:119
 #, fuzzy, c-format
 msgid "Restarted %s"
 msgstr "%s 已重新啟動\n"

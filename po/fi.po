@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: im-chooser 0.3.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-04 16:39+0900\n"
+"POT-Creation-Date: 2011-01-05 19:38+0900\n"
 "PO-Revision-Date: 2008-04-06 13:23+0300\n"
 "Last-Translator: Ville-Pekka Vainio <vpivaini@cs.helsinki.fi>\n"
 "Language-Team: Finnish <laatu@lokalisointi.org>\n"
@@ -128,90 +128,90 @@ msgstr ""
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "Objekti, joka on DBus-yhteys"
 
-#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:408
 msgid "DBus connection"
 msgstr "DBus-yhteys"
 
-#: ../imsettings-daemon/imsettings-server.c:421
+#: ../imsettings-daemon/imsettings-server.c:409
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "Objekti, joka on DBus-yhteys"
 
-#: ../imsettings-daemon/imsettings-server.c:426
+#: ../imsettings-daemon/imsettings-server.c:414
 msgid "Logging"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:427
+#: ../imsettings-daemon/imsettings-server.c:415
 msgid "A boolean value whether the logging facility is enabled or not."
+msgstr ""
+
+#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:421
+msgid "Home directory"
+msgstr ""
+
+#: ../imsettings-daemon/imsettings-server.c:426
+#: ../imsettings-daemon/imsettings-server.c:427
+msgid "xinputrc directory"
 msgstr ""
 
 #: ../imsettings-daemon/imsettings-server.c:432
 #: ../imsettings-daemon/imsettings-server.c:433
-msgid "Home directory"
-msgstr ""
-
-#: ../imsettings-daemon/imsettings-server.c:438
-#: ../imsettings-daemon/imsettings-server.c:439
-msgid "xinputrc directory"
-msgstr ""
-
-#: ../imsettings-daemon/imsettings-server.c:444
-#: ../imsettings-daemon/imsettings-server.c:445
 msgid "xinput directory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:450
+#: ../imsettings-daemon/imsettings-server.c:438
 msgid "module directory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:451
+#: ../imsettings-daemon/imsettings-server.c:439
 msgid "IMSettings module directory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:685
+#: ../imsettings-daemon/imsettings-server.c:683
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "Järjestelmässä ei ole syöttömenetelmää: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:694
-#: ../imsettings-daemon/imsettings-server.c:807
-#: ../imsettings-daemon/imsettings-server.c:848
-#: ../imsettings-daemon/imsettings-server.c:1038
+#: ../imsettings-daemon/imsettings-server.c:692
+#: ../imsettings-daemon/imsettings-server.c:805
+#: ../imsettings-daemon/imsettings-server.c:846
+#: ../imsettings-daemon/imsettings-server.c:1036
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:736
+#: ../imsettings-daemon/imsettings-server.c:734
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "Varmuuskopiotiedoston palautus epäonnistui %s"
 
-#: ../imsettings-daemon/imsettings-server.c:749
+#: ../imsettings-daemon/imsettings-server.c:747
 #, fuzzy, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "Varmuuskopiotiedoston palautus epäonnistui %s"
 
-#: ../imsettings-daemon/imsettings-server.c:759
+#: ../imsettings-daemon/imsettings-server.c:757
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr ".xinputrc-tiedoston poisto epäonnistui: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:770
+#: ../imsettings-daemon/imsettings-server.c:768
 #, fuzzy, c-format
 msgid "Failed to create a symlink: %s"
 msgstr "Symbolisen linkin tekeminen epäonnistui: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:800
+#: ../imsettings-daemon/imsettings-server.c:798
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:840
+#: ../imsettings-daemon/imsettings-server.c:838
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:1030
+#: ../imsettings-daemon/imsettings-server.c:1028
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "Järjestelmässä ei ole syöttömenetelmää: %s"
@@ -255,8 +255,8 @@ msgstr ""
 msgid "Unable to create a client instance."
 msgstr "Varmuuskopiotiedostoa luominen epäonnistui: %s"
 
-#: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:60
-#: ../utils/imsettings-switch.c:89
+#: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:62
+#: ../utils/imsettings-switch.c:91
 #, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
@@ -314,12 +314,12 @@ msgstr ""
 msgid "Read xinputrc to determine the input method"
 msgstr ""
 
-#: ../utils/imsettings-switch.c:104
+#: ../utils/imsettings-switch.c:106
 #, fuzzy, c-format
 msgid "No Input Method running to be restarted.\n"
 msgstr "Järjestelmässä ei ole syöttömenetelmää: %s"
 
-#: ../utils/imsettings-switch.c:117
+#: ../utils/imsettings-switch.c:119
 #, fuzzy, c-format
 msgid "Restarted %s"
 msgstr "Pysäytettiin %s\n"

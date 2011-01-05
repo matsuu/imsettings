@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.trunk.or\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-04 16:39+0900\n"
+"POT-Creation-Date: 2011-01-05 19:38+0900\n"
 "PO-Revision-Date: 2009-09-25 14:34+0530\n"
 "Last-Translator: Manoj Kumar Giri <mgiri@redhat.com>\n"
 "Language-Team: Oriya <oriya-it@googlegroups.com>\n"
@@ -143,94 +143,94 @@ msgstr "IMSettings ଆପଲେଟ"
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "DBus ସଂଯୋଗ ହେବାକୁ ଥିବା ଗୋଟିଏ ବସ୍ତୁ"
 
-#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:408
 msgid "DBus connection"
 msgstr "DBus ସଂଯୋଗ"
 
-#: ../imsettings-daemon/imsettings-server.c:421
+#: ../imsettings-daemon/imsettings-server.c:409
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "DBus ସଂଯୋଗ ହେବାକୁ ଥିବା ଗୋଟିଏ ବସ୍ତୁ"
 
-#: ../imsettings-daemon/imsettings-server.c:426
+#: ../imsettings-daemon/imsettings-server.c:414
 #, fuzzy
 msgid "Logging"
 msgstr "ଲଗଇନ କରୁଅଛି"
 
-#: ../imsettings-daemon/imsettings-server.c:427
+#: ../imsettings-daemon/imsettings-server.c:415
 #, fuzzy
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr "ଲଗଇନ ସୁବିଧାକୁ ସକ୍ରିୟ କରାଯାଇଛି କି ନାହିଁ ତାହା ପାଇଁ ଗୋଟିଏ ଫ୍ଲାଗ।"
 
-#: ../imsettings-daemon/imsettings-server.c:432
-#: ../imsettings-daemon/imsettings-server.c:433
+#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:421
 msgid "Home directory"
 msgstr "ମୂଳସ୍ଥାନ ପଞ୍ଜିକା"
 
-#: ../imsettings-daemon/imsettings-server.c:438
-#: ../imsettings-daemon/imsettings-server.c:439
+#: ../imsettings-daemon/imsettings-server.c:426
+#: ../imsettings-daemon/imsettings-server.c:427
 msgid "xinputrc directory"
 msgstr "xinputrc ଡିରେକ୍ଟୋରୀ"
 
-#: ../imsettings-daemon/imsettings-server.c:444
-#: ../imsettings-daemon/imsettings-server.c:445
+#: ../imsettings-daemon/imsettings-server.c:432
+#: ../imsettings-daemon/imsettings-server.c:433
 msgid "xinput directory"
 msgstr "xinput ଡିରେକ୍ଟୋରୀ"
 
-#: ../imsettings-daemon/imsettings-server.c:450
+#: ../imsettings-daemon/imsettings-server.c:438
 #, fuzzy
 msgid "module directory"
 msgstr "ମୂଳସ୍ଥାନ ପଞ୍ଜିକା"
 
-#: ../imsettings-daemon/imsettings-server.c:451
+#: ../imsettings-daemon/imsettings-server.c:439
 #, fuzzy
 msgid "IMSettings module directory"
 msgstr "IMSettings ଆପଲେଟ ପସନ୍ଦଗୁଡ଼ିକ"
 
-#: ../imsettings-daemon/imsettings-server.c:685
+#: ../imsettings-daemon/imsettings-server.c:683
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "ଆପଣଙ୍କର ତନ୍ତ୍ରରେ ଏପରି କିଛି ନିବେଶ ପଦ୍ଧତି ନାହିଁ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:694
-#: ../imsettings-daemon/imsettings-server.c:807
-#: ../imsettings-daemon/imsettings-server.c:848
-#: ../imsettings-daemon/imsettings-server.c:1038
+#: ../imsettings-daemon/imsettings-server.c:692
+#: ../imsettings-daemon/imsettings-server.c:805
+#: ../imsettings-daemon/imsettings-server.c:846
+#: ../imsettings-daemon/imsettings-server.c:1036
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:736
+#: ../imsettings-daemon/imsettings-server.c:734
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "ନକଲ ସଂରକ୍ଷଣ ଫାଇଲକୁ ପ୍ରତ୍ୟାବୃତ କରିବାରେ ବିଫଳ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:749
+#: ../imsettings-daemon/imsettings-server.c:747
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "ନକଲ ସଂରକ୍ଷଣ ଫାଇଲକୁ ସୃଷ୍ଟି କରିବାରେ ବିଫଳ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:759
+#: ../imsettings-daemon/imsettings-server.c:757
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr "xinputrc ଫାଇଲକୁ ହଟାଇବାରେ ବିଫଳ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:770
+#: ../imsettings-daemon/imsettings-server.c:768
 #, fuzzy, c-format
 msgid "Failed to create a symlink: %s"
 msgstr "ଗୋଟିଏ symlink ତିଆରି କରିବାରେ ବିଫଳ: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:800
+#: ../imsettings-daemon/imsettings-server.c:798
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:840
+#: ../imsettings-daemon/imsettings-server.c:838
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:1030
+#: ../imsettings-daemon/imsettings-server.c:1028
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "ଆପଣଙ୍କର ତନ୍ତ୍ରରେ ଏପରି କିଛି ନିବେଶ ପଦ୍ଧତି ନାହିଁ: %s"
@@ -275,8 +275,8 @@ msgstr "କୌଣସି ଲଗ ଫାଇଲ ସୃଷ୍ଟି କରନ୍ତ�
 msgid "Unable to create a client instance."
 msgstr "ତ୍ୱରଣ କି କୁ ସେଟ କରିବାରେ ଅସମର୍ଥ"
 
-#: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:60
-#: ../utils/imsettings-switch.c:89
+#: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:62
+#: ../utils/imsettings-switch.c:91
 #, fuzzy, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
@@ -334,12 +334,12 @@ msgstr "କୌଣସି ତନ୍ତ୍ର ନିର୍ଦ୍ଦିଷ୍ଟ ନ
 msgid "Read xinputrc to determine the input method"
 msgstr ""
 
-#: ../utils/imsettings-switch.c:104
+#: ../utils/imsettings-switch.c:106
 #, fuzzy, c-format
 msgid "No Input Method running to be restarted.\n"
 msgstr "ଏପରି କୌଣସି ନିବେଶ ପ୍ରଣାଳୀ ଚାଲୁନାହିଁ: %s"
 
-#: ../utils/imsettings-switch.c:117
+#: ../utils/imsettings-switch.c:119
 #, fuzzy, c-format
 msgid "Restarted %s"
 msgstr "%s କୁ ପୁନଃ ପ୍ରାରମ୍ଭ କରିଅଛି\n"

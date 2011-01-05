@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.trunk.te\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-04 16:39+0900\n"
+"POT-Creation-Date: 2011-01-05 19:38+0900\n"
 "PO-Revision-Date: 2009-09-10 17:02+0530\n"
 "Last-Translator: Krishna Babu K <kkrothap@redhat.com>\n"
 "Language-Team: Telugu <en@li.org>\n"
@@ -137,94 +137,94 @@ msgstr "IMఅమరికల ఆప్లెట్"
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "DBus అనుసంధానంకు ఒక ఆబ్జక్ట్‍"
 
-#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:408
 msgid "DBus connection"
 msgstr "DBus అనుసంధానం"
 
-#: ../imsettings-daemon/imsettings-server.c:421
+#: ../imsettings-daemon/imsettings-server.c:409
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "DBus అనుసంధానంకు ఒక ఆబ్జక్ట్‍"
 
-#: ../imsettings-daemon/imsettings-server.c:426
+#: ../imsettings-daemon/imsettings-server.c:414
 #, fuzzy
 msgid "Logging"
 msgstr "లాగింగ్"
 
-#: ../imsettings-daemon/imsettings-server.c:427
+#: ../imsettings-daemon/imsettings-server.c:415
 #, fuzzy
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr "లాగింగ్ సౌలభ్యము చెతనపరచవలెనా లేదా అనుదానికి వొక ఫ్లాగ్."
 
-#: ../imsettings-daemon/imsettings-server.c:432
-#: ../imsettings-daemon/imsettings-server.c:433
+#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:421
 msgid "Home directory"
 msgstr "నివాస డైరెక్టరీ"
 
-#: ../imsettings-daemon/imsettings-server.c:438
-#: ../imsettings-daemon/imsettings-server.c:439
+#: ../imsettings-daemon/imsettings-server.c:426
+#: ../imsettings-daemon/imsettings-server.c:427
 msgid "xinputrc directory"
 msgstr "xinputrc డైరెక్టరీ"
 
-#: ../imsettings-daemon/imsettings-server.c:444
-#: ../imsettings-daemon/imsettings-server.c:445
+#: ../imsettings-daemon/imsettings-server.c:432
+#: ../imsettings-daemon/imsettings-server.c:433
 msgid "xinput directory"
 msgstr "xinput డైరెక్టరీ"
 
-#: ../imsettings-daemon/imsettings-server.c:450
+#: ../imsettings-daemon/imsettings-server.c:438
 #, fuzzy
 msgid "module directory"
 msgstr "నివాస డైరెక్టరీ"
 
-#: ../imsettings-daemon/imsettings-server.c:451
+#: ../imsettings-daemon/imsettings-server.c:439
 #, fuzzy
 msgid "IMSettings module directory"
 msgstr "IMఅమరికల ఆప్లెట్ అభీష్టాలు"
 
-#: ../imsettings-daemon/imsettings-server.c:685
+#: ../imsettings-daemon/imsettings-server.c:683
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "మీ సిస్టమే పై అటువంటి ఇన్పుట్ పద్దతి లేదు: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:694
-#: ../imsettings-daemon/imsettings-server.c:807
-#: ../imsettings-daemon/imsettings-server.c:848
-#: ../imsettings-daemon/imsettings-server.c:1038
+#: ../imsettings-daemon/imsettings-server.c:692
+#: ../imsettings-daemon/imsettings-server.c:805
+#: ../imsettings-daemon/imsettings-server.c:846
+#: ../imsettings-daemon/imsettings-server.c:1036
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:736
+#: ../imsettings-daemon/imsettings-server.c:734
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "బ్యక్అప్ దస్త్రమును తిరిగిపంపుటలో విఫలనమైంది: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:749
+#: ../imsettings-daemon/imsettings-server.c:747
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "బ్యక్అప్ దస్త్రము సృష్టించుటలో విఫలమైంది: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:759
+#: ../imsettings-daemon/imsettings-server.c:757
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr ".xinputrc దస్త్రమును తీసివేయుటలో విఫలమైంది: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:770
+#: ../imsettings-daemon/imsettings-server.c:768
 #, fuzzy, c-format
 msgid "Failed to create a symlink: %s"
 msgstr "symlink చేయుటలో విఫలమైంది: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:800
+#: ../imsettings-daemon/imsettings-server.c:798
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:840
+#: ../imsettings-daemon/imsettings-server.c:838
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:1030
+#: ../imsettings-daemon/imsettings-server.c:1028
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "మీ సిస్టమే పై అటువంటి ఇన్పుట్ పద్దతి లేదు: %s"
@@ -269,8 +269,8 @@ msgstr "ఒక లాగ్ దస్త్రమును సృష్టిం
 msgid "Unable to create a client instance."
 msgstr "ఏక్సెలరేషన్ కీను అమర్చలేక పోయింది"
 
-#: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:60
-#: ../utils/imsettings-switch.c:89
+#: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:62
+#: ../utils/imsettings-switch.c:91
 #, fuzzy, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
@@ -327,12 +327,12 @@ msgstr "సిస్టమ్ అప్రమేయ యిన్పుట్ ప
 msgid "Read xinputrc to determine the input method"
 msgstr ""
 
-#: ../utils/imsettings-switch.c:104
+#: ../utils/imsettings-switch.c:106
 #, fuzzy, c-format
 msgid "No Input Method running to be restarted.\n"
 msgstr "అటువంటి యిన్పుట్ పద్దతి నడుచుటలేదు: %s"
 
-#: ../utils/imsettings-switch.c:117
+#: ../utils/imsettings-switch.c:119
 #, fuzzy, c-format
 msgid "Restarted %s"
 msgstr "%s పునఃప్రారంభించింది\n"

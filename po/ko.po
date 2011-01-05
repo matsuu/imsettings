@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imsettings.ko\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-04 16:39+0900\n"
+"POT-Creation-Date: 2011-01-05 19:38+0900\n"
 "PO-Revision-Date: 2010-03-31 15:14+1000\n"
 "Last-Translator: Hyunsok Oh <hoh@redhat.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -133,94 +133,94 @@ msgstr "IMSettings 애플릿  "
 msgid "A GObject to be a IMSettingsInfo"
 msgstr "DBus 연결 대상 "
 
-#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:408
 msgid "DBus connection"
 msgstr "DBus 연결 "
 
-#: ../imsettings-daemon/imsettings-server.c:421
+#: ../imsettings-daemon/imsettings-server.c:409
 #, fuzzy
 msgid "A GObject to be a DBus connection"
 msgstr "DBus 연결 대상 "
 
-#: ../imsettings-daemon/imsettings-server.c:426
+#: ../imsettings-daemon/imsettings-server.c:414
 #, fuzzy
 msgid "Logging"
 msgstr "로깅  "
 
-#: ../imsettings-daemon/imsettings-server.c:427
+#: ../imsettings-daemon/imsettings-server.c:415
 #, fuzzy
 msgid "A boolean value whether the logging facility is enabled or not."
 msgstr "로깅 기능 활성화 여부에 대한 플래그  "
 
-#: ../imsettings-daemon/imsettings-server.c:432
-#: ../imsettings-daemon/imsettings-server.c:433
+#: ../imsettings-daemon/imsettings-server.c:420
+#: ../imsettings-daemon/imsettings-server.c:421
 msgid "Home directory"
 msgstr "홈 디렉토리  "
 
-#: ../imsettings-daemon/imsettings-server.c:438
-#: ../imsettings-daemon/imsettings-server.c:439
+#: ../imsettings-daemon/imsettings-server.c:426
+#: ../imsettings-daemon/imsettings-server.c:427
 msgid "xinputrc directory"
 msgstr "xinputrc 디렉토리  "
 
-#: ../imsettings-daemon/imsettings-server.c:444
-#: ../imsettings-daemon/imsettings-server.c:445
+#: ../imsettings-daemon/imsettings-server.c:432
+#: ../imsettings-daemon/imsettings-server.c:433
 msgid "xinput directory"
 msgstr "xinput 디렉토리  "
 
-#: ../imsettings-daemon/imsettings-server.c:450
+#: ../imsettings-daemon/imsettings-server.c:438
 #, fuzzy
 msgid "module directory"
 msgstr "홈 디렉토리  "
 
-#: ../imsettings-daemon/imsettings-server.c:451
+#: ../imsettings-daemon/imsettings-server.c:439
 #, fuzzy
 msgid "IMSettings module directory"
 msgstr "IMSettings 애플릿 설정  "
 
-#: ../imsettings-daemon/imsettings-server.c:685
+#: ../imsettings-daemon/imsettings-server.c:683
 #, c-format
 msgid "No such input method on your system: %s"
 msgstr "시스템에 없는 입력 방식: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:694
-#: ../imsettings-daemon/imsettings-server.c:807
-#: ../imsettings-daemon/imsettings-server.c:848
-#: ../imsettings-daemon/imsettings-server.c:1038
+#: ../imsettings-daemon/imsettings-server.c:692
+#: ../imsettings-daemon/imsettings-server.c:805
+#: ../imsettings-daemon/imsettings-server.c:846
+#: ../imsettings-daemon/imsettings-server.c:1036
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:736
+#: ../imsettings-daemon/imsettings-server.c:734
 #, c-format
 msgid "Failed to revert the backup file: %s"
 msgstr "백업 파일로 되돌리기 실패: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:749
+#: ../imsettings-daemon/imsettings-server.c:747
 #, c-format
 msgid "Failed to create a backup file: %s"
 msgstr "백업 파일 생성 실패: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:759
+#: ../imsettings-daemon/imsettings-server.c:757
 #, c-format
 msgid "Failed to remove a .xinputrc file: %s"
 msgstr ".xinputrc 파일 삭제 실패: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:770
+#: ../imsettings-daemon/imsettings-server.c:768
 #, fuzzy, c-format
 msgid "Failed to create a symlink: %s"
 msgstr "심볼릭 링크 생성 실패: %s"
 
-#: ../imsettings-daemon/imsettings-server.c:800
+#: ../imsettings-daemon/imsettings-server.c:798
 #, c-format
 msgid "No system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:840
+#: ../imsettings-daemon/imsettings-server.c:838
 #, c-format
 msgid "No .xinputrc nor system-wide xinputrc available"
 msgstr ""
 
-#: ../imsettings-daemon/imsettings-server.c:1030
+#: ../imsettings-daemon/imsettings-server.c:1028
 #, fuzzy, c-format
 msgid "No such input method: %s"
 msgstr "시스템에 없는 입력 방식: %s"
@@ -265,8 +265,8 @@ msgstr "로그 파일을 생성하지 않음  "
 msgid "Unable to create a client instance."
 msgstr "가속키를 설정할 수 없음  "
 
-#: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:60
-#: ../utils/imsettings-switch.c:89
+#: ../utils/imsettings-info.c:64 ../utils/imsettings-list.c:62
+#: ../utils/imsettings-switch.c:91
 #, fuzzy, c-format
 msgid ""
 "Currently a different version of imsettings is running.\n"
@@ -324,12 +324,12 @@ msgstr "시스템 기본 입력 방식이 없음.   "
 msgid "Read xinputrc to determine the input method"
 msgstr ""
 
-#: ../utils/imsettings-switch.c:104
+#: ../utils/imsettings-switch.c:106
 #, fuzzy, c-format
 msgid "No Input Method running to be restarted.\n"
 msgstr "다음 입력 방식이 실행중이 아님: %s "
 
-#: ../utils/imsettings-switch.c:117
+#: ../utils/imsettings-switch.c:119
 #, fuzzy, c-format
 msgid "Restarted %s"
 msgstr "%s 재시작\n"

@@ -1,3 +1,13 @@
+0.108.1 -> 1.0.0
+===================
+* Simplify the process structures.
+* Revise a lot of code.
+* Modularize the backends.
+* GDBus transition.
+* Bump API version.
+* Bug Fix:
+  * rhbz#526205: Unable to find XIM with the certain locale
+
 0.108.0 -> 0.108.1
 =====================
 * Bug Fixes:
