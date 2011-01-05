@@ -104,8 +104,8 @@ static const gchar *imsettings_server_get_moduledir  (IMSettingsServer *server);
 
 GDBusInterfaceVTable __iface_vtable = {
 	imsettings_server_bus_method_call,
-	imsettings_server_bus_get_property,
-	imsettings_server_bus_set_property,
+	NULL,
+	NULL,
 };
 guint signals[LAST_SIGNAL];
 
@@ -1134,33 +1134,6 @@ imsettings_server_bus_method_call(GDBusConnection       *connection,
 			g_variant_unref(value);
 		}
 	}
-}
-
-static GVariant *
-imsettings_server_bus_get_property(GDBusConnection  *connection,
-				   const gchar      *sender,
-				   const gchar      *object_path,
-				   const gchar      *interface_name,
-				   const gchar      *property_name,
-				   GError          **error,
-				   gpointer          user_data)
-{
-	g_print("XXX: %s\n", __PRETTY_FUNCTION__);
-	return NULL;
-}
-
-static gboolean
-imsettings_server_bus_set_property(GDBusConnection  *connection,
-				   const gchar      *sender,
-				   const gchar      *object_paht,
-				   const gchar      *interface_name,
-				   const gchar      *property_name,
-				   GVariant         *value,
-				   GError          **error,
-				   gpointer          user_data)
-{
-	g_print("XXX: %s\n", __PRETTY_FUNCTION__);
-	return FALSE;
 }
 
 static void
