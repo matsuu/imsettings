@@ -81,21 +81,6 @@ static void      imsettings_server_bus_method_call (GDBusConnection       *conne
                                                     GVariant              *parameters,
                                                     GDBusMethodInvocation *invocation,
                                                     gpointer               user_data);
-static GVariant *imsettings_server_bus_get_property(GDBusConnection       *connection,
-                                                    const gchar           *sender,
-                                                    const gchar           *object_path,
-                                                    const gchar           *interface_name,
-                                                    const gchar           *property_name,
-                                                    GError                **error,
-                                                    gpointer               user_data);
-static gboolean  imsettings_server_bus_set_property(GDBusConnection       *connection,
-                                                    const gchar           *sender,
-                                                    const gchar           *object_paht,
-                                                    const gchar           *interface_name,
-                                                    const gchar           *property_name,
-                                                    GVariant              *value,
-                                                    GError                **error,
-                                                    gpointer               user_data);
 
 static const gchar *imsettings_server_get_homedir    (IMSettingsServer *server);
 static const gchar *imsettings_server_get_xinputrcdir(IMSettingsServer *server);
@@ -1143,21 +1128,8 @@ imsettings_server_bus_on_name_acquired(GDBusConnection *connection,
 {
 	IMSettingsServer *server = IMSETTINGS_SERVER (user_data);
 	IMSettingsServerPrivate *priv = server->priv;
-	GError *err = NULL;
 	GList *l, *ll;
 	GString *s;
-
-	priv->id = g_dbus_connection_register_object(priv->connection,
-						     IMSETTINGS_PATH_DBUS,
-						     imsettings_get_interface_info(),
-						     &__iface_vtable,
-						     server, /* user_data */
-						     NULL, /* user_data_free_func */
-						     &err);
-	if (err) {
-		g_error("%s", err->message);
-	}
-	priv->signal_id = g_dbus_connection_signal_subscribe(connection, NULL, IMSETTINGS_INTERFACE_DBUS, NULL, IMSETTINGS_PATH_DBUS, NULL, G_DBUS_SIGNAL_FLAGS_NONE, imsettings_server_bus_signal, server, NULL);
 
 	priv->active = TRUE;
 	g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
@@ -1344,6 +1316,7 @@ imsettings_server_start(IMSettingsServer *server,
 {
 	IMSettingsServerPrivate *priv;
 	guint flags = G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT;
+	GError *err = NULL;
 
 	g_return_if_fail (IMSETTINGS_IS_SERVER (server));
 
@@ -1354,6 +1327,27 @@ imsettings_server_start(IMSettingsServer *server,
 		if (replace)
 			flags |= G_BUS_NAME_OWNER_FLAGS_REPLACE;
 
+		priv->id = g_dbus_connection_register_object(priv->connection,
+							     IMSETTINGS_PATH_DBUS,
+							     imsettings_get_interface_info(),
+							     &__iface_vtable,
+							     server, /* user_data */
+							     NULL, /* user_data_free_func */
+							     &err);
+		if (err) {
+			g_error("%s", err->message);
+			g_error_free(err);
+		}
+		priv->signal_id = g_dbus_connection_signal_subscribe(priv->connection,
+								     NULL /* sender */,
+								     IMSETTINGS_INTERFACE_DBUS,
+								     NULL /* member */,
+								     IMSETTINGS_PATH_DBUS,
+								     NULL /* arg0 */,
+								     G_DBUS_SIGNAL_FLAGS_NONE,
+								     imsettings_server_bus_signal,
+								     server,
+								     NULL /* user_data_free_func */);
 		priv->owner = g_bus_own_name_on_connection(priv->connection,
 							   IMSETTINGS_SERVICE_DBUS,
 							   flags,
