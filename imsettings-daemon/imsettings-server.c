@@ -393,13 +393,13 @@ imsettings_server_finalize(GObject *object)
 	g_log(G_LOG_DOMAIN, G_LOG_LEVEL_INFO,
 	      "imsettings-daemon is shut down.");
 
+	if (priv->old_log_handler)
+		g_log_set_default_handler(priv->old_log_handler, NULL);
+
 	g_free(priv->homedir);
 	g_free(priv->xinputrcdir);
 	g_free(priv->xinputdir);
 	g_free(priv->moduledir);
-
-	if (priv->old_log_handler)
-		g_log_set_default_handler(priv->old_log_handler, NULL);
 
 	if (G_OBJECT_CLASS (imsettings_server_parent_class)->finalize)
 		G_OBJECT_CLASS (imsettings_server_parent_class)->finalize(object);
