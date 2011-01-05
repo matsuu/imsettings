@@ -33,7 +33,6 @@
 static void _sig_handler(int signum);
 
 static IMSettingsServer *server = NULL;
-static GQuark __loop_quark = 0;
 static gboolean running = TRUE;
 
 /*< private >*/
@@ -140,7 +139,6 @@ main(int argc, char **argv)
 		exit(1);
 	}
 
-	__loop_quark = g_quark_from_static_string("imsettings-main-loop");
 	g_dbus_error_register_error(IMSETTINGS_GERROR, 3, "com.redhat.imsettings.Error");
 
 	_setup_signal(SIGTERM);
@@ -156,7 +154,6 @@ main(int argc, char **argv)
 		exit(1);
 	}
 	loop = g_main_loop_new(NULL, FALSE);
-	g_object_set_qdata(G_OBJECT (server), __loop_quark, loop);
 
 	g_signal_connect(server, "disconnected",
 			 G_CALLBACK (_disconnected_cb),
