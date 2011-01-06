@@ -40,6 +40,9 @@ if [ -r /etc/profile.d/lang.sh ]; then
 elif [ -r /etc/default/locale ]; then
     # for Debian
     source /etc/default/locale
+elif [ -r /etc/profile.env ]; then
+    # for Gentoo
+    source /etc/profile.env
 fi
 [ -n "$oldterm" ] && export TERM=$oldterm
 
