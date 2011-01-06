@@ -311,15 +311,10 @@ if test "x$use_qt" = "xyes"; then
    echo "   CFLAGS:               $QT_CFLAGS"
    echo "   LDFLAGS:              $QT_LIBS"
 fi
-echo " Xfce mcs support:       $use_xfce_mcs"
-if test "x$use_xfce_mcs" = "xyes"; then
-   echo "   CFLAGS:               $XFCE_MCS_CFLAGS"
-   echo "   LDFLAGS:              $XFCE_MCS_LIBS"
-fi
-echo " Xfce xfconf support:    $use_xfce_xfconf"
-if test "x$use_xfce_xfconf" = "xyes"; then
-   echo "   CFLAGS:               $XFCE_XFCONF_CFLAGS"
-   echo "   LDFLAGS:              $XFCE_XFCONF_LIBS"
+echo " Xfce support:           $use_xfce"
+if test "x$use_xfce" = "xyes"; then
+   echo "   CFLAGS:               $XFCE_CFLAGS"
+   echo "   LDFLAGS:              $XFCE_LIBS"
 fi
 echo " LXDE support:           $use_lxde"
 if test "x$use_lxde" = "xyes"; then
