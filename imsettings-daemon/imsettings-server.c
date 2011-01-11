@@ -464,7 +464,7 @@ imsettings_server_init(IMSettingsServer *server)
 					      g_str_equal,
 					      g_free,
 					      g_object_unref);
-#ifdef HAS_STATUS_ICON
+#ifdef HAS_OLD_LIBNOTIFY
 	/* this is deprecated code */
 	priv->notify = notify_notification_new("imsettings-daemon notification",
 					       "messages from imsettings-daemon",

@@ -78,19 +78,19 @@ dnl ======================================================================
 PKG_CHECK_MODULES(IMSETTINGS, gio-2.0 >= $GIO_REQUIRED
 			      gobject-2.0 >= $GOBJECT_REQUIRED)
 PKG_CHECK_MODULES(LIBNOTIFY, libnotify, [
-	save_CFLAGS="$CFLAGS"
-	CFLAGS="$(pkg-config --cflags --libs libnotify gtk+-2.0)"
-	AC_CHECK_FUNC(notify_notification_new_with_status_icon,[
-		has_status_icon=yes
+	PKG_CHECK_MODULES(LIBNOTIFY_OLD, libnotify < $LIBNOTIFY_REQUIRED, [
+		has_old_libnotify=yes
 		PKG_CHECK_MODULES(GTK, gtk+-2.0 >= $GTK_REQUIRED)
-		AC_DEFINE(HAS_STATUS_ICON,, [status icon support in libnotify])
-		IMDAEMON_CFLAGS="$GTK_CFLAGS $LIBNOTIFY_CFLAGS"
-		IMDAEMON_LIBS="$GTK_LIBS $LIBNOTIFY_LIBS"],[
-		has_status_icon=no
+		AC_DEFINE(HAS_OLD_LIBNOTIFY,, [Using older libnotify])
+		IMDAEMON_CFLAGS="$GTK_CFLAGS $LIBNOTIFY_OLD_CFLAGS"
+		IMDAEMON_LIBS="$GTK_LIBS $LIBNOTIFY_OLD_LIBS"],[
+		has_old_libnotify=no
 		IMDAEMON_CFLAGS="$LIBNOTIFY_CFLAGS"
 		IMDAEMON_LIBS="$LIBNOTIFY_LIBS"])
-	CFLAGS="$save_CFLAGS"
-])
+],
+	AC_MSG_ERROR([
+*** LIBNOTIFY is required.])
+)
 PKG_CHECK_MODULES(X11, x11)
 # for gconf backend
 PKG_CHECK_MODULES(GCONF, gconf-2.0,
