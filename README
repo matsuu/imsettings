@@ -175,3 +175,10 @@ Processes
 
   A XIM bridge between client applications and real XIM server.
 
+Logging
+==========
+
+IMSettings has the logging facility to help for debugging purpose mainly.
+Any output from IMSettings and Input Methods is stored into
+$HOME/.imsettings.log.
+
